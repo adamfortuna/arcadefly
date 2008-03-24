@@ -1,0 +1,19 @@
+<h1>Edit address</h1>
+
+<%= error_messages_for :address %>
+
+<% form_for(:address, :url => user_address_path(@address), :html => { :method => :put }) do |f| %>
+  <fieldset>
+    <legend>Edit an Address</legend>
+
+    <%= render :partial => 'shared/address', :locals => { :address => @address } %>
+    
+		<p>
+		  <input type="hidden" name="id" value="<%= @address.id %>">
+	    <%= f.submit "Update" %>
+    </p>
+	</fieldset>
+<% end %>
+
+<%= link_to 'Show', address_path(@address) %> |
+<%= link_to 'Back', addresses_path %>

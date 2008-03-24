@@ -1,0 +1,23 @@
+class Game < ActiveRecord::Base
+  has_many :playables
+  has_many :arcades, :through => :playables
+  belongs_to :arcade, :counter_cache => true
+  
+  validates_presence_of :name
+
+  # This controls how many ames will be shown per page to the user.
+  cattr_reader :per_page
+  @@per_page = 200
+  
+  # Used for pagination of a search term given the current page. The number of games per page
+  # isn't customizable for the user and is set to a static number within this model.
+  #
+  # = Example
+  #  Game.search("dance", 2) => Pagination Array
+  def self.search(search, page)
+    search = "%#{search}" if search and search.length >= 2
+    paginate :per_page => @@per_page, :page => page,
+             :conditions => ['name like ?', "#{search}%"],
+             :order => 'name'
+  end
+end

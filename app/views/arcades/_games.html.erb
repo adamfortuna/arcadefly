@@ -1,0 +1,21 @@
+<% javascript 'dynamic_games' -%>
+<% games = Game.find(:all) -%>
+      <fieldset>
+        <legend>Games at this location
+          (<a href="javascript:showAllGames();" id="show_all_games">Show all games</a><a href="javascript:showPopularGames();" id="show_popular_games">Show games already in arcades</a>)
+          
+        </legend>
+        <ul class="scrollable content-height">
+      		<% games.each do |game| %>
+      		  <li class="<%= cycle("even","odd")%>" id="game_<%= game.id %>_field">
+      			  <%= check_box_tag "arcade[game_ids][]",
+      			                    game.id,
+      			                    arcade.games.include?(game),
+      			                    :id => "game_id_#{game.id}",
+      			                    :class => "left" %>
+      			  <label for="game_id_<%= game.id %>"><%= game.name %></label>
+      			</li>
+      		<% end %>
+      	</ul>
+      	<span class="note">All selected games will be added, even those currently not filtered for.</span>
+      </fieldset>

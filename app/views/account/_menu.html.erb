@@ -1,0 +1,12 @@
+<div class="tabbed column span-8 prepend-2 last">
+  <div class="box">
+    <h3>Options</h3>
+    <ul>
+      <%= nav_link "About Me", "/users/#{user.login}/settings" %>
+      <%= nav_link "Manage Addresses", "/users/#{user.login}/settings/addresses" %>
+      <%= nav_link "Privacy Settings", "/users/#{user.login}/settings/privacy" %>
+      <%= nav_link "Change Password", "/users/#{user.login}/settings/password" %>
+      <%= nav_link "Viewing Preferemces", "/users/#{user.login}/settings/preferences" %>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<%= error_messages_for :user %>
+
+<div class="column span-12">
+  <% form_tag url_for(:action => "update"), :html => { :method => :put } do %>
+    <fieldset>
+      <legend>Change Password</legend>
+      <p class="block">
+        <label for="user_old_password">Old Password</label>
+        <%= password_field_tag 'old_password', @old_password, :size => 45, :class=> 'text' %>
+      </p>
+      <p class="block">
+        <label for="user_password">New Password</label>
+        <%= password_field_tag 'password', {}, :size => 45, :class => 'button' %><br />
+        <small>Between 4 and 40 characters</small>
+      </p>
+      <p class="block">
+        <label for="user_password_confirmation">Confirm New Password</label>
+        <%= password_field_tag 'password_confirmation', {}, :size => 45, :class => 'button' %>
+      </p>
+      <p class="block">
+        <%= submit_tag "Change Password" %>
+      </p>
+    </fieldset>
+  <% end %>
+</div>

@@ -1,0 +1,65 @@
+<% content_for(:header) do %>
+  <script>
+    Event.observe(window, 'load', function() {
+      Form.focusFirstElement('signup_form');
+      $('add_address').observe('click', function() {
+        if ($('add_address').checked) {
+          $('address_country_id').selectedIndex = 1;
+          Effect.Appear('address');
+        } else {
+          Effect.Fade('address');
+        }
+      });
+    });
+  </script>
+<% end %>
+
+<% title "Signup for an Account" %>
+  <fieldset>
+    <legend>Register</legend>
+    <% form_for :user, :url => users_path, :html => { :id => 'signup_form' } do |f| -%>
+  
+    <div class="left prepend-1">
+      <p class="block required">
+        <label for="user_login">Choose a Username</label>
+        <span class="block info">This must be between 3 and 40 characters and will be public.</span>
+        <%= error_message_on "user", "login", "Login " %>
+        <%= f.text_field :login, { :class => 'text'} %>
+      </p>
+      
+      <p class="block required">
+        <label for="user_email">Email</label>
+        <span class="block info">You'll need this to login for the first time.</span>
+        <%= error_message_on "user", "email", "Email " %>
+        <%= f.text_field :email, { :class => 'text'} %>
+      </p>
+      
+      <p class="block required">
+        <label for="user_password">Choose a Password</label>
+        <span class="block info">At least 4 characters.</span>
+        <%= error_message_on "user", "password", "Password " %>
+        <%= f.password_field :password, { :class => 'text'} %>
+      </p>
+      
+      <p class="block required">
+        <label for="user_password_confirmation">Confirm your Password</label>
+        <%= error_message_on "user", "password_confirmation", "Confirm password " %>
+        <%= f.password_field :password_confirmation, { :class => 'text'} %>
+      </p>
+
+      <p class="left shift-1">
+        <input type="checkbox" name="add_address" id="add_address"<%= ' checked="true"' if !params[:user] || params[:add_address] %> />
+        <label for="add_address">Add an address now?</label>
+        <span class="small block">Adding an address will let us show distinace calculations</span>
+      </p>
+    </div>
+    
+    <div class="right append-1" id="address"<%= ' style="display:none;' if params[:user] && !params[:add_address] %>>
+      <%= render :partial => 'shared/address', :locals => { :address => @user.address } %>
+    </div>
+    
+    <p class="clear-left prepend-4">
+      <br/><br/><%= submit_tag 'Register', { :class => 'big_button' } %>
+    </p>
+    <% end -%>
+  </fieldset>

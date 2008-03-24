@@ -1,0 +1,21 @@
+<% title "Arcades Maps" -%>
+
+<% content_for(:header) do %>
+  <%= GMap.header %>
+  <%= javascript_include_tag("markerGroup") %>
+	<%= @map.to_html %>
+<% end %>
+
+<ul class="tabs right-tabs">
+  <%= nav_link "Map", "arcades", "map" %>
+  <%= nav_link "List", "arcades" %>
+</ul>
+
+<div class="right-tabbed">
+  <%= render :partial => 'list_map', :locals => { :arcades => @arcades } %>
+  <%= @map.div(:class => 'right prepend-1 span-13 last map_medium content-height') %>
+</div>
+
+<ul class="clear right-tabbed">
+  <%= link_to 'New arcade', new_arcade_path, :class => 'admin' %>
+</ul>

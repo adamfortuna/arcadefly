@@ -1,0 +1,10 @@
+<% map ||= false -%>
+<ul class="tabs">
+  <%= nav_link "Game Info", game_path(game) %>
+  <%= nav_link "Arcades", game_arcades_path(game) %>
+  <%= nav_link "Players", game_users_path(game) %>
+  <% if map %>
+    <%= nav_link "Map", "/games/#{game.id}/arcades/map", "index", true, "right" %>
+    <%= nav_link "List", game_arcades_path(game), "index", true, "right" %>
+  <% end %>
+</ul>

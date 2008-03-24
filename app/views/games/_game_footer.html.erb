@@ -1,0 +1,7 @@
+<ul class="nav">
+  <%= nav_link "Game Listing", games_path, "", false %>
+  <% if role?('game_editor') %>
+	  <%= nav_link "Edit", edit_game_path(game), "", false %>
+	  <%= nav_link "New", new_game_path, "", false %>
+  <% end %>
+</ul>

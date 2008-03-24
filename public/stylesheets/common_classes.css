@@ -1,0 +1,97 @@
+.even { background-color: #eee; }
+.clear { clear: both; }
+.clear-left { clear: left; }
+.clear-right { clear: right; }
+p.block { margin: 0 0 .3em 0; }
+p.block label { display:block; padding:0; margin:0; }
+input.button { padding:.3em; }
+input.big_button { padding:.6em; }
+.block { display: block; }
+.shift-1 { padding-top: 1em; }
+
+span.info { font-size: .8em; line-height: 1.875em; }
+
+/*  For horizontal lists */
+ul.nav li { display: inline; border-right: 1px solid #ccc; padding: 0 .5em; }
+ul.nav li:last-child { border: none; }
+ul.nav li a, ul.nav li a:visited { color: #369; text-decoration: none; }
+ul.nav li a:hover, ul.nav li a:active { text-decoration: underline; }
+
+/* Data lists */
+ul.data { margin: 1em 0; }
+ul.data li { padding: .4em; clear: right; }
+ul.data li:hover { background-color: #ddd; }
+
+/* Very cool tabs from  http://www.simplebits.com/bits/css_tabs.html */
+ul.tabs { height: 2.6em; padding: 0 20px; background: url(../images/tab_bottom.gif) repeat-x bottom; clear: both; }
+ul.tabs li { margin: 0; padding: 0; display: inline; list-style-type: none; }
+ul.tabs a:link, ul.tabs a:visited{ float: left; background: #f3f3f3;  font-weight: bold; padding: .5em 1.2em; margin-right: 8px; border: 1px solid #ccc; text-decoration: none; color: #666; }
+ul.tabs li.current a:link, ul.tabs li.current a:visited { border-bottom: 1px solid #fff; background: #fff; color: #000; }
+ul.tabs a:hover { background: #fff;	}
+
+ul.right-tabs { position:relative; top:-4em; }
+ul.right-tabs li { float: right; }
+.tabbed ul.right-tabs { top: -3.5em; }
+
+
+.right-tabbed { position:relative; top:-4em; }
+.tabbed .right-tabbed { top:0em; }
+
+/* Pad the div below a ul.tab so that it has a left padding to match the first tab. */
+div.tabbed { padding: 1em 0 0 20px; }
+
+/* Styled boxes, usually on the right with additional text */
+div.box { border: 1px solid #ccc; background-color:#f6f6f6; }
+
+/* Pagination */
+.pagination { padding: 3px; margin: 3px; }
+.pagination a { padding: 2px 5px 2px 5px; margin: 2px; border: 1px solid #6d84b4; text-decoration: none; color: #000099; }
+.pagination a:hover, .pagination a:active {border: 1px solid #3b5998; color: #fff; background-color: #6d84b4; }
+.pagination span.current { padding: 2px 5px 2px 5px; margin: 2px; border: 1px solid #000099; font-weight: bold; background-color: #3b5998; color: #FFF; }
+.pagination span.disabled { padding: 2px 5px 2px 5px; margin: 2px; border: 1px solid #ccc; color: #bbb; }
+
+/* Title describing a data list */
+h3.title { }
+
+/* Cool links and buttons */
+
+.key { background-image:url(blueprint/plugins/buttons/icons/key.png) no-repeat bottom; }
+.admin, .admin:link { color: red; }
+
+div.map_big { width: 100%; height: 350px; padding-bottom: 1em; }
+div.map_medium { margin-top: 1em; }
+
+ul.map_list { }
+ul.map_list li { clear: both; }
+
+.scrollable { overflow-x: hidden; overflow-y: scroll; }
+ul.scrollable li { clear: both; }
+ul.scrollable li:hover { background-color: #ddd; }
+ul.scrollable li label { display: block; font-weight:normal; }
+
+.content-height { height: 400px; }
+
+select.text, select.title   { width: 300px; margin:0.5em 0.5em 0.5em 0; }
+select.text, select.title   { border:1px solid #bbb; background:#f6f6f6; padding:5px; }
+select.text:focus,
+select.title:focus         { border:1px solid #999; background:#fff; }
+select.title               { font-size:1.5em; }
+
+/* Errors */
+div.formError { color: red; }
+div.fieldWithErrors input, div.fieldWithErrors select, div.fieldWithErrors textarea { border-color: red; }
+div.fieldWithErrors input.text:focus, div.fieldWithErrors input.title:focus         { border-color: red; background:#fff; }
+
+/* Forms */
+p.required label:before { content: "* "; }
+
+/* Lists within a box */
+.box ul li.current { background-color: #6d84b4; }
+.box ul li.current a { color: white; }
+.box ul li a { text-decoration: none; }
+
+/* Notices */
+.error, .notice, .warning    { padding: .8em; margin-bottom: 1em; }
+div.notice { background-color: #CFC; border: solid 1px #6C6; }	
+div.warning { background-color: #DD9A24; border: solid 1px #DD9A24; }
+div.error { background-color: #FCC; border: solid 1px #C66; }

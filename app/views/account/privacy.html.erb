@@ -1,0 +1,9 @@
+<% title "Settings for #{@user.login}" %>
+
+<%= render :partial => 'users/menu', :locals => { :user => @user } %>
+
+<div class="tabbed column span-15 clear">
+  Privacy settings here...
+</div>
+
+<%= render :partial => 'menu', :locals => { :user => @user } %>

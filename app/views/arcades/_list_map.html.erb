@@ -1,0 +1,17 @@
+  <ul class="left data span-10 scrollable content-height">
+  <% for arcade in arcades %>
+  	<li class="<%= cycle("even","odd")%> clear">
+		  <div class="right">
+		    <% if logged_in? &&  current_user.has_address? -%>
+		      <%= arcade.address.distance_to(current_user.address).round_to(2) %> miles away<br/>
+		    <% end %>
+		    <a href="#" onclick="arcades.showMarker(1);return false;">Show on Map</a>
+		  </div>
+      <div class="left">
+  		  <%= link_to(arcade.name, arcade_path(arcade)) %><br/>
+	    	<%= arcade.address.city %>, <%= arcade.address.region.name %><br/>
+        <strong>Games:</strong> <%= arcade.games.count %>
+		  <div>
+  	</li>
+  <% end %>
+  </ul>

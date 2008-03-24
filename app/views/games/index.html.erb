@@ -1,0 +1,15 @@
+<% title "Games" -%>
+<% letters = ('a'..'z').to_a << '#' -%>
+<div class="pagination">
+  <%= render(:partial => "shared/letter", :collection => letters) %>
+</div>
+
+<%= render :partial => 'list', :locals => { :games => @games } %>
+
+<%= will_paginate @games %>
+
+<br />
+
+<% if role?('game_editor') %>
+  <%= link_to 'New Game', new_game_path, :class => 'admin button key' %>
+<% end %>

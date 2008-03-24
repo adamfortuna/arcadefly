@@ -1,0 +1,25 @@
+<ul class="data right-tabbed">
+<% for arcade in arcades %>
+	<li class="<%= cycle("even","odd")%>">
+		<!-- Todo: Fix this so controls can go after the text -->
+		<ul class="controls right nav">
+			<li><%= link_to 'Edit', edit_arcade_path(arcade), :class => 'admin' %></li>
+	    <li><%= link_to 'Destroy', arcade_path(arcade), :class => 'admin', :confirm => 'Are you sure?', :method => :delete %></li>
+	  </ul>
+	  
+	  <% if logged_in? &&  current_user.has_address? -%>
+	    <span class="right">
+	      <%= arcade.address.distance_to(current_user.address).round_to(2) %> miles away
+	    </span>
+	  <% end %>
+
+		<%= link_to(arcade.name, arcade_path(arcade)) %>
+		
+		<span class="count"> in 
+		  <strong><%= arcade.address.city %>, <%= arcade.address.region.name %></strong>, <%= arcade.address.country.name %>
+		  has <%= pluralize(arcade.playables_count, "game") %>
+		</span>
+
+	</li>
+<% end %>
+</ul>

@@ -1,0 +1,30 @@
+<% title "Editing Arcade" -%>
+<%= error_messages_for :arcade %>
+
+<fieldset class="span-24">
+  <legend>Editing <%= @arcade.name %></legend>
+  
+  <% form_for(:arcade, :url => arcade_path(@arcade), :html => { :method => :put }) do |f| %>
+    
+    <div class="column span-12">
+      <p class="block">
+        <label>Name</label>
+        <%= f.text_field :name, { :class => 'text'} %>
+      </p>
+    
+      <%= render :partial => 'shared/address', :locals => { :context => 'arcade[address]',
+    																												:address => @arcade.address } %>
+      <p>
+        <%= submit_tag "Update" %>
+      </p>
+    </div>	
+    
+    <div class="column last span-12">
+      <%= render :partial => 'games', :locals => { :arcade => @arcade,
+    																							 :games => @games } %>
+    </div>
+    <% end %>
+</fielset>
+
+<%= link_to 'Show', arcade_path(@arcade) %> |
+<%= link_to 'Back', arcades_path %>

@@ -1,0 +1,41 @@
+<%- javascript 'dynamic_regions'
+    address ||= Address.new
+    @address = address %>
+    
+<%- address.title = "My Home" if address.title.nil? %>
+  <% fields_for :address, address do |a| %>
+    <p class="block required">
+      <label for="address_title">Title for this Address</label>
+      <%= error_message_on "address", "title", "Title " %>
+      <%= a.text_field :title, { :class => "text" } %>
+    </p>
+    <p class="block">	
+      <label for="address_street">Street</label>
+      <%= error_message_on "address", "street", "Street " %>
+      <%= a.text_field :street, { :class => "text" } %>
+    </p>
+    <p class="block required">
+      <label for="address_city">City</label>
+      <%= error_message_on "address", "city", "City " %>
+      <%= a.text_field :city, { :class => "text" } %>
+    </p>
+    <p class="block required">
+      <label for="address_country_id">Country</label>
+      <%= error_message_on "address", "country_id", "Country " %>
+      <%= a.select :country_id, Country.find(:all).collect {|r| [ r.name, r.id ] }, 
+                                { :include_blank => true },
+                                { :class => "text", :id => "address_country_id" } %>
+    </p>
+    <p class="block required" id="address_region_id_field">
+      <label for="address_region_id">State/Region</label>
+      <%= error_message_on "address", "region_id", "State/Region " %>
+      <%= a.select :region_id, Region.find(:all).collect {|r| [ r.name, r.id ] }, 
+                               { :include_blank => true },
+                               { :class => "text", :id => "address_region_id" } %>
+    </p>
+    <p class="block required">
+      <label for="address_postal_code">Zip/Postal Code</label>
+      <%= error_message_on "address", "postal_code", "Zip/Postal Code " %>
+      <%= a.text_field :postal_code, { :class => "text" } %>
+    </p>
+  <% end %>

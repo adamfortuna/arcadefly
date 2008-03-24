@@ -1,0 +1,17 @@
+<h2>New Game</h2>
+<% @game = Game.new %>
+<div class="tabbed">
+  <%= error_messages_for :game %>
+
+  <% form_for(:game, :url => smart_url(@game)) do |f| %>
+    <fieldset>
+      <legend>New</legend>
+      <%= render :partial => 'form', :locals => { :game => @game, :f => f } %>
+      <p>
+        <%= submit_tag "Create" %>
+      </p>
+  </fieldset>
+  <% end %>
+
+  <%= render :partial => 'footer', :locals => { :game => @game } %>
+</div>

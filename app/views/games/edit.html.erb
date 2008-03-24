@@ -1,0 +1,19 @@
+<%- title "Edit: #{@game.name}" %>
+
+<%= render :partial => 'menu', :locals => { :game => @game } %>
+
+<div class="tabbed">
+  <%= error_messages_for :game %>
+
+  <% form_for(:game, :url => smart_url(@game), :html => { :method => :put }) do |f| %>
+    <fieldset>
+      <legend>Edit</legend>
+      <%= render :partial => 'form', :locals => { :game => @game, :f => f } %>
+      <p>
+        <%= submit_tag "Update" %>
+      </p>
+  </fieldset>
+  <% end %>
+
+  <%= render :partial => 'footer', :locals => { :game => @game } %>
+</div>

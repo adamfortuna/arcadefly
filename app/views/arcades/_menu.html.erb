@@ -1,0 +1,6 @@
+<ul class="tabs">
+  <%= nav_link "Arcade", arcade_path(arcade) %>
+  <%= nav_link "Games", arcade_games_path(arcade) %>
+  <%= nav_link "Players", arcade_users_path(arcade) %>
+  <%= nav_link "Map", "/arcades/#{arcade.id}/map" %>
+</ul>

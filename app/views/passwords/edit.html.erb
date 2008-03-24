@@ -1,0 +1,21 @@
+<% title "Reset Password" %>
+<%= error_messages_for :user %>
+
+<div class="column span-12">
+  <% form_for :user, :url => url_for(:action => "update", :id => params[:id]), :html => { :method => :put } do |f| %>
+    <fieldset>
+      <legend>Reset Password</legend>
+      <p class="block">
+        <label for="user_password">Password</label>
+        <%= password_field_tag :password, "", :size => 50,  :class => 'text'%>
+      </p>
+      <p class="block">
+        <label for="user_password_confirmation">Confirm Password</label>
+        <%= password_field_tag :password_confirmation, "", :size => 50,  :class => 'text' %>
+      </p>
+      <p class="block">
+        <%= submit_tag "Reset Your Password" %>
+      </p>
+    </fieldset>
+  <% end %>
+</div>

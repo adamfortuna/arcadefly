@@ -1,0 +1,49 @@
+Note: It would be good to refactor some partials where I passed in an array as a local 
+and looped over it. This could be done the "Rails Way" by passing it in as a collection.
+
+=========================================================================================
+
+Errors:
+Edit Arcade - Does not update address, but does update arcade and games
+
+Game Arcade List - The Map tab doesn't select the Arcades tab as the current path.
+
+Delete Arcade - This gives an error "undefined method `destroy' for 3.4:Float"
+
+Change Password - Form doesn't work.
+
+=========================================================================================
+
+Improvements:
+Game arcades - If there are no games at this location, maybe hide the list/map tab so 
+those links aren't there. An empty map shouldn't be shown.
+
+Move arcade_info_window out of the arcades_controller. This should be a partial. Instead 
+of generating the markers in the controller, the addresses should be passed to the view
+and then the markers created there.
+
+Update the header content with a better helper function. Right now you can only output
+header content once. After that it'll be overwritten.
+
+Add form for rating Arcades to arcades page.
+
+Add form for rating Games to the games page.
+
+Move field lengths into constants within their models
+
+Register Form - Make address not required on 
+
+Edit Address - Add Edit Address Form
+
+=========================================================================================
+
+Unfinished:
+Arcade rating is static.
+
+Arcade ranking is static.
+
+Game ranking is static
+
+=========================================================================================
+
+Layout/Design:

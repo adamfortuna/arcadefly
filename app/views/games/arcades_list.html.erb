@@ -1,0 +1,11 @@
+<% title @game.name -%>
+
+<%= render :partial => 'games/menu', :locals => { :game => @game, :map => true } %>
+<div class="tabbed">
+
+  <%= render :partial => 'arcades/list', :locals => { :arcades => @game.arcades } %>
+
+  <% if role?("arcade_editor") -%>
+    <p class="tabbed"><%= link_to 'New arcade', new_arcade_path, :class => 'admin' %></p>
+  <% end -%>
+</div>

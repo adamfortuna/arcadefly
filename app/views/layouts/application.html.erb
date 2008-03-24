@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+  "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<title>ArcadeFly - <%= yield(:title) || "Tracking the arcade buzz!" %></title>
+    
+    <%= stylesheet_link_tag 'blueprint/screen.css' %>
+    <%= stylesheet_link_tag 'application' %>
+    <%= stylesheet_link_tag 'common_classes' %>
+
+    <%= javascript_include_tag :defaults %>
+
+    <%= yield(:head) %>
+	  <%= yield(:header) %>
+	</head>
+	<body>
+		
+		<div id="header_row"> 
+  		<div id="header" class="container">
+  		  <div id="title" class="column span-12">
+  		    <h1>ArcadeFly.com</h1>
+  		    <span>Mapping the arcade buzz!</span>
+  		  </div>
+  		  
+  		  <div class="column span-12 last">
+    		  <ul id="status" class="nav right">
+            <%= nav_link "Help", "help", "", false %>
+    		    <%- if logged_in? -%>
+              <%= nav_link "Account", "users/#{current_user.login}/settings", false %>
+              <%= nav_link "Logout", "logout", "", false %>
+            <%- else -%>
+              <%= nav_link "Register", "signup", "", false %>
+              <%= nav_link "Login", "login", "", false %>
+            <%- end -%>
+          </ul>
+          
+          <% form_for(:search, :url => '/search') do |f| %>
+            <fieldset id="quick_search" class="right">
+              <legend>Search</legend>
+              <label for="search_name">Search</label>
+              <%= f.text_field :name %>
+              <%= f.submit "Search" %>
+            </fieldset>
+          <% end %>
+          
+          <% if logged_in? -%>
+            <span id="login_status">
+              <em>Currently logged in as <%= link_to h(current_user.login.capitalize), user_path(current_user) %>.</em>
+            </span>
+          <% end -%>
+          
+        </div>
+  		</div>
+  	</div>
+		
+		<div id="navigation_row">
+  		<div class="container">
+  		  <ul id="navigation" class="nav">
+  		    <li><%= link_to "Home",    :controller => "home" %></li>
+  		    <li><%= link_to "Arcades", :controller => "arcades" %></li>
+  		    <li><%= link_to "Games",   :controller => "games" %></li>
+  		    <li><%= link_to "Players", :controller => "players" %></li>
+  		    <li><%= link_to "Popular", :controller => "popular" %></li>
+  		  </ul>
+  		</div>
+		</div>
+		
+		<div id="content_row">
+  		<div id="content" class="container">
+  		    <% flash.each do |key, msg| %>
+  		      <%= content_tag :div, msg, :class => key %>
+  		    <% end %>
+  		    
+  				<h2><%= yield(:title) %></h2>
+          <%= yield %>
+      </div>
+    </div>
+    
+    <div id="footer_row">
+  		<div id="footer" class="container">
+  		    <ul class="nav">
+  		      <%= nav_link "About ArcadeFly", "about" %>
+  		      <%= nav_link "Contact Us", "contact" %>
+  		      <%= nav_link "Terms of Use", "terms" %>
+  		      <%= nav_link "Privacy Policy", "privacy" %>
+  		      <li><a href="http://blog.arcadefly.com">Blog</a></li>
+  		    </ul>
+  		    <%- if not logged_in? -%>
+  		    <p><%= link_to_unless_current "Signup", :id => nil, :action => 'index', :controller => 'signup' %> and submit some arcades! What are you waiting for?</p>
+  		    <%- end %>
+  		    <p>Copyright &copy; 2007 ArcadeFly. Design and development by <a href="http://www.adamfortuna.com">Adam Fortuna</a>.</p>
+      </div>
+    </div>
+    
+    
+    
+    <% if ENV["RAILS_ENV"] == "adevelopment" %>
+      <div id="debug">
+        <a href="#" onclick="Element.toggle('params_debug_info');return false">
+        params</a> |
+        <a href="#" onclick="Element.toggle('session_debug_info');return false">
+        session</a> |
+        <a href="#" onclick="Element.toggle('env_debug_info');return false">
+        env</a> |
+        <a href="#" onclick="Element.toggle('request_debug_info');return false">
+        request</a>
+        <fieldset id="params_debug_info" class="debug_info" style="display: none">
+          <legend>params</legend>
+          <%= debug(params) %>
+        </fieldset>
+        <fieldset id="session_debug_info" class="debug_info" style="display: none">
+          <legend>session</legend>
+          <%= debug(session) %>
+        </fieldset>
+        <fieldset id="env_debug_info" class="debug_info" style="display: none">
+          <legend>env</legend>
+          <%= debug(request.env) %>
+        </fieldset>
+        <fieldset id="request_debug_info" class="debug_info" style="display: none">
+          <legend>request</legend>
+          <%= debug(request) %>
+        </fieldset>
+      </div>
+    <% end %>
+	</body>
+</html>

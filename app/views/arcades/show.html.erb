@@ -1,0 +1,28 @@
+<% title 'Arcades - ' + @arcade.name %>
+
+<%= render :partial => 'menu', :locals => { :arcade => @arcade } %>
+
+<div class="tabbed">  
+  <p>
+    <b>Address:</b><br/>
+    <%= @arcade.address.street %><br />
+    <%= @arcade.address.city %>, <%= @arcade.address.region.name %> <%= @arcade.address.postal_code %><br />
+    <%= @arcade.address.country.name %><br/>
+    <%= link_to "View Map", "/arcades/#{@arcade.id}/map" %>
+  </p>
+  <p>
+    <b>Games at this location:</b> <%= @arcade.games.count %> ( <%= link_to "view them", arcade_games_path(@arcade) %> )
+  </p>
+  <p>
+    <strong><%= @arcade.users.count %> players</strong> on this site frequent <%= @arcade.name %>.
+  </p>
+  
+  <% if logged_in? && current_user.has_address? -%>
+  <p>
+    <strong>Distance Away: </strong>
+    <%= @arcade.address.distance_to(current_user.address).round_to(2) %> miles
+  </p>
+  <% end %>
+
+  <%= render :partial => 'footer', :locals => { :arcade => @arcade } %>
+</div>  

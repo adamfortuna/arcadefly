@@ -1,0 +1,9 @@
+<% title "Profile for #{@user.login}" %>
+<%= render :partial => 'menu', :locals => { :user => @user} %>
+
+<div class="tabbed">
+  <p>Joined on: <%= @user.created_at.to_s(:long) %></p>
+  <% if @user.has_address? %>
+  <p>Location: <%= @user.address.short_line %>
+  <% end %>
+</div>

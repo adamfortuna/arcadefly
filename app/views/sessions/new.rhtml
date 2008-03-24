@@ -1,0 +1,25 @@
+<% title "Login" %>
+
+<% content_for(:header) do %>
+  <script>Event.observe(window, 'load', function() { Form.focusFirstElement('login_form'); });</script>
+<% end %>
+
+<div class="column span-12">
+  <%= render :partial => 'login_form' %>
+</div>
+
+<div class="column span-10 prepend-2 last">
+  
+  <%= render :partial => 'passwords/forgot_password_form' %>
+  
+  <div class="box">
+    <h3>Don't have an account?</h3>
+    <p>
+      <%= link_to "Signup", :id => nil, :action => 'index', :controller => 'signup' %> now and create one!
+      By logging in, we can map the distances between you and any location -- not to mention many other
+      <%= link_to "features", :id => nil, :action => 'features', :controller => 'help' %>.
+    </p>
+  </div>
+  
+</div>
+

@@ -1,0 +1,20 @@
+<% title 'Arcades - Map - ' + @arcade.name %>
+
+<% content_for(:header) do %>
+  <%= GMap.header %>
+	<%= @map.to_html %>
+<% end %>
+
+<%= render :partial => 'menu', :locals => { :arcade => @arcade } %>
+
+<div class="tabbed">
+  
+  <%= @map.div(:class => 'map_big') %>
+  
+  <div>
+    <b>View this Map by itself on...</b>
+    <ul>
+      <li><a href="http://maps.google.com/?ie=UTF8&hl=en&q=<%= @arcade.address.single_line %>" target="_blank">Google Maps</a></li>
+    </ul>
+  <%= render :partial => 'footer', :locals => { :arcade => @arcade } %>
+</div>  

@@ -1,0 +1,8 @@
+<ul class="tabs">
+  <%= nav_link "Profile", user_path(user) %>
+  <%= nav_link "Favorite Games", user_games_path(user) %>
+  <%= nav_link "Favorite Arcades", user_arcades_path(user) %>
+  <% if current_user.id = user.id -%>
+  <%= nav_link "Settings", "/users/#{user.login}/settings" %>
+  <% end %>
+</ul>

@@ -1,0 +1,9 @@
+<% title 'Arcades - ' + @arcade.name %>
+
+<%= render :partial => 'arcades/menu', :locals => { :arcade => @arcade } %>
+
+<div class="tabbed">
+  <%= render :partial => 'games/list', :locals => { :games => @arcade.games } %>  
+
+  <%= render :partial => 'arcades/footer', :locals => { :arcade => @arcade } %>
+</div>  

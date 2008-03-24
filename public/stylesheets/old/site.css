@@ -1,0 +1,331 @@
+body {
+  font-family: sans-serif;
+  background: gray;
+  margin: 0;
+  text-align: center;
+}
+
+a, a:visited  {
+  color: #1F215C;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+#whole_page {
+  width: 47em;
+  margin: auto;
+  padding: 0;
+  text-align: left;
+  border-width:  0 1px 1px 1px;
+  border-color:  black;
+  border-style:  solid;
+}
+
+#header {
+  color: white;
+  background: #1F215C; /* No "ruby" defined in HTML color names! */
+  font-size: 24pt;
+  padding: 0.25em;
+  margin-bottom: 0;
+}
+
+#nav {
+  color: black;
+  font-size: 12pt;
+  font-weight: bold;
+  background: #ccc;
+  padding: 0.5em;
+}
+
+#nav a, #nav a:visited  {
+  color: #1F215C;
+  text-decoration: none;
+}
+
+#nav a:hover {
+  border-bottom: 2px dotted #1F215C;
+}
+
+#content {
+  height: 100%;
+  background:  white;
+  padding: 1em;
+}
+
+#content h1 {
+  font-size: 18pt;
+}
+
+/* Hack to get IE to display fieldset/legend correctly */ 
+html fieldset { 
+  position: relative; 
+} 
+
+html legend { 
+  position:absolute; 
+  top: -1em; 
+  left: .5em; 
+} 
+
+html fieldset { 
+  position: relative; 
+  margin-top:1em; 
+  padding-top:2em; 
+  padding-bottom: 2em; 
+} 
+
+/* Form Styles */ 
+fieldset { 
+  background: #ddd; 
+} 
+
+legend { 
+  color: white; 
+  background: #1F215C; 
+  padding: .4em 1em; 
+} 
+
+label { 
+  width: 10em; 
+  float: left; 
+  text-align: right; 
+  margin-right: 0.2em; 
+  display: block; 
+} 
+
+.form_row { 
+  white-space: nowrap; 
+  padding-bottom: .5em; 
+} 
+
+.submit { 
+  margin-left: 15em; 
+}
+
+/* Debug Style */
+
+#debug {
+  margin-top: 1em;
+  margin-left: auto;
+}
+#debug a, #debug a.visited {
+  text-decoration: none;
+  color: #1F215C;
+}
+fieldset.debug_info {
+  text-align: left; 
+  margin: 1em; 
+  background: #eee;
+}
+
+/* Error Reporting Styles */ 
+.fieldWithErrors { 
+  margin: 2px; 
+  padding: 2px; 
+  background-color: red; 
+  display: table; 
+} 
+
+#errorExplanation { 
+  border: 2px solid red; 
+  padding: 7px; 
+  padding-bottom: 12px; 
+  margin-bottom: 20px; 
+  background-color: #f0f0f0; 
+} 
+
+#errorExplanation h2 { 
+  text-align: left; 
+  font-weight: bold; 
+  padding: 5px 5px 5px 15px; 
+  font-size: 12pt; 
+  margin: -7px; 
+  background-color: #c00; 
+  color: #fff; 
+} 
+
+#errorExplanation p { 
+  color: #333; 
+  margin-bottom: 0; 
+  padding: 5px; 
+} 
+
+#errorExplanation ul li { 
+  font-size: 11pt; 
+  list-style: square; 
+} 
+
+/* Flash Notice Style */ 
+#notice { 
+  border: 1px solid green; 
+  padding: 1em; 
+  margin: 1em; 
+  margin-bottom: 2em; 
+  background-color: lightgray; 
+  font: bold smaller sans-serif; 
+}
+
+
+/* Community Styles */
+
+a, a#visited {
+  color: #1F215C;
+  text-decoration: none;
+}
+
+.letter, .letter_current {
+  width: 1em;
+  text-align: center;
+  border: 1px solid gray; 
+  background: #fff; 
+  padding: 5px 2px 1px 2px; 
+  float: left; 
+  margin: 2px
+}
+
+.letter:hover {
+  background: #fe4;
+}
+
+.letter_current {
+  background: #fe4;
+  font-weight: bold;
+  border: 1px solid black;
+}
+
+table.users {
+  background: #fff;
+  margin-left: 2em;
+}
+
+table.users td.bottom {
+  border-top: 1px solid #999;
+  padding-top: 10px;
+}
+
+table.users th {
+  color: white;
+  background: #507BA8;
+  font-weight: normal;
+}
+
+table.users th a {
+  color: white;
+  text-decoration: underline;
+}
+
+table.users tr.even {
+  background: #ddd;
+}
+
+table.users tr.odd {
+  background: #eee;
+}
+
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+
+#controls {
+	padding: .5em;
+	background-color:#eee;
+}
+
+ul.data { margin:0; padding:0; list-style: none; }
+ul.data li { clear:both; padding: .4em; }
+
+ul.controls {
+	list-style: none;
+	display: inline;
+	float:right;
+}
+ul.controls li {
+	padding: 0 .5em;
+	border-right: 1px solid #369;
+	display: inline;
+}
+ul.controls li:last-child {
+	border-right: none;
+}
+span.count {
+	font-style:italic;
+	font-size:80%;
+}
+
+
+li.even { background-color: #eee; }
+li.odd { }
+
+.star-rating,
+.star-rating a:hover,
+.star-rating a:active,
+.star-rating a:focus,
+.star-rating .current-rating{
+	background: url('/images/star_rating.gif') left -1000px repeat-x;
+}
+.star-rating{
+	position: relative;
+	width: 150px;
+	height: 30px;
+	overflow: hidden;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	background-position: left top;
+}
+.star-rating li{
+	display: inline;
+}
+.star-rating a,
+.star-rating .current-rating{
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-indent: -1000em;
+	height: 30px;
+	line-height: 30px;
+	outline: none;
+	overflow: hidden;
+	border: none;
+}
+.star-rating a:hover,
+.star-rating a:active,
+.star-rating a:focus{
+	background-position: left center;
+}
+.star-rating a.one-stars{
+	width: 20%;
+	z-index: 6;
+}
+.star-rating a.two-stars{
+	width: 40%;
+	z-index: 5;
+}
+.star-rating a.three-stars{
+	width: 60%;
+	z-index: 4;
+}
+.star-rating a.four-stars{
+	width: 80%;
+	z-index: 3;
+}
+.star-rating a.five-stars{
+	width: 100%;
+	z-index: 2;
+}
+.star-rating .current-rating{
+	z-index: 1;
+	background-position: left bottom;
+}
+.star-ratings-block {
+	font-size: .9em;
+	font-weight: bold;
+	text-align: center;
+	width: 100%;
+}
