@@ -10,6 +10,14 @@ class UsersController < ApplicationController
   
   def show
     @user =  User.find_by_login(params[:id], :include => 'address')
+
+    if @user.has_address?
+      @map = GMap.new("user_map")
+	    @map.control_init(:map_type => false, :small_zoom => true)
+	    @map.center_zoom_init([@user.address.public_lat, @user.address.public_lng], 11)
+	    @map.overlay_init(GMarker.new([@user.address.public_lat,@user.address.public_lng], :title => @user.login))
+    end
+	                    
   end
     
   # render new.rhtml
@@ -26,7 +34,7 @@ class UsersController < ApplicationController
     @user.save!
     #Uncomment to have the user logged in after creating an account - Not Recommended
     #self.current_user = @user
-    flash[:notice] = "Thanks for signing up! Please check your email to activate your account before logging in."
+    flash[:notice] = "Thanks for signing up, <b>#{@user.login}</b>! Please check your email to activate your account before logging in."
     redirect_to login_path    
   rescue ActiveRecord::RecordInvalid
     flash[:error] = "There was a problem creating your account. Please correct any errors below before continuing."

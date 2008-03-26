@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   # Pick a unique cookie name to distinguish our session data from others'
   session :session_key => 'arcadefly_session_id'
-  geocode_ip_address
+  #geocode_ip_address
   
   protected
     class << self

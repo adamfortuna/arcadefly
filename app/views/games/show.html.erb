@@ -7,16 +7,6 @@
 		<b><%=h @game.name %></b> is playable at <b><%=h pluralize(@game.playables_count, "arcade") %></b>.
 	</p>
 	<p>
-	  <b>Rating:</b> <%= @game.rating || "No ratings yet" %> <em>(#<%= @game.rank %>)</em>
-	</p>
-	<% if logged_in? %>
-  <p>
-    <%= #render :partial => 'shared/rate', :locals => { :asset => @game }
-    %>
-    <%= debug(@game) %>
-  </p>
-  <% end %>
-	<p>
 	  <a href="http://www.gamefaqs.com/coinop/arcade/data/<%= @game.gamefaqs_id %>.html">GameFaqs</a>
 	</p>
 	

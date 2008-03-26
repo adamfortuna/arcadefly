@@ -16,8 +16,8 @@ class SessionsController < ApplicationController
     self.current_user.forget_me if logged_in?
     cookies.delete :auth_token
     reset_session
-    flash[:notice] = "You have been logged out."
-  redirect_to login_path    
+    flash[:notice] = "You have been logged out. Come back again soon!"
+  redirect_to login_path
   end
   
   protected
@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
     if logged_in?
       successful_login
     else
-      failed_login("Your username or password was entered incorrectly, or you may not have activated your account.")
+      failed_login("Either your username and password was entered incorrectly, or you may not have activated your account.")
     end
   end
   
@@ -43,7 +43,7 @@ class SessionsController < ApplicationController
       self.current_user.remember_me
       cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
     end
-      flash[:notice] = "Logged in successfully"
+      flash[:notice] = "You're now logged in! Enjoy the mappy, arcadey goodness!"
       return_to = session[:return_to]
       if return_to.nil?
         redirect_to user_path(current_user)

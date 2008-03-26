@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(:version => 101) do
     t.integer  "country_id",                    :default => 1, :null => false
     t.float    "lat"
     t.float    "lng"
+    t.float    "public_lat"
+    t.float    "public_lng"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

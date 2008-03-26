@@ -1,5 +1,5 @@
 class ArcadesController < ResourceController::Base
-  belongs_to :game
+  belongs_to :user, :games
   
   def collection
     # GET /arcades/1/games
@@ -79,6 +79,5 @@ class ArcadesController < ResourceController::Base
   private
   def arcade_info_window(arcade)
     "<strong>#{arcade.name}</strong> <p>#{arcade.address.street}<br />#{arcade.address.city}, #{arcade.address.region.name} #{arcade.address.postal_code}</p><p><strong>Games:</strong> #{arcade.games.count}</p>"
-  end
-      
+  end 
 end

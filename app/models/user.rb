@@ -171,8 +171,7 @@ class User < ActiveRecord::Base
   def to_param
     login
   end
-
-
+  
   def validate
     if address && !address.valid?
       address.errors.each { |attr, msg| errors.add(attr, msg) }
@@ -214,6 +213,8 @@ class User < ActiveRecord::Base
   private
     def activate!
       @activated = true
-      self.update_attributes(:activated_at => Time.now.utc, :activation_code => nil)
+      self.activated_at = Time.now.utc
+      self.activation_code = nil
+      self.save!
     end
 end

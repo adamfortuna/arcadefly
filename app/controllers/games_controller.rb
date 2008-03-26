@@ -18,7 +18,7 @@ class GamesController < ResourceController::Base
   
   # Override the default object
   def object
-    @object = Game.find(params[:id], :include => :ratings)
+    @object = Game.find(params[:id])
   end
   
   # This controls what views will be used depending on where the request is from.

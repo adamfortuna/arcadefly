@@ -8,8 +8,10 @@ input.button { padding:.3em; }
 input.big_button { padding:.6em; }
 .block { display: block; }
 .shift-1 { padding-top: 1em; }
+.center { text-align: center; }
 
 span.info { font-size: .8em; line-height: 1.875em; }
+div.info { font-size: .9em; line-height: 1.8em; }
 
 /*  For horizontal lists */
 ul.nav li { display: inline; border-right: 1px solid #ccc; padding: 0 .5em; }
@@ -38,7 +40,8 @@ ul.right-tabs li { float: right; }
 .tabbed .right-tabbed { top:0em; }
 
 /* Pad the div below a ul.tab so that it has a left padding to match the first tab. */
-div.tabbed { padding: 1em 0 0 20px; }
+div.tabbed { padding: 1em 0 1em 20px; border-bottom: 1px solid #ccc; }
+
 
 /* Styled boxes, usually on the right with additional text */
 div.box { border: 1px solid #ccc; background-color:#f6f6f6; }
@@ -60,6 +63,8 @@ h3.title { }
 
 div.map_big { width: 100%; height: 350px; padding-bottom: 1em; }
 div.map_medium { margin-top: 1em; }
+div.map_small { width: 300px; height:250px; padding: 1em; }
+div.map_small_width { width: 300px; }
 
 ul.map_list { }
 ul.map_list li { clear: both; }

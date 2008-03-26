@@ -1,9 +1,25 @@
-<% title "Profile for #{@user.login}" %>
+<% title "#{@user.login}" %>
+
 <%= render :partial => 'menu', :locals => { :user => @user} %>
 
+<% content_for(:header) do %>
+  <%= GMap.header %>
+	<%= @map.to_html %>
+<% end if @user.has_address? %>
+
+
 <div class="tabbed">
-  <p>Joined on: <%= @user.created_at.to_s(:long) %></p>
   <% if @user.has_address? %>
-  <p>Location: <%= @user.address.short_line %>
+    <%= @map.div(:class => 'right prepend-1 span-13 last map_small') %>
+    <div class="clear right map_small_width center">
+      <strong><%= @user.login %></strong> lives in <em><%= @user.address.city %>, <%= @user.address.region.name %></em>.
+    </div>
   <% end %>
+
+  <ul>
+    <li><%= @user.login %> joined on <%= @user.created_at.to_s(:long) %> (#<%= @user.id %>)</li>
+    <li><%= @user.login %> has <%= link_to "#{@user.arcades.length} favorite #{'arcade'.pluralize unless @user.arcades.length == 1}", user_arcades_path(@user) %>.</li>
+  </ul>
+  
+  <br class="clear" />
 </div>

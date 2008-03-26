@@ -4,8 +4,7 @@ class Address < ActiveRecord::Base
   belongs_to            :region
   belongs_to            :country
 
-  acts_as_mappable      :auto_geocode => { :field=>:single_line, 
-                                           :error_message=>'We couldn\'t translate the address you entered into a location. Can you change it?' }
+  acts_as_mappable
 
   validates_presence_of :title,
                         :city,
@@ -17,6 +16,8 @@ class Address < ActiveRecord::Base
                         :with => /^[0-9]{5}$/,
                         :allow_nil => true,
                         :message => "must be a valid 5 digit code"
+
+  before_save           :auto_geocode
 
   # Returns the region's country if the region is specified
   def country_with_region_check
@@ -33,8 +34,10 @@ class Address < ActiveRecord::Base
       line << ', ' if !line.blank?
       line << region.name
     end
+    line << ', ' if !line.blank?
     line << country.name if country
     line = 'No Address' if line.blank?
+    line
   end
 
   # Gets the value of the address on a single line.
@@ -74,5 +77,18 @@ class Address < ActiveRecord::Base
   #  USA.known_region_required? => true
   def known_region_required?
     country.regions.count != 0
+  end
+  
+  def auto_geocode
+    # Public
+    loc = GeoKit::Geocoders::GoogleGeocoder.geocode(single_line)
+    self.lat = loc.lat
+    self.lng  = loc.lng
+
+    # Public
+    loc = GeoKit::Geocoders::GoogleGeocoder.geocode(short_line)
+    self.public_lat = loc.lat
+    self.public_lng  = loc.lng
+    breakpoint
   end
 end
