@@ -6,8 +6,10 @@
         if ($('add_address').checked) {
           $('address_country_id').selectedIndex = 1;
           Effect.Appear('address');
+          $('registercontainer').style.width='100%';
         } else {
           Effect.Fade('address');
+          $('registercontainer').style.width='400px';
         }
       });
     });
@@ -15,7 +17,8 @@
 <% end %>
 
 <% title "Signup for an Account" %>
-  <fieldset>
+
+  <fieldset id="registercontainer" style="margin:0 auto;">
     <legend>Register</legend>
     <% form_for :user, :url => users_path, :html => { :id => 'signup_form' } do |f| -%>
   
