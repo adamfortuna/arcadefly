@@ -1,4 +1,4 @@
-class CreateFrequentship < ActiveRecord::Migration
+class CreateFrequentships < ActiveRecord::Migration
   def self.up
     create_table :frequentships do |t|
       t.belongs_to :arcade, :user, :null => false

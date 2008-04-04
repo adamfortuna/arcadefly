@@ -11,6 +11,7 @@
     </p>
     <p class="block">	
       <label for="address_street">Street</label>
+	  <span class="block info">For pinpoint accurate mapping, please include a street. This will be private.</span>
       <%= error_message_on "address", "street", "Street " %>
       <%= a.text_field :street, { :class => "text" } %>
     </p>

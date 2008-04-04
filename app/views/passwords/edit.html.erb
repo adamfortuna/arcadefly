@@ -5,11 +5,12 @@
   <% form_for :user, :url => url_for(:action => "update", :id => params[:id]), :html => { :method => :put } do |f| %>
     <fieldset>
       <legend>Reset Password</legend>
-      <p class="block">
+      <p class="block required">
         <label for="user_password">Password</label>
+				<span class="block info">At least 4 characters.</span>
         <%= password_field_tag :password, "", :size => 50,  :class => 'text'%>
       </p>
-      <p class="block">
+      <p class="block required">
         <label for="user_password_confirmation">Confirm Password</label>
         <%= password_field_tag :password_confirmation, "", :size => 50,  :class => 'text' %>
       </p>
@@ -18,4 +19,8 @@
       </p>
     </fieldset>
   <% end %>
+</div>
+
+<div class="column span-10 last box right shift-1">
+  <span>After resetting your password you will immediately be logged in and sent an email reminding you that your password changed.</span>
 </div>

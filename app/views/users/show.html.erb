@@ -10,15 +10,15 @@
 
 <div class="tabbed">
   <% if @user.has_address? %>
-    <%= @map.div(:class => 'right prepend-1 span-13 last map_small') %>
+    <%= @map.div(:class => 'right prepend-1 span-13 last map_small map') %>
     <div class="clear right map_small_width center">
       <strong><%= @user.login %></strong> lives in <em><%= @user.address.city %>, <%= @user.address.region.name %></em>.
     </div>
   <% end %>
 
   <ul>
-    <li><%= @user.login %> joined on <%= @user.created_at.to_s(:long) %> (#<%= @user.id %>)</li>
-    <li><%= @user.login %> has <%= link_to "#{@user.arcades.length} favorite #{'arcade'.pluralize unless @user.arcades.length == 1}", user_arcades_path(@user) %>.</li>
+    <li><strong><%= @user.login %></strong> joined on <%= @user.created_at.to_s(:long) %> (#<%= @user.id %>)</li>
+    <li><%= @user.login %> has <%= link_to "#{@user.arcades.length} favorite #{'arcade'.pluralize unless @user.arcades.length == 1}", user_arcades_path(@user) %> and <%= link_to "#{@user.games.length} favorite #{'gae'.pluralize unless @user.games.length == 1}", user_games_path(@user) %>.</li>
   </ul>
   
   <br class="clear" />

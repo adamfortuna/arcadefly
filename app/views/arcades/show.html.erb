@@ -2,7 +2,17 @@
 
 <%= render :partial => 'menu', :locals => { :arcade => @arcade } %>
 
-<div class="tabbed">  
+<% content_for(:header) do %>
+  <%= GMap.header %>
+	<%= @map.to_html %>
+<% end %>
+
+<div class="tabbed">
+  <%= @map.div(:class => 'right prepend-1 span-13 last map_small map') %>
+  <div class="clear right map_small_width center">
+  	<strong><%= @arcade.name %></strong> is in <em><%= @arcade.address.city %>, <%= @arcade.address.region.name %></em>.
+  </div>
+  	
   <p>
     <b>Address:</b><br/>
     <%= @arcade.address.street %><br />

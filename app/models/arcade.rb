@@ -26,6 +26,14 @@ class Arcade < ActiveRecord::Base
 						 :conditions => ['name like ?', "#{search}%"],
 						 :order => 'name'
 	end
+  
+  def to_param
+    "#{id}-#{url_safe(name)}"
+  end
+  
+  def url_safe(param)
+    param
+  end
 	
 	private
 		# after_save callback to handle group_ids

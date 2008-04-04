@@ -1,18 +1,33 @@
 <% content_for(:header) do %>
   <script>
+	function set_address_status(status) {
+	  $$('#address input').each( function(e) {
+	  	$(e).disabled = status;
+	  });
+	  $$('#address select').each( function(e) {
+	  	$(e).disabled = status;
+	  });
+	}
+
     Event.observe(window, 'load', function() {
       Form.focusFirstElement('signup_form');
       $('add_address').observe('click', function() {
         if ($('add_address').checked) {
           $('address_country_id').selectedIndex = 1;
-          Effect.Appear('address');
-          $('registercontainer').style.width='100%';
+          set_address_status(false);
+		  $('address').removeClassName('disabled');
         } else {
-          Effect.Fade('address');
-          $('registercontainer').style.width='400px';
+		  set_address_status(true);
+		  $('address').addClassName('disabled');
         }
       });
-    });
+	<% if !@add_address %>
+		set_address_status(true);
+    	$('address').addClassName('disabled');
+	<% end %>
+	});
+	
+	
   </script>
 <% end %>
 
@@ -25,11 +40,11 @@
     <div class="left prepend-1">
       <p class="block required">
         <label for="user_login">Choose a Username</label>
-        <span class="block info">This must be between 3 and 40 characters and will be public.</span>
+        <span class="block info">This must be between 3 and 40 characters and will be public. You can change this later.</span>
         <%= error_message_on "user", "login", "Login " %>
         <%= f.text_field :login, { :class => 'text'} %>
       </p>
-      
+	  
       <p class="block required">
         <label for="user_email">Email</label>
         <span class="block info">You'll need this to login for the first time.</span>
@@ -51,13 +66,13 @@
       </p>
 
       <p class="left shift-1">
-        <input type="checkbox" name="add_address" id="add_address"<%= ' checked="true"' if !params[:user] || params[:add_address] %> />
+        <input type="checkbox" name="add_address" id="add_address"<%= ' checked="true"' if @add_address %> />
         <label for="add_address">Add an address now?</label>
         <span class="small block">Adding an address will let us show distinace calculations</span>
       </p>
     </div>
     
-    <div class="right append-1" id="address"<%= ' style="display:none;' if params[:user] && !params[:add_address] %>>
+    <div class="right append-1" id="address">
       <%= render :partial => 'shared/address', :locals => { :address => @user.address } %>
     </div>
     

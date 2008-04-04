@@ -4,8 +4,10 @@ class User < ActiveRecord::Base
   attr_accessor :password
 
   has_many :frequentships
+  has_many :favoriteships
   has_many :permissions
   has_many :arcades, :through => :frequentships
+  has_many :games, :through => :favoriteships
   has_many :roles, :through => :permissions
   has_one :address, :as => :addressable 
     

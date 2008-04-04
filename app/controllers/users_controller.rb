@@ -22,10 +22,12 @@ class UsersController < ApplicationController
     
   # render new.rhtml
   def new
-    @user = User.new
+    @user = User.new(params[:user])
+    @add_address = params[:add_address] || true
   end
  
   def create
+    @add_address = params[:add_address]
     cookies.delete :auth_token
     @user = User.new(params[:user])
     if params[:add_address]
@@ -34,7 +36,7 @@ class UsersController < ApplicationController
     @user.save!
     #Uncomment to have the user logged in after creating an account - Not Recommended
     #self.current_user = @user
-    flash[:notice] = "Thanks for signing up, <b>#{@user.login}</b>! Please check your email to activate your account before logging in."
+    flash[:notice] = "Thanks for signing up, <b>#{@user.login}</b>! Please check your email and click on the link we sent you to activate your account and logging in."
     redirect_to login_path    
   rescue ActiveRecord::RecordInvalid
     flash[:error] = "There was a problem creating your account. Please correct any errors below before continuing."

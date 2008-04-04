@@ -12,6 +12,14 @@ class ArcadesController < ResourceController::Base
     end
   end
   
+  def object
+    @arcade = Arcade.find(params[:id],
+    @map = GMap.new("arcade_map")
+    @map.control_init(:map_type => false, :small_zoom => true)
+    @map.center_zoom_init([@arcade.address.lat, @user.address.lng], 11)
+    @map.overlay_init(GMarker.new([@user.address.lat,@user.address.lng], :title => @arcade.name))
+  end
+  
   # index can be called from the following:
   # GET /arcades
   # GET /games/:game_id/arcades
