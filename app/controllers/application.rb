@@ -10,6 +10,8 @@ class ApplicationController < ActionController::Base
   #geocode_ip_address
 
   
+  
+  
   protected
     class << self
       attr_reader :parents

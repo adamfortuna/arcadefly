@@ -8,16 +8,16 @@
 <% end if @user.has_address? %>
 
 
-<div class="tabbed">
+<div class="tabbed vcard">
   <% if @user.has_address? %>
     <%= @map.div(:class => 'right prepend-1 span-13 last map_small map') %>
-    <div class="clear right map_small_width center">
-      <strong><%= @user.login %></strong> lives in <em><%= @user.address.city %>, <%= @user.address.region.name %></em>.
+    <div class="clear right map_small_width center adr">
+      <strong><%= @user.login %></strong> lives in <em><span class="locality"><%= @user.address.city %></city>, <span class="region"><%= @user.address.region.name %></span></em>.
     </div>
   <% end %>
 
   <ul>
-    <li><strong><%= @user.login %></strong> joined on <%= @user.created_at.to_s(:long) %> (#<%= @user.id %>)</li>
+    <li><strong class="fn nickname"><%= @user.login %></strong> joined on <%= @user.created_at.to_s(:long) %> (#<%= @user.id %>)</li>
     <li><%= @user.login %> has <%= link_to "#{@user.arcades.length} favorite #{'arcade'.pluralize unless @user.arcades.length == 1}", user_arcades_path(@user) %> and <%= link_to "#{@user.games.length} favorite #{'gae'.pluralize unless @user.games.length == 1}", user_games_path(@user) %>.</li>
   </ul>
   

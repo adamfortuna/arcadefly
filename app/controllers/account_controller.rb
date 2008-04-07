@@ -1,5 +1,25 @@
 class AccountController < ApplicationController
-  before_filter :login_required
+  before_filter :login_required, :except => :activate
+  
+  before_filter :not_logged_in_required, :only => :activate
+ 
+  # After a user registers, they will receive an email with a link to this action to activate their account.
+  # Upon clicking on it, their acocunt will be activated. 
+  def activate
+    # Uncomment and change paths to have user logged in after activation - not recommended
+    self.current_user = User.find_and_activate!(params[:id])
+    flash[:notice] = "Your account has been activated and you've been logged in!"
+    redirect_to welcome_url
+  rescue User::ArgumentError
+    flash[:error] = 'Activation code invalid or not found. Please try creating a new account.'
+    redirect_to '/signup'
+  rescue User::ActivationCodeNotFound
+    flash[:error] = 'That doesn\'t seem to be a valid activation code. Please try creating a new account.'
+    redirect_to '/signup'
+  rescue User::AlreadyActivated
+    flash[:warning] = 'Your account has already been activated. You can log in below.'
+    redirect_to '/login'
+  end
   
   # Form for a logged in user to control their account information. This will include teh defaults - username, name, contact info, that kind of thing.
   # This will not include address though, since a user can have multiple addresses and that would be a bit much for this form.

@@ -7,6 +7,29 @@
 	  $$('#address select').each( function(e) {
 	  	$(e).disabled = status;
 	  });
+		
+		// Remove the error messages on the address field if it's disabled
+		$$('#address .formError').each( function(e) {
+			if (status) {
+				$(e).addClassName('hidden');
+			}	else {
+				$(e).removeClassName('hidden');
+			}
+		});
+		
+		if (status) {
+			$$('#address .fieldWithErrors').each( function(e) {
+				$(e).removeClassName('fieldWithErrors');
+				$(e).addClassName('fieldWithErrorsDisabled');
+			});
+		} else {
+			$$('#address .fieldWithErrorsDisabled').each( function(e) {
+				$(e).removeClassName('fieldWithErrorsDisabled');
+				$(e).addClassName('fieldWithErrors');
+			});			
+		}
+		// Remove the red outline around address fields if it's disabled
+		
 	}
 
     Event.observe(window, 'load', function() {
@@ -15,15 +38,15 @@
         if ($('add_address').checked) {
           $('address_country_id').selectedIndex = 1;
           set_address_status(false);
-		  $('address').removeClassName('disabled');
+				  $('address').removeClassName('disabled');
         } else {
-		  set_address_status(true);
-		  $('address').addClassName('disabled');
+				  set_address_status(true);
+		  		$('address').addClassName('disabled');
         }
       });
 	<% if !@add_address %>
 		set_address_status(true);
-    	$('address').addClassName('disabled');
+    $('address').addClassName('disabled');
 	<% end %>
 	});
 	

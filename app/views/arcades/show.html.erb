@@ -4,6 +4,7 @@
 
 <% content_for(:header) do %>
   <%= GMap.header %>
+	
 	<%= @map.to_html %>
 <% end %>
 
@@ -13,11 +14,11 @@
   	<strong><%= @arcade.name %></strong> is in <em><%= @arcade.address.city %>, <%= @arcade.address.region.name %></em>.
   </div>
   	
-  <p>
+  <p class="adr">
     <b>Address:</b><br/>
-    <%= @arcade.address.street %><br />
-    <%= @arcade.address.city %>, <%= @arcade.address.region.name %> <%= @arcade.address.postal_code %><br />
-    <%= @arcade.address.country.name %><br/>
+    <span class="street-address"><%= @arcade.address.street %></span><br/>
+    <span class="locality"><%= @arcade.address.city %></span>, <span class="region"><%= @arcade.address.region.name %></span> <span class="postal-code"><%= @arcade.address.postal_code %></span><br/>
+    <span class="country-name"><%= @arcade.address.country.name %></span><br/>
     <%= link_to "View Map", "/arcades/#{@arcade.id}/map" %>
   </p>
   <p>

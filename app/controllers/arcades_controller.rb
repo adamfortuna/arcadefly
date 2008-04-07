@@ -13,11 +13,12 @@ class ArcadesController < ResourceController::Base
   end
   
   def object
-    @arcade = Arcade.find(params[:id],
+    @arcade = Arcade.find(params[:id], :include => :address)
     @map = GMap.new("arcade_map")
     @map.control_init(:map_type => false, :small_zoom => true)
-    @map.center_zoom_init([@arcade.address.lat, @user.address.lng], 11)
-    @map.overlay_init(GMarker.new([@user.address.lat,@user.address.lng], :title => @arcade.name))
+    @map.center_zoom_init([@arcade.address.lat, @arcade.address.lng], 11)
+    @map.overlay_init(GMarker.new([@arcade.address.lat, @arcade.address.lng], :title => @arcade.name))
+    @arcade
   end
   
   # index can be called from the following:

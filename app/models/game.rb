@@ -20,4 +20,13 @@ class Game < ActiveRecord::Base
              :conditions => ['name like ?', "#{search}%"],
              :order => 'name'
   end
+  
+  def to_param
+    "#{id}-#{url_safe(name)}"
+  end
+  
+  
+  def url_safe(param)
+    param.downcase.gsub(/[^[:alnum:]]/,'-').gsub(/-{2,}/,'-')
+  end
 end

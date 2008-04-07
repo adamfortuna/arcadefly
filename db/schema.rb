@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 101) do
+ActiveRecord::Schema.define(:version => 16) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "addressable_id"
@@ -49,6 +49,13 @@ ActiveRecord::Schema.define(:version => 101) do
   add_index "countries", ["alpha_2_code"], :name => "index_countries_on_alpha_2_code", :unique => true
   add_index "countries", ["alpha_3_code"], :name => "index_countries_on_alpha_3_code", :unique => true
 
+  create_table "favoriteships", :force => true do |t|
+    t.integer  "game_id",    :null => false
+    t.integer  "user_id",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "frequentships", :force => true do |t|
     t.integer  "arcade_id",  :null => false
     t.integer  "user_id",    :null => false
@@ -59,7 +66,8 @@ ActiveRecord::Schema.define(:version => 101) do
   create_table "games", :force => true do |t|
     t.string   "name"
     t.integer  "gamefaqs_id"
-    t.integer  "playables_count", :default => 0
+    t.integer  "playables_count",    :default => 0
+    t.integer  "favoriteship_count", :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

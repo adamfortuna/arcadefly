@@ -27,7 +27,7 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
 
   # User account controls
-  map.activate '/activate/:id', :controller => 'accounts',   :action => 'show'
+  map.activate '/activate/:id', :controller => 'account',   :action => 'activate'
   map.forgot_password '/forgot_password',    :controller => 'passwords', :action => 'new'
   map.reset_password  '/reset_password/:id', :controller => 'passwords', :action => 'edit'
   map.change_password '/change_password', :controller => 'accounts', :action => 'edit'
@@ -39,6 +39,11 @@ ActionController::Routing::Routes.draw do |map|
   map.terms '/terms',       :controller => 'home',    :action => 'terms'
   map.privacy '/privacy',   :controller => 'home',    :action => 'privacy'
   map.welcome '/welcome',   :controller => 'account', :action => 'welcome'
+
+  # Popular 
+  map.popular '/popular',                   :controller => 'popular',    :action => 'index'
+  map.popular_arcades '/popular/arcades',   :controller => 'popular',    :action => 'arcades'
+  map.popular_games '/popular/games',       :controller => 'popular',    :action => 'games'
 
   # Better named arcade routes
   map.arcades_map '/arcades/map',  :controller => 'arcades',  :action => 'list_map'
@@ -63,4 +68,5 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action.:format'
   map.connect ':controller/:action/:id.:format'
+  map.connect ':controller', :action => 'index'
 end 

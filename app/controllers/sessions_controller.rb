@@ -43,13 +43,14 @@ class SessionsController < ApplicationController
       self.current_user.remember_me
       cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
     end
-      flash[:notice] = "You're now logged in! Enjoy the mappy, arcadey goodness!"
-      return_to = session[:return_to]
-      if return_to.nil?
-        redirect_to user_path(current_user)
-      else
-        redirect_to return_to
-      end
+    
+    flash[:notice] = "You're now logged in! Enjoy the mappy, arcadey goodness!"
+    return_to = session[:return_to]
+    if return_to.nil?
+      redirect_to user_path(current_user)
+    else
+      redirect_to return_to
+    end
   end
  
 end

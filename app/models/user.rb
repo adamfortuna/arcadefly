@@ -12,15 +12,26 @@ class User < ActiveRecord::Base
   has_one :address, :as => :addressable 
     
   validates_presence_of     :login, :email
+  validates_length_of       :login,    :within => 3..40
+  validates_uniqueness_of   :login, :case_sensitive => false, :message => 'is already taken. Please choose another login.'
+  validates_format_of       :login, :with => /^\w+$/i, :message => ' must contain only letters, numbers and underscores.'
+  validates_format_of       :login, :with => /[^_]$/, :message => 'cannot end with an underscore.'
+  validates_format_of       :login, :with => /^[^_]/, :message => 'cannot start with an underscore.'
+  validates_format_of       :login, :with => /^[^0-9]/, :message => 'cannot start with a number.'
+  
+  validates_uniqueness_of   :email, :case_sensitive => false, :message => 'is already taken. Do you already have an account here?'
+  validates_format_of       :email, :with => /(^([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i
+  validates_length_of       :email, :within => 6..100
+
+  # More thorough validation rules
+  #@@email_validation_regex = /^[a-z0-9][\._\-a-z0-9]+([_\-a-z0-9]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\d{1,3}\.){3}\d{1,3})(:\d{4})?$/i
+  #validates_format_of       :email,    :with => @@email_validation_regex, :message => 'is not a valid email address.'
+
+
   validates_presence_of     :password,                   :if => :password_required?
   validates_presence_of     :password_confirmation,      :if => :password_required?
   validates_length_of       :password, :within => 4..40, :if => :password_required?
   validates_confirmation_of :password,                   :if => :password_required?
-  validates_length_of       :login,    :within => 3..40
-  validates_length_of       :email,    :within => 6..100
-  validates_uniqueness_of   :login, :case_sensitive => false, :message => 'is already taken. Please choose another login.'
-  validates_uniqueness_of   :email, :case_sensitive => false, :message => 'is already taken. Do you already have an account here?'
-  validates_format_of       :email, :with => /(^([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i
   
   validates_associated :address
   
@@ -124,6 +135,14 @@ class User < ActiveRecord::Base
     @forgotten_password
   end
   
+  def requested_signup_notification
+    @requested_signup = true
+  end
+    
+  def recently_requested_signup_notification?
+    @requested_signup
+  end
+
   def delete_reset_code
     self.password_reset_code = nil
     save(false)
@@ -171,7 +190,7 @@ class User < ActiveRecord::Base
   end
   
   def to_param
-    login
+    login.downcase
   end
   
   def validate
@@ -189,7 +208,7 @@ class User < ActiveRecord::Base
     end
       
     def password_required?
-      crypted_password.blank? || !password.blank?
+      crypted_password.blank? || !password.nil? || !password_confirmation.nil?
     end
     
     def make_activation_code

@@ -31,8 +31,9 @@ class Arcade < ActiveRecord::Base
     "#{id}-#{url_safe(name)}"
   end
   
+  
   def url_safe(param)
-    param
+    param.downcase.gsub(/[^[:alnum:]]/,'-').gsub(/-{2,}/,'-')
   end
 	
 	private

@@ -10,7 +10,7 @@ class InsertAdministrator < ActiveRecord::Migration
     us = Country.find_by_name('United States of America')
     florida = Region.find_by_name('Florida')
     
-    user = User.new :login => 'admin',
+    user = User.new :login => 'adam',
                     :email => 'adam@fortuna.name',
                     :password => 'admin',
                     :password_confirmation => 'admin'
