@@ -1,9 +1,63 @@
-<h2>Edit Your Account</h2>
-<p><%= link_to 'Show Profile', user_path(@user) %> | <%= link_to 'Change Password', change_password_path %></p>
-<%= error_messages_for :user %>
- 
-<% form_for :user, :url => user_url(@user), :html => { :method => :put } do |f| %>
-  <p>Email:<br /><%= f.text_field :email, :size => 60 %></p>
+<% title "Settings for #{@user.login}" %>
+
+<%= render :partial => 'users/menu', :locals => { :user => @user } %>
+
+
+<div class="tabbed clear">
+  <div class="span-12 column" id="address">
+  <% form_for :user, :url => user_url(@user), :html => { :method => :put } do |f| %>
+    <fieldset>
+      <legend>Change Address</legend>
+      <%= render :partial => 'shared/address', :locals => { :address => @user.address } %>
+      <p>
+        <%= submit_tag "Change Address", :name => 'change_address' %>
+      </p>
+    </fieldset>
+  <% end %> 
+  </div>
+
+  <div class="span-10 column last right">
+  <% form_for :user, :url => user_url(@user), :html => { :method => :put } do |f| %>
+    <fieldset>
+      <legend>Change Password</legend>
+      <p class="block required">
+        <label for="user_old_password">Current Password</label>
+        <%= error_message_on "user", "current_password", "Current Password " %>
+        <input class="text" id="user_old_password" name="old_password" size="30" type="password" />
+      </p>
+      <p class="block required">
+        <label for="user_password">New Password</label>
+        <span class="block info">At least 4 characters.</span>
+        <%= error_message_on "user", "password", "Password " %>
+        <%= f.password_field :password, { :class => 'text', :value => '' } %>
+      </p>
+      <p class="block required">
+        <label for="user_password_confirmation">Confirm New Password</label>
+        <%= error_message_on "user", "password_confirmation", "Confirm password " %>
+        <%= f.password_field :password_confirmation, { :class => 'text', :value => '' } %>
+      </p>
+      <p>
+        <%= submit_tag "Change Password", :name => 'change_password' %>
+      </p>
+    </fieldset>
+  <% end %> 
   
-<%= submit_tag 'Save' %>
-<% end %>
+  <% form_for :user, :url => user_url(@user), :html => { :method => :put } do |f| %>
+    <fieldset>
+      <legend>Change Username</legend>
+      <p class="block required">
+        <label for="user_login">New username</label>
+        <span class="block info">This must be between 3 and 40 characters.</span>
+        <%= error_message_on "user", "login", "Username " %>
+        <%= f.text_field :login, { :class => 'text', :value => ''} %>
+      </p>
+      <p>
+        <%= submit_tag "Change Username", :name => 'change_username' %>
+      </p>
+    </fieldset>
+  <% end %> 
+  </div>
+  
+  
+  
+</div>

@@ -64,6 +64,7 @@ module AuthenticatedSystem
           access_denied
         end
       end
+      true
     end
   
      def check_administrator_role

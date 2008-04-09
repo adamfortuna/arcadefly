@@ -44,15 +44,35 @@ class UsersController < ApplicationController
   end
   
   def edit
+    raise if current_user.login != params[:id] && !check_administrator_role
     @user = current_user
   end
   
   def update
-    @user = User.find(current_user)
-    if @user.update_attributes(params[:user])
-      flash[:notice] = "User updated"
-      redirect_to :action => 'show', :id => current_user
+    raise if current_user.login != params[:id] && !check_administrator_role
+        
+    @user = User.find_by_login(params[:id])
+    if params[:change_address]
+      @user.address = Address.new(params[:address])
+      saved = @user.address.save
+    elsif params[:change_password]
+      if !@user.authenticated?(params[:old_password])
+        @user.errors.add('current_password', 'is not correct. Please re-enter it.')
+      else
+        @user.password = params[:user][:password]
+        @user.password_confirmation = params[:user][:password_confirmation]
+        saved = @user.save
+      end
+    elsif params[:change_username]
+      @user.login = params[:user][:login]
+      saved = @user.save
+    end
+    
+    if saved
+      flash[:notice] = (@user == current_user) ? "Your user account has been updated!" : "User updated."
+      redirect_to :action => 'show', :id => @user
     else
+      flash[:error] = 'There was a problem updating your account. Check out the error details below.'
       render :action => 'edit'
     end
   end

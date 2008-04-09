@@ -31,7 +31,7 @@ ActionController::Routing::Routes.draw do |map|
   map.forgot_password '/forgot_password',    :controller => 'passwords', :action => 'new'
   map.reset_password  '/reset_password/:id', :controller => 'passwords', :action => 'edit'
   map.change_password '/change_password', :controller => 'accounts', :action => 'edit'
-  map.settings '/users/:id/settings/:action', :controller => 'account'
+  map.settings '/users/:id/settings', :controller => 'users', :action => 'edit'
 
   # Shortened routes
   map.about '/about',       :controller => 'home',    :action => 'about'

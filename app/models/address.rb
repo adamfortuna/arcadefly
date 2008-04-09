@@ -89,6 +89,5 @@ class Address < ActiveRecord::Base
     loc = GeoKit::Geocoders::GoogleGeocoder.geocode(short_line)
     self.public_lat = loc.lat
     self.public_lng  = loc.lng
-    breakpoint
   end
 end
