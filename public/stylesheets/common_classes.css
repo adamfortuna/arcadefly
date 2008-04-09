@@ -1,4 +1,4 @@
-.even { background-color: #eee; }
+.even { background-color: #efefef; }
 .clear { clear: both; }
 .clear-left { clear: left; }
 .clear-right { clear: right; }
@@ -20,9 +20,30 @@ ul.nav li a, ul.nav li a:visited { color: #369; text-decoration: none; }
 ul.nav li a:hover, ul.nav li a:active { text-decoration: underline; }
 
 /* Data lists */
-ul.data { margin: 1em 0; }
-ul.data li { padding: .4em; clear: right; }
+ul.data a { color: #2D7BB2; 
+      text-decoration: none; 
+      font-weight: bold; }
+ul.data a:hover { 
+	      color: #333; 
+	    }
+ul.data { border-top: 1px solid #EEE; }
+ul.data li { position: relative; display: block; border-bottom: 1px solid #EEE; _zoom: 1;}
+ul.data li a {display: block;  padding: 0.4em 4.5em 0.4em 0.5em; position: relative; z-index: 2; }
+ul.data li .count { display: block; position: absolute; top: 0; right: 0; margin: 0 0.3em; text-align: right; color: #999; font-weight: bold; font-size: 0.875em; line-height: 2em; }
 ul.data li:hover { background-color: #ddd; }
+ul.data li span.index { 
+      display: block; 
+	      position: absolute; 
+	      top: 0; 
+	      left: 0; 
+	      height: 100%; 
+	      background: #B8E4F5; 
+	      text-indent: -9999px; 
+	      overflow: hidden; 
+	      line-height: 2em;
+    }
+
+ul.left-shift { position:absolute; left:-150px; }
 
 /* Very cool tabs from  http://www.simplebits.com/bits/css_tabs.html */
 ul.tabs { height: 2.6em; padding: 0 20px; background: url(../images/tab_bottom.gif) repeat-x bottom; clear: both; }
@@ -60,6 +81,8 @@ h3.title { }
 
 .key { background-image:url(blueprint/plugins/buttons/icons/key.png) no-repeat bottom; }
 .admin, .admin:link { color: red; }
+ul.admin { display: inline; }
+ul.admin li { display: inline; float:left; }
 
 .map { border: 1px solid #ccc; margin-bottom:1em; }
 

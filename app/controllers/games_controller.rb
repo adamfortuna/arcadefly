@@ -14,6 +14,8 @@ class GamesController < ResourceController::Base
     else
       @collection ||= Game.search(params[:search], params[:page])
     end
+    @playables_count = (@collection.collect do |r| r.playables_count end).max.to_i * 1.1
+    @collection
   end
   
   # Override the default object
