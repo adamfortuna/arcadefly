@@ -1,4 +1,4 @@
-<h2><%=h @game.name %></h2>
+<% title "Games - " + @game.name -%>
 
 <%= render :partial => 'menu', :locals => { :game => @game } %>
 
@@ -6,6 +6,17 @@
 	<p>
 		<b><%=h @game.name %></b> is playable at <b><%=h pluralize(@game.playables_count, "arcade") %></b>.
 	</p>
+	
+	<p>
+		<b><%=h @game.name %></b> is on the favorites list of <b><%=h pluralize(@game.favoriteships_count, "players") %></b>.
+	</p>
+	
+	<% if logged_in? && !(current_user.games.collect do |a| a.id end).include?(@game.id) %>
+  <p>
+    <%= link_to "Add this game to your favorites", game_favorite_path(@game), { :method => "post" } %>
+  </p>
+  <% end %>
+  
 	<p>
 	  <a href="http://www.gamefaqs.com/coinop/arcade/data/<%= @game.gamefaqs_id %>.html">GameFaqs</a>
 	</p>

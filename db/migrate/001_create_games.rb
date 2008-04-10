@@ -4,7 +4,7 @@ class CreateGames < ActiveRecord::Migration
       t.string :name
       t.integer :gamefaqs_id, :length => 6
       t.integer :playables_count, :default => 0
-      t.integer :favoriteship_count, :default => 0
+      t.integer :favoriteships_count, :default => 0
       t.timestamps
     end
     

@@ -1,7 +1,7 @@
 # This controller handles the login/logout function of the site.  
 class SessionsController < ApplicationController
   layout 'application'
-  before_filter :login_required, :only => :destroy
+  #before_filter :login_required, :only => :destroy
   before_filter :not_logged_in_required, :only => [:new, :create]
   
   # render new.rhtml
@@ -44,7 +44,7 @@ class SessionsController < ApplicationController
       cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
     end
     
-    flash[:notice] = "You're now logged in! Enjoy the mappy, arcadey goodness!"
+    flash[:notice] = "You're now logged in! Enjoy the map-py, arcadey goodness!"
     return_to = session[:return_to]
     if return_to.nil?
       redirect_to user_path(current_user)

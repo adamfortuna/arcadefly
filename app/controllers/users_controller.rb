@@ -1,12 +1,37 @@
-class UsersController < ApplicationController
-  layout 'application'
+class UsersController < ResourceController::Base
+  belongs_to :game, :arcade
+  
   before_filter :not_logged_in_required, :only => [:new, :create] 
   before_filter :login_required, :only => [:edit, :update]
-  before_filter :check_administrator_role, :only => [:index, :destroy, :enable]
+  before_filter :check_administrator_role, :only => [:destroy, :enable]
   
-  def index
-    @users = User.find(:all)
+  def collection
+    # GET /arcades/1-disney/users
+    if parent_type == :arcade
+      @arcade = Arcade.find(params[:arcade_id], :include => 'users')
+      @collection = @arcade.users
+    elsif parent_type == :game
+      @game = Game.find(params[:game_id], :include => 'users')
+      @collection = @game.users
+    # GET /users
+    else
+      @collection = User.find(:all)
+    end
+    @collection
   end
+
+  index.wants.html { 
+    # GET /arcades/:arcade_id/users
+    if parent_type == :arcade
+      render :template => "arcades/users" 
+    # GET /games/:game_id/users
+    elsif parent_type == :game
+      render :template => "games/users"
+    # GET /users
+    else
+      render :template => "users/index"
+    end
+  }
   
   def show
     @user =  User.find_by_login(params[:id], :include => 'address')
@@ -36,7 +61,7 @@ class UsersController < ApplicationController
     @user.save!
     #Uncomment to have the user logged in after creating an account - Not Recommended
     #self.current_user = @user
-    flash[:notice] = "Thanks for signing up, <b>#{@user.login}</b>! Please check your email and click on the link we sent you to activate your account and logging in."
+    flash[:notice] = "Thanks for signing up, <b>#{@user.login}</b>! Please check your email and click on the link we sent you to activate your account and log in."
     redirect_to login_path    
   rescue ActiveRecord::RecordInvalid
     flash[:error] = "There was a problem creating your account. Please correct any errors below before continuing."

@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   validates_format_of       :login, :with => /^[^_]/, :message => 'cannot start with an underscore.'
   validates_format_of       :login, :with => /^[^0-9]/, :message => 'cannot start with a number.'
   
-  validates_uniqueness_of   :email, :case_sensitive => false, :message => 'is already taken. Do you already have an account here?'
+  validates_uniqueness_of   :email, :case_sensitive => false, :message => 'is taken. Do you already have an account here?'
   validates_format_of       :email, :with => /(^([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i
   validates_length_of       :email, :within => 6..100
 

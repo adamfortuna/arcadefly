@@ -1,6 +1,11 @@
 class Game < ActiveRecord::Base
   has_many :playables
   has_many :arcades, :through => :playables
+
+  has_many :favoriteships
+  has_many :users, :through => :favoriteships
+  
+	
   belongs_to :arcade, :counter_cache => true
   
   validates_presence_of :name

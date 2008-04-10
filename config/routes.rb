@@ -50,6 +50,10 @@ ActionController::Routing::Routes.draw do |map|
   map.arcade_map '/arcades/:id/map', :controller => 'arcades', :action => 'map'
   map.game_arcades_map '/games/:game_id/arcades/map', :controller => 'arcades', :action => 'list_map'
   
+  # Arcade/Game/User interaction routes
+  map.arcade_favorite '/arcades/:id/favorite', :controller => 'arcades', :action => 'favorite'
+  map.game_favorite '/games/:id/favorite',     :controller => 'games',   :action => 'favorite'
+    
   # Resources
   map.resources :arcades, :has_many => [ :games, :users ],
                           :has_one => :address

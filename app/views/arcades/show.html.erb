@@ -34,6 +34,12 @@
     <%= @arcade.address.distance_to(current_user.address).round_to(2) %> miles
   </p>
   <% end %>
+  
+  <% if logged_in? && !(current_user.arcades.collect do |a| a.id end).include?(@arcade.id) %>
+  <p>
+    <%= link_to "Add this arcade to your favorites", arcade_favorite_path(@arcade), { :method => "post" } %>
+  </p>
+  <% end %>
 
   <%= render :partial => 'footer', :locals => { :arcade => @arcade } %>
 </div>  

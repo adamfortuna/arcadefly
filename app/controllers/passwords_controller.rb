@@ -16,7 +16,9 @@ class PasswordsController < ApplicationController
     elsif @user = User.find_by_email(params[:email])
       @user.requested_signup_notification
       @user.save
-      flash[:error] = "It looks like you never activated your accounted. We sent an email to #{@user.email} with instructions on how to activate and change the password for your account."
+      flash[:error] = "It looks like you never activated your accounted. We sent an email to <b>#{@user.email}</b> with instructions on how to activate and change the password for your account."
+    else
+      flash[:error] = "We couldn't find a user with the email address <b>#{params[:email]}</b>. Do you want to try <a href=\"#{signup_url}?user[email]=#{params[:email]}\">signing up</a>?"
     end  
     redirect_to login_path
   end

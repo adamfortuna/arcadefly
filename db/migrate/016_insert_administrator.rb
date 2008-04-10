@@ -12,8 +12,8 @@ class InsertAdministrator < ActiveRecord::Migration
     
     user = User.new :login => 'adam',
                     :email => 'adam@fortuna.name',
-                    :password => 'admin',
-                    :password_confirmation => 'admin'
+                    :password => 'password',
+                    :password_confirmation => 'password'
     user.address = Address.new :title => 'Home',
                                :street => '1130 Summer Lakes Drive',
                                :city => 'Orlando',

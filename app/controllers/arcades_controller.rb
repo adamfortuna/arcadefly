@@ -1,5 +1,7 @@
 class ArcadesController < ResourceController::Base
-  belongs_to :user, :games
+  belongs_to :user, :game
+  
+  before_filter :login_required, :only => :favorite
   
   def collection
     # GET /arcades/1/games
@@ -10,6 +12,8 @@ class ArcadesController < ResourceController::Base
     else
       @collection ||=  Arcade.search(params[:search], params[:page])
     end
+    @playables_count = (@collection.collect do |r| r.playables_count end).max.to_i * 1.1
+    @collection
   end
   
   def object
@@ -85,6 +89,17 @@ class ArcadesController < ResourceController::Base
 	                    :info_window => arcade_info_window(@arcade)))
   end
 
+  def favorite
+    @arcade = Arcade.find(params[:id])
+    if !(current_user.arcades.collect do |a| a.id end).include?(@arcade.id)
+      current_user.arcades.push(@arcade)
+      flash[:notice] = "You added <b>#{@arcade.name}</b> to your list of favorite arcades!"
+    else
+      flash[:error] = "You have already added <b>#{@arcade.name}</b> to your list of favorite arcades."
+    end
+    redirect_to arcade_path(@arcade)
+  end
+  
   private
   def arcade_info_window(arcade)
     "<strong>#{arcade.name}</strong> <p>#{arcade.address.street}<br />#{arcade.address.city}, #{arcade.address.region.name} #{arcade.address.postal_code}</p><p><strong>Games:</strong> #{arcade.games.count}</p>"

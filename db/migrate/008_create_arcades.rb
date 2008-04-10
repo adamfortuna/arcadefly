@@ -3,7 +3,7 @@ class CreateArcades < ActiveRecord::Migration
     create_table :arcades do |t|
       t.string :name, :phone
       t.integer :playables_count, :default => 0
-      t.integer :frequentship_count, :default => 0
+      t.integer :frequentships_count, :default => 0
       t.timestamps
     end  
   end

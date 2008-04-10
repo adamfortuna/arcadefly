@@ -1,8 +1,8 @@
-<% title @game.name -%>
+<% title 'Game - ' + @game.name -%>
 
 <%= render :partial => 'games/menu', :locals => { :game => @game, :map => true } %>
-<div class="tabbed">
 
+<div class="tabbed">
   <%= render :partial => 'arcades/list', :locals => { :arcades => @game.arcades } %>
 
   <% if role?("arcade_editor") -%>
