@@ -3,7 +3,10 @@
 <%= render :partial => 'arcades/menu', :locals => { :arcade => @arcade } %>
 
 <div class="tabbed">
-  <%= render :partial => 'users/list', :locals => { :users => @arcade.users } %>  
 
+  <ul class="data">
+    <%= render :partial => 'users/user', :collection => @arcade.users, :locals => { :parent => :arcade } %>
+  </ul>
+  
   <%= render :partial => 'arcades/footer', :locals => { :arcade => @arcade } %>
 </div>

@@ -3,8 +3,10 @@
 <%= render :partial => 'games/menu', :locals => { :game => @game, :map => true } %>
 
 <div class="tabbed">
-  <%= render :partial => 'arcades/list', :locals => { :arcades => @game.arcades } %>
-
+  <ul class="data">
+    <%= render :partial => 'arcades/arcade', :collection => @game.arcades %>
+  </ul>
+  
   <% if role?("arcade_editor") -%>
     <p class="tabbed"><%= link_to 'New arcade', new_arcade_path, :class => 'admin' %></p>
   <% end -%>

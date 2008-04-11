@@ -3,7 +3,9 @@
 <%= render :partial => 'arcades/menu', :locals => { :arcade => @arcade } %>
 
 <div class="tabbed">
-  <%= render :partial => 'games/list', :locals => { :games => @arcade.games } %>  
-
+  <ul class="data">
+    <%= render :partial => 'games/game', :collection => @arcade.games %>  
+  </ul>
+    
   <%= render :partial => 'arcades/footer', :locals => { :arcade => @arcade } %>
 </div>  

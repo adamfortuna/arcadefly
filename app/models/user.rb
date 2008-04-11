@@ -4,11 +4,14 @@ class User < ActiveRecord::Base
   attr_accessor :password
 
   has_many :frequentships
-  has_many :favoriteships
-  has_many :permissions
   has_many :arcades, :through => :frequentships
+
+  has_many :favoriteships
   has_many :games, :through => :favoriteships
+
+  has_many :permissions
   has_many :roles, :through => :permissions
+  
   has_one :address, :as => :addressable 
     
   validates_presence_of     :login, :email
@@ -190,7 +193,7 @@ class User < ActiveRecord::Base
   end
   
   def to_param
-    login.downcase
+    "#{id}-#{login.downcase}"
   end
   
   def validate

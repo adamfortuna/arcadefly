@@ -10,6 +10,7 @@ class UsersController < ResourceController::Base
     if parent_type == :arcade
       @arcade = Arcade.find(params[:arcade_id], :include => 'users')
       @collection = @arcade.users
+    #GET /games/1-ABC/users
     elsif parent_type == :game
       @game = Game.find(params[:game_id], :include => 'users')
       @collection = @game.users
@@ -34,7 +35,7 @@ class UsersController < ResourceController::Base
   }
   
   def show
-    @user =  User.find_by_login(params[:id], :include => 'address')
+    @user =  User.find(params[:id], :include => 'address')
 
     if @user.has_address?
       @map = GMap.new("user_map")
@@ -69,8 +70,8 @@ class UsersController < ResourceController::Base
   end
   
   def edit
-    raise if current_user.login != params[:id] && !check_administrator_role
-    @user = current_user
+    @user = User.find(params[:id])
+    raise if current_user != @user  && !check_administrator_role
   end
   
   def update
@@ -122,4 +123,10 @@ class UsersController < ResourceController::Base
       redirect_to :action => 'index'
   end
  
+ 
+  protected
+  def object
+    @object ||= end_of_association_chain.find_by_permalink(param)
+  end
+
 end

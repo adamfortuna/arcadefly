@@ -1,0 +1,9 @@
+<% title 'Favorite Arcades for ' + @user.login -%>
+
+<%= render :partial => 'users/menu', :locals => { :user => @user } %>
+
+<div class="tabbed">
+  <ul class="data">
+    <%= render :partial => 'arcades/arcade', :collection => @user.arcades %>
+  </ul>
+</div>

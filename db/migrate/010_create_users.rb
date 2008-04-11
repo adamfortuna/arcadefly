@@ -5,6 +5,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :crypted_password,           :limit => 40
       t.string :salt,                       :limit => 40
       t.integer :frequentships_count,       :default => 0
+      t.integer :favoriteships_count,       :default => 0
       t.string :remember_token
       t.datetime :remember_token_expires_at
       t.string :activation_code,            :limit => 40

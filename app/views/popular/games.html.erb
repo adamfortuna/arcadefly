@@ -2,7 +2,8 @@
 
 <%= render :partial => 'menu' %>
   
-
 <div class="tabbed">
-	testing this out
+  <ul class="data">
+    <%= render :partial => 'games/game', :collection => @games %>
+  </ul>
 </div>

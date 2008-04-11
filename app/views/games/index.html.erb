@@ -4,12 +4,13 @@
   <%= render(:partial => "shared/letter", :collection => letters) %>
 </div>
 
-<%= render :partial => 'list', :locals => { :games => @games } %>
+<ul class="data">
+  <%= render :partial => 'game', :collection => @games %>
+</ul>
 
-<%= will_paginate @games %>
-
-<br />
-
-<% if role?('game_editor') %>
-  <%= link_to 'New Game', new_game_path, :class => 'admin button key' %>
-<% end %>
+<p>
+  <%= will_paginate @games %>
+  <% if role?('game_editor') %>
+    <%= link_to 'New Game', new_game_path, :class => 'admin button key' %>
+  <% end %>
+</p>

@@ -5,9 +5,6 @@ class Game < ActiveRecord::Base
   has_many :favoriteships
   has_many :users, :through => :favoriteships
   
-	
-  belongs_to :arcade, :counter_cache => true
-  
   validates_presence_of :name
 
   # This controls how many ames will be shown per page to the user.

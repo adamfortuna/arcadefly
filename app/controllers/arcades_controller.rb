@@ -5,14 +5,19 @@ class ArcadesController < ResourceController::Base
   
   def collection
     # GET /arcades/1/games
-    if parent?
+    if parent_type == :game
       @game = Game.find(params[:game_id], :include => 'arcades')
       @collection = @game.arcades
+    # GET /users/adam/games
+    elsif parent_type == :user
+      @user = User.find(params[:user_id], :include => 'arcades')
+      @collection = @user.arcades
     # GET /games
     else
       @collection ||=  Arcade.search(params[:search], params[:page])
     end
-    @playables_count = (@collection.collect do |r| r.playables_count end).max.to_i * 1.1
+    @playables_count = Arcade.maximum(:playables_count) * 1.1
+    #@playables_count = (@collection.collect do |r| r.playables_count end).max.to_i * 1.1
     @collection
   end
   
@@ -29,8 +34,10 @@ class ArcadesController < ResourceController::Base
   # GET /arcades
   # GET /games/:game_id/arcades
   index.wants.html { 
-    if parent?
+    if parent_type == :game
       render :template => "games/arcades_list" 
+    elsif parent_type == :user
+      render :template => "users/arcades"
     else
       render :template => "arcades/index"
     end
@@ -89,16 +96,29 @@ class ArcadesController < ResourceController::Base
 	                    :info_window => arcade_info_window(@arcade)))
   end
 
+  
   def favorite
     @arcade = Arcade.find(params[:id])
-    if !(current_user.arcades.collect do |a| a.id end).include?(@arcade.id)
-      current_user.arcades.push(@arcade)
-      flash[:notice] = "You added <b>#{@arcade.name}</b> to your list of favorite arcades!"
-    else
-      flash[:error] = "You have already added <b>#{@arcade.name}</b> to your list of favorite arcades."
+    
+    # POST /arcade/1-arcade-name/favorite
+    if request.post?
+      if !(current_user.arcades.collect do |a| a.id end).include?(@arcade.id)
+        current_user.arcades.push(@arcade)
+        flash[:notice] = "You added <b>#{@arcade.name}</b> to your list of favorite arcades!"
+      else
+          flash[:error] = "You have already added <b>#{@arcade.name}</b> to your list of favorite arcades."
+      end
+    elsif request.delete?
+      if !(current_user.arcades.collect do |a| a.id end).include?(@arcade.id)
+        flash[:error] = "You have not added <b>#{@arcade.name}</b> to your list of favorite arcades, so how could you remove it?"
+      else
+        current_user.arcades.delete(@arcade)
+        flash[:notice] = "You removed <b>#{@arcade.name}</b> from your list of favorite arcade."
+      end
     end
     redirect_to arcade_path(@arcade)
   end
+  
   
   private
   def arcade_info_window(arcade)

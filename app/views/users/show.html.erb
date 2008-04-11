@@ -1,4 +1,4 @@
-<% title "#{@user.login}" %>
+<% title 'Profile for ' + @user.login -%>
 
 <%= render :partial => 'menu', :locals => { :user => @user} %>
 
@@ -18,7 +18,7 @@
 
   <ul>
     <li><strong class="fn nickname"><%= @user.login %></strong> joined on <%= @user.created_at.to_s(:long) %> (#<%= @user.id %>)</li>
-    <li><%= @user.login %> has <%= link_to "#{@user.arcades.length} favorite #{'arcade'.pluralize unless @user.arcades.length == 1}", user_arcades_path(@user) %> and <%= link_to "#{@user.games.length} favorite #{'gae'.pluralize unless @user.games.length == 1}", user_games_path(@user) %>.</li>
+    <li><%= @user.login %> has <%= link_to pluralize(@user.arcades.length, "favorite arcade"), user_arcades_path(@user) %> and <%= link_to pluralize(@user.games.length, "favorite game"), user_games_path(@user) %>.</li>
   </ul>
   
   <br class="clear" />

@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(:version => 16) do
   create_table "arcades", :force => true do |t|
     t.string   "name"
     t.string   "phone"
-    t.integer  "playables_count",    :default => 0
-    t.integer  "frequentship_count", :default => 0
+    t.integer  "playables_count",     :default => 0
+    t.integer  "frequentships_count", :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -66,8 +66,8 @@ ActiveRecord::Schema.define(:version => 16) do
   create_table "games", :force => true do |t|
     t.string   "name"
     t.integer  "gamefaqs_id"
-    t.integer  "playables_count",    :default => 0
-    t.integer  "favoriteship_count", :default => 0
+    t.integer  "playables_count",     :default => 0
+    t.integer  "favoriteships_count", :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -109,7 +109,8 @@ ActiveRecord::Schema.define(:version => 16) do
     t.string   "email"
     t.string   "crypted_password",          :limit => 40
     t.string   "salt",                      :limit => 40
-    t.integer  "frequentship_count",                      :default => 0
+    t.integer  "frequentships_count",                     :default => 0
+    t.integer  "favoriteships_count",                     :default => 0
     t.string   "remember_token"
     t.datetime "remember_token_expires_at"
     t.string   "activation_code",           :limit => 40

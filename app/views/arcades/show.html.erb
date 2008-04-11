@@ -25,7 +25,7 @@
     <b>Games at this location:</b> <%= @arcade.games.count %> ( <%= link_to "view them", arcade_games_path(@arcade) %> )
   </p>
   <p>
-    <strong><%= @arcade.users.count %> players</strong> on this site frequent <%= @arcade.name %>.
+    <strong><%=h pluralize(@arcade.users.size, "players") %></strong> on this site frequent <%= @arcade.name %>.
   </p>
   
   <% if logged_in? && current_user.has_address? -%>
@@ -35,9 +35,14 @@
   </p>
   <% end %>
   
-  <% if logged_in? && !(current_user.arcades.collect do |a| a.id end).include?(@arcade.id) %>
-  <p>
-    <%= link_to "Add this arcade to your favorites", arcade_favorite_path(@arcade), { :method => "post" } %>
+  <% if logged_in? %>
+	  <p>
+	  <% if !(current_user.arcades.collect do |a| a.id end).include?(@arcade.id) %>
+      <%= link_to "Add this arcade to your favorites", arcade_favorite_path(@arcade), { :method => "post" } %>
+    <% else %>
+      This arcade is on your list of favorites.<br/>
+      <%= link_to "Remove this arcade from your favorites", arcade_favorite_path(@arcade), { :method => "delete" } %>
+    <% end %>
   </p>
   <% end %>
 

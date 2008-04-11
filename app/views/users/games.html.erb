@@ -1,0 +1,13 @@
+<% title 'Favorite Games for ' + @user.login -%>
+
+<%= render :partial => 'users/menu', :locals => { :user => @user } %>
+
+<div class="tabbed">
+  <ul class="data">
+    <%= render :partial => 'games/game', :collection => @user.games %>
+  </ul>
+  
+  <% if @user.games.size == 0 %>
+  <p><%= @user.login %> doesn't have any favorite games</p>
+  <% end %>
+</div>

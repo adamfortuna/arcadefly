@@ -3,11 +3,16 @@
 <%= render :partial => 'games/menu', :locals => { :game => @game } %>
 
 <div class="tabbed">
-  <%= render :partial => 'users/list', :locals => { :users => @game.users } %>
-  
+
+ <ul class="data">
+   <%= render :partial => 'users/user', :collection => @game.users, :locals => { :parent => :game } %>
+ </ul> 
+
   <% if @game.users.length == 0 && logged_in? %>
     <p>
       <%= link_to "Add this game to your favorites", game_favorite_path(@game), { :method => "post" } %>
     </p>
   <% end %>
+  
+  <%= render :partial => 'games/footer', :locals => { :game => @game } %>
 </div>

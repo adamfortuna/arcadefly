@@ -2,7 +2,7 @@
   <%= nav_link "Profile", user_path(user) %>
   <%= nav_link "Favorite Arcades", user_arcades_path(user) %>
   <%= nav_link "Favorite Games", user_games_path(user) %>
-  <% if current_user.id = user.id -%>
-  <%= nav_link "Settings", "/users/#{user.login}/settings" %>
+  <% if logged_in? && (current_user.id = user.id || role?('user_editor')) -%>
+  <%= nav_link "Settings", settings_path(user) %>
   <% end %>
 </ul>

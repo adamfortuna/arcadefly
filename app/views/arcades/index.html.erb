@@ -5,9 +5,11 @@
   <%= nav_link "List", "arcades" %>
 </ul>
 
-<%= render :partial => 'arcades/list', :locals => { :arcades => @arcades } %>
+<ul class="data right-tabbed">
+  <%= render :partial => 'arcade', :collection => @arcades %>
+</ul>
   
-<p class="right-tabbed">
+<p>
   <%= will_paginate @arcades %>
   <% if role?('arcade_editor') %>
     <%= link_to 'New arcade', new_arcade_path, :class => 'admin' %>
