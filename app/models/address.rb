@@ -1,6 +1,5 @@
 class Address < ActiveRecord::Base
-  belongs_to            :addressable,
-                        :polymorphic => true
+  belongs_to            :addressable, :polymorphic => true
   belongs_to            :region
   belongs_to            :country
 
@@ -21,7 +20,7 @@ class Address < ActiveRecord::Base
 
   # Returns the region's country if the region is specified
   def country_with_region_check
-    region ? region.country : country_without_region_check
+    (region && region.country != nil) ? region.country : country_without_region_check
   end
   alias_method_chain :country, :region_check
 
@@ -66,6 +65,19 @@ class Address < ActiveRecord::Base
     lines
   end
   
+  protected
+  def auto_geocode
+    # Exact location
+    loc = GeoKit::Geocoders::GoogleGeocoder.geocode(single_line)
+    self.lat = loc.lat
+    self.lng  = loc.lng
+
+    # General Location
+    loc = GeoKit::Geocoders::GoogleGeocoder.geocode(short_line)
+    self.public_lat = loc.lat
+    self.public_lng  = loc.lng
+  end
+  
   private
   
   # Since some countries are not divided into regions, we shouldn't require a region for all addresses.
@@ -76,18 +88,7 @@ class Address < ActiveRecord::Base
   # Example:
   #  USA.known_region_required? => true
   def known_region_required?
+    return false if country == nil
     country.regions.count != 0
-  end
-  
-  def auto_geocode
-    # Public
-    loc = GeoKit::Geocoders::GoogleGeocoder.geocode(single_line)
-    self.lat = loc.lat
-    self.lng  = loc.lng
-
-    # Public
-    loc = GeoKit::Geocoders::GoogleGeocoder.geocode(short_line)
-    self.public_lat = loc.lat
-    self.public_lng  = loc.lng
   end
 end

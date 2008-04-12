@@ -5,6 +5,8 @@ class Arcade < ActiveRecord::Base
 	has_many :users, :through => :frequentships
 	has_one :address, :as => :addressable
 	
+	acts_as_mappable
+	  
 	attr_accessor :game_ids
 	after_save :update_games
 	after_create :update_address
@@ -23,15 +25,21 @@ class Arcade < ActiveRecord::Base
 	def self.search(search, page)
 		search = "%#{search}" if search and search.length >= 2
 		paginate :per_page => @@per_page, :page => page,
-						 :conditions => ['name like ?', "#{search}%"],
-						 :order => 'name'
+						 :conditions => ['name like ?', "#{search}%"]
 	end
   
   def to_param
     "#{id}-#{url_safe(name)}"
   end
   
-  
+  def lat
+    address.lat
+  end
+
+  def lng
+    address.lng
+  end
+
   def url_safe(param)
     param.downcase.gsub(/[^[:alnum:]]/,'-').gsub(/-{2,}/,'-')
   end

@@ -1,8 +1,8 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class AddressTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  def test_truth
-    assert true
+class AddressTest < Test::Unit::TestCase
+  context "A valid address" do
+    should "be valid" do
+    end
   end
 end

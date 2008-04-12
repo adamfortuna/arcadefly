@@ -13,8 +13,8 @@
 </ul>
 
 <div class="clear right-tabbed">
-  <ul class="left data span-10 scrollable content-height map shift-1">
-    <%= render :partial => 'arcade', :collection => @arcades %>
+  <ul class="left data span-10 scrollable content-height map shift-1 content">
+    <%= render :partial => 'arcades/arcade', :collection => @arcades, :locals => { :map => true } %>
   </ul>
   <%= @map.div(:class => 'right prepend-1 span-13 last map_medium content-height map') %>
 </div>

@@ -30,6 +30,9 @@ ul.data li:hover { background-color: #ddd; }
 ul.data li span.index { display: block; position: absolute; top: 0; left: 0; height: 100%; background: #B8E4F5; text-indent: -9999px; overflow: hidden; line-height: 2em; z-index:1; }
 ul.data li span.index:hover { background: #9fbceb; }
 
+ul.content li .count { clear:left; position: relative; top:1em; }
+ul.content li a { display: inline; }
+
 ul.left-shift { position:absolute; left:-150px; }
 
 /* Very cool tabs from  http://www.simplebits.com/bits/css_tabs.html */

@@ -26,7 +26,7 @@
     		  <ul id="status" class="nav right">
             <%= nav_link "Help", "help", "", false %>
     		    <%- if logged_in? -%>
-              <%= nav_link "Account", "users/#{current_user.login}/settings", false %>
+              <%= nav_link "Account", settings_path(current_user), false %>
               <%= nav_link "Logout", "logout", "", false %>
             <%- else -%>
               <%= nav_link "Register", "signup", "", false %>

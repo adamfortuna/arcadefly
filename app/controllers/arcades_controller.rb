@@ -18,7 +18,7 @@ class ArcadesController < ResourceController::Base
     end
     @playables_count = Arcade.maximum(:playables_count) * 1.1
     #@playables_count = (@collection.collect do |r| r.playables_count end).max.to_i * 1.1
-    @collection
+    @collection.sort_by_distance_from(current_user.address) if current_user.has_address?
   end
   
   def object
@@ -54,6 +54,8 @@ class ArcadesController < ResourceController::Base
       @arcades = Arcade.search(params[:search], params[:page])
     end
 
+    @arcades.sort_by_distance_from(current_user.address) if current_user.has_address?
+    
     @map = GMap.new("arcades_map")
     @map.control_init(:small_map => true, :map_type => false)
     @map.center_zoom_init([26,-80], 13)
@@ -113,7 +115,7 @@ class ArcadesController < ResourceController::Base
         flash[:error] = "You have not added <b>#{@arcade.name}</b> to your list of favorite arcades, so how could you remove it?"
       else
         current_user.arcades.delete(@arcade)
-        flash[:notice] = "You removed <b>#{@arcade.name}</b> from your list of favorite arcade."
+        flash[:notice] = "You removed <b>#{@arcade.name}</b> from your list of favorite arcades."
       end
     end
     redirect_to arcade_path(@arcade)
