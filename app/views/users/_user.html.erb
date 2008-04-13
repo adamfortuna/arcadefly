@@ -13,8 +13,8 @@
 	<% if parent == :user %>
 	  <span class="count">Lives in <%= user.address.short_line %></span>
 	<% elsif parent == :arcade %>
-	  <span class="count"><%= pluralize(user.arcades.size, "favorite arcade") %></span>
+	  <span class="count"><%= pluralize(user.frequentships_count, "favorite arcade") %></span>
 	<% elsif parent == :game %>
-	  <span class="count"><%= pluralize(user.games.size, "favorite games") %></span>
+	  <span class="count"><%= pluralize(user.favoriteships_count, "favorite games") %></span>
 	<% end %>
 </li>

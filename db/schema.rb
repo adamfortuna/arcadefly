@@ -37,6 +37,8 @@ ActiveRecord::Schema.define(:version => 16) do
     t.datetime "updated_at"
   end
 
+  add_index "arcades", ["name"], :name => "index_arcades_on_name"
+
   create_table "countries", :force => true do |t|
     t.string "name",          :limit => 80, :null => false
     t.string "official_name", :limit => 80
@@ -56,12 +58,16 @@ ActiveRecord::Schema.define(:version => 16) do
     t.datetime "updated_at"
   end
 
+  add_index "favoriteships", ["user_id", "game_id"], :name => "index_favoriteships_on_user_id_and_game_id", :unique => true
+
   create_table "frequentships", :force => true do |t|
     t.integer  "arcade_id",  :null => false
     t.integer  "user_id",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "frequentships", ["user_id", "arcade_id"], :name => "index_frequentships_on_user_id_and_arcade_id", :unique => true
 
   create_table "games", :force => true do |t|
     t.string   "name"
@@ -88,6 +94,8 @@ ActiveRecord::Schema.define(:version => 16) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "playables", ["arcade_id", "game_id"], :name => "index_playables_on_arcade_id_and_game_id", :unique => true
 
   create_table "regions", :force => true do |t|
     t.integer "country_id"
@@ -120,5 +128,8 @@ ActiveRecord::Schema.define(:version => 16) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "users", ["login"], :name => "index_users_on_login", :unique => true
+  add_index "users", ["login", "crypted_password"], :name => "index_users_on_login_and_crypted_password"
 
 end

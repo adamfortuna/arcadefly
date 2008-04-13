@@ -4,7 +4,7 @@ class PopularController < ApplicationController
   end
   
   def arcades
-    @arcades = Arcade.find(:all, :order => 'frequentships_count desc', :limit => 20)
+    @arcades = Arcade.find(:all, :order => 'frequentships_count desc', :limit => 20, :include => [ { :address => :region } ] )
   end
 
   def games

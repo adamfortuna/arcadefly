@@ -16,9 +16,13 @@ class UsersController < ResourceController::Base
       @collection = @game.users
     # GET /users
     else
-      @collection = User.find(:all)
+      @collection = User.find(:all, :include => { :address => [:region, :country] })
     end
     @collection
+  end
+
+  def object
+    User.find(param, :include => { :address => [:region, :country] })
   end
 
   index.wants.html { 
@@ -70,7 +74,7 @@ class UsersController < ResourceController::Base
   end
   
   def edit
-    @user = User.find(params[:id])
+    @user = User.find(params[:id], :include => :address)
     raise if current_user != @user  && !check_administrator_role
   end
   

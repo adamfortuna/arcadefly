@@ -14,6 +14,11 @@ class CreateUsers < ActiveRecord::Migration
       t.boolean :enabled, :default => true
       t.timestamps      
     end
+    
+    add_index :users, :login,                       :unique => true
+    add_index :users, [:login, :crypted_password]
+    
+    
   end
 
   def self.down

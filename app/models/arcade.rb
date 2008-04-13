@@ -25,7 +25,8 @@ class Arcade < ActiveRecord::Base
 	def self.search(search, page)
 		search = "%#{search}" if search and search.length >= 2
 		paginate :per_page => @@per_page, :page => page,
-						 :conditions => ['name like ?', "#{search}%"]
+						 :conditions => ['arcades.name like ?', "#{search}%"],
+						 :include => [{:address => [:region, :country]}]
 	end
   
   def to_param

@@ -37,6 +37,6 @@ production:
   adapter: mysql
   encoding: utf8
   database: arcadefly_production
-  username: root
-  password: 
-  host: localhost
+  username: arcadefly
+  password: Q1w2e3r4
+  host: mysql.arcadefly.com

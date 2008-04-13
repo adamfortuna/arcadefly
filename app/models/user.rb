@@ -201,6 +201,16 @@ class User < ActiveRecord::Base
       address.errors.each { |attr, msg| errors.add(attr, msg) }
     end
   end
+  
+  def has_favorite_arcade?(arcade)
+    Frequentship.find_by_user_id_and_arcade_id(id, arcade.id, :select => 'true')
+    # (arcades.collect do |a| a.id end).include?(arcade.id)
+  end
+  
+  def has_favorite_game?(game)
+    Favoriteship.find_by_user_id_and_game_id(id, game.id, :select => 'true')
+    # (games.collect do |a| a.id end).include?(game.id)
+  end
 
   protected
     # before filter 

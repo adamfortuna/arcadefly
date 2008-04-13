@@ -5,7 +5,10 @@ class CreateArcades < ActiveRecord::Migration
       t.integer :playables_count, :default => 0
       t.integer :frequentships_count, :default => 0
       t.timestamps
-    end  
+    end
+    
+    add_index :arcades, :name
+    
   end
 
   def self.down

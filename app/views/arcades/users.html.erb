@@ -9,9 +9,7 @@
   </ul>
   
   <% if @arcade.users.length == 0 && logged_in? %>
-    <p>
-      <%= link_to "Add this arcade to your favorites", arcade_favorite_path(@arcade), { :method => "post" } %>
-    </p>
+    <p><%= link_to "Add this arcade to your favorites", arcade_favorite_path(@arcade), { :method => "post" } %></p>
   <% end %>
   
   

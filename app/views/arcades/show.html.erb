@@ -22,10 +22,10 @@
     <%= link_to "View Map", "/arcades/#{@arcade.id}/map" %>
   </p>
   <p>
-    <b>Games at this location:</b> <%= @arcade.games.count %> ( <%= link_to "view them", arcade_games_path(@arcade) %> )
+    <b>Games at this location:</b> <%= @arcade.playables_count %> ( <%= link_to "view them", arcade_games_path(@arcade) %> )
   </p>
   <p>
-    <strong><%=h pluralize(@arcade.users.size, "players") %></strong> on this site frequent <%= @arcade.name %>.
+    <strong><%=h pluralize(@arcade.frequentships_count, "players") %></strong> on this site frequent <%= @arcade.name %>.
   </p>
   
   <% if logged_in? && current_user.has_address? -%>
@@ -37,7 +37,7 @@
   
   <% if logged_in? %>
 	  <p>
-	  <% if !(current_user.arcades.collect do |a| a.id end).include?(@arcade.id) %>
+	  <% if !current_user.has_favorite_arcade?(@arcade) %>
       <%= link_to "Add this arcade to your favorites", arcade_favorite_path(@arcade), { :method => "post" } %>
     <% else %>
       This arcade is on your list of favorites.<br/>

@@ -19,10 +19,10 @@ class Address < ActiveRecord::Base
   before_save           :auto_geocode
 
   # Returns the region's country if the region is specified
-  def country_with_region_check
-    (region && region.country != nil) ? region.country : country_without_region_check
-  end
-  alias_method_chain :country, :region_check
+#  def country_with_region_check
+#    (region && region.country != nil) ? region.country : country_without_region_check
+#  end
+#  alias_method_chain :country, :region_check
 
   # This is the default way an address will be displayed.
   # Currently: Orlando, Florida United States of America

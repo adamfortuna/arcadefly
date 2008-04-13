@@ -8,12 +8,12 @@
 	</p>
 	
 	<p>
-		<b><%=h @game.name %></b> is on the favorites list of <b><%=h pluralize(@game.users.size, "players") %></b>.
+		<b><%=h @game.name %></b> is on the favorites list of <b><%=h pluralize(@game.favoriteships_count, "players") %></b>.
 	</p>
 	
 	<% if logged_in? %>
 	  <p>
-	  <% if !(current_user.games.collect do |a| a.id end).include?(@game.id) %>
+	  <% if !current_user.has_favorite_game?(@game) %>
       <%= link_to "Add this game to your favorites", game_favorite_path(@game), { :method => "post" } %>
     <% else %>
       This game is on your list of favorites.<br/>

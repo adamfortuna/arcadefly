@@ -7,6 +7,10 @@
     <%= render :partial => 'arcades/arcade', :collection => @game.arcades %>
   </ul>
   
+  <% if @game.arcades.size == 0 %>
+  <p>We don't know of any arcades that have <strong><%= @game.name %></strong>.</p>
+  <% end %>
+  
   <% if role?("arcade_editor") -%>
     <p class="tabbed"><%= link_to 'New arcade', new_arcade_path, :class => 'admin' %></p>
   <% end -%>

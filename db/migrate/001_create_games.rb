@@ -8,7 +8,7 @@ class CreateGames < ActiveRecord::Migration
       t.timestamps
     end
     
-    add_index :games, :name,          :unique => true
+    add_index :games, :name,         :unique => true
     add_index :games, :gamefaqs_id,  :unique => true
 
   end

@@ -8,6 +8,6 @@
   <div class="left">
 	  <%= link_to(arcade.name, arcade_path(arcade_map)) %><br/>
   	<%= arcade_map.address.city %>, <%= arcade_map.address.region.name %><br/>
-    <strong>Games:</strong> <%= arcade_map.games.count %>
+    <strong>Games:</strong> <%= arcade_map.playables_count %>
   <div>
 </li>

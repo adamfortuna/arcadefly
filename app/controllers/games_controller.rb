@@ -18,7 +18,7 @@ class GamesController < ResourceController::Base
     else
       @collection ||= Game.search(params[:search], params[:page])
     end
-    @playables_count = Game.maximum(:playables_count) * 1.1
+    @playables_count = Game.maximum(:playables_count) * 1.1 if @collection.size > 0
     #@playables_count = (@collection.collect do |r| r.playables_count end).max.to_i * 1.1
     @collection
   end
@@ -51,7 +51,7 @@ class GamesController < ResourceController::Base
       end
     elsif request.delete?
       if favorite_game = Favoriteship.find_by_game_id_and_user_id(@game.id,current_user.id)
-        current_user.favoriteships.delete(favorite_game)
+        favorite_game.destroy
         flash[:notice] = "You removed <b>#{@game.name}</b> from your list of favorite games."
       else
         flash[:error] = "You have not added <b>#{@game.name}</b> to your list of favorite games, so how could you remove it?"

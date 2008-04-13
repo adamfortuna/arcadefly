@@ -4,4 +4,12 @@
 class Frequentship < ActiveRecord::Base
   belongs_to :arcade, :counter_cache => true
   belongs_to :user, :counter_cache => true
+  
+  after_destroy :update_frequentships_count
+  
+  private
+  def update_frequentships_count
+    arcade.save
+    user.save
+  end
 end

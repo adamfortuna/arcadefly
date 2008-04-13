@@ -16,13 +16,13 @@ class ArcadesController < ResourceController::Base
     else
       @collection ||=  Arcade.search(params[:search], params[:page])
     end
-    @playables_count = Arcade.maximum(:playables_count) * 1.1
+    @playables_count = Arcade.maximum(:playables_count) * 1.1 if @collection.length > 0
     #@playables_count = (@collection.collect do |r| r.playables_count end).max.to_i * 1.1
-    @collection.sort_by_distance_from(current_user.address) if current_user.has_address?
+    @collection.sort_by_distance_from(current_user.address) if current_user.has_address? && @collection.length > 1
   end
   
   def object
-    @arcade = Arcade.find(params[:id], :include => :address)
+    @arcade = Arcade.find(params[:id], :include => [ { :address => [:country, :region] }] )
     @map = GMap.new("arcade_map")
     @map.control_init(:map_type => false, :small_zoom => true)
     @map.center_zoom_init([@arcade.address.lat, @arcade.address.lng], 11)
@@ -48,7 +48,7 @@ class ArcadesController < ResourceController::Base
   # GET /games/:game_id/arcades/map
   def list_map
     if parent?
-      @game = Game.find(params[:game_id], :include => 'arcades')
+      @game = Game.find(params[:game_id], :include => { :arcades => [{:address => [:region, :country]} ] })
       @arcades= @game.arcades
     else
       @arcades = Arcade.search(params[:search], params[:page])
@@ -88,7 +88,7 @@ class ArcadesController < ResourceController::Base
   # Map for an arcade
   # GET /arcades/:id/map
   def map
-    @arcade = Arcade.find(params[:id], :include => 'address')
+    @arcade = Arcade.find(params[:id], :include => { :address => [:region, :country]} )
     
     @map = GMap.new("arcade_map")
 	  @map.control_init(:large_map => true, :map_type => true)
@@ -100,7 +100,7 @@ class ArcadesController < ResourceController::Base
 
   
   def favorite
-    @arcade = Arcade.find(params[:id])
+    raise if !(@arcade = Arcade.find(params[:id]))
     
     # POST /arcade/1-arcade-name/favorite
     if request.post?
@@ -111,19 +111,22 @@ class ArcadesController < ResourceController::Base
           flash[:error] = "You have already added <b>#{@arcade.name}</b> to your list of favorite arcades."
       end
     elsif request.delete?
-      if !(current_user.arcades.collect do |a| a.id end).include?(@arcade.id)
-        flash[:error] = "You have not added <b>#{@arcade.name}</b> to your list of favorite arcades, so how could you remove it?"
-      else
-        current_user.arcades.delete(@arcade)
+      if favorite_arcade = Frequentship.find_by_arcade_id_and_user_id(@arcade.id,current_user.id)
+        favorite_arcade.destroy
         flash[:notice] = "You removed <b>#{@arcade.name}</b> from your list of favorite arcades."
+      else
+        flash[:error] = "You have not added <b>#{@arcade.name}</b> to your list of favorite arcades, so how could you remove it?"
       end
     end
     redirect_to arcade_path(@arcade)
+  rescue
+    flash[:error] = "Doesn't look like that was a valid arcade. Wannt to try again?"
+    redirect_back_or_default('/arcades')
   end
   
   
   private
   def arcade_info_window(arcade)
-    "<strong>#{arcade.name}</strong> <p>#{arcade.address.street}<br />#{arcade.address.city}, #{arcade.address.region.name} #{arcade.address.postal_code}</p><p><strong>Games:</strong> #{arcade.games.count}</p>"
+    "<strong>#{arcade.name}</strong> <p>#{arcade.address.street}<br />#{arcade.address.city}, #{arcade.address.region.name} #{arcade.address.postal_code}</p><p><strong>Games:</strong> #{arcade.playables_count}</p>"
   end 
 end

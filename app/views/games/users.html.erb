@@ -8,10 +8,12 @@
    <%= render :partial => 'users/user', :collection => @game.users, :locals => { :parent => :game } %>
  </ul> 
 
-  <% if @game.users.length == 0 && logged_in? %>
-    <p>
-      <%= link_to "Add this game to your favorites", game_favorite_path(@game), { :method => "post" } %>
-    </p>
+ <% if @game.favoriteships_count == 0 %>
+ <p>No one has favorited <strong><%= @game.name %></strong> just yet.</p>
+ <% end %>
+
+  <% if logged_in? && !current_user.has_favorite_game?(@game) %>
+    <p><%= link_to "Add this game to your favorites", game_favorite_path(@game), { :method => "post" } %></p>
   <% end %>
   
   <%= render :partial => 'games/footer', :locals => { :game => @game } %>
