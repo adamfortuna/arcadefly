@@ -15,6 +15,6 @@
       <%= check_box_tag 'remember_me' %> <label for="remember_me">Remember me</label>
     </p>
     
-    <p class="block"><%= submit_tag 'Log in', { :class => 'button' } %></p>
+    <p class="block"><%= submit_tag 'Log in', { :class => 'button', :disable_with => 'Logging in...' } %></p>
     <% end -%>
   </fieldset>

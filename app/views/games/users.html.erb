@@ -13,7 +13,7 @@
  <% end %>
 
   <% if logged_in? && !current_user.has_favorite_game?(@game) %>
-    <p><%= link_to "Add this game to your favorites", game_favorite_path(@game), { :method => "post" } %></p>
+    <p><%= button_to "Add this game to your favorites", game_favorite_path(@game), { :method => "post" } %></p>
   <% end %>
   
   <%= render :partial => 'games/footer', :locals => { :game => @game } %>

@@ -3,21 +3,18 @@
 <%= render :partial => 'menu', :locals => { :game => @game } %>
 
 <div class="tabbed">
-	<p>
-		<b><%=h @game.name %></b> is playable at <b><%=h pluralize(@game.playables_count, "arcade") %></b>.
-	</p>
-	
-	<p>
-		<b><%=h @game.name %></b> is on the favorites list of <b><%=h pluralize(@game.favoriteships_count, "players") %></b>.
-	</p>
-	
+
+  <span class="right counts">
+    <%= link_to pluralize(@game.favoriteships_count, "favorite"), game_users_path(@game), :class=>"users" %>
+    <%= link_to pluralize(@game.playables_count, "arcade"), game_arcades_path(@game), :class=>"arcades" %>
+  </span>
+
 	<% if logged_in? %>
 	  <p>
 	  <% if !current_user.has_favorite_game?(@game) %>
-      <%= link_to "Add this game to your favorites", game_favorite_path(@game), { :method => "post" } %>
+      <%= button_to "Add this game to your favorites", game_favorite_path(@game), { :method => "post" } %>
     <% else %>
-      This game is on your list of favorites.<br/>
-      <%= link_to "Remove this game from your favorites", game_favorite_path(@game), { :method => "delete" } %>
+      <%= button_to "Remove this game from your favorites", game_favorite_path(@game), { :method => "delete" } %>
     <% end %>
   </p>
   <% end %>

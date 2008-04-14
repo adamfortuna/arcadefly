@@ -1,7 +1,7 @@
 <ul class="tabs">
-  <%= nav_link "Profile", user_path(user) %>
-  <%= nav_link "Favorite Arcades", user_arcades_path(user) %>
-  <%= nav_link "Favorite Games", user_games_path(user) %>
+  <%= nav_link "Profile", user_path(user), { :a_class => 'users' } %>
+  <%= nav_link "Favorite Arcades", user_arcades_path(user), { :a_class => 'arcades' } %>
+  <%= nav_link "Favorite Games", user_games_path(user), { :a_class => 'games' } %>
   <% if logged_in? && (current_user.id = user.id || role?('user_editor')) -%>
   <%= nav_link "Settings", settings_path(user) %>
   <% end %>

@@ -17,6 +17,4 @@
   <%= @map.div(:class => 'right prepend-1 span-13 last map_medium content-height map') %>
 </div>
 
-<ul class="clear right-tabbed">
-  <%= link_to 'New arcade', new_arcade_path, :class => 'admin' %>
-</ul>
+<%= render :partial => 'games/footer', :locals => { :game => @game } %>

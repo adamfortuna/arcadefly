@@ -24,13 +24,13 @@
   		  
   		  <div class="column span-12 last">
     		  <ul id="status" class="nav right">
-            <%= nav_link "Help", "help", "", false %>
+            <%= nav_link "Help", "/help", { :show_link => false } %>
     		    <%- if logged_in? -%>
-              <%= nav_link "Account", settings_path(current_user), false %>
-              <%= nav_link "Logout", "logout", "", false %>
+              <%= nav_link "Account", settings_path(current_user), { :show_link => false } %>
+              <%= nav_link "Logout", "/logout", { :show_link => false } %>
             <%- else -%>
-              <%= nav_link "Register", "signup", "", false %>
-              <%= nav_link "Login", "login", "", false %>
+              <%= nav_link "Register", "/signup", { :show_link => false } %>
+              <%= nav_link "Login", "/login", { :show_link => false } %>
             <%- end -%>
           </ul>
           
@@ -56,11 +56,11 @@
 		<div id="navigation_row">
   		<div class="container">
   		  <ul id="navigation" class="nav">
-  		    <li><%= link_to "Home",    :controller => "home" %></li>
-  		    <li><%= link_to "Arcades", :controller => "arcades" %></li>
-  		    <li><%= link_to "Games",   :controller => "games" %></li>
-  		    <li><%= link_to "Players", :controller => "users" %></li>
-  		    <li><%= link_to "Popular", :controller => "popular" %></li>
+  		    <li><%= link_to "Home",    "/home" %></li>
+  		    <li><%= link_to "Arcades", "/arcades" %></li>
+  		    <li><%= link_to "Games",   "/games" %></li>
+  		    <li><%= link_to "Players", "/users" %></li>
+  		    <li><%= link_to "Popular", "/popular" %></li>
   		  </ul>
   		</div>
 		</div>

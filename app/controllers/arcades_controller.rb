@@ -100,32 +100,39 @@ class ArcadesController < ResourceController::Base
 
   
   def favorite
-    raise if !(@arcade = Arcade.find(params[:id]))
-    
-    # POST /arcade/1-arcade-name/favorite
-    if request.post?
-      if !(current_user.arcades.collect do |a| a.id end).include?(@arcade.id)
-        current_user.arcades.push(@arcade)
-        flash[:notice] = "You added <b>#{@arcade.name}</b> to your list of favorite arcades!"
-      else
-          flash[:error] = "You have already added <b>#{@arcade.name}</b> to your list of favorite arcades."
-      end
-    elsif request.delete?
-      if favorite_arcade = Frequentship.find_by_arcade_id_and_user_id(@arcade.id,current_user.id)
-        favorite_arcade.destroy
-        flash[:notice] = "You removed <b>#{@arcade.name}</b> from your list of favorite arcades."
-      else
-        flash[:error] = "You have not added <b>#{@arcade.name}</b> to your list of favorite arcades, so how could you remove it?"
-      end
-    end
-    redirect_to arcade_path(@arcade)
+    raise if !(arcade = Arcade.find(params[:id]))
+
+    create_favorite(arcade) if request.post?
+    destroy_favorite(arcade) if request.delete?
+
+    redirect_to arcade_path(arcade)
   rescue
     flash[:error] = "Doesn't look like that was a valid arcade. Wannt to try again?"
     redirect_back_or_default('/arcades')
   end
   
-  
   private
+  def create_favorite(arcade)
+    #if !(current_user.arcades.collect do |a| a.id end).include?(@arcade.id)
+    if current_user.has_favorite_arcade?(arcade)
+      flash[:error] = "You have already added <b>#{arcade.name}</b> to your list of favorite arcades."
+    else
+      current_user.arcades.push(arcade)
+      flash[:notice] = "You added <b>#{arcade.name}</b> to your list of favorite arcades!"
+    end
+  end
+  
+  def destroy_favorite(arcade)
+    if favorite_arcade = Frequentship.find_by_arcade_id_and_user_id(arcade.id,current_user.id)
+    favorite_arcade.destroy
+    #if current_user.has_favorite_arcade?(arcade)
+    #  current_user.arcades.delete(arcade)
+      flash[:notice] = "You removed <b>#{arcade.name}</b> from your list of favorite arcades."
+    else
+      flash[:error] = "You have not added <b>#{arcade.name}</b> to your list of favorite arcades, so how could you remove it?"
+    end
+  end
+  
   def arcade_info_window(arcade)
     "<strong>#{arcade.name}</strong> <p>#{arcade.address.street}<br />#{arcade.address.city}, #{arcade.address.region.name} #{arcade.address.postal_code}</p><p><strong>Games:</strong> #{arcade.playables_count}</p>"
   end 

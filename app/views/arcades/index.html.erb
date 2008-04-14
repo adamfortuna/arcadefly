@@ -1,11 +1,11 @@
 <% title "Arcades Listing" -%>
 
 <ul class="tabs right-tabs">
-  <%= nav_link "Map", "arcades", "map" %>
-  <%= nav_link "List", "arcades" %>
+  <%= nav_link "Map", "/arcades/map" %>
+  <%= nav_link "List", "/arcades" %>
 </ul>
 
-<ul class="data right-tabbed">
+<ul class="data right-tabbed shift-1">
   <%= render :partial => 'arcade', :collection => @arcades %>
 </ul>
   

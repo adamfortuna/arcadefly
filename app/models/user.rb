@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   has_one :address, :as => :addressable 
     
   validates_presence_of     :login, :email
-  validates_length_of       :login,    :within => 3..40
+  validates_length_of       :login, :within => 3..40
   validates_uniqueness_of   :login, :case_sensitive => false, :message => 'is already taken. Please choose another login.'
   validates_format_of       :login, :with => /^\w+$/i, :message => ' must contain only letters, numbers and underscores.'
   validates_format_of       :login, :with => /[^_]$/, :message => 'cannot end with an underscore.'

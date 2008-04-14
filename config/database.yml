@@ -32,11 +32,11 @@ test:
   username: root
   password:
   host: localhost
-
+#
 production:
   adapter: mysql
   encoding: utf8
-  database: arcadefly_production
-  username: arcadefly
-  password: Q1w2e3r4
-  host: mysql.arcadefly.com
+  database: arcadefly_development
+  username: root
+  password: 
+  host: localhost

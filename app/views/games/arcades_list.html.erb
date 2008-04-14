@@ -11,7 +11,5 @@
   <p>We don't know of any arcades that have <strong><%= @game.name %></strong>.</p>
   <% end %>
   
-  <% if role?("arcade_editor") -%>
-    <p class="tabbed"><%= link_to 'New arcade', new_arcade_path, :class => 'admin' %></p>
-  <% end -%>
+  <%= render :partial => 'games/footer', :locals => { :game => @game } %>
 </div>

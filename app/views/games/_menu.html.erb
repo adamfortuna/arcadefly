@@ -1,10 +1,10 @@
 <% map ||= false -%>
 <ul class="tabs">
-  <%= nav_link "Game Info", game_path(game) %>
-  <%= nav_link "Arcades", game_arcades_path(game) %>
-  <%= nav_link "Players", game_users_path(game) %>
+  <%= menu_link "Game Info", game_path(game), { :a_class => 'games' } %>
+  <%= menu_link "Arcades", game_arcades_path(game), { :a_class => 'arcades' } %>
+  <%= menu_link "Players", game_users_path(game), { :a_class => 'users' } %>
   <% if map %>
-    <%= nav_link "Map", "/games/#{game.to_param}/arcades/map", "index", true, "right" %>
-    <%= nav_link "List", game_arcades_path(game), "index", true, "right" %>
+    <%= menu_link "Map", game_arcades_map_path(game), { :li_class => 'right' } %>
+    <%= menu_link "List", game_arcades_path(game), { :li_class => 'right' } %>
   <% end %>
 </ul>

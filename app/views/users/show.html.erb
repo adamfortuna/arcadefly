@@ -10,16 +10,21 @@
 
 <div class="tabbed vcard">
   <% if @user.has_address? %>
-    <%= @map.div(:class => 'right prepend-1 span-13 last map_small map') %>
-    <div class="clear right map_small_width center adr">
-      <strong><%= @user.login %></strong> lives in <em><span class="locality"><%= @user.address.city %></city>, <span class="region"><%= @user.address.region.name %></span></em>.
+    <div class="right map_small_width center">
+      <%= @map.div(:class => 'right prepend-1 span-13 last map_small map') %>
+      <div">
+        <strong><%= @user.login %></strong> lives in somewhere in <em><span class="locality"><%= @user.address.city %></city>, <span class="region"><%= @user.address.region.name %></span></em>.
+      </div>
     </div>
   <% end %>
 
-  <ul>
-    <li><strong class="fn nickname"><%= @user.login %></strong> joined on <%= @user.created_at.to_s(:long) %> (#<%= @user.id %>)</li>
-    <li><%= @user.login %> has <%= link_to pluralize(@user.frequentships_count, "favorite arcade"), user_arcades_path(@user) %> and <%= link_to pluralize(@user.favoriteships_count, "favorite game"), user_games_path(@user) %>.</li>
-  </ul>
+  <div<% if @user.has_address? %> class="span-13"<% end %>>
+    <span class="right counts">
+      <%= link_to pluralize(@user.frequentships_count, "arcade"), user_arcades_path(@user), :class=>"arcades" %>
+      <%= link_to pluralize(@user.favoriteships_count, "game"), user_games_path(@user), :class=>"games" %>
+    </span>
   
+    <p><strong class="fn nickname"><%= @user.login %></strong> joined on <%= @user.created_at.to_s(:long) %> (#<%= @user.id %>)</p>
+  </div>
   <br class="clear" />
 </div>

@@ -81,7 +81,7 @@ class UsersController < ResourceController::Base
   def update
     raise if current_user.login != params[:id] && !check_administrator_role
         
-    @user = User.find_by_login(params[:id])
+    @user = User.find(params[:id])
     if params[:change_address]
       @user.address = Address.new(params[:address])
       saved = @user.address.save

@@ -38,9 +38,16 @@ ul.left-shift { position:absolute; left:-150px; }
 /* Very cool tabs from  http://www.simplebits.com/bits/css_tabs.html */
 ul.tabs { height: 2.6em; padding: 0 20px; background: url(../images/tab_bottom.gif) repeat-x bottom; clear: both; }
 ul.tabs li { margin: 0; padding: 0; display: inline; list-style-type: none; }
-ul.tabs a:link, ul.tabs a:visited{ float: left; background: #f3f3f3;  font-weight: bold; padding: .5em 1.2em; margin-right: 8px; border: 1px solid #ccc; text-decoration: none; color: #666; }
+ul.tabs a:link, ul.tabs a:visited { float: left; font-weight: bold; padding: .5em 1.2em; margin-right: 8px; border: 1px solid #ccc; text-decoration: none; color: #666; }
+ul.tabs a { background-color: #f3f3f3; }
 ul.tabs li.current a:link, ul.tabs li.current a:visited { border-bottom: 1px solid #fff; background: #fff; color: #000; }
-ul.tabs a:hover { background: #fff;	}
+ul.tabs a:hover { background-color: #fff;	}
+ul.tabs a.arcades { background-color: #dde; }
+ul.tabs a.arcades:hover { background-color: #ccf; }
+ul.tabs a.games { background-color: #fdd; }
+ul.tabs a.games:hover { background-color: #fcc; }
+ul.tabs a.users { background-color: #ded; }
+ul.tabs a.users:hover { background-color: #cec; }
 
 ul.right-tabs { position:relative; top:-4em; }
 ul.right-tabs li { float: right; }
@@ -116,6 +123,15 @@ div.notice { background-color: #CFC; border: solid 1px #6C6; }
 div.warning { background-color: #DD9A24; border: solid 1px #DD9A24; }
 div.error { background-color: #FCC; border: solid 1px #C66; }
 
-
 .disabled label { font-weight:lighter; }
 .disabled p.required label:before { content: ""; }
+
+span.counts { border: 1px solid #ccc; }
+span.counts a { display:block; padding:1em; font-weight: bold; }
+span.counts a:first-child { border-bottom: 1px solid #ccc;}
+a.arcades { background-color: #dde; }
+a.arcades:hover { background-color: #ccf; }
+a.games { background-color: #fdd; }
+a.games:hover { background-color: #fcc; }
+a.users { background-color: #ded; }
+a.users:hover { background-color: #cec; }

@@ -39,25 +39,34 @@ class GamesController < ResourceController::Base
   }
   
   def favorite
-    @game = Game.find(params[:id])
+    raise if !(game = Game.find(params[:id]))
     
-    # POST /games/1-game-name/favorite
-    if request.post?
-      if !(current_user.games.collect do |a| a.id end).include?(@game.id)
-        current_user.games.push(@game)
-        flash[:notice] = "You added <b>#{@game.name}</b> to your list of favorite games!"
-      else
-        flash[:error] = "You have already added <b>#{@game.name}</b> to your list of favorite games."
-      end
-    elsif request.delete?
-      if favorite_game = Favoriteship.find_by_game_id_and_user_id(@game.id,current_user.id)
-        favorite_game.destroy
-        flash[:notice] = "You removed <b>#{@game.name}</b> from your list of favorite games."
-      else
-        flash[:error] = "You have not added <b>#{@game.name}</b> to your list of favorite games, so how could you remove it?"
-      end
+    create_favorite(game) if request.post?
+    destroy_favorite(game) if request.delete?
+    
+    redirect_to game_path(game)
+  #rescue
+  #  flash[:error] = "Doesn't look like that was a valid game. Wannt to try again?"
+  #  redirect_back_or_default('/games')
+  end
+  
+  private
+  def create_favorite(game)
+    if current_user.has_favorite_game?(game)
+      flash[:error] = "You have already added <b>#{game.name}</b> to your list of favorite games."
+    else
+      current_user.games.push(game)
+      flash[:notice] = "You added <b>#{game.name}</b> to your list of favorite games!"
     end
-    redirect_to game_path(@game)
+  end
+  
+  def destroy_favorite(game)
+    if favorite_game = Favoriteship.find_by_game_id_and_user_id(game.id,current_user.id)
+      favorite_game.destroy
+      flash[:notice] = "You removed <b>#{game.name}</b> from your list of favorite games."
+    else
+      flash[:error] = "You have not added <b>#{game.name}</b> to your list of favorite games, so how could you remove it?"
+    end
   end
   
   

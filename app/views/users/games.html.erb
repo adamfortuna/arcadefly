@@ -7,7 +7,7 @@
     <%= render :partial => 'games/game', :collection => @user.games %>
   </ul>
   
-  <% if @user.games.size == 0 %>
+  <% if @user.favoriteships_count == 0 %>
   <p><%= @user.login %> doesn't have any favorite games</p>
   <% end %>
 </div>

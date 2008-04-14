@@ -6,4 +6,8 @@
   <ul class="data">
     <%= render :partial => 'arcades/arcade', :collection => @user.arcades %>
   </ul>
+  
+  <% if @user.frequentships_count == 0 %>
+  <p><strong><%= @user.login %></strong> doesn't have any favorite arcades.</p>
+  <% end %>
 </div>

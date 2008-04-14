@@ -11,6 +11,9 @@ class Arcade < ActiveRecord::Base
 	after_save :update_games
 	after_create :update_address
 	
+	#after_destroy :update_playables_count
+	#after_destroy :update_frequentships_count
+	
 	validates_presence_of :name, :message => "is required."
 	validates_presence_of :address
 	validates_associated :address
@@ -63,5 +66,10 @@ class Arcade < ActiveRecord::Base
 		def update_address
 		  address.save!
 		end
+	
+	#def update_playables_count
+	#end
+	#def update_frequentships_count
+  #end
 	
 end
