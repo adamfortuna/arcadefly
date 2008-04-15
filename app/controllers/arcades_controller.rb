@@ -18,7 +18,8 @@ class ArcadesController < ResourceController::Base
     end
     @playables_count = Arcade.maximum(:playables_count) * 1.1 if @collection.length > 0
     #@playables_count = (@collection.collect do |r| r.playables_count end).max.to_i * 1.1
-    @collection.sort_by_distance_from(current_user.address) if current_user.has_address? && @collection.length > 1
+    @collection.sort_by_distance_from(current_user.address) if logged_in? && current_user.has_address? && @collection.length > 1
+    @collection
   end
   
   def object
@@ -105,7 +106,7 @@ class ArcadesController < ResourceController::Base
     create_favorite(arcade) if request.post?
     destroy_favorite(arcade) if request.delete?
 
-    redirect_to arcade_path(arcade)
+    redirect_to request.env["HTTP_REFERER"]
   rescue
     flash[:error] = "Doesn't look like that was a valid arcade. Wannt to try again?"
     redirect_back_or_default('/arcades')

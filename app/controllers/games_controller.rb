@@ -44,7 +44,7 @@ class GamesController < ResourceController::Base
     create_favorite(game) if request.post?
     destroy_favorite(game) if request.delete?
     
-    redirect_to game_path(game)
+    redirect_to request.env["HTTP_REFERER"]
   #rescue
   #  flash[:error] = "Doesn't look like that was a valid game. Wannt to try again?"
   #  redirect_back_or_default('/games')

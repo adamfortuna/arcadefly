@@ -6,9 +6,7 @@ class Playable < ActiveRecord::Base
 
   after_destroy :update_playables_count
 
-  # Todo: Additional functionality for controlling quantity of games at an arcade.
-  #  If an arcade has 3 copies of a game it will be shown within this model.
-  
+  validates_presence_of :number_of_games, :minimum => 0
   
   private
   def update_playables_count

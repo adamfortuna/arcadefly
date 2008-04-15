@@ -8,7 +8,7 @@
   </ul>
   <% end %>
 
-	<%= link_to(user.login, user_path(user)) %>
+	<%= link_to(user.login, user_path(user), :class => 'main' ) %>
 	
 	<% if parent == :user %>
 	  <span class="count">Lives in <%= user.address.short_line %></span>

@@ -27,10 +27,9 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
 
   # User account controls
-  map.activate '/activate/:id', :controller => 'account',   :action => 'activate'
+  map.activate '/activate/:id', :controller => 'user',   :action => 'activate'
   map.forgot_password '/forgot_password',    :controller => 'passwords', :action => 'new'
   map.reset_password  '/reset_password/:id', :controller => 'passwords', :action => 'edit'
-  map.change_password '/change_password', :controller => 'accounts', :action => 'edit'
   map.settings '/users/:id/settings', :controller => 'users', :action => 'edit'
 
   # Shortened routes
@@ -38,7 +37,7 @@ ActionController::Routing::Routes.draw do |map|
   map.contact  '/contact',  :controller => 'home',    :action => 'contact'
   map.terms '/terms',       :controller => 'home',    :action => 'terms'
   map.privacy '/privacy',   :controller => 'home',    :action => 'privacy'
-  map.welcome '/welcome',   :controller => 'account', :action => 'welcome'
+  map.welcome '/welcome',   :controller => 'user',    :action => 'welcome'
 
   # Popular 
   map.popular '/popular',                   :controller => 'popular',    :action => 'index'
@@ -53,20 +52,18 @@ ActionController::Routing::Routes.draw do |map|
   # Arcade/Game/User interaction routes
   map.arcade_favorite '/arcades/:id/favorite', :controller => 'arcades', :action => 'favorite'
   map.game_favorite '/games/:id/favorite',     :controller => 'games',   :action => 'favorite'
+  
+  # Remote procedures
+  map.games_update '/games/update', :controller => 'gateway', :action => 'update_games'
     
   # Resources
   map.resources :arcades, :has_many => [ :games, :users ],
                           :has_one => :address
   map.resources :games,   :has_many => [ :arcades, :users ]
-  map.resources :users,   :has_many => [ :arcades, :games ],
+  map.resources :users,   :has_many => [ :arcades, :games, :roles ],
                           :has_one => :address
   
   map.resources :addresses, :sessions, :passwords
-
-  map.resources :users, :member => { :enable => :put } do |users|
-    users.resource :account
-    users.resources :roles
-  end
 
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'

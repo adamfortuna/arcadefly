@@ -5,8 +5,8 @@
 <div class="tabbed">
 
   <span class="right counts">
+  <%= link_to pluralize(@game.playables_count, "arcade"), game_arcades_path(@game), :class=>"arcades" %>
     <%= link_to pluralize(@game.favoriteships_count, "favorite"), game_users_path(@game), :class=>"users" %>
-    <%= link_to pluralize(@game.playables_count, "arcade"), game_arcades_path(@game), :class=>"arcades" %>
   </span>
 
 	<% if logged_in? %>

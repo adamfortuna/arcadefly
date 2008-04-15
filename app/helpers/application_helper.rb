@@ -20,14 +20,15 @@ module ApplicationHelper
     options.reverse_merge! :a_class => [], :li_class => []
 
     # If there is only one option passed in, convert it to an array
-    options[:a_class] = Array.new([options[:a_class]]) if options[:a_class].class == String
     options[:li_class] = Array.new([options[:li_class]]) if options[:li_class].class == String
-    
     options[:li_class].push("current") if current_page?(link)
-    li_attributes = ""
-    li_attributes = " class=\"#{options[:li_class].join(' ')}\"" if options[:li_class].length > 0
     
-    "<li#{li_attributes}>#{link_to text, link, { :class => options[:a_class].join(' ') } }</li>"
+    content_tag :li, menu_a(text,link, options), :class => options[:li_class].length > 0 ? options[:li_class].join(' ') : nil
+  end
+  
+  def menu_a(text, link, options = {})
+    options[:a_class] = Array.new([options[:a_class]]) if options[:a_class].class == String
+    link_to text, link, { :class => options[:a_class].length > 0 ? options[:a_class].join(' ') : nil }
   end
   
   # Used in views to set the page title for the layout

@@ -1,13 +1,31 @@
 <li class="<%= cycle("even","odd")%> clear">
-  <div class="right">
-    <% if logged_in? &&  current_user.has_address? -%>
-      <%= arcade_map.address.distance_to(current_user.address).round_to(2) %> miles away<br/>
-    <% end %>
+
+  <span style="width:280px;" class="left">
+    <%= link_to(arcade_map.name, arcade_path(arcade_map)) %>
+  </span>
+  
+  <span style="width:80px;" class="right">
     <a href="#" onclick="arcades_map.showMarker(1);return false;">Show on Map</a>
+  </span>
+  
+  <div class="clear soft">
+    <% if logged_in? %>
+  	<span>
+  	  <% if current_user.arcades.include?(arcade_map) %>
+  	    <%= link_to "&nbsp;", arcade_favorite_path(arcade_map), { :method => "delete", :class => "favorite_delete" } %>
+  	  <% else %>
+        <%= link_to "&nbsp;", arcade_favorite_path(arcade_map), { :method => "post", :class => "favorite_add" } %>
+  	  <% end %>
+  	</span>
+  	<% end %>
+
+    <span>
+      is in <%= arcade_map.address.city %>, <%= arcade_map.address.region.name %><% if logged_in? &&  current_user.has_address? -%>, <%= arcade_map.address.distance_to(current_user.address).round_to(2) %> miles away,
+        <% end %>
+        and has <strong><%= pluralize(arcade_map.playables_count, "game") %></strong>
+    </span>
   </div>
-  <div class="left">
-	  <%= link_to(arcade.name, arcade_path(arcade_map)) %><br/>
-  	<%= arcade_map.address.city %>, <%= arcade_map.address.region.name %><br/>
-    <strong>Games:</strong> <%= arcade_map.playables_count %>
-  <div>
+  
+  
+	
 </li>

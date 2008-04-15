@@ -18,9 +18,17 @@ class Game < ActiveRecord::Base
   #  Game.search("dance", 2) => Pagination Array
   def self.search(search, page)
     search = "%#{search}" if search and search.length >= 2
-    paginate :per_page => @@per_page, :page => page,
+    
+    		
+    if search == '#'
+      paginate :per_page => @@per_page, :page => page,
+             :conditions => ['name regexp "^[0-9]+"'],
+             :order => 'name'
+    else
+      paginate :per_page => @@per_page, :page => page,
              :conditions => ['name like ?', "#{search}%"],
              :order => 'name'
+    end
   end
   
   def to_param

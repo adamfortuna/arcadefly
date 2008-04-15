@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 16) do
+ActiveRecord::Schema.define(:version => 15) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "addressable_id"
@@ -89,12 +89,15 @@ ActiveRecord::Schema.define(:version => 16) do
   end
 
   create_table "playables", :force => true do |t|
-    t.integer  "arcade_id",  :null => false
-    t.integer  "game_id",    :null => false
+    t.integer  "arcade_id",                             :null => false
+    t.integer  "game_id",                               :null => false
+    t.integer  "update_playables_count", :default => 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "playables", ["arcade_id"], :name => "index_playables_on_arcade_id", :unique => true
+  add_index "playables", ["game_id"], :name => "index_playables_on_game_id", :unique => true
   add_index "playables", ["arcade_id", "game_id"], :name => "index_playables_on_arcade_id_and_game_id", :unique => true
 
   create_table "regions", :force => true do |t|

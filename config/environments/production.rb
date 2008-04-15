@@ -16,3 +16,8 @@ config.action_controller.perform_caching             = true
 
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
+
+#RAILS_ROOT = "/home/arcadefly/alpha.arcadefly.com/current"
+
+
+HOST = 'http://alpha.arcadefly.com'

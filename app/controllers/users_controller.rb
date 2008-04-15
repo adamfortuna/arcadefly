@@ -1,7 +1,7 @@
 class UsersController < ResourceController::Base
   belongs_to :game, :arcade
   
-  before_filter :not_logged_in_required, :only => [:new, :create] 
+  before_filter :not_logged_in_required, :only => [:new, :create, :activate] 
   before_filter :login_required, :only => [:edit, :update]
   before_filter :check_administrator_role, :only => [:destroy, :enable]
   
@@ -127,6 +127,21 @@ class UsersController < ResourceController::Base
       redirect_to :action => 'index'
   end
  
+  def activate
+    # Uncomment and change paths to have user logged in after activation - not recommended
+    self.current_user = User.find_and_activate!(params[:id])
+    flash[:notice] = "Your account has been activated and you've been logged in!"
+    redirect_to welcome_url
+  rescue User::ArgumentError
+    flash[:error] = 'Activation code invalid or not found. Please try creating a new account.'
+    redirect_to '/signup'
+  rescue User::ActivationCodeNotFound
+    flash[:error] = 'That doesn\'t seem to be a valid activation code. Please try creating a new account.'
+    redirect_to '/signup'
+  rescue User::AlreadyActivated
+    flash[:warning] = 'Your account has already been activated. You can log in below.'
+    redirect_to '/login'
+  end
  
   protected
   def object
