@@ -96,8 +96,11 @@ class UsersController < ResourceController::Base
     elsif params[:change_username]
       @user.login = params[:user][:login]
       saved = @user.save
+    elsif params[:update_profile]
+      @user.about = params[:user][:about]
+      saved = @user.save
     end
-    
+
     if saved
       flash[:notice] = (@user == current_user) ? "Your user account has been updated!" : "User updated."
       redirect_to :action => 'show', :id => @user

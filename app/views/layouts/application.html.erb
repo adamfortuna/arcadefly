@@ -56,11 +56,11 @@
 		<div id="navigation_row">
   		<div class="container">
   		  <ul id="navigation" class="nav">
-  		    <li><%= link_to "Home",    "/home" %></li>
-  		    <li><%= link_to "Arcades", "/arcades" %></li>
-  		    <li><%= link_to "Games",   "/games" %></li>
-  		    <li><%= link_to "Players", "/users" %></li>
-  		    <li><%= link_to "Popular", "/popular" %></li>
+  		    <li><%= link_to "Home",    root_path %></li>
+  		    <li><%= link_to "Arcades", arcades_path %></li>
+  		    <li><%= link_to "Games",   games_path %></li>
+  		    <li><%= link_to "Players", users_path %></li>
+  		    <li><%= link_to "Popular", popular_path %></li>
   		  </ul>
   		</div>
 		</div>
@@ -79,10 +79,10 @@
     <div id="footer_row">
   		<div id="footer" class="container">
   		    <ul class="nav">
-  		      <%= nav_link "About ArcadeFly", "about" %>
-  		      <%= nav_link "Contact Us", "contact" %>
-  		      <%= nav_link "Terms of Use", "terms" %>
-  		      <%= nav_link "Privacy Policy", "privacy" %>
+  		      <%= nav_link "About ArcadeFly", about_path %>
+  		      <%= nav_link "Contact Us", contact_path %>
+  		      <%= nav_link "Terms of Use", terms_path %>
+  		      <%= nav_link "Privacy Policy", privacy_path %>
   		      <li><a href="http://blog.arcadefly.com">Blog</a></li>
   		    </ul>
   		    <%- if not logged_in? -%>

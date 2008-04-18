@@ -5,6 +5,8 @@ class Arcade < ActiveRecord::Base
 	has_many :users, :through => :frequentships
 	has_one :address, :as => :addressable
 	
+	has_many :hours, :as => :timeable, :order => 'dayofweek, start, end'
+	
 	acts_as_mappable
 	  
 	attr_accessor :game_ids
@@ -57,7 +59,7 @@ class Arcade < ActiveRecord::Base
 					game_ids.delete(p.game_id.to_s)
 				end 
 				game_ids.each do |g|
-					self.playables.create(:game_id => g) unless g.blank?
+					self.playables.create(:game_id => g, :count => 1) unless g.blank?
 				end
 				reload
 			end

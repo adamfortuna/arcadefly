@@ -4,7 +4,7 @@
   <%= render(:partial => "shared/letter", :collection => letters) %>
 </div>
 
-<ul class="data">
+<ul class="data<%= ' tabbed' if logged_in? %>">
   <%= render :partial => 'game', :collection => @games %>
 </ul>
 

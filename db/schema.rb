@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 15) do
+ActiveRecord::Schema.define(:version => 14) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "addressable_id"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 15) do
   create_table "arcades", :force => true do |t|
     t.string   "name"
     t.string   "phone"
+    t.string   "website"
     t.integer  "playables_count",     :default => 0
     t.integer  "frequentships_count", :default => 0
     t.datetime "created_at"
@@ -81,6 +82,18 @@ ActiveRecord::Schema.define(:version => 15) do
   add_index "games", ["name"], :name => "index_games_on_name", :unique => true
   add_index "games", ["gamefaqs_id"], :name => "index_games_on_gamefaqs_id", :unique => true
 
+  create_table "hours", :force => true do |t|
+    t.integer  "timeable_id"
+    t.string   "timeable_type"
+    t.integer  "dayofweek",     :null => false
+    t.time     "start"
+    t.time     "end"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "hours", ["timeable_id", "timeable_type"], :name => "index_hours_on_timeable_id_and_timeable_type", :unique => true
+
   create_table "permissions", :force => true do |t|
     t.integer  "role_id",    :null => false
     t.integer  "user_id",    :null => false
@@ -119,6 +132,7 @@ ActiveRecord::Schema.define(:version => 15) do
     t.string   "login"
     t.string   "email"
     t.string   "crypted_password",          :limit => 40
+    t.text     "about"
     t.string   "salt",                      :limit => 40
     t.integer  "frequentships_count",                     :default => 0
     t.integer  "favoriteships_count",                     :default => 0

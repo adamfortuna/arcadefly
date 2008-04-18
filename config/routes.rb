@@ -55,7 +55,13 @@ ActionController::Routing::Routes.draw do |map|
   
   # Remote procedures
   map.games_update '/games/update', :controller => 'gateway', :action => 'update_games'
-    
+  
+  map.new_arcade_1 '/arcades/new/details', :controller => 'arcades', :action => 'new1'
+  map.new_arcade_2 '/arcades/new/verifydetails', :controller => 'arcades', :action => 'new2'
+  map.new_arcade_3 '/arcades/new/addgames', :controller => 'arcades', :action => 'new3'
+  map.new_arcade_2 '/arcades/new/verify', :controller => 'arcades', :action => 'new4'
+  
+  
   # Resources
   map.resources :arcades, :has_many => [ :games, :users ],
                           :has_one => :address

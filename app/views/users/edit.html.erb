@@ -57,4 +57,22 @@
     </fieldset>
   <% end %> 
   </div>
+  
+
+  <div class="span-23 clear">
+  <% form_for :user, :url => user_url(@user), :html => { :method => :put } do |f| %>
+    <fieldset>
+      <legend>Edit Pubic Profile</legend>
+      <p class="block required">
+        <label for="user_login">About</label>
+        <span class="block info">This will show up in your public profile.</span>
+        <%= error_message_on "user", "about", "About " %>
+        <%= f.text_area :about, { :class => 'text' } %>
+      </p>
+      <p>
+        <%= submit_tag "Update Public Profile", :name => 'update_profile' %>
+      </p>
+    </fieldset>
+  <% end %>
+  </div>
 </div>

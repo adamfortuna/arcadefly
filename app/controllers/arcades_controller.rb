@@ -43,6 +43,26 @@ class ArcadesController < ResourceController::Base
       render :template => "arcades/index"
     end
   }
+
+  # One page form for creating a new arcade (currently doesnt work with games or address)
+  def new
+    @arcade = Arcade.new(params[:arcade])
+  end
+  
+  # Step 1 of 3 for creating an arcade
+  # Step 1 will setup the basics about an arcade - name, address
+  def new1
+    @arcade = Arcade.new(params[:arcade])
+    @arcade.address = Address.new(params[:address])
+  end
+  
+  
+  
+  def new2
+    @arcade = Arcade.new(params[:arcade])
+  end
+  
+  
   
   # Additional actions
   # GET /arcades/map
@@ -55,7 +75,7 @@ class ArcadesController < ResourceController::Base
       @arcades = Arcade.search(params[:search], params[:page])
     end
 
-    @arcades.sort_by_distance_from(current_user.address) if current_user.has_address?
+    @arcades.sort_by_distance_from(current_user.address) if logged_in? && current_user.has_address?
     
     @map = GMap.new("arcades_map")
     @map.control_init(:small_map => true, :map_type => false)

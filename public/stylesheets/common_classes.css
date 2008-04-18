@@ -12,6 +12,7 @@ input.big_button { padding:.6em; }
 .hidden { display:none; visibility:hidden; }
 span.info { font-size: .8em; line-height: 1.875em; }
 div.info { font-size: .9em; line-height: 1.8em; }
+/*width: 300px; */
 
 /*  For horizontal lists */
 ul.nav li { display: inline; border-right: 1px solid #ccc; padding: 0 .5em; }
@@ -102,11 +103,13 @@ ul.scrollable li label { display: block; font-weight:normal; }
 
 .content-height { height: 400px; }
 
+p.block input.text { width: 300px; }
 select.text, select.title   { width: 310px; margin:0.5em 0.5em 0.5em 0; }
 select.text, select.title   { border:1px solid #bbb; background:#f6f6f6; padding:5px; }
 select.text:focus,
 select.title:focus         { border:1px solid #999; background:#fff; }
 select.title               { font-size:1.5em; }
+
 
 /* Errors */
 div.formError { color: red; }
@@ -130,7 +133,7 @@ div.error { background-color: #FCC; border: solid 1px #C66; }
 .disabled label { font-weight:lighter; }
 .disabled p.required label:before { content: ""; }
 
-span.counts { border: 1px solid #ccc; }
+span.counts { border: 1px solid #ccc; margin-left:1em; }
 span.counts a { display:block; padding:1em 1em 1em 1em; font-weight: bold; }
 span.counts a:first-child { border-bottom: 1px solid #ccc;}
 a.arcades { background-color: #dde; }

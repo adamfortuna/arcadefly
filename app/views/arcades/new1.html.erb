@@ -1,0 +1,157 @@
+<% title "Create a New Arcade" -%>
+<%- javascript 'dynamic_regions' %>
+
+<% content_for(:header) do %>
+  <script>
+	function fill_down() {
+	  var start = $F('hours_0_start');
+	  var to = $F('hours_0_end');
+	  
+	  $('hours_1_start').value = start;
+	  $('hours_2_start').value = start;
+	  $('hours_3_start').value = start;
+	  $('hours_4_start').value = start;
+	  $('hours_5_start').value = start;
+	  $('hours_6_start').value = start;
+	  
+	  $('hours_1_end').value = to;
+    $('hours_2_end').value = to;
+    $('hours_3_end').value = to;
+	  $('hours_4_end').value = to;
+    $('hours_5_end').value = to;
+	  $('hours_6_end').value = to;
+	}
+	
+	function closedChanged(day, show) {
+	  if (show)
+	    $(day+'_hours').style.visibility = '';
+	  else
+	    $(day+'_hours').style.visibility = 'hidden';
+	}
+	
+	function hoursChanged(display) {
+	  console.log(display);
+	  if (display) {
+	    $('hours').show();
+	  } else {
+	    $('hours').hide();
+	  }
+	  return;
+	}
+  </script>
+  
+  <style>
+  ul#hours li span.dayofweek {
+    width:40px;
+    display:block;
+    float:left;
+    text-align:right;
+    padding-right:.4em;
+    margin-top:.8em;
+  }
+  ul#hours li span.from_to {
+    display:block;
+    width:210px;
+    float:left;    
+  }
+  ul#hours li span.options {
+    margin-top:.8em;
+    diplay:block;
+    float:left;
+  }
+  </style>
+<% end %>
+
+<fieldset class="span-24">
+  <legend>Editing <%= @arcade.name %></legend>
+
+  <% form_for(:arcade, :url => new_arcade_1_path) do |f| %> 
+  
+    <div class="column span-10">
+      <p class="block">
+        <label for="arcade_name">Arcade Name</label>
+        <%= error_message_on "arcade", "name", "Arcade Name " %>
+        <%= f.text_field :name, { :class => 'text' } %>
+      </p>
+          
+      <% fields_for :address, @arcade.address do |a| %>
+      <p class="block">	
+        <label for="address_street">Street</label>
+        <%= error_message_on "address", "street", "Street " %>
+        <%= a.text_field :street, { :class => "text" } %>
+      </p>
+      <p class="block required">
+        <label for="address_city">City</label>
+        <%= error_message_on "address", "city", "City " %>
+        <%= a.text_field :city, { :class => "text" } %>
+      </p>
+      <p class="block required">
+        <label for="address_country_id">Country</label>
+        <%= error_message_on "address", "country_id", "Country " %>
+        <%= a.select :country_id, Country.find(:all).collect {|r| [ r.name, r.id ] }, 
+                                  { :include_blank => true },
+                                  { :class => "text", :id => "address_country_id" } %>
+      </p>
+      <p class="block required" id="address_region_id_field">
+        <label for="address_region_id">State/Region</label>
+        <%= error_message_on "address", "region_id", "State/Region " %>
+        <%= a.select :region_id, Region.find(:all).collect {|r| [ r.name, r.id ] }, 
+                                 { :include_blank => true },
+                                 { :class => "text", :id => "address_region_id" } %>
+      </p>
+      <p class="block required">
+        <label for="address_postal_code">Zip/Postal Code <a href="http://zip4.usps.com/zip4/welcome.jsp" target="_blank">[?]</a></label>
+        <%= error_message_on "address", "postal_code", "Zip/Postal Code " %>
+        <%= a.text_field :postal_code, { :class => "text" } %>
+      </p>
+    <% end %>
+    </div>
+    
+    <div class="column span-14 last">
+      <h3>Hours</h3>
+  
+      <p>
+        <input id="add_hours" name="add_hours" type="radio" value="false" checked="true" onclick="javascript:hoursChanged(this.value)" />
+        Don't specify hours for this location right now.
+      </p>
+      <p>
+        <input id="add_hours" name="add_hours" type="radio" value="true" onclick="javascript:hoursChanged(this.value)" />
+        Specify hours for this location right now.
+      </p>
+      
+     
+      <ul id="hours">
+        <% days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] %>
+        <% days.each_with_index do |day, index| %>
+        <% fields_for 'hours['+index.to_s+']', @arcade.hours do |h| %>
+        <li class="clear">
+          <span class="dayofweek"><%= day %>:</span>
+          <span id="<%= day.downcase %>_hours" class="from_to">
+           <%= h.hidden_field :dayofweek, :value => index %>
+           <%= h.text_field :start, { :class => "text", :value => "12:00 PM", :size => 8 } %> to&nbsp;&nbsp;
+           <%= h.text_field :end, { :class => "text", :value => "12:00 AM", :size => 8 } %>  
+<!--            <input type="text" size="8" id="<%= day.downcase %>_from" name="<%= day.downcase %>_from" value="10:00 AM" class="text" />  to&nbsp;&nbsp;
+            <input type="text" size="8" id="<%= day.downcase %>_to" name="<%= day.downcase %>_to" value="12:00 PM" class="text"/>
+-->
+          </span>
+          <span class="options">
+            <input type="checkbox" value="<%= day.downcase %>" name="<%= day.downcase %>_closed" id="<%= day.downcase %>_closed" onChange="javascript:closedChanged(this.value, !this.checked)" /><label for="<%= day.downcase %>_closed">Closed</label>
+            <% if day == 'Mon' %><a href="javascript:fill_down();" class="down">Copy to all days</a><% end %>
+          </span>
+        </li>
+        <% end %>
+        <% end %>
+      </ul>
+      
+      <p>
+        <%= submit_tag "Next »" %>
+      </p>
+        
+    </div>
+  <% end %>
+</fieldset>
+
+<%= link_to 'Back', arcades_path %>
+
+
+<!--  « Back-->

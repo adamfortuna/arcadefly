@@ -11,7 +11,7 @@
 	<%= link_to(user.login, user_path(user), :class => 'main' ) %>
 	
 	<% if parent == :user %>
-	  <span class="count">Lives in <%= user.address.short_line %></span>
+	  <span class="count"><% if user.has_address? %>Lives in <%= user.address.short_line %><% end %></span>
 	<% elsif parent == :arcade %>
 	  <span class="count"><%= pluralize(user.frequentships_count, "favorite arcade") %></span>
 	<% elsif parent == :game %>
