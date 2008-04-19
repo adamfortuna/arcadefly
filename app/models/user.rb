@@ -36,7 +36,6 @@ class User < ActiveRecord::Base
   validates_length_of       :password, :within => 4..40, :if => :password_required?
   validates_confirmation_of :password,                   :if => :password_required?
   
-  validates_length_of       :about, :within => 3..10000
   validates_associated :address
   
   before_save :encrypt_password

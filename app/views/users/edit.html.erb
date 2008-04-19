@@ -23,7 +23,9 @@
       <p class="block required">
         <label for="user_old_password">Current Password</label>
         <%= error_message_on "user", "current_password", "Current Password " %>
+        <% if @user.errors[:current_password] %><div class="fieldWithErrors"><% end %>
         <input class="text" id="user_old_password" name="old_password" size="30" type="password" />
+          <% if @user.errors[:current_password] %></div><% end %>
       </p>
       <p class="block required">
         <label for="user_password">New Password</label>

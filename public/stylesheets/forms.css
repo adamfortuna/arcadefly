@@ -1,0 +1,24 @@
+/* General look and feel of main buttons */
+input[type="button"] { padding:.3em; }
+input[type="submit"] { padding:.4em; }
+
+input[type="submit"].inline { position:absolute; margin-top: .3em; }
+/* Forms */
+input[type="text"],input[type="password"]  { width: 300px; }
+select.text, select.title  { width: 310px; margin:0.5em 0.5em 0.5em 0; border:1px solid #bbb; background:#f6f6f6; padding:5px; }
+select.text:focus, select.title:focus { border:1px solid #999; background:#fff; }
+select.title { font-size:1.5em; }
+
+/* Errors */
+div.formError { color: red; }
+div.fieldWithErrors input, div.fieldWithErrors select, div.fieldWithErrors textarea { border-color: red; }
+div.fieldWithErrors input.text:focus, div.fieldWithErrors input.title:focus         { border-color: red; background:#fff; }
+
+/* Handle required and disabled fields  */
+p.required label:before { content: "* "; }
+.disabled { font-weight: lighter; color: #ababab; }
+.disabled p.required label:before { content: ""; }
+
+p.block { margin: 0 0 .3em 0; }
+p.block label { display:block; padding:0; margin:0; }
+

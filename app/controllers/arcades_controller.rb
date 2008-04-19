@@ -16,7 +16,7 @@ class ArcadesController < ResourceController::Base
     else
       @collection ||=  Arcade.search(params[:search], params[:page])
     end
-    @playables_count = Arcade.maximum(:playables_count) * 1.1 if @collection.length > 0
+    @max_count = Arcade.maximum(:playables_count) if @collection.length > 0
     #@playables_count = (@collection.collect do |r| r.playables_count end).max.to_i * 1.1
     @collection.sort_by_distance_from(current_user.address) if logged_in? && current_user.has_address? && @collection.length > 1
     @collection

@@ -18,7 +18,7 @@ class GamesController < ResourceController::Base
     else
       @collection ||= Game.search(params[:search], params[:page])
     end
-    @playables_count = Game.maximum(:playables_count) * 1.1 if @collection.size > 0
+    @playables_count = Game.maximum(:playables_count) if @collection.size > 0
     #@playables_count = (@collection.collect do |r| r.playables_count end).max.to_i * 1.1
     @collection
   end

@@ -4,6 +4,6 @@
 
 <div class="tabbed">
   <ul class="data">
-    <%= render :partial => 'arcades/arcade', :collection => @arcades %>
+    <%= render :partial => 'arcades/arcade', :collection => @arcades, :locals => { :count => 'frequentships_count' } %>
   </ul>
 </div>

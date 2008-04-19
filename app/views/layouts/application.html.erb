@@ -7,6 +7,7 @@
     <%= stylesheet_link_tag 'blueprint/screen.css' %>
     <%= stylesheet_link_tag 'application' %>
     <%= stylesheet_link_tag 'common_classes' %>
+    <%= stylesheet_link_tag 'forms' %>
 
     <%= javascript_include_tag 'prototype' %>
 
@@ -24,7 +25,6 @@
   		  
   		  <div class="column span-12 last">
     		  <ul id="status" class="nav right">
-            <%= nav_link "Help", "/help", { :show_link => false } %>
     		    <%- if logged_in? -%>
               <%= nav_link "Account", settings_path(current_user), { :show_link => false } %>
               <%= nav_link "Logout", "/logout", { :show_link => false } %>
@@ -52,7 +52,7 @@
         </div>
   		</div>
   	</div>
-		
+  	
 		<div id="navigation_row">
   		<div class="container">
   		  <ul id="navigation" class="nav">
@@ -80,6 +80,7 @@
   		<div id="footer" class="container">
   		    <ul class="nav">
   		      <%= nav_link "About ArcadeFly", about_path %>
+            <%= nav_link "Help", help_path %>
   		      <%= nav_link "Contact Us", contact_path %>
   		      <%= nav_link "Terms of Use", terms_path %>
   		      <%= nav_link "Privacy Policy", privacy_path %>

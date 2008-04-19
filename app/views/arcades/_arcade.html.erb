@@ -1,3 +1,4 @@
+<% count ||= "playables_count" %>
 <li class="<%= cycle("even","odd")%>">
 	<ul class="left-shift admin">
 		<li><%= link_to 'Edit', edit_arcade_path(arcade), :class => 'admin' %></li>
@@ -24,7 +25,7 @@
   	<% end %>
 	</span>
 	
-	<% if @playables_count %>
-	<span class="index" style="width: <%= (arcade.playables_count/@playables_count)*100 %>%">(<%= ((arcade.playables_count/@playables_count)*100) %>%)</span>
-  <% end %>
+	<% if @max_count && @max_count > 0 %>
+	  <span class="index" style="width: <%= (arcade[count]*10/@max_count*10) %>%">(<%= ((arcade[count]*10/@max_count*10)) %>%)</span>
+	<% end %>
 </li>

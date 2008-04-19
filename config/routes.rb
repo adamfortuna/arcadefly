@@ -27,7 +27,7 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
 
   # User account controls
-  map.activate '/activate/:id', :controller => 'user',   :action => 'activate'
+  map.activate '/activate/:id', :controller => 'users',   :action => 'activate'
   map.forgot_password '/forgot_password',    :controller => 'passwords', :action => 'new'
   map.reset_password  '/reset_password/:id', :controller => 'passwords', :action => 'edit'
   map.settings '/users/:id/settings', :controller => 'users', :action => 'edit'
@@ -37,7 +37,8 @@ ActionController::Routing::Routes.draw do |map|
   map.contact  '/contact',  :controller => 'home',    :action => 'contact'
   map.terms '/terms',       :controller => 'home',    :action => 'terms'
   map.privacy '/privacy',   :controller => 'home',    :action => 'privacy'
-  map.welcome '/welcome',   :controller => 'user',    :action => 'welcome'
+  map.welcome '/welcome',   :controller => 'users',    :action => 'welcome'
+  map.help '/help',   :controller => 'help',    :action => 'index'
 
   # Popular 
   map.popular '/popular',                   :controller => 'popular',    :action => 'index'

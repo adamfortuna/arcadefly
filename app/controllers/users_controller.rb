@@ -79,18 +79,19 @@ class UsersController < ResourceController::Base
   end
   
   def update
-    raise if current_user.login != params[:id] && !check_administrator_role
+    raise if current_user.id != params[:id].to_i
         
     @user = User.find(params[:id])
     if params[:change_address]
       @user.address = Address.new(params[:address])
       saved = @user.address.save
     elsif params[:change_password]
+      @user.password = params[:user][:password]
+      @user.password_confirmation = params[:user][:password_confirmation]
       if !@user.authenticated?(params[:old_password])
+        @user.valid?
         @user.errors.add('current_password', 'is not correct. Please re-enter it.')
       else
-        @user.password = params[:user][:password]
-        @user.password_confirmation = params[:user][:password_confirmation]
         saved = @user.save
       end
     elsif params[:change_username]
@@ -104,11 +105,14 @@ class UsersController < ResourceController::Base
     if saved
       flash[:notice] = (@user == current_user) ? "Your user account has been updated!" : "User updated."
       redirect_to :action => 'show', :id => @user
+      return
     else
       flash[:error] = 'There was a problem updating your account. Check out the error details below.'
       render :action => 'edit'
+      return
     end
   end
+
   
   def destroy
     @user = User.find(params[:id])

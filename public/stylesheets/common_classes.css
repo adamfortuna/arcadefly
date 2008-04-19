@@ -1,20 +1,17 @@
-.even { background-color: #efefef; }
+/* Very general classes */
 .clear { clear: both; }
 .clear-left { clear: left; }
 .clear-right { clear: right; }
-p.block { margin: 0 0 .3em 0; }
-p.block label { display:block; padding:0; margin:0; }
-input.button { padding:.3em; }
-input.big_button { padding:.6em; }
 .block { display: block; }
 .shift-1 { margin-top: 1em; }
 .center { text-align: center; }
-.hidden { display:none; visibility:hidden; }
-span.info { font-size: .8em; line-height: 1.875em; }
-div.info { font-size: .9em; line-height: 1.8em; }
-/*width: 300px; */
+.hide { display:none; visibility: hidden; }
+.hidden { visibility: hidden; }
+.content-height { height: 400px; }
+span.info, div.info { font-size: .8em; line-height: 1.875em; }
+legend { padding: 0 .5em; }
 
-/*  For horizontal lists */
+/*  For general horizontal lists */
 ul.nav li { display: inline; border-right: 1px solid #ccc; padding: 0 .5em; }
 ul.nav li:last-child { border: none; }
 ul.nav li a, ul.nav li a:visited { color: #369; text-decoration: none; }
@@ -23,22 +20,18 @@ ul.nav li a:hover, ul.nav li a:active { text-decoration: underline; }
 /* Data lists */
 ul.data a { color: #2D7BB2; text-decoration: none; font-weight: bold; }
 ul.data a:hover { color: #333; }
-/*ul.data { border-top: 1px solid #EEE; } */
 ul.data li { position: relative; display: block; border-bottom: 1px solid #EEE; _zoom: 1;}
 ul.data li a.main {display: block;  padding: 0.4em 4.5em 0.4em 0.5em; position: relative; z-index: 2; }
 ul.data li .count { display: block; position: absolute; top: 0; right: 0; margin: 0 0.3em; text-align: right; color: #999; font-weight: bold; font-size: 0.875em; line-height: 2em; z-index:2; }
 ul.data li .favorite { display: inline; position:absolute; top:0; padding-left:1em; }
 ul.data li .soft { color: #999; font-weight: bold; font-size: 0.875em; line-height: 2em; z-index:2; }
 ul.data li a.favorite_add, ul.data li a.favorite_delete { display: inline;  padding: 1em; position: relative; z-index: 2; }
-
 ul.data li:hover { background-color: #ddd; }
 ul.data li span.index { display: block; position: absolute; top: 0; left: 0; height: 100%; background: #B8E4F5; text-indent: -9999px; overflow: hidden; line-height: 2em; z-index:1; }
 ul.data li span.index:hover { background: #9fbceb; }
-
 ul.content li .count { clear:left; position: relative; top:1em; }
 ul.content li a { display: inline; }
-
-ul.left-shift { position:absolute; left:-150px; }
+ul.left-shift { position:absolute; left:-150px; } /* Used to shirt some menus beyond the main data */
 
 /* Very cool tabs from  http://www.simplebits.com/bits/css_tabs.html */
 ul.tabs { height: 2.6em; padding: 0 20px; background: url(../images/tab_bottom.gif) repeat-x bottom; clear: both; }
@@ -54,20 +47,18 @@ ul.tabs a.games:hover { background-color: #fcc; }
 ul.tabs a.users { background-color: #ded; }
 ul.tabs a.users:hover { background-color: #cec; }
 
+/* Right aligned tabs */
 ul.right-tabs { position:relative; top:-4em; }
 ul.right-tabs li { float: right; }
 .tabbed ul.right-tabs { top: -3.5em; }
-
-
 .right-tabbed { position:relative; top:-4em; }
 .tabbed .right-tabbed { top:0em; }
 
 /* Pad the div below a ul.tab so that it has a left padding to match the first tab. */
-div.tabbed { padding: 1em 0 1em 20px; margin-right:20px;}
-
+div.tabbed { padding: 1em 0 1em 20px; margin-right:20px; }
 
 /* Styled boxes, usually on the right with additional text */
-div.box { border: 1px solid #ccc; background-color:#f6f6f6; }
+.box { border: 1px solid #ccc; background-color:#f6f6f6; }
 
 /* Pagination */
 .pagination { padding: 3px; margin: 3px; }
@@ -76,53 +67,20 @@ div.box { border: 1px solid #ccc; background-color:#f6f6f6; }
 .pagination span.current { padding: 2px 5px 2px 5px; margin: 2px; border: 1px solid #000099; font-weight: bold; background-color: #3b5998; color: #FFF; }
 .pagination span.disabled { padding: 2px 5px 2px 5px; margin: 2px; border: 1px solid #ccc; color: #bbb; }
 
-/* Title describing a data list */
-h3.title { }
-
 /* Cool links and buttons */
-
-.key { background-image:url(blueprint/plugins/buttons/icons/key.png) no-repeat bottom; }
 .admin, .admin:link { color: red; }
 ul.admin { display: inline; }
 ul.admin li { display: inline; float:left; }
 
-.map { border: 1px solid #ccc; margin-bottom:1em; }
-
-div.map_big { width: 100%; height: 350px; padding-bottom: 1em; }
-div.map_medium { margin-top: 1em; }
-div.map_small { width: 300px; height:250px; padding: 1em; }
-div.map_small_width { width: 300px; }
-
-ul.map_list { }
-ul.map_list li { clear: both; padding:.2em .2em .2em .5em; }
-
+/* Elements that require secial attention for inline scrolling */
 .scrollable { overflow-x: hidden; overflow-y: scroll; }
 ul.scrollable li { clear: both; }
 ul.scrollable li:hover { background-color: #ddd; }
 ul.scrollable li label { display: block; font-weight:normal; }
 
-.content-height { height: 400px; }
-
-p.block input.text { width: 300px; }
-select.text, select.title   { width: 310px; margin:0.5em 0.5em 0.5em 0; }
-select.text, select.title   { border:1px solid #bbb; background:#f6f6f6; padding:5px; }
-select.text:focus,
-select.title:focus         { border:1px solid #999; background:#fff; }
-select.title               { font-size:1.5em; }
-
-
-/* Errors */
-div.formError { color: red; }
-div.fieldWithErrors input, div.fieldWithErrors select, div.fieldWithErrors textarea { border-color: red; }
-div.fieldWithErrors input.text:focus, div.fieldWithErrors input.title:focus         { border-color: red; background:#fff; }
-
-/* Forms */
-p.required label:before { content: "* "; }
-
-/* Lists within a box */
-.box ul li.current { background-color: #6d84b4; }
-.box ul li.current a { color: white; }
-.box ul li a { text-decoration: none; }
+/* Default colors for rows */
+.even { background-color: #efefef; }
+.odd { }
 
 /* Notices */
 .error, .notice, .warning    { padding: .8em; margin-bottom: 1em; }
@@ -130,9 +88,7 @@ div.notice { background-color: #CFC; border: solid 1px #6C6; }
 div.warning { background-color: #DD9A24; border: solid 1px #DD9A24; }
 div.error { background-color: #FCC; border: solid 1px #C66; }
 
-.disabled label { font-weight:lighter; }
-.disabled p.required label:before { content: ""; }
-
+/* Counts displayed on an arcade/game/user page */
 span.counts { border: 1px solid #ccc; margin-left:1em; }
 span.counts a { display:block; padding:1em 1em 1em 1em; font-weight: bold; }
 span.counts a:first-child { border-bottom: 1px solid #ccc;}
@@ -143,5 +99,15 @@ a.games:hover { background-color: #fcc; }
 a.users { background-color: #ded; }
 a.users:hover { background-color: #cec; }
 
+/* Graphics for adding/removing something from favorites */
 a.favorite_add { background: url(../../images/heart_add.png) no-repeat left; }
 a.favorite_delete { background: url(../../images/heart_delete.png) no-repeat left; }
+
+/* Global Map settings */
+.map { border: 1px solid #ccc; margin-bottom: 1em; }
+div.map_big { width: 100%; height: 350px; padding-bottom: 1em; } /* Entire Page Map */
+div.map_medium { margin-top: 1em; } /* List Map */
+div.map_small { width: 300px; height:250px; padding: 1em; } /* Profile Map */
+div.map_small_width { width: 300px; }
+
+ul.map_list li { clear: both; padding:.2em .2em .2em .5em; }

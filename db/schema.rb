@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 14) do
+ActiveRecord::Schema.define(:version => 115) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "addressable_id"

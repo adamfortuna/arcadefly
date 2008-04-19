@@ -1,16 +1,51 @@
+<% content_for(:header) do %>
+  <script>
+    function gotoGame(game_id) {
+      window.location += 'games/'+game_id;
+      return false
+    }
+  </script>
+<% end %>
+
 <% title "Welcome to ArcadeFly.com!" %>
-
-<h3>What is ArcadeFly.com?</h3>
 <p>
-  We are a place to find where to play arcade games! Have you ever had a game in mind but not known where you could go to play it?
-</p>
-<p>
-  <b>Here's a few sample questions you might want to ask:</b>
-  <ul>
-    <li>Where can I play <a href="/games/dance_dance_revolution_supernova">Dance Dance Revolution Supernova</a> near Orlando, Florida?</li>
-    <li>What <a href="/arcades/disney_quest/games">games</a> are available at <a href="/arcades/disney_quest">Disney Quest</a>?
-  </ul>
+  We have 3 simple goals...
 </p>
 
-<h3>How does signing up help me?</h3>
-<p>If you sign up and provide your address, we'll be able to show arcades that are closest to you. We'll even be able to work out what games are hot in your area.</p>
+<ul>
+  <li>
+    <%= link_to "Help you find Arcades", arcades_path, { :class=>"box center span-7 column" } %>
+  </li>
+  <li>
+    <%= link_to "Help you find the games you want to play", games_path, { :class=>"box center span-7 column" } %>
+    
+  </li>
+  <li>
+    <%= link_to "Help you find other gamers to hang out with", users_path, { :class=>"box center span-7 column right" } %>
+  </li>
+</ul>
+
+<div>
+  <fieldset class="column span-11">
+    <legend>Find an Arcade Near You</legend>
+    <p>Want to see arcades in your area? Just enter your address! You can also <%= link_to "Register", signup_path %> anytime and we'll save your address for later.
+    
+    <p class="block">
+      <label for="address">Enter your Address<label>
+      <%= text_field_tag :address, '', { :class => 'text' } %>  
+      <%= submit_tag "Find!", :class => 'inline' %>
+    </p>
+  </fieldset>
+
+  <fieldset class="column span-11 last right">
+  <legend>Find an Arcade to Play a Game</legend>
+    <% form_tag({ :controller => 'games' }, { :method => 'get', :onsubmit => "gotoGame($F('game_id'));" } ) do %>
+    <p>Looking for a place to play a specific game? Check out the <%= link_to "Games section", games_path %> or choose from the most popular games.
+    <p class="block">
+      <label for="game_id">Find a Game<label>
+      <%= select_tag :game_id, options_from_collection_for_select(@games, "to_param", "name"), { :class => "text" } %>
+      <%= submit_tag "Find!", :class => 'inline', :onclick => 'return gotoGame($F("game_id"));' %>
+    </p>
+    <% end %>
+  </fieldset>
+</div>
