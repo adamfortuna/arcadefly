@@ -105,9 +105,10 @@
     <div class="right append-1" id="address">
       <%= render :partial => 'shared/address', :locals => { :address => @user.address } %>
     </div>
-    
-    <p class="clear-left prepend-4">
-      <br/><br/><%= submit_tag 'Register', { :disable_with => 'Registering...' } %>
-    </p>
+
+    <p class="shift-2 center right clear-right span-11">
+      <%= submit_tag 'Register', { :disable_with => 'Registering...' } %>
+    </p
+
     <% end -%>
   </fieldset>

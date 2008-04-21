@@ -4,11 +4,6 @@
     
 <%- address.title = "My Home" if address.title.nil? %>
   <% fields_for :address, address do |a| %>
-    <p class="block required">
-      <label for="address_title">Title for this Address</label>
-      <%= error_message_on "address", "title", "Title " %>
-      <%= a.text_field :title, { :class => "text" } %>
-    </p>
     <p class="block">	
       <label for="address_street">Street</label>
 	  <span class="block info">For pinpoint accurate mapping, please include a street. This will be private.</span>

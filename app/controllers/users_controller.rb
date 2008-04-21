@@ -63,6 +63,7 @@ class UsersController < ResourceController::Base
     @user = User.new(params[:user])
     if params[:add_address]
       @user.address = Address.new(params[:address])
+      @user.title = "My Home"
     end
     @user.save!
     
