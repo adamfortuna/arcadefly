@@ -11,13 +11,7 @@ fieldset p label { font-size: 120%; }
 
 ul#status li { font-weight: bold; }
 
-span#login_status { font-size: 80%; float:right; clear:both; }
-
-#header fieldset#quick_search { border: none; clear: both; margin: 1em 0 0 1em; padding:0; }
-#header fieldset#quick_search legend { display: none; }
-#header fieldset#quick_search label { display: none; }
-#header fieldset#quick_search input { font-size:130%; padding:.2em; }
-
+span#login_status { font-size: 90%; }
 
 /* Navigation */
 #navigation_row { background-color: #3b5998;}
@@ -27,11 +21,9 @@ ul#navigation li a { padding: .5em; font-size: 130%; color: white;}
 ul#navigation li a, ul#navigation li a:visited { text-decoration: none; }
 ul#navigation li a:hover, ul#navigation li a:active { background-color: #6d84b4; }
 
-
 /* Content */
 #content_row { background-color: white; margin:0; padding-bottom: 5em; border:1px solid white; }
 #content { padding-top: 1em; position:relative; }
-
 
 /* Footer */
 #footer_row { background-color: #f1f1f1; border-top: 1px solid #ddd; }

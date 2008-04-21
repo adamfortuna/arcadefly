@@ -4,12 +4,15 @@
 .clear-right { clear: right; }
 .block { display: block; }
 .shift-1 { margin-top: 1em; }
+.shift-2 { margin-top: 2em; }
 .center { text-align: center; }
 .hide { display:none; visibility: hidden; }
 .hidden { visibility: hidden; }
 .content-height { height: 400px; }
 span.info, div.info { font-size: .8em; line-height: 1.875em; }
 legend { padding: 0 .5em; }
+.framed { border:1px solid #ccc; background-color:#ddd; padding:.5em;}
+img { margin:0; padding:0; }
 
 /*  For general horizontal lists */
 ul.nav li { display: inline; border-right: 1px solid #ccc; padding: 0 .5em; }
@@ -56,6 +59,8 @@ ul.right-tabs li { float: right; }
 
 /* Pad the div below a ul.tab so that it has a left padding to match the first tab. */
 div.tabbed { padding: 1em 0 1em 20px; margin-right:20px; }
+div.right-space { padding: 1em 0 1em 0; margin-right:20px; }
+div.tabbed-map { padding: 0em 0 1em 0; clear:both; }
 
 /* Styled boxes, usually on the right with additional text */
 .box { border: 1px solid #ccc; background-color:#f6f6f6; }
@@ -100,8 +105,8 @@ a.users { background-color: #ded; }
 a.users:hover { background-color: #cec; }
 
 /* Graphics for adding/removing something from favorites */
-a.favorite_add { background: url(../../images/heart_add.png) no-repeat left; }
-a.favorite_delete { background: url(../../images/heart_delete.png) no-repeat left; }
+.favorite_add { background: url(../../images/heart_add.png) no-repeat left; padding-left:2em; }
+.favorite_delete { background: url(../../images/heart_delete.png) no-repeat left; padding-left:2em; }
 
 /* Global Map settings */
 .map { border: 1px solid #ccc; margin-bottom: 1em; }

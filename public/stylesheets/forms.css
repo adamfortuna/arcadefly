@@ -2,7 +2,9 @@
 input[type="button"] { padding:.3em; }
 input[type="submit"] { padding:.4em; }
 
-input[type="submit"].inline { position:absolute; margin-top: .3em; }
+input.inline { position:absolute; margin-top: .3em; }
+
+
 /* Forms */
 input[type="text"],input[type="password"]  { width: 300px; }
 select.text, select.title  { width: 310px; margin:0.5em 0.5em 0.5em 0; border:1px solid #bbb; background:#f6f6f6; padding:5px; }
