@@ -3,24 +3,15 @@
 
 <% content_for(:header) do %>
   <script>
-	function fill_down() {
-	  var start = $F('hours_0_start');
-	  var to = $F('hours_0_end');
-	  
-	  $('hours_1_start').value = start;
-	  $('hours_2_start').value = start;
-	  $('hours_3_start').value = start;
-	  $('hours_4_start').value = start;
-	  $('hours_5_start').value = start;
-	  $('hours_6_start').value = start;
-	  
-	  $('hours_1_end').value = to;
-    $('hours_2_end').value = to;
-    $('hours_3_end').value = to;
-	  $('hours_4_end').value = to;
-    $('hours_5_end').value = to;
-	  $('hours_6_end').value = to;
+	function fill_down(start, stop) {
+	  $$('#hours input.start').each( function(e) {
+  	  $(e).value = start;
+	  });
+	  $$('#hours input.end').each( function(e) {
+  	  $(e).value = to;
+	  });
 	}
+	
 	
 	function closedChanged(day, show) {
 	  if (show)
@@ -29,15 +20,35 @@
 	    $(day+'_hours').style.visibility = 'hidden';
 	}
 	
-	function hoursChanged(display) {
-	  console.log(display);
-	  if (display) {
-	    $('hours').show();
-	  } else {
-	    $('hours').hide();
-	  }
-	  return;
+	function hoursChanged(showAddHours) {
+	  $$('#hours input').each( function(e) {
+      if (showAddHours) {
+  			$(e).removeClassName('disabled');
+  			$(e).disabled = '';
+  		}	else {
+  			$(e).addClassName('disabled');
+  			$(e).disabled = 'disabled';
+  		}	
+	  });
+	  $$('#hours label').each( function(e) {
+      if (showAddHours) {
+  			$(e).removeClassName('disabled');
+  		}	else {
+  			$(e).addClassName('disabled');
+  		}	
+	  });
 	}
+	
+	  Event.observe(window, 'load', function() {
+      Form.focusFirstElement('new_arcade_form');
+      hoursChanged(false);
+      $('hide_hours').observe('click', function() {
+        hoursChanged(false);
+      });
+      $('show_hours').observe('click', function() {
+        hoursChanged(true);
+      });
+    });
   </script>
   
   <style>
@@ -59,13 +70,14 @@
     diplay:block;
     float:left;
   }
+  ul#hours li input.text { width:70px; }
   </style>
 <% end %>
 
 <fieldset class="span-24">
   <legend>Editing <%= @arcade.name %></legend>
 
-  <% form_for(:arcade, :url => new_arcade_1_path) do |f| %> 
+  <% form_for(:arcade, :url => new_arcade_1_path, :html => { :id => 'new_arcade_form' }) do |f| %> 
   
     <div class="column span-10">
       <p class="block">
@@ -111,32 +123,29 @@
       <h3>Hours</h3>
   
       <p>
-        <input id="add_hours" name="add_hours" type="radio" value="false" checked="true" onclick="javascript:hoursChanged(this.value)" />
-        Don't specify hours for this location right now.
+        <input id="hide_hours" name="add_hours" type="radio" value="false" checked="true" />
+        <label for="hide_hours">Don't specify hours for this location right now.</label>
       </p>
       <p>
-        <input id="add_hours" name="add_hours" type="radio" value="true" onclick="javascript:hoursChanged(this.value)" />
-        Specify hours for this location right now.
+        <input id="show_hours" name="add_hours" type="radio" value="true" />
+        <label for="show_hours">Specify hours for this location now.</label>
       </p>
       
      
       <ul id="hours">
-        <% days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] %>
-        <% days.each_with_index do |day, index| %>
-        <% fields_for 'hours['+index.to_s+']', @arcade.hours do |h| %>
+        <% @arcade.hours.each do |hour| %>
+        <% fields_for 'hours', hour do |h| %>
         <li class="clear">
-          <span class="dayofweek"><%= day %>:</span>
-          <span id="<%= day.downcase %>_hours" class="from_to">
-           <%= h.hidden_field :dayofweek, :value => index %>
-           <%= h.text_field :start, { :class => "text", :value => "12:00 PM", :size => 8 } %> to&nbsp;&nbsp;
-           <%= h.text_field :end, { :class => "text", :value => "12:00 AM", :size => 8 } %>  
-<!--            <input type="text" size="8" id="<%= day.downcase %>_from" name="<%= day.downcase %>_from" value="10:00 AM" class="text" />  to&nbsp;&nbsp;
-            <input type="text" size="8" id="<%= day.downcase %>_to" name="<%= day.downcase %>_to" value="12:00 PM" class="text"/>
--->
+          <span class="dayofweek"><%= hour.dayofweek.capitalize %>:</span>
+          <span id="<%= hour.dayofweek %>_hours" class="from_to">
+          <%= h.hidden_field :dayofweek, :value => hour.dayofweek %>
+          <%= h.text_field :start, { :class => "text", :value => "12:00 PM", :size => 8 } %> to&nbsp;&nbsp;
+          <%= h.text_field :end, { :class => "text", :value => "12:00 AM", :size => 8 } %>  
           </span>
           <span class="options">
-            <input type="checkbox" value="<%= day.downcase %>" name="<%= day.downcase %>_closed" id="<%= day.downcase %>_closed" onChange="javascript:closedChanged(this.value, !this.checked)" /><label for="<%= day.downcase %>_closed">Closed</label>
-            <% if day == 'Mon' %><a href="javascript:fill_down();" class="down">Copy to all days</a><% end %>
+            <%= check_box_tag 'hours[][closed]', true, false, { :onchange => 'javascript:closedChanged(this.value, !this.checked);' } %>
+            <label for="hours_closed">Closed</label>
+            <% if hour.dayofweek == 'Mon' -%><a href="javascript:fill_down();" class="down">Copy to all days</a><% end %>
           </span>
         </li>
         <% end %>

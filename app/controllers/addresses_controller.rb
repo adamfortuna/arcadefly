@@ -5,7 +5,7 @@ class AddressesController < ApplicationController
     unless params[:user_id]
       @addresses = Address.find(:all)
     else
-      @addresses = [current_user.address]
+      @addresses = current_user.address
     end
     
     respond_to do |format|
@@ -20,7 +20,7 @@ class AddressesController < ApplicationController
     unless params[:user_id]
       @address = Address.find(params[:id])
     else
-      @address = current_user.address
+      @address = current_address
     end
     
     respond_to do |format|
@@ -39,25 +39,35 @@ class AddressesController < ApplicationController
     unless params[:user_id]
       @address = Address.find(params[:id])
     else
-      @address = current_user.address
+      @address = current_address
     end
   end
 
   # POST /addresses
   # POST /addresses.xml
   def create
-    @address = Address.new(params[:address])
-
-    respond_to do |format|
-      if @address.save
-        flash[:notice] = 'Address was successfully created.'
-        format.html { redirect_to address_url(@address) }
-        format.xml  { head :created, :location => address_url(@address) }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @address.errors.to_xml }
-      end
+    raise if !params[:address]
+    loc = Address.geocode(params[:address])
+    
+    region = Region.find_by_abbreviation(loc.state)
+    country = Country.find_by_alpha_2_code(loc.country_code)
+    
+    current_address = Address.create(:addressable_type => 'Session', 
+                                     :region => region,
+                                     :country => country,
+                                     :street => loc.street_address,
+                                     :postal_code => loc.zip,
+                                     :city => loc.city)
+    if current_address.valid?
+      session[:address] = current_address.id
+      redirect_to arcades_distance_path
+    else
+      flash[:error] = "We had trouble finding out just where your address is. Are you sure you typed it correctly?"
+      root_path
     end
+  rescue
+    flash[:error] = "We had trouble finding out just where your address is. Are you sure you typed it correctly?"
+    redirect_to root_path
   end
 
   # PUT /addresses/1

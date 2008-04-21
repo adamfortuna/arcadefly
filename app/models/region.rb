@@ -17,6 +17,14 @@ class Region < ActiveRecord::Base
   validates_uniqueness_of :abbreviation,
                           :scope => :country_id
 
+  def to_param
+    "#{id}-#{url_safe(name)}"
+  end
+  
+  def url_safe(param)
+    param.downcase.gsub(/[^[:alnum:]]/,'-').gsub(/-{2,}/,'-')
+  end
+  
   def to_s #:nodoc
     name
   end

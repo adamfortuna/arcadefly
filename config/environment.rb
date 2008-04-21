@@ -124,3 +124,7 @@ class Array
    array_to_concat.nil? ? [] : pagination_array.concat(array_to_concat)
  end
 end
+
+
+AMS_KEY = "096RRJ93PTDQPZZ44802"
+AMAZON_ASSOCIATES_ID = "adamfortuna-20"

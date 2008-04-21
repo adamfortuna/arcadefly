@@ -1,5 +1,4 @@
 <% title "Arcades Map" -%>
-<% stylesheet "map" %>
 
 <% content_for(:header) do %>
   <%= GMap.header %>
@@ -7,18 +6,19 @@
 	<%= @map.to_html %>
 <% end %>
 
-<ul class="tabs right-tabs">
-  <%= nav_link "Map", "/arcades/map" %>
-  <%= nav_link "List", "/arcades" %>
-</ul>
+<%= render :partial => 'arcades/list_menu', :locals => { :map => true } %>
 
-<div class="clear right-tabbed">
+<div class="tabbed-map">
   <ul class="left data span-10 scrollable content-height map shift-1 content map_list">
     <%= render :partial => 'arcades/arcade_map', :collection => @arcades %>
   </ul>
   <%= @map.div(:class => 'right prepend-1 span-13 last map_medium content-height map') %>
-</div>
 
-<ul class="clear right-tabbed">
-  <%= link_to 'New arcade', new_arcade_path, :class => 'admin' %>
-</ul>
+
+  <p>
+    <%= will_paginate @arcades %>
+    <% if role?('arcade_editor') %>
+      <%= link_to 'New arcade', new_arcade_path, :class => 'admin' %>
+    <% end %>
+  </p>
+</div>

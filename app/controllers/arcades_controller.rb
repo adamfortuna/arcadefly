@@ -7,18 +7,17 @@ class ArcadesController < ResourceController::Base
     # GET /arcades/1/games
     if parent_type == :game
       @game = Game.find(params[:game_id], :include => 'arcades')
-      @collection = @game.arcades
+      @collection = @game.arcades.paginate :page => params[:page], :order => 'name', :per_page => Arcade::PER_PAGE
     # GET /users/adam/games
     elsif parent_type == :user
       @user = User.find(params[:user_id], :include => 'arcades')
-      @collection = @user.arcades
+      @collection = @user.arcades.paginate :page => params[:page], :order => 'name', :per_page => Arcade::PER_PAGE
     # GET /games
     else
-      @collection ||=  Arcade.search(params[:search], params[:page])
+      @collection =  Arcade.search(params[:search], params[:page])
+      @collection.sort_by_distance_from(current_address) if addressed_in? && @collection.length > 1
     end
     @max_count = Arcade.maximum(:playables_count) if @collection.length > 0
-    #@playables_count = (@collection.collect do |r| r.playables_count end).max.to_i * 1.1
-    @collection.sort_by_distance_from(current_user.address) if logged_in? && current_user.has_address? && @collection.length > 1
     @collection
   end
   
@@ -38,11 +37,37 @@ class ArcadesController < ResourceController::Base
     if parent_type == :game
       render :template => "games/arcades_list" 
     elsif parent_type == :user
-      render :template => "users/arcades"
+      render :template => "users/arcades_list"
     else
       render :template => "arcades/index"
     end
   }
+
+  def browse
+    @countries = Country.find(:all, :include => :addresses, :conditions => 'addresses.addressable_type="Arcade"', :order => 'countries.name')
+    @regions = Region.find(:all, :include => :addresses, :conditions => 'addresses.addressable_type="Arcade"', :order => 'regions.name')
+  end
+  
+  # GET /arcades/countries/:id
+  # :id will be the region id
+  def country
+    @arcades = Arcade.search_by_country(params[:id], params[:page])
+    @max_count = Arcade.maximum(:playables_count, :include => :address, :conditions => ['addresses.country_id = ?', params[:id]]) if @arcades.length > 0
+    render :template => "arcades/arcades"
+  end
+
+  # GET /arcades/regions/:id
+  # :id will be the region id
+  def region
+    @arcades = Arcade.search_by_region(params[:id].to_i, params[:page])
+    @max_count = Arcade.maximum(:playables_count, :include => :address, :conditions => ['addresses.region_id = ?', params[:id]]) if @arcades.length > 0
+    render :template => "arcades/arcades"
+  end
+
+  def distance
+    @arcades = collection
+    render :template => "arcades/arcades"
+  end
 
   # One page form for creating a new arcade (currently doesnt work with games or address)
   def new
@@ -54,6 +79,24 @@ class ArcadesController < ResourceController::Base
   def new1
     @arcade = Arcade.new(params[:arcade])
     @arcade.address = Address.new(params[:address])
+    
+    if request.post?
+      if params[:add_hours] == "true"
+        params[:hours].each do |hour|
+          new_hour = Hour.new(hour)
+          @arcade.hours << new_hour
+        end
+      end
+      debugger
+    elsif request.get?
+      @arcade.hours << Hour.new(:dayofweek => 'mon')
+      @arcade.hours << Hour.new(:dayofweek => 'tue')
+      @arcade.hours << Hour.new(:dayofweek => 'wed')
+      @arcade.hours << Hour.new(:dayofweek => 'thu')
+      @arcade.hours << Hour.new(:dayofweek => 'fri')
+      @arcade.hours << Hour.new(:dayofweek => 'sat')
+      @arcade.hours << Hour.new(:dayofweek => 'sun')
+    end
   end
   
   
@@ -67,15 +110,20 @@ class ArcadesController < ResourceController::Base
   # Additional actions
   # GET /arcades/map
   # GET /games/:game_id/arcades/map
+  # GET /user/:user_id/arcades/map
   def list_map
-    if parent?
+    if parent_type == :game
       @game = Game.find(params[:game_id], :include => { :arcades => [{:address => [:region, :country]} ] })
       @arcades= @game.arcades
+    elsif parent_type == :user
+      @user = User.find(params[:user_id], :include => { :arcades => [{:address => [:region, :country]} ] })
+      @arcades = @user.arcades.paginate :page => params[:page], :order => 'name', :per_page => Arcade::PER_PAGE
     else
       @arcades = Arcade.search(params[:search], params[:page])
     end
-
-    @arcades.sort_by_distance_from(current_user.address) if logged_in? && current_user.has_address?
+    
+    # Default code for mapping beyond this point
+    @arcades.sort_by_distance_from(current_address) if addressed_in?
     
     @map = GMap.new("arcades_map")
     @map.control_init(:small_map => true, :map_type => false)
@@ -98,11 +146,10 @@ class ArcadesController < ResourceController::Base
                                       [sorted_latitudes.last, sorted_longitudes.last]])
 
     # Is this the an arcade listing map or a game/arcade listing map?
-    unless not params[:game_id]
-      respond_to do |format|
-        format.html { render :template => 'games/arcades_map' }
-        format.xml  { render :xml => @arcades.to_xml }
-      end
+    if parent_type == :game
+      render :template => 'games/arcades_map'
+    elsif parent_type == :user
+      render :template => 'users/arcades_map'
     end
   end
   
@@ -139,7 +186,7 @@ class ArcadesController < ResourceController::Base
       flash[:error] = "You have already added <b>#{arcade.name}</b> to your list of favorite arcades."
     else
       current_user.arcades.push(arcade)
-      flash[:notice] = "You added <b>#{arcade.name}</b> to your list of favorite arcades!"
+      flash[:notice] = "<span class=\"favorite_add\">You added <b>#{arcade.name}</b> to your list of favorite arcades!</span>"
     end
   end
   
@@ -148,7 +195,7 @@ class ArcadesController < ResourceController::Base
     favorite_arcade.destroy
     #if current_user.has_favorite_arcade?(arcade)
     #  current_user.arcades.delete(arcade)
-      flash[:notice] = "You removed <b>#{arcade.name}</b> from your list of favorite arcades."
+      flash[:notice] = "<span class=\"favorite_delete\">You removed <b>#{arcade.name}</b> from your list of favorite arcades.</span>"
     else
       flash[:error] = "You have not added <b>#{arcade.name}</b> to your list of favorite arcades, so how could you remove it?"
     end

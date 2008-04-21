@@ -10,8 +10,8 @@
 	<span class="count"> in 
 	  <strong><%= arcade.address.city %>, <%= arcade.address.region.name %></strong>
 	  has <%= pluralize(arcade.playables_count, "game") %>
-	  <% if logged_in? &&  current_user.has_address? -%>
-	    and is <%= arcade.address.distance_to(current_user.address).round_to(2) %> miles away
+	  <% if addressed_in? -%>
+	    and is <%= arcade.address.distance_to(current_address).round_to(2) %> miles away
 	  <% end %>
 	  
 	  <% if logged_in? %>

@@ -30,10 +30,10 @@
       <%= link_to "View Map", arcade_map_path(@arcade) %>
     </p>
     
-    <% if logged_in? && current_user.has_address? -%>
+    <% if addressed_in? -%>
     <p>
       <strong>Distance Away: </strong>
-      <%= @arcade.address.distance_to(current_user.address).round_to(2) %> miles
+      <%= @arcade.address.distance_to(current_address).round_to(2) %> miles
     </p>
     <% end %>
     

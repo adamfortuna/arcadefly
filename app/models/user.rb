@@ -1,5 +1,10 @@
 require 'digest/sha1'
+require 'digest/md5'
+
 class User < ActiveRecord::Base
+  
+  PER_PAGE = 50
+  
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 
@@ -14,7 +19,7 @@ class User < ActiveRecord::Base
   
   has_one :address, :as => :addressable 
     
-  validates_presence_of     :login, :email
+  validates_presence_of     :login, :email, :name
   validates_length_of       :login, :within => 3..40
   validates_uniqueness_of   :login, :case_sensitive => false, :message => 'is already taken. Please choose another login.'
   validates_format_of       :login, :with => /^\w+$/i, :message => ' must contain only letters, numbers and underscores.'
@@ -43,7 +48,7 @@ class User < ActiveRecord::Base
 
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :login, :email, :password, :password_confirmation, :about
+  attr_accessible :login, :email, :password, :password_confirmation, :about, :name
 
   class ActivationCodeNotFound < StandardError; end
   class AlreadyActivated < StandardError
@@ -212,6 +217,32 @@ class User < ActiveRecord::Base
     # (games.collect do |a| a.id end).include?(game.id)
   end
 
+
+  # Returns a Gravatar URL associated with the email parameter.
+  def gravatar_url(gravatar_options={})
+
+    # Default highest rating.
+    # Rating can be one of G, PG, R X.
+    # If set to nil, the Gravatar default of X will be used.
+    gravatar_options[:rating] ||= nil
+
+    # Default size of the image.
+    # If set to nil, the Gravatar default size of 80px will be used.
+    gravatar_options[:size] ||= nil 
+
+    # Default image url to be used when no gravatar is found
+    # or when an image exceeds the rating parameter.
+    gravatar_options[:default] ||= nil
+
+    # Build the Gravatar url.
+    grav_url = 'http://www.gravatar.com/avatar.php?'
+    grav_url << "gravatar_id=#{Digest::MD5.new.update(email)}" 
+    grav_url << "&rating=#{gravatar_options[:rating]}" if gravatar_options[:rating]
+    grav_url << "&size=#{gravatar_options[:size]}" if gravatar_options[:size]
+    grav_url << "&default=#{gravatar_options[:default]}" if gravatar_options[:default]
+    return grav_url
+  end
+  
   protected
     # before filter 
     def encrypt_password

@@ -20,7 +20,7 @@
   	<% end %>
 
     <span>
-      in <%= arcade_map.address.city %>, <%= arcade_map.address.region.name %><% if logged_in? &&  current_user.has_address? -%>, <%= arcade_map.address.distance_to(current_user.address).round_to(2) %> miles away,
+      in <%= arcade_map.address.city %>, <%= arcade_map.address.region.name %><% if addressed_in? -%>, <%= arcade_map.address.distance_to(current_address).round_to(2) %> miles away,
         <% end %>
         and has <strong><%= pluralize(arcade_map.playables_count, "game") %></strong>
     </span>

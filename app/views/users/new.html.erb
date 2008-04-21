@@ -69,6 +69,13 @@
       </p>
 	  
       <p class="block required">
+        <label for="user_name">Name</label>
+        <span class="block info">This will not be public.</span>
+        <%= error_message_on "user", "name", "Name " %>
+        <%= f.text_field :name, { :class => 'text'} %>
+      </p>
+
+      <p class="block required">
         <label for="user_email">Email</label>
         <span class="block info">You'll need this to login for the first time.</span>
         <%= error_message_on "user", "email", "Email " %>

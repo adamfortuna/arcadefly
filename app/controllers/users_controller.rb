@@ -9,11 +9,11 @@ class UsersController < ResourceController::Base
     # GET /arcades/1-disney/users
     if parent_type == :arcade
       @arcade = Arcade.find(params[:arcade_id], :include => 'users')
-      @collection = @arcade.users
+      @collection = @arcade.users.paginate :page => params[:page], :order => 'name', :per_page => User::PER_PAGE
     #GET /games/1-ABC/users
     elsif parent_type == :game
       @game = Game.find(params[:game_id], :include => 'users')
-      @collection = @game.users
+      @collection = @game.users.paginate :page => params[:page], :order => 'name', :per_page => User::PER_PAGE
     # GET /users
     else
       @collection = User.find(:all, :include => { :address => [:region, :country] })
@@ -39,7 +39,7 @@ class UsersController < ResourceController::Base
   }
   
   def show
-    @user =  User.find(params[:id], :include => 'address')
+    @user =  User.find(params[:id], :include => [ { :address => [:region] }])
 
     if @user.has_address?
       @map = GMap.new("user_map")
@@ -53,6 +53,7 @@ class UsersController < ResourceController::Base
   # render new.rhtml
   def new
     @user = User.new(params[:user])
+    @user.address = current_address if addressed_in?
     @add_address = params[:add_address] || true
   end
  
@@ -64,6 +65,7 @@ class UsersController < ResourceController::Base
       @user.address = Address.new(params[:address])
     end
     @user.save!
+    
     #Uncomment to have the user logged in after creating an account - Not Recommended
     #self.current_user = @user
     flash[:notice] = "Thanks for signing up, <b>#{@user.login}</b>! Please check your email and click on the link we sent you to activate your account and log in."

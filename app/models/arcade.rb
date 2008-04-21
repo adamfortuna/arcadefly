@@ -20,20 +20,33 @@ class Arcade < ActiveRecord::Base
 	validates_presence_of :address
 	validates_associated :address
 	
-	# Controls how many arcades should be shown per page.
-	cattr_reader :per_page
-	@@per_page = 10
+	PER_PAGE = 30
 	
 	# Method for paginating search. This will return a Pagination object
 	# which can be used in the same way as the result of a regular find
 	# except that it will have additional pagination information.
 	def self.search(search, page)
 		search = "%#{search}" if search and search.length >= 2
-		paginate :per_page => @@per_page, :page => page,
+		paginate :per_page => PER_PAGE, :page => page,
 						 :conditions => ['arcades.name like ?', "#{search}%"],
+		         :order => 'arcades.name, frequentships_count desc',
 						 :include => [{:address => [:region, :country]}]
 	end
-  
+  	
+  def self.search_by_region(region_id, page)
+		paginate :per_page => PER_PAGE, :page => page,
+						 :conditions => ['addresses.region_id = ?', region_id],
+		         :order => 'addresses.city, arcades.name',
+						 :include => [{:address => [:region, :country]}]
+	end
+	
+  def self.search_by_country(country_id, page)
+		paginate :per_page => PER_PAGE, :page => page,
+						 :conditions => ['addresses.country_id = ?', country_id],
+		         :order => 'regions.name, addresses.city, arcades.name',
+						 :include => [{:address => [:region, :country]}]
+	end
+
   def to_param
     "#{id}-#{url_safe(name)}"
   end
@@ -49,7 +62,7 @@ class Arcade < ActiveRecord::Base
   def url_safe(param)
     param.downcase.gsub(/[^[:alnum:]]/,'-').gsub(/-{2,}/,'-')
   end
-	
+	  
 	private
 		# after_save callback to handle group_ids
 		def update_games

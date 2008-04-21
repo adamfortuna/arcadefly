@@ -25,6 +25,6 @@ function countrySelected(selectedValue) {
 }
 
 Event.observe(window, 'load', function() {
-  countrySelected($('address_region_id').value);
+  //countrySelected($('address_region_id').value);
   $('address_country_id').observe('change', countrySelected);
 });

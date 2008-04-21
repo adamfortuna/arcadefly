@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(:version => 115) do
     t.string   "title"
     t.string   "street",                                       :null => false
     t.string   "city",                                         :null => false
-    t.integer  "region_id"
+    t.string   "region_id"
     t.integer  "postal_code",      :limit => 5,                :null => false
     t.integer  "country_id",                    :default => 1, :null => false
     t.float    "lat"
@@ -29,9 +29,10 @@ ActiveRecord::Schema.define(:version => 115) do
   end
 
   create_table "arcades", :force => true do |t|
-    t.string   "name"
+    t.string   "name",                               :null => false
     t.string   "phone"
     t.string   "website"
+    t.integer  "user_id"
     t.integer  "playables_count",     :default => 0
     t.integer  "frequentships_count", :default => 0
     t.datetime "created_at"
@@ -39,13 +40,12 @@ ActiveRecord::Schema.define(:version => 115) do
   end
 
   add_index "arcades", ["name"], :name => "index_arcades_on_name"
+  add_index "arcades", ["user_id"], :name => "index_arcades_on_user_id"
 
   create_table "countries", :force => true do |t|
-    t.string "name",          :limit => 80, :null => false
-    t.string "official_name", :limit => 80
-    t.string "alpha_2_code",  :limit => 2,  :null => false
-    t.string "alpha_3_code",  :limit => 3,  :null => false
-    t.string "calling_code",  :limit => 3
+    t.string "name",         :limit => 80, :null => false
+    t.string "alpha_2_code", :limit => 2,  :null => false
+    t.string "alpha_3_code", :limit => 3,  :null => false
   end
 
   add_index "countries", ["name"], :name => "index_countries_on_name", :unique => true
@@ -71,8 +71,8 @@ ActiveRecord::Schema.define(:version => 115) do
   add_index "frequentships", ["user_id", "arcade_id"], :name => "index_frequentships_on_user_id_and_arcade_id", :unique => true
 
   create_table "games", :force => true do |t|
-    t.string   "name"
-    t.integer  "gamefaqs_id"
+    t.string   "name",                               :null => false
+    t.integer  "gamefaqs_id",                        :null => false
     t.integer  "playables_count",     :default => 0
     t.integer  "favoriteships_count", :default => 0
     t.datetime "created_at"
@@ -85,14 +85,16 @@ ActiveRecord::Schema.define(:version => 115) do
   create_table "hours", :force => true do |t|
     t.integer  "timeable_id"
     t.string   "timeable_type"
-    t.integer  "dayofweek",     :null => false
-    t.time     "start"
-    t.time     "end"
+    t.string   "dayofweek",                       :null => false
+    t.integer  "day",                             :null => false
+    t.time     "start",                           :null => false
+    t.time     "end",                             :null => false
+    t.boolean  "closed",        :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "hours", ["timeable_id", "timeable_type"], :name => "index_hours_on_timeable_id_and_timeable_type", :unique => true
+  add_index "hours", ["timeable_id", "timeable_type", "dayofweek"], :name => "index_hours_on_timeable_id_and_timeable_type_and_dayofweek", :unique => true
 
   create_table "permissions", :force => true do |t|
     t.integer  "role_id",    :null => false
@@ -100,6 +102,8 @@ ActiveRecord::Schema.define(:version => 115) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "permissions", ["user_id", "role_id"], :name => "index_permissions_on_user_id_and_role_id", :unique => true
 
   create_table "playables", :force => true do |t|
     t.integer  "arcade_id",                             :null => false
@@ -113,6 +117,20 @@ ActiveRecord::Schema.define(:version => 115) do
   add_index "playables", ["game_id"], :name => "index_playables_on_game_id", :unique => true
   add_index "playables", ["arcade_id", "game_id"], :name => "index_playables_on_arcade_id_and_game_id", :unique => true
 
+  create_table "products", :force => true do |t|
+    t.integer "game_id",                                       :null => false
+    t.string  "name"
+    t.decimal "purchase_price", :precision => 10, :scale => 2
+    t.decimal "sale_price",     :precision => 10, :scale => 2
+    t.integer "parent_id"
+    t.string  "content_type"
+    t.string  "filename"
+    t.string  "thumbnail"
+    t.integer "size"
+    t.integer "width"
+    t.integer "height"
+  end
+
   create_table "regions", :force => true do |t|
     t.integer "country_id"
     t.string  "name",         :limit => 50, :null => false
@@ -123,14 +141,15 @@ ActiveRecord::Schema.define(:version => 115) do
   add_index "regions", ["abbreviation", "country_id"], :name => "index_regions_on_abbreviation_and_country_id", :unique => true
 
   create_table "roles", :force => true do |t|
-    t.string   "rolename"
+    t.string   "rolename",   :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
-    t.string   "login"
-    t.string   "email"
+    t.string   "login",                                                     :null => false
+    t.string   "email",                                                     :null => false
+    t.string   "name",                                                      :null => false
     t.string   "crypted_password",          :limit => 40
     t.text     "about"
     t.string   "salt",                      :limit => 40

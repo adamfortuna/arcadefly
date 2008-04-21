@@ -14,14 +14,14 @@ class SampleArcades < ActiveRecord::Migration
                                             :postal_code => 32707 )
                   
 
-    Arcade.create :name => 'Beach Gameland', 
-                  :phone => '(727) 444-4494',
+    Arcade.create :name => 'Universal Studios Citywalk-AMC Universal Cineplex', 
+                  :phone => '(407) 354-3374',
                   :address => Address.new ( :title => 'test',
-                                            :street => '483 Mandalay Avenue',
-                                            :city => 'Clearwater Beach',
+                                            :street => '6000 Universal Blvd., Ste 740',
+                                            :city => 'Orlando',
                                             :region => florida,
                                             :country => us,
-                                            :postal_code => 33767 )
+                                            :postal_code => 32819 )
 
     Arcade.create :name => 'Magical Midway', 
                   :phone => '(407) 370-5353',
@@ -93,6 +93,61 @@ class SampleArcades < ActiveRecord::Migration
                                            :region => florida,
                                            :country => us,
                                            :postal_code => 32819 )
+                                           
+    
+    Arcade.create :name => 'Nickelodeon Family Suites',
+                  :phone => '(866) 462-6425',
+                  :address => Address.new( :title => 'test',
+                                           :street => '14500 Continental Gateway',
+                                           :city => 'Orlando',
+                                           :region => florida,
+                                           :country => us,
+                                           :postal_code => 32821 )
+    
+    Arcade.create :name => 'Fun Spot Action Park',
+                  :phone => '(407) 363-3867',
+                  :address => Address.new( :title => 'test',
+                                           :street => '5551 Del Verde Way',
+                                           :city => 'Orlando',
+                                           :region => florida,
+                                           :country => us,
+                                           :postal_code => 32819 )
+    
+    Arcade.create :name => 'Universal Studios - New York Penny Arcade',
+                  :phone => '(407) 363-8000',
+                  :address => Address.new( :title => 'test',
+                                           :street => '1000 Universal Studios Plaza',
+                                           :city => 'Orlando',
+                                           :region => florida,
+                                           :country => us,
+                                           :postal_code => 32837 )
+    
+    Arcade.create :name => 'Sea World Adventure Park',
+                  :phone => '(407) 363-8000',
+                  :address => Address.new( :title => 'test',
+                                           :street => '7007 Sea Harbor Dr.',
+                                           :city => 'Orlando',
+                                           :region => florida,
+                                           :country => us,
+                                           :postal_code => 32821 )
+    
+    Arcade.create :name => 'Regal Cinemas THE LOOP 16',
+                  :phone => '(407) 343-0405',
+                  :address => Address.new( :title => 'test',
+                                           :street => '3232 N. John Young Pkwy.',
+                                           :city => 'Kissimmee',
+                                           :region => florida,
+                                           :country => us,
+                                           :postal_code => 34741 )
+    
+    Arcade.create :name => 'AMC Altamonte Mall 18',
+                  :phone => '(407) 551-2262',
+                  :address => Address.new( :title => 'test',
+                                           :street => '433 East Altamonte Drive ',
+                                           :city => 'Altamonte',
+                                           :region => florida,
+                                           :country => us,
+                                           :postal_code => 32701 )
   end
 
   def self.down

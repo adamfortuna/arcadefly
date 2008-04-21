@@ -1,15 +1,19 @@
 <% title 'Game - ' + @game.name -%>
-
-<%= render :partial => 'games/menu', :locals => { :game => @game, :map => true } %>
+<% show_map = @game.playables_count > 0 %>
+<%= render :partial => 'games/menu', :locals => { :game => @game, :map => show_map } %>
 
 <div class="tabbed">
   <ul class="data">
-    <%= render :partial => 'arcades/arcade', :collection => @game.arcades %>
+    <%= render :partial => 'arcades/arcade', :collection => @arcades %>
   </ul>
   
-  <% if @game.arcades.size == 0 %>
+  <% if @game.playables_count == 0 %>
   <p>We don't know of any arcades that have <strong><%= @game.name %></strong>.</p>
   <% end %>
+  
+  <p>
+    <%= will_paginate @arcades %>
+  </p>
   
   <%= render :partial => 'games/footer', :locals => { :game => @game } %>
 </div>

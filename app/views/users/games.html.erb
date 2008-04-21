@@ -4,10 +4,14 @@
 
 <div class="tabbed">
   <ul class="data">
-    <%= render :partial => 'games/game', :collection => @user.games %>
+    <%= render :partial => 'games/game', :collection => @games %>
   </ul>
   
   <% if @user.favoriteships_count == 0 %>
   <p><%= @user.login %> doesn't have any favorite games</p>
   <% end %>
+  
+  <p>
+    <%= will_paginate @games %>
+  </p>
 </div>

@@ -1,5 +1,7 @@
-# This is a very basic CRUD controller for managing games. Games can be accessed either by themselves
-# or as a child of arcades or users.
+require 'amazon/aws/search'
+
+include Amazon::AWS
+include Amazon::AWS::Search
 
 class GamesController < ResourceController::Base
   belongs_to :arcade, :user
@@ -9,11 +11,11 @@ class GamesController < ResourceController::Base
     # GET /arcades/1-disney/games
     if parent_type == :arcade
       @arcade = Arcade.find(params[:arcade_id], :include => 'games')
-      @collection = @arcade.games
+      @collection = @arcade.games.paginate :page => params[:page], :order => 'name', :per_page => Game::PER_PAGE
     # GET /users/1-adam/games
     elsif parent_type == :user
       @user = User.find(params[:user_id], :include => 'games')
-      @collection = @user.games
+      @collection = @user.games.paginate :page => params[:page], :order => 'name', :per_page => Game::PER_PAGE
     # GET /games
     else
       @collection ||= Game.search(params[:search], params[:page])
@@ -38,6 +40,23 @@ class GamesController < ResourceController::Base
     end
   }
   
+  def show
+    @game = object
+    
+    # Get the Amazon items with this name
+    is = ItemSearch.new( 'VideoGames', { 'Keywords' => @game.name } )
+    rg = ResponseGroup.new( 'Small' )
+    req = Request.new(AMS_KEY, AMAZON_ASSOCIATES_ID)
+    req.locale = 'us'
+    resp = req.search( is, rg )
+
+    @items = resp.item_search_response[0].items[0].item
+  rescue
+    @items = []
+  end
+  
+  
+
   def favorite
     raise if !(game = Game.find(params[:id]))
     
@@ -56,14 +75,14 @@ class GamesController < ResourceController::Base
       flash[:error] = "You have already added <b>#{game.name}</b> to your list of favorite games."
     else
       current_user.games.push(game)
-      flash[:notice] = "You added <b>#{game.name}</b> to your list of favorite games!"
+      flash[:notice] = "<span class=\"favorite_add\">You added <b>#{game.name}</b> to your list of favorite games!</span>"
     end
   end
   
   def destroy_favorite(game)
     if favorite_game = Favoriteship.find_by_game_id_and_user_id(game.id,current_user.id)
       favorite_game.destroy
-      flash[:notice] = "You removed <b>#{game.name}</b> from your list of favorite games."
+      flash[:notice] = "<span class=\"favorite_delete\">You removed <b>#{game.name}</b> from your list of favorite games.</span>"
     else
       flash[:error] = "You have not added <b>#{game.name}</b> to your list of favorite games, so how could you remove it?"
     end

@@ -1,8 +1,0 @@
-<div class="left">
-  <b><%=h address.title %></b><br/>
-  <%=h address.street %><br/>
-  <%=h address.city %>, <%=h address.region.name %> <%=h address.postal_code %><br/>
-  <%=h address.country.name %><br/>
-  <%= link_to 'Edit address', edit_user_address_path(user, address) %>
-  <%= link_to 'Destroy', user_address_path(user, address), :confirm => 'Are you sure?', :method => :delete %>
-</div>

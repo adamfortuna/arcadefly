@@ -23,7 +23,9 @@
       <%= link_to pluralize(@user.frequentships_count, "arcade"), user_arcades_path(@user), :class=>"arcades" %>
       <%= link_to pluralize(@user.favoriteships_count, "game"), user_games_path(@user), :class=>"games" %>
     </span>
-  
+    
+    <img src="<%= @user.gravatar_url %>" alt="Gravatar for <%= @user.login %>" class="framed right" />
+    
     <p><strong class="fn nickname"><%= @user.login %></strong> joined on <%= @user.created_at.to_s(:long) %> (#<%= @user.id %>)</p>
     
     <strong>About <%= @user.login.capitalize %></strong>

@@ -23,32 +23,36 @@
   		    <span>Mapping the arcade buzz!</span>
   		  </div>
   		  
-  		  <div class="column span-12 last">
-    		  <ul id="status" class="nav right">
-    		    <%- if logged_in? -%>
-              <%= nav_link "Account", settings_path(current_user), { :show_link => false } %>
+  		  <div class="column span-12 last right">
+  		    <%- if logged_in? -%>
+  		    <a href="<%= user_path(current_user) %>">
+            <img src="<%= current_user.gravatar_url %>" alt="Gravatar for <%= current_user.login %>" class="right framed" />
+          </a>
+          <% end %>
+
+          <div class="right center shift-2 append-1">
+    		    <ul id="status" class="nav">
+    		      <%- if logged_in? -%>
+              <%= nav_link "Manage Account", settings_path(current_user), { :show_link => false } %>
               <%= nav_link "Logout", "/logout", { :show_link => false } %>
-            <%- else -%>
+              <%- else -%>
               <%= nav_link "Register", "/signup", { :show_link => false } %>
               <%= nav_link "Login", "/login", { :show_link => false } %>
-            <%- end -%>
-          </ul>
-          
-          <% form_for(:search, :url => '/search') do |f| %>
-            <fieldset id="quick_search" class="right">
-              <legend>Search</legend>
-              <label for="search_name">Search</label>
-              <%= f.text_field :name %>
-              <%= f.submit "Search" %>
-            </fieldset>
-          <% end %>
-          
-          <% if logged_in? -%>
+              <%- end -%>
+            </ul>
+
+            <% if logged_in? -%>
             <span id="login_status">
               <em>Currently logged in as <%= link_to h(current_user.login.capitalize), user_path(current_user) %>.</em>
             </span>
-          <% end -%>
-          
+            <% end -%>
+						
+            <% if !logged_in? && addressed_in? -%>
+						<span id="login_status">
+							<em>Currently browsing from the address<br/><%= current_address.single_line %>. <%= link_to "Change Address?", root_path %></em>
+						</span>
+						<% end %>
+          </div>
         </div>
   		</div>
   	</div>
@@ -92,36 +96,5 @@
   		    <p>Copyright &copy; 2007 ArcadeFly. Design and development by <a href="http://www.adamfortuna.com">Adam Fortuna</a>.</p>
       </div>
     </div>
-    
-    
-    
-    <% if ENV["RAILS_ENV"] == "adevelopment" %>
-      <div id="debug">
-        <a href="#" onclick="Element.toggle('params_debug_info');return false">
-        params</a> |
-        <a href="#" onclick="Element.toggle('session_debug_info');return false">
-        session</a> |
-        <a href="#" onclick="Element.toggle('env_debug_info');return false">
-        env</a> |
-        <a href="#" onclick="Element.toggle('request_debug_info');return false">
-        request</a>
-        <fieldset id="params_debug_info" class="debug_info" style="display: none">
-          <legend>params</legend>
-          <%= debug(params) %>
-        </fieldset>
-        <fieldset id="session_debug_info" class="debug_info" style="display: none">
-          <legend>session</legend>
-          <%= debug(session) %>
-        </fieldset>
-        <fieldset id="env_debug_info" class="debug_info" style="display: none">
-          <legend>env</legend>
-          <%= debug(request.env) %>
-        </fieldset>
-        <fieldset id="request_debug_info" class="debug_info" style="display: none">
-          <legend>request</legend>
-          <%= debug(request) %>
-        </fieldset>
-      </div>
-    <% end %>
 	</body>
 </html>

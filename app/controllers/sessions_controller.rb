@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
     cookies.delete :auth_token
     reset_session
     flash[:notice] = "You have been logged out. Come back again soon!"
-  redirect_to login_path
+    redirect_to login_path
   end
   
   protected

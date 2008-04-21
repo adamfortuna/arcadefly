@@ -2,8 +2,8 @@
   <% for arcade in arcades %>
   	<li class="<%= cycle("even","odd")%> clear">
 		  <div class="right">
-		    <% if logged_in? &&  current_user.has_address? -%>
-		      <%= arcade.address.distance_to(current_user.address).round_to(2) %> miles away<br/>
+		    <% if addressed_in? -%>
+		      <%= arcade.address.distance_to(current_address).round_to(2) %> miles away<br/>
 		    <% end %>
 		    <a href="#" onclick="arcades.showMarker(1);return false;">Show on Map</a>
 		  </div>

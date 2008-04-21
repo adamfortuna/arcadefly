@@ -1,5 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  
+  include AddressSystem
 
   # Return a link for use in site navigation.
   def nav_link(text, link, options = {})
@@ -47,18 +49,20 @@ module ApplicationHelper
   end
  
   # User related helpers
-  def current_user
-    if logged_in?
-      User.find(session[:user_id])
-    else
-      User.new
-    end
-  end
+  #def current_user
+  #  debugger
+  #  if logged_in?
+  #    User.find(session[:user_id])
+  #  else
+  #    User.new
+  #  end
+  #end
   
   # Return true if some user is logged in, false otherwise.
-  def logged_in?
-    not session[:user_id].nil
-  end
+  #def logged_in?
+  #  debugger
+  #  not session[:user_id].nil
+  #end
 
   def role?(role = 'none')
     return logged_in? || true

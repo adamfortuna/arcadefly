@@ -4,6 +4,9 @@
       window.location += 'games/'+game_id;
       return false
     }
+    Event.observe(window, 'load', function() {
+      Form.focusFirstElement('address_form');
+    }
   </script>
 <% end %>
 
@@ -18,10 +21,9 @@
   </li>
   <li>
     <%= link_to "Help you find the games you want to play", games_path, { :class=>"box center span-7 column" } %>
-    
   </li>
   <li>
-    <%= link_to "Help you find other gamers to hang out with", users_path, { :class=>"box center span-7 column right" } %>
+    <%= link_to "Help you find other gamers to hang out with", users_path, { :class=>"box center span-7 right" } %>
   </li>
 </ul>
 
@@ -30,19 +32,21 @@
     <legend>Find an Arcade Near You</legend>
     <p>Want to see arcades in your area? Just enter your address! You can also <%= link_to "Register", signup_path %> anytime and we'll save your address for later.
     
+    <% form_tag(addresses_path) do %>
     <p class="block">
-      <label for="address">Enter your Address<label>
-      <%= text_field_tag :address, '', { :class => 'text' } %>  
+      <label for="address">Enter your Address</label>
+      <%= text_field_tag :address, addressed_in? ? current_address.single_line : '', { :class => 'text' } %>  
       <%= submit_tag "Find!", :class => 'inline' %>
     </p>
+    <% end %>
   </fieldset>
 
   <fieldset class="column span-11 last right">
-  <legend>Find an Arcade to Play a Game</legend>
+    <legend>Find an Arcade to Play a Game</legend>
     <% form_tag({ :controller => 'games' }, { :method => 'get', :onsubmit => "gotoGame($F('game_id'));" } ) do %>
-    <p>Looking for a place to play a specific game? Check out the <%= link_to "Games section", games_path %> or choose from the most popular games.
+    <p>Looking for a place to play a specific game? Check out the <%= link_to "Games section", games_path %> or choose from the most popular games.</p>
     <p class="block">
-      <label for="game_id">Find a Game<label>
+      <label for="game_id">Find a Game</label>
       <%= select_tag :game_id, options_from_collection_for_select(@games, "to_param", "name"), { :class => "text" } %>
       <%= submit_tag "Find!", :class => 'inline', :onclick => 'return gotoGame($F("game_id"));' %>
     </p>

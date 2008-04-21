@@ -12,11 +12,18 @@
 	<% if logged_in? %>
 	  <p>
 	  <% if !current_user.has_favorite_game?(@game) %>
-      <%= button_to "Add this game to your favorites", game_favorite_path(@game), { :method => "post" } %>
+      <%= button_to "Add to favorites", game_favorite_path(@game), { :method => "post", :class => "favorite_add" } %>
     <% else %>
-      <%= button_to "Remove this game from your favorites", game_favorite_path(@game), { :method => "delete" } %>
+      <%= button_to "Remove from favorites", game_favorite_path(@game), { :method => "delete", :class => "favorite_delete" } %>
     <% end %>
   </p>
+  <% end %>
+  
+  
+  <% if @items.size > 0 %>
+    <ul class="data">
+      <%= render :partial => 'products/product', :collection => @items %>
+    <ul>
   <% end %>
   
 	<p>

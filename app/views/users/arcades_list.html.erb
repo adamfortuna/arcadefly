@@ -1,0 +1,18 @@
+<% title 'Favorite Arcades for ' + @user.login -%>
+
+<% show_map = @user.frequentships_count > 0 %>
+<%= render :partial => 'users/menu', :locals => { :user => @user, :map => show_map } %>
+
+<div class="tabbed">
+  <ul class="data">
+    <%= render :partial => 'arcades/arcade', :collection => @arcades %>
+  </ul>
+  
+  <% if @user.frequentships_count == 0 %>
+  <p><strong><%= @user.login %></strong> doesn't have any favorite arcades.</p>
+  <% end %>
+  
+  <p>
+    <%= will_paginate @arcades %>
+  </p>
+</div>

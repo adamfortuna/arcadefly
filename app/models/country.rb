@@ -1,5 +1,6 @@
 # Defined by the ISO 3166-1 standard
 class Country < ActiveRecord::Base
+  has_many                  :addresses
   has_many                  :regions
 
   validates_presence_of     :name, :alpha_2_code, :alpha_3_code
@@ -14,6 +15,14 @@ class Country < ActiveRecord::Base
   # The official name of the country
   def official_name
     read_attribute(:official_name) || name
+  end
+
+  def to_param
+    "#{id}-#{url_safe(name)}"
+  end
+  
+  def url_safe(param)
+    param.downcase.gsub(/[^[:alnum:]]/,'-').gsub(/-{2,}/,'-')
   end
 
   # Returns the name of the country

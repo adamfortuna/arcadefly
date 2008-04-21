@@ -5,8 +5,7 @@ class Address < ActiveRecord::Base
 
   acts_as_mappable
 
-  validates_presence_of :title,
-                        :city,
+  validates_presence_of :city,
                         :postal_code,
                         :country_id
   validates_presence_of :region_id,
@@ -53,7 +52,7 @@ class Address < ActiveRecord::Base
     line << city if city?
     if region
       line << ', ' if !line.blank?
-      line << region.name
+      line << region.abbreviation
     end
     if postal_code?
       line << '  ' if !line.blank?
@@ -61,8 +60,12 @@ class Address < ActiveRecord::Base
     end
     lines << line if !line.blank?
 
-    lines << country.name if country
+    lines << country.alpha_2_code if country
     lines
+  end
+  
+  def geocode(address)
+    GeoKit::Geocoders::GoogleGeocoder.geocode(address)
   end
   
   protected

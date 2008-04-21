@@ -1,0 +1,16 @@
+<% title "Arcades Listing" -%>
+
+<%= render :partial => 'arcades/list_menu', :locals => { :map => true } %>
+
+<div class="tabbed"
+  <ul class="data shift-1">
+    <%= render :partial => 'arcade', :collection => @arcades %>
+  </ul>
+</div>
+
+<p>
+  <%= will_paginate @arcades %>
+  <% if role?('arcade_editor') %>
+    <%= link_to 'New arcade', new_arcade_path, :class => 'admin' %>
+  <% end %>
+</p>

@@ -1,24 +1,41 @@
 <% title "Games" -%>
-
-<% form_for(:game, games_path, :html => { :method => 'get' }) do |f| %>
-  <label for="search">Search for a Game:</label>
-  <%= text_field_tag :search, '', { :class => 'text' } %>  
-  <%= submit_tag "Search!", { :disable_with => 'Searching...', :class => 'inline' } %>
+<% content_for(:header) do %>
+  <style>
+    <!--
+    #game_search label { position:absolute; margin:1em 0 0 .6em; color:#aaa; }
+    //-->
+  </style>
+  <script>
+  <!--
+    function toggleLabel(show) {
+      show && $F('search') == '' ? $('search_label').show() : $('search_label').hide();
+    }
+  //-->
+  </script>
 <% end %>
 
+<div id="game_search">
+<% form_for(:game, games_path, :html => { :method => 'get' }) do |f| %>
+    <label id="search_label" for="search">Search for a Game...</label>
+    <%= text_field_tag :search, '', { :class => 'text', :onfocus => 'toggleLabel(false);', :onblur => 'toggleLabel(true);' } %>  
+    <%= submit_tag "Search!", { :disable_with => 'Searching...', :class => 'inline' } %>
+<% end %>
+</div>
 
 <% letters = ('a'..'z').to_a << '#' -%>
 <div class="pagination">
   <%= render(:partial => "shared/letter", :collection => letters) %>
 </div>
 
-<ul class="data<%= ' tabbed' if logged_in? %>">
-  <%= render :partial => 'game', :collection => @games %>
-</ul>
+<div<%= ' class="right-space"' if logged_in? %>>
+  <ul class="data">
+    <%= render :partial => 'game', :collection => @games %>
+    </ul>
 
-<p>
-  <%= will_paginate @games %>
-  <% if role?('game_editor') %>
-    <%= link_to 'New Game', new_game_path, :class => 'admin button key' %>
-  <% end %>
-</p>
+    <p>
+    <%= will_paginate @games %>
+    <% if role?('game_editor') %>
+      <%= link_to 'New Game', new_game_path, :class => 'admin button key' %>
+    <% end %>
+    </p>
+</div>

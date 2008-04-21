@@ -1,0 +1,6 @@
+<li class="<%= cycle("even","odd")%>">
+  <%= link_to country.name, country_arcades_path(country), :class => 'main' %>
+  <span class="count">
+    has <%= pluralize(country.addresses.count, "arcades") %>
+  </span>
+</li>

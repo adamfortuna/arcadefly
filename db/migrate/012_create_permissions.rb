@@ -1,10 +1,11 @@
 class CreatePermissions < ActiveRecord::Migration
-  
   def self.up
     create_table :permissions do |t|
-      t.integer :role_id, :user_id, :null => false
+      t.belongs_to :role, :user, :null => false
       t.timestamps
     end
+    
+    add_index :permissions, [:user_id, :role_id], :unique
   end
  
   def self.down

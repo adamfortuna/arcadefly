@@ -1,0 +1,11 @@
+<% map ||= false -%>
+<ul class="tabs">
+  <%= menu_link "Browse by Location", arcades_path, { :a_class => 'arcades' } %>
+  <% if addressed_in? -%>
+  <%= menu_link "Browse by Distance", arcades_distance_path, { :a_class => 'arcades' } %>
+  <% end %>
+  <% if map %>
+    <%= menu_link "Map", arcades_map_path, { :li_class => 'right' } %>
+    <%= menu_link "List", arcades_distance_path, { :li_class => 'right' } %>
+  <% end %>
+</ul>
