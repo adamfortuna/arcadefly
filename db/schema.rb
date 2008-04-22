@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 115) do
+ActiveRecord::Schema.define(:version => 116) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "addressable_id"
@@ -17,9 +17,9 @@ ActiveRecord::Schema.define(:version => 115) do
     t.string   "title"
     t.string   "street",                                       :null => false
     t.string   "city",                                         :null => false
-    t.string   "region_id"
+    t.integer  "region_id"
     t.integer  "postal_code",      :limit => 5,                :null => false
-    t.integer  "country_id",                    :default => 1, :null => false
+    t.integer  "country_id",                    :default => 1
     t.float    "lat"
     t.float    "lng"
     t.float    "public_lat"
@@ -106,16 +106,16 @@ ActiveRecord::Schema.define(:version => 115) do
   add_index "permissions", ["user_id", "role_id"], :name => "index_permissions_on_user_id_and_role_id", :unique => true
 
   create_table "playables", :force => true do |t|
-    t.integer  "arcade_id",                             :null => false
-    t.integer  "game_id",                               :null => false
-    t.integer  "update_playables_count", :default => 1
+    t.integer  "arcade_id",                  :null => false
+    t.integer  "game_id",                    :null => false
+    t.integer  "games_count", :default => 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "playables", ["arcade_id"], :name => "index_playables_on_arcade_id", :unique => true
-  add_index "playables", ["game_id"], :name => "index_playables_on_game_id", :unique => true
   add_index "playables", ["arcade_id", "game_id"], :name => "index_playables_on_arcade_id_and_game_id", :unique => true
+  add_index "playables", ["arcade_id"], :name => "index_playables_on_arcade_id"
+  add_index "playables", ["game_id"], :name => "index_playables_on_game_id"
 
   create_table "products", :force => true do |t|
     t.integer "game_id",                                       :null => false

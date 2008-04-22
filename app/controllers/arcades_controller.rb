@@ -7,11 +7,11 @@ class ArcadesController < ResourceController::Base
     # GET /arcades/1/games
     if parent_type == :game
       @game = Game.find(params[:game_id], :include => 'arcades')
-      @collection = @game.arcades.paginate :page => params[:page], :order => 'name', :per_page => Arcade::PER_PAGE
+      @collection = @game.arcades.paginate :page => params[:page], :order => 'arcades.name', :per_page => Arcade::PER_PAGE, :include => {:address => [:region, :country]}
     # GET /users/adam/games
     elsif parent_type == :user
-      @user = User.find(params[:user_id], :include => 'arcades')
-      @collection = @user.arcades.paginate :page => params[:page], :order => 'name', :per_page => Arcade::PER_PAGE
+      @user = User.find(params[:user_id])
+      @collection = @user.arcades.paginate :page => params[:page], :order => 'arcades.name', :per_page => Arcade::PER_PAGE, :include => {:address => [:region, :country]}
     # GET /games
     else
       @collection =  Arcade.search(params[:search], params[:page])
@@ -43,6 +43,13 @@ class ArcadesController < ResourceController::Base
     end
   }
 
+  def show
+    @arcade = object
+
+    @games_popularity =  Arcade.count(:conditions => ['playables_count > ?', @arcade.playables_count])+1
+    @users_popularity =  Arcade.count(:conditions => ['frequentships_count > ?', @arcade.frequentships_count])+1
+  end
+  
   def browse
     @countries = Country.find(:all, :include => :addresses, :conditions => 'addresses.addressable_type="Arcade"', :order => 'countries.name')
     @regions = Region.find(:all, :include => :addresses, :conditions => 'addresses.addressable_type="Arcade"', :order => 'regions.name')
@@ -59,8 +66,9 @@ class ArcadesController < ResourceController::Base
   # GET /arcades/regions/:id
   # :id will be the region id
   def region
-    @arcades = Arcade.search_by_region(params[:id].to_i, params[:page])
-    @max_count = Arcade.maximum(:playables_count, :include => :address, :conditions => ['addresses.region_id = ?', params[:id]]) if @arcades.length > 0
+    region = params[:id].to_i
+    @arcades = Arcade.search_by_region(region, params[:page])
+    @max_count = Arcade.maximum(:playables_count, :include => :address, :conditions => ['addresses.region_id = ?', region]) if @arcades.length > 0
     render :template => "arcades/arcades"
   end
 
@@ -113,11 +121,11 @@ class ArcadesController < ResourceController::Base
   # GET /user/:user_id/arcades/map
   def list_map
     if parent_type == :game
-      @game = Game.find(params[:game_id], :include => { :arcades => [{:address => [:region, :country]} ] })
-      @arcades= @game.arcades
+      @game = Game.find(params[:game_id])
+      @arcades = @game.arcades.paginate :page => params[:page], :order => 'arcades.name', :per_page => Arcade::PER_PAGE, :include => {:address => [:region, :country]}
     elsif parent_type == :user
-      @user = User.find(params[:user_id], :include => { :arcades => [{:address => [:region, :country]} ] })
-      @arcades = @user.arcades.paginate :page => params[:page], :order => 'name', :per_page => Arcade::PER_PAGE
+      @user = User.find(params[:user_id])
+      @arcades = @user.arcades.paginate :page => params[:page], :order => 'arcades.name', :per_page => Arcade::PER_PAGE, :include => {:address => [:region, :country]}
     else
       @arcades = Arcade.search(params[:search], params[:page])
     end

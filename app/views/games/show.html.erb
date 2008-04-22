@@ -9,6 +9,18 @@
     <%= link_to pluralize(@game.favoriteships_count, "favorite"), game_users_path(@game), :class=>"users" %>
   </span>
 
+  <% if @game.playables_count > 0 %>
+  <p>
+    With availability at <em><%= pluralize(@game.playables_count, "arcade") %></em>, <%= @game.name %> is the <em>#<%= @arcades_popularity %> most available</em> game.
+  </p>
+  <% end %>
+  
+  <% if @game.favoriteships_count > 0 %>
+  <p>
+    <%= @game.name %> has been favorited by <em><%= pluralize(@game.favoriteships_count, "player") %></em>, making it the <em>#<%= @users_popularity %> most favorited</em> game.
+  </p>
+  <% end %>
+
 	<% if logged_in? %>
 	  <p>
 	  <% if !current_user.has_favorite_game?(@game) %>
@@ -18,16 +30,9 @@
     <% end %>
   </p>
   <% end %>
-  
-  
-  <% if @items.size > 0 %>
-    <ul class="data">
-      <%= render :partial => 'products/product', :collection => @items %>
-    <ul>
-  <% end %>
-  
-	<p>
-	  <a href="http://www.gamefaqs.com/coinop/arcade/data/<%= @game.gamefaqs_id %>.html">GameFaqs</a>
+    
+	<p class="shift-2">
+	  <a href="http://www.gamefaqs.com/coinop/arcade/data/<%= @game.gamefaqs_id %>.html" target="_blank">View this game on GameFaqs</a>
 	</p>
 	
 	<%= render :partial => 'games/footer', :locals => { :game => @game } %>

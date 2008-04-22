@@ -6,7 +6,7 @@ class Playable < ActiveRecord::Base
 
   after_destroy :update_playables_count
 
-  validates_presence_of :number_of_games, :minimum => 0
+  validates_presence_of :games_count, :minimum => 0
   
   private
   def update_playables_count

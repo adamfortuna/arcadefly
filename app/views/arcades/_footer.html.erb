@@ -1,7 +1,7 @@
-<ul class="nav">
+<ul class="nav shift-2">
   <li><%= link_to "Arcades Listing", arcades_path %></li>
-  <% if role?('arcade_editor') %>
-    <li><%= link_to "Edit", edit_arcade_path(arcade), :class=>'admin' %></li>
-    <li><%= link_to "New", new_arcade_1_path, :class=>'admin' %></li>
+  <% if logged_in? %>
+    <li><%= link_to "Edit this arcade", edit_arcade_path(arcade) %></li>
+    <li><%= link_to "Add a new arcade", new_arcade_1_path %></li>
   <% end %>
 </ul>

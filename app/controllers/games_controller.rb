@@ -10,17 +10,17 @@ class GamesController < ResourceController::Base
   def collection
     # GET /arcades/1-disney/games
     if parent_type == :arcade
-      @arcade = Arcade.find(params[:arcade_id], :include => 'games')
+      @arcade = Arcade.find(params[:arcade_id])
       @collection = @arcade.games.paginate :page => params[:page], :order => 'name', :per_page => Game::PER_PAGE
     # GET /users/1-adam/games
     elsif parent_type == :user
-      @user = User.find(params[:user_id], :include => 'games')
+      @user = User.find(params[:user_id])
       @collection = @user.games.paginate :page => params[:page], :order => 'name', :per_page => Game::PER_PAGE
     # GET /games
     else
       @collection ||= Game.search(params[:search], params[:page])
     end
-    @playables_count = Game.maximum(:playables_count) if @collection.size > 0
+    @max_count = Game.maximum(:playables_count) if @collection.size > 0
     #@playables_count = (@collection.collect do |r| r.playables_count end).max.to_i * 1.1
     @collection
   end
@@ -42,17 +42,21 @@ class GamesController < ResourceController::Base
   
   def show
     @game = object
+   
+    @arcades_popularity =  Game.count(:conditions => ['playables_count > ?', @game.playables_count])+1
+    @users_popularity =  Game.count(:conditions => ['favoriteships_count > ?', @game.favoriteships_count])+1
+  
     
     # Get the Amazon items with this name
-    is = ItemSearch.new( 'VideoGames', { 'Keywords' => @game.name } )
-    rg = ResponseGroup.new( 'Small' )
-    req = Request.new(AMS_KEY, AMAZON_ASSOCIATES_ID)
-    req.locale = 'us'
-    resp = req.search( is, rg )
+    #is = ItemSearch.new( 'VideoGames', { 'Keywords' => @game.name } )
+    #rg = ResponseGroup.new( 'Small' )
+    #req = Request.new(AMS_KEY, AMAZON_ASSOCIATES_ID)
+    #req.locale = 'us'
+    #resp = req.search( is, rg )
 
-    @items = resp.item_search_response[0].items[0].item
-  rescue
-    @items = []
+    #@items = resp.item_search_response[0].items[0].item
+  #rescue
+    #@items = []
   end
   
   

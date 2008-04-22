@@ -62,7 +62,11 @@ class Arcade < ActiveRecord::Base
   def url_safe(param)
     param.downcase.gsub(/[^[:alnum:]]/,'-').gsub(/-{2,}/,'-')
   end
-	  
+	
+	def add_game(game_id, games_count)
+	  self.playables.create(:game => Game.find(game_id), :games_count => games_count)
+  end
+
 	private
 		# after_save callback to handle group_ids
 		def update_games

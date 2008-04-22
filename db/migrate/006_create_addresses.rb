@@ -5,9 +5,9 @@ class CreateAddresses < ActiveRecord::Migration
       t.string :title,            :null => true
       t.string :street,           :null => false
       t.string :city,             :null => false,        :limit => 255
-      t.string :region_id
+      t.belongs_to :region,       :null => true
       t.integer :postal_code,     :null => false,        :limit => 5
-      t.integer :country_id,      :null => false,        :default => 1
+      t.belongs_to :country,      :null => true,         :default => 1
       t.float :lat, :lng, :public_lat, :public_lng
       t.timestamps
     end

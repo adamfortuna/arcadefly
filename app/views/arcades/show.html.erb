@@ -27,8 +27,20 @@
       <span class="street-address"><%= @arcade.address.street %></span><br/>
       <span class="locality"><%= @arcade.address.city %></span>, <span class="region"><%= @arcade.address.region.name %></span> <span class="postal-code"><%= @arcade.address.postal_code %></span><br/>
       <span class="country-name"><%= @arcade.address.country.name %></span><br/>
-      <%= link_to "View Map", arcade_map_path(@arcade) %>
+      <%= link_to "View Larger Map", arcade_map_path(@arcade) %>
     </p>
+
+    <% if @arcade.frequentships_count > 0 -%>
+    <p>
+      Having been favorited by <em><%= pluralize(@arcade.frequentships_count, "user") %></em>, <%= @arcade.name %> is the <em>#<%= @users_popularity %> most favorited arcade</em>.
+    </p>
+    <% end -%>
+    
+    <% if @arcade.playables_count > 0 -%>
+    <p>
+      With <em><%= pluralize(@arcade.playables_count, "game") %></em>, <%= @arcade.name %> comes in with the <em>#<%= @games_popularity %> most games</em>.
+    </p>
+    <% end %>
     
     <% if addressed_in? -%>
     <p>
@@ -40,13 +52,13 @@
     <% if logged_in? %>
       <p>
       <% if !current_user.has_favorite_arcade?(@arcade) %>
-        <%= button_to "Add this arcade to your favorites", arcade_favorite_path(@arcade), { :method => "post" } %>
+        <%= button_to "Add this arcade to your favorites", arcade_favorite_path(@arcade), { :method => "post", :class => "favorite_add" } %>
       <% else %>
-        <%= button_to "Remove this arcade from your favorites", arcade_favorite_path(@arcade), { :method => "delete" } %>
+        <%= button_to "Remove this arcade from your favorites", arcade_favorite_path(@arcade), { :method => "delete", :class => "favorite_delete" } %>
       <% end %>
       </p>
      <% end %>
   </div>
-
+  
   <%= render :partial => 'footer', :locals => { :arcade => @arcade } %>
 </div>  

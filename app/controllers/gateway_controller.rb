@@ -5,13 +5,13 @@ class GatewayController < ApplicationController
   before_filter :check_administrator_role
   
   def update_games
-    @letter ||= 'a'
+    @letter ||= params[:letter] || 'a'
     letters = (@letter..'z').to_a << '0'
     
     @attempts = 0 if !@attempts
     @attempts += 1
     
-    letters.each do |@letter|
+    for @letter in letters
     
       html = open('http://www.gamefaqs.com/coinop/arcade/list_'+@letter+'.html')
       page = Hpricot(html)   
@@ -31,6 +31,15 @@ class GatewayController < ApplicationController
     
     render :template => "games/update"
   rescue
-    update_games if @attempts < 3
+    if @attempts < 5
+      update_games
+    else
+      render :text => "Failed to update all games. Made it to #{@letter}. <a href=\"/games/update?letter=#{@letter}\">Restart?</a>"
+    end
+  end
+  
+  protected
+  def update_games_internal
+    update_games
   end
 end

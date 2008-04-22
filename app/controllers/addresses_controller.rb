@@ -63,7 +63,7 @@ class AddressesController < ApplicationController
       redirect_to arcades_distance_path
     else
       flash[:error] = "We had trouble finding out just where your address is. Are you sure you typed it correctly?"
-      root_path
+      redirect_to root_path
     end
   rescue
     flash[:error] = "We had trouble finding out just where your address is. Are you sure you typed it correctly?"

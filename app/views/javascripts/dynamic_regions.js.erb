@@ -5,6 +5,7 @@ var regions = new Array();
 <% end -%>
 
 function countrySelected(selectedValue) {
+  console.log("country selected...");
   selectedValue = selectedValue || '';
   country_id = $('address_country_id').getValue();
   options = $('address_region_id').options;
