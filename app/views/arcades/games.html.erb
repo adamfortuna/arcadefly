@@ -4,8 +4,12 @@
 
 <div class="tabbed">
   <ul class="data">
-    <%= render :partial => 'games/game', :collection => @arcade.games %>  
+    <%= render :partial => 'games/game', :collection => @arcade.playables %>  
   </ul>
-    
+  
+  <p>
+    <%= will_paginate @games %>
+  </p>
+  
   <%= render :partial => 'arcades/footer', :locals => { :arcade => @arcade } %>
 </div>  

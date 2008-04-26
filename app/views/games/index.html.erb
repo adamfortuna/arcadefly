@@ -30,12 +30,9 @@
 <div<%= ' class="right-space"' if logged_in? %>>
   <ul class="data">
     <%= render :partial => 'game', :collection => @games %>
-    </ul>
+  </ul>
 
-    <p>
+  <p>
     <%= will_paginate @games %>
-    <% if role?('game_editor') %>
-      <%= link_to 'New Game', new_game_path, :class => 'admin button key' %>
-    <% end %>
-    </p>
+  </p>
 </div>

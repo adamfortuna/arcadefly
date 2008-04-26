@@ -52,7 +52,7 @@
     <% if logged_in? %>
       <p>
       <% if !current_user.has_favorite_arcade?(@arcade) %>
-        <%= button_to "Add this arcade to your favorites", arcade_favorite_path(@arcade), { :method => "post", :class => "favorite_add" } %>
+        <%= button_to "Add this arcade to your favorites", arcade_favorites_path(@arcade), { :method => "post", :class => "favorite_add" } %>
       <% else %>
         <%= button_to "Remove this arcade from your favorites", arcade_favorite_path(@arcade), { :method => "delete", :class => "favorite_delete" } %>
       <% end %>

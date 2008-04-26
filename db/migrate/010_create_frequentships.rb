@@ -1,8 +1,8 @@
 class CreateFrequentships < ActiveRecord::Migration
   def self.up
     create_table :frequentships do |t|
-      t.belongs_to :arcade, :user, :null => false
       t.timestamps
+      t.belongs_to :arcade, :user, :null => false
     end
     
     add_index :frequentships, [:user_id, :arcade_id], :unique

@@ -1,7 +1,7 @@
 <%- parent ||= :user -%>
 
 <li class="<%= cycle("even","odd")%>">
-  <% if logged_in? && current_user.has_role?('Administrator') -%>
+  <% if logged_in? && current_user.administrator? -%>
   <ul class="left-shift admin">
     <li><%= link_to 'Edit', edit_user_path(user), :class => 'admin' %></li>
     <li><%= link_to 'Destroy', user_path(user), :class => 'admin', :confirm => 'Are you sure?', :method => :delete %></li>

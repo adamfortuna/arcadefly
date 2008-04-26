@@ -1,10 +1,6 @@
 class InsertAdministrator < ActiveRecord::Migration
   
   def self.up
-    #Make sure the role migration file was generated first    
-    role = Role.new(:rolename => 'administrator')
-    role.save()
-    
     #Then, add default admin user
     #Be sure change the password later or in this migration file
     us = Country.find_by_name('United States of America')
@@ -14,7 +10,8 @@ class InsertAdministrator < ActiveRecord::Migration
                     :email => 'adam@fortuna.name',
                     :name => 'Adam Fortuna',
                     :password => 'password',
-                    :password_confirmation => 'password'
+                    :password_confirmation => 'password',
+                    :administrator => true
     user.address = Address.new :title => 'Home',
                                :street => '1130 Summer Lakes Drive',
                                :city => 'Orlando',
@@ -23,15 +20,9 @@ class InsertAdministrator < ActiveRecord::Migration
                                :postal_code => 32835
     user.save!
     user.send(:activate!)
-    
-    role = Role.find_by_rolename('administrator')
-    permission = Permission.new :user => user, :role => role
-    permission.save(false)
   end
  
   def self.down
-    Role.find_by_rolename('administrator').destroy   
-    User.find_by_login('admin').destroy   
-    Permission.find_by_user_id(user.id).destroy
+    execute 'TRUNCATE users' 
   end
 end

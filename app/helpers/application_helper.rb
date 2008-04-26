@@ -47,31 +47,5 @@ module ApplicationHelper
   def stylesheet(*files)
     content_for(:head) { stylesheet_link_tag(*files) }
   end
- 
-  # User related helpers
-  #def current_user
-  #  debugger
-  #  if logged_in?
-  #    User.find(session[:user_id])
-  #  else
-  #    User.new
-  #  end
-  #end
-  
-  # Return true if some user is logged in, false otherwise.
-  #def logged_in?
-  #  debugger
-  #  not session[:user_id].nil
-  #end
-
-  def role?(role = 'none')
-    return logged_in? || true
-  end
-  
-  
-  #def script_gmap_with_key
-  #  key = YAML::load(IO.read(RAILS_ROOT + '/config/gmap.yml'))[ENV['RAILS_ENV']][request.host]
-  #  "<script src='http://maps.google.com/maps?file=api&amp;v=2&amp;key=#{key}' type='text/javascript'></script>"
-  #end
 
 end

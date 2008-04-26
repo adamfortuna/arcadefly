@@ -47,7 +47,8 @@ class UsersController < ResourceController::Base
 	    @map.center_zoom_init([@user.address.public_lat, @user.address.public_lng], 11)
 	    @map.overlay_init(GMarker.new([@user.address.public_lat,@user.address.public_lng], :title => @user.login))
     end
-	                    
+	  
+	 
   end
     
   # render new.rhtml

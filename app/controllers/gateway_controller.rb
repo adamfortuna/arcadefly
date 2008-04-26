@@ -2,7 +2,7 @@ require 'hpricot'
 require 'open-uri'
 
 class GatewayController < ApplicationController
-  before_filter :check_administrator_role
+  before_filter :check_administrator
   
   def update_games
     @letter ||= params[:letter] || 'a'
@@ -36,10 +36,5 @@ class GatewayController < ApplicationController
     else
       render :text => "Failed to update all games. Made it to #{@letter}. <a href=\"/games/update?letter=#{@letter}\">Restart?</a>"
     end
-  end
-  
-  protected
-  def update_games_internal
-    update_games
   end
 end

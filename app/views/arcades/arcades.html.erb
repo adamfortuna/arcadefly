@@ -10,7 +10,5 @@
 
 <p>
   <%= will_paginate @arcades %>
-  <% if role?('arcade_editor') %>
-    <%= link_to 'New arcade', new_arcade_path, :class => 'admin' %>
-  <% end %>
+  <%= link_to 'Add a new arcade', new_arcade_path %>
 </p>

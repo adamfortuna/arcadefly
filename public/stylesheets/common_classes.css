@@ -111,6 +111,8 @@ a.users:hover { background-color: #cec; }
 /* Graphics for adding/removing something from favorites */
 .favorite_add { background: url(../../images/heart_add.png) no-repeat left; padding-left:2em; }
 .favorite_delete { background: url(../../images/heart_delete.png) no-repeat left; padding-left:2em; }
+.user_add { background: url(../../images/user_add.png) no-repeat left; padding-left:2em; }
+.user_delete { background: url(../../images/user_delete.png) no-repeat left; padding-left:2em; }
 
 
 /* Global Map settings */

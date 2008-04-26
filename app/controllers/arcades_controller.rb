@@ -173,42 +173,8 @@ class ArcadesController < ResourceController::Base
 	                    :title => @arcade.name,
 	                    :info_window => arcade_info_window(@arcade)))
   end
-
-  
-  def favorite
-    raise if !(arcade = Arcade.find(params[:id]))
-
-    create_favorite(arcade) if request.post?
-    destroy_favorite(arcade) if request.delete?
-
-    redirect_to request.env["HTTP_REFERER"]
-  rescue
-    flash[:error] = "Doesn't look like that was a valid arcade. Wannt to try again?"
-    redirect_back_or_default('/arcades')
-  end
   
   private
-  def create_favorite(arcade)
-    #if !(current_user.arcades.collect do |a| a.id end).include?(@arcade.id)
-    if current_user.has_favorite_arcade?(arcade)
-      flash[:error] = "You have already added <b>#{arcade.name}</b> to your list of favorite arcades."
-    else
-      current_user.arcades.push(arcade)
-      flash[:notice] = "<span class=\"favorite_add\">You added <b>#{arcade.name}</b> to your list of favorite arcades!</span>"
-    end
-  end
-  
-  def destroy_favorite(arcade)
-    if favorite_arcade = Frequentship.find_by_arcade_id_and_user_id(arcade.id,current_user.id)
-    favorite_arcade.destroy
-    #if current_user.has_favorite_arcade?(arcade)
-    #  current_user.arcades.delete(arcade)
-      flash[:notice] = "<span class=\"favorite_delete\">You removed <b>#{arcade.name}</b> from your list of favorite arcades.</span>"
-    else
-      flash[:error] = "You have not added <b>#{arcade.name}</b> to your list of favorite arcades, so how could you remove it?"
-    end
-  end
-  
   def arcade_info_window(arcade)
     "<strong>#{arcade.name}</strong> <p>#{arcade.address.street}<br />#{arcade.address.city}, #{arcade.address.region.name} #{arcade.address.postal_code}</p><p><strong>Games:</strong> #{arcade.playables_count}</p>"
   end 

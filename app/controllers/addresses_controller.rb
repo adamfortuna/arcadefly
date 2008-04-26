@@ -1,46 +1,16 @@
-class AddressesController < ApplicationController
-  # GET /addresses
-  # GET /addresses.xml
-  def index
-    unless params[:user_id]
-      @addresses = Address.find(:all)
-    else
-      @addresses = current_user.address
-    end
-    
-    respond_to do |format|
-      format.html # index.rhtml
-      format.xml  { render :xml => @addresses.to_xml }
-    end
-  end
-
-  # GET /addresses/1
-  # GET /addresses/1.xml
-  def show
-    unless params[:user_id]
-      @address = Address.find(params[:id])
-    else
-      @address = current_address
-    end
-    
-    respond_to do |format|
-      format.html # show.rhtml
-      format.xml  { render :xml => @address.to_xml }
-    end
-  end
-
-  # GET /addresses/new
+class AddressesController < ResourceController::Base
+  belongs_to :user, :game, :session
+ 
+  # GET /users/1/addresses/new
+  # Todo: Add the ability for users to add multiple addresses
   def new
     @address = Address.new
   end
 
-  # GET /addresses/1/edit
+  # GET /users/1-adam/addresses/1/edit
+  # Todo: Implement multiple addresses
   def edit
-    unless params[:user_id]
-      @address = Address.find(params[:id])
-    else
-      @address = current_address
-    end
+    @address = Address.find(params[:id])
   end
 
   # POST /addresses
@@ -63,15 +33,14 @@ class AddressesController < ApplicationController
       redirect_to arcades_distance_path
     else
       flash[:error] = "We had trouble finding out just where your address is. Are you sure you typed it correctly?"
-      redirect_to root_path
+      redirect_to request.env["HTTP_REFERER"]
     end
   rescue
     flash[:error] = "We had trouble finding out just where your address is. Are you sure you typed it correctly?"
-    redirect_to root_path
+    redirect_to request.env["HTTP_REFERER"]
   end
 
-  # PUT /addresses/1
-  # PUT /addresses/1.xml
+  # PUT users/1-adam/addresses/1
   def update
     @address = Address.find(params[:id])
 
@@ -89,18 +58,6 @@ class AddressesController < ApplicationController
         format.html { render :action => "edit" }
         format.xml  { render :xml => @address.errors.to_xml }
       end
-    end
-  end
-
-  # DELETE /addresses/1
-  # DELETE /addresses/1.xml
-  def destroy
-    @address = Address.find(params[:id])
-    @address.destroy
-
-    respond_to do |format|
-      format.html { redirect_to addresses_url }
-      format.xml  { head :ok }
     end
   end
 end

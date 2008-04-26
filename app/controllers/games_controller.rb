@@ -1,7 +1,7 @@
-require 'amazon/aws/search'
+#require 'amazon/aws/search'
 
-include Amazon::AWS
-include Amazon::AWS::Search
+#include Amazon::AWS
+#include Amazon::AWS::Search
 
 class GamesController < ResourceController::Base
   belongs_to :arcade, :user
@@ -58,39 +58,4 @@ class GamesController < ResourceController::Base
   #rescue
     #@items = []
   end
-  
-  
-
-  def favorite
-    raise if !(game = Game.find(params[:id]))
-    
-    create_favorite(game) if request.post?
-    destroy_favorite(game) if request.delete?
-    
-    redirect_to request.env["HTTP_REFERER"]
-  #rescue
-  #  flash[:error] = "Doesn't look like that was a valid game. Wannt to try again?"
-  #  redirect_back_or_default('/games')
-  end
-  
-  private
-  def create_favorite(game)
-    if current_user.has_favorite_game?(game)
-      flash[:error] = "You have already added <b>#{game.name}</b> to your list of favorite games."
-    else
-      current_user.games.push(game)
-      flash[:notice] = "<span class=\"favorite_add\">You added <b>#{game.name}</b> to your list of favorite games!</span>"
-    end
-  end
-  
-  def destroy_favorite(game)
-    if favorite_game = Favoriteship.find_by_game_id_and_user_id(game.id,current_user.id)
-      favorite_game.destroy
-      flash[:notice] = "<span class=\"favorite_delete\">You removed <b>#{game.name}</b> from your list of favorite games.</span>"
-    else
-      flash[:error] = "You have not added <b>#{game.name}</b> to your list of favorite games, so how could you remove it?"
-    end
-  end
-  
-  
 end

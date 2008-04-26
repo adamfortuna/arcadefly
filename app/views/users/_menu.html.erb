@@ -3,8 +3,9 @@
   <%= nav_link "Profile", user_path(user), { :a_class => 'users' } %>
   <%= nav_link "Favorite Arcades", user_arcades_path(user), { :a_class => 'arcades' } %>
   <%= nav_link "Favorite Games", user_games_path(user), { :a_class => 'games' } %>
+  <%= nav_link "Friends", user_friends_path(user), { :a_class => 'users' } %>
 
-  <% if logged_in? && (current_user.id == user.id || current_user.has_role?('Administrator')) -%>
+  <% if logged_in? && current_user.administrator? -%>
   <%= nav_link "Settings", settings_path(user) %>
   <% end %>
 

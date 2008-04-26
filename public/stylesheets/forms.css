@@ -25,4 +25,9 @@ p.block { margin: 0 0 .3em 0; }
 p.block label { display:block; padding:0; margin:0; }
 
 form.button-to input.favorite_add,
-form.button-to input.favorite_delete { padding-left:1.5em; }
+form.button-to input.favorite_delete,
+form.button-to input.user_add,
+form.button-to input.user_delete,
+form.button-to input.arcade_add,
+form.button-to input.arcade_delete
+ { padding-left:1.5em; }

@@ -1,7 +1,7 @@
 <ul class="tabbed nav">
   <%= nav_link "Game Listing", games_path, { :show_link => false } %>
 
-  <% if logged_in? && current_user.has_role?('Administrator') -%>
+  <% if logged_in? && current_user.administrator? -%>
     <%= nav_link "New", new_game_path, { :show_link => false, :li_class => 'admin' } %>
 	  <%= nav_link "Edit", edit_game_path(game), { :show_link => false, :li_class => 'admin' } %>
   <% end -%>

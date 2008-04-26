@@ -1,9 +1,9 @@
 class AddGamesToArcades < ActiveRecord::Migration
   def self.up
     a = Arcade.find(:all)
-    20.times do |time| 
+    50.times do |time| 
       a.each do |arcade| 
-        game_id = 1+rand(50)
+        game_id = 1+rand(500)
         if !Playable.find_by_arcade_id_and_game_id(arcade.id, game_id)
           arcade.add_game(game_id, 1+rand(5))
         end

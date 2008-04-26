@@ -4,9 +4,11 @@
       window.location += 'games/'+game_id;
       return false
     }
+    <% if !logged_in? %>
     Event.observe(window, 'load', function() {
       Form.focusFirstElement('address_form');
-    }
+    });
+    <% end %>
   </script>
 <% end %>
 
@@ -43,7 +45,7 @@
         <p class="block">
           <label for="address">Enter your Address</label>
           <%= text_field_tag :address, addressed_in? ? current_address.single_line : '', { :class => 'text' } %>  
-          <%= submit_tag "Find!", :class => 'inline' %>
+          <%= submit_tag "Find!", :class => 'inline', :disable_with => 'Finding...' %>
         </p>
       <% end %>
     <% end %>
@@ -56,7 +58,7 @@
     <p class="block">
       <label for="game_id">Find a Game</label>
       <%= select_tag :game_id, options_from_collection_for_select(@games, "to_param", "name"), { :class => "text" } %>
-      <%= submit_tag "Find!", :class => 'inline', :onclick => 'return gotoGame($F("game_id"));' %>
+      <%= submit_tag "Find!", :class => 'inline', :onclick => 'return gotoGame($F("game_id"));', :disable_with => 'Finding...' %>
     </p>
     <% end %>
   </fieldset>

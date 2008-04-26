@@ -1,5 +1,4 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :roles
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   map.root :controller => "home"
@@ -64,23 +63,19 @@ ActionController::Routing::Routes.draw do |map|
   map.regions_arcades '/arcades/regions',             :controller => 'arcades', :action => 'regions'
   map.region_arcades '/arcades/regions/:id',          :controller => 'arcades', :action => 'region'
   
-  # Arcade/Game/User interaction routes
-  map.arcade_favorite '/arcades/:id/favorite', :controller => 'arcades', :action => 'favorite'
-  map.game_favorite '/games/:id/favorite',     :controller => 'games',   :action => 'favorite'
-  
   # Remote procedures
   map.games_update '/games/update', :controller => 'gateway', :action => 'update_games'
   
-  
-  
   # Resources
-  map.resources :arcades, :has_many => [ :games, :users ],
+  map.resources :arcades, :has_many => [ :games, :users, :favorites ],
                           :has_one => :address
-  map.resources :games,   :has_many => [ :arcades, :users ]
-  map.resources :users,   :has_many => [ :arcades, :games, :roles ],
+  map.resources :games,   :has_many => [ :arcades, :users, :favorites ]
+  map.resources :users,   :has_many => [ :arcades, :games, :friends ],
                           :has_one => :address
+
+  map.resources :users, :alias => :friends
   
-  map.resources :addresses, :sessions, :passwords
+  map.resources :addresses, :sessions, :passwords, :favorites
 
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'

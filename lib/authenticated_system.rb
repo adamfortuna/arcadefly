@@ -56,21 +56,6 @@ module AuthenticatedSystem
       !logged_in? || permission_denied
     end
     
-    def check_role(role)
-      unless logged_in? && @current_user.has_role?(role)
-        if logged_in?
-          permission_denied
-        else
-          access_denied
-        end
-      end
-      true
-    end
-  
-     def check_administrator_role
-       check_role('administrator')
-     end   
-
     # Redirect as appropriate when an access request fails.
     #
     # The default action is to redirect to the login screen.
@@ -165,6 +150,9 @@ module AuthenticatedSystem
       end
     end
 
+    def check_administrator
+      current_user.administrator?
+    end
   private
     @@http_auth_headers = %w(Authorization HTTP_AUTHORIZATION X-HTTP_AUTHORIZATION X_HTTP_AUTHORIZATION REDIRECT_X_HTTP_AUTHORIZATION)
 

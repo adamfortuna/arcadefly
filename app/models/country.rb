@@ -12,10 +12,6 @@ class Country < ActiveRecord::Base
   alias_attribute :abbreviation_2, :alpha_2_code
   alias_attribute :abbreviation_3, :alpha_3_code
 
-  # The official name of the country
-  def official_name
-    read_attribute(:official_name) || name
-  end
 
   def to_param
     "#{id}-#{url_safe(name)}"

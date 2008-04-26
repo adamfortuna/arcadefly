@@ -26,12 +26,29 @@
     
     <img src="<%= @user.gravatar_url %>" alt="Gravatar for <%= @user.login %>" class="framed right" />
     
-    <p><strong class="fn nickname"><%= @user.login %></strong> joined on <%= @user.created_at.to_s(:long) %> (#<%= @user.id %>)</p>
+    <p>
+      <strong class="fn nickname"><%= @user.login %></strong> joined on <%= @user.created_at.to_s(:long) %> (#<%= @user.id %>)
+    </p>
+    
+    <% if logged_in? && current_user != @user %>
+    <p>
+      <% if current_user.friended?(@user) %>
+        <%= button_to "Remove #{@user.login} as a friend", user_friend_path(@user), { :method => 'delete', :class => 'user_delete' } %>
+      <% elsif current_user.following?(@user) %>
+        <%= button_to "Withdraw friend request to #{@user.login}", user_friend_path(@user), { :method => 'delete', :class => 'user_delete' } %>
+      <% else %>
+        <%= button_to "Add #{@user.login} as a friend", user_friends_path(@user), { :method => 'post', :class => 'user_add' } %>
+      <% end %>
+    </p>
+    <% end %>
+    
+    <% if @user.has_address? && addressed_in? && current_user != @user %>
+  	  <p><%= @user.login %> lives <%= pluralize(@user.address.distance_to(current_address).round_to(2), "mile") %> away from you.</p>
+  	<% end %>
     
     <strong>About <%= @user.login.capitalize %></strong>
     <p>
       <%= simple_format @user.about %>
     </p>
   </div>
-  <br class="clear" />
 </div>

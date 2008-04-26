@@ -1,24 +1,34 @@
-<% count ||= "playables_count" %>
+<% 
+  # If a playable is passed in rather than a game, show the count of games as well. 
+  # Todo: This could probably be cleaned up a little
+  if game.is_a?(Playable)
+    playable = game
+    game = playable.game
+  end
+  count ||= "playables_count"
+  
+  game_name = game.name
+  game_name += " (#{playable.games_count})" if game.is_a?(Playable) && playable.games_count > 1
+-%>
 <li class="<%= cycle("even","odd")%>">
 
-  <% if logged_in? && current_user.has_role?('Administrator') -%>
+  <% if logged_in? && current_user.administrator? -%>
     <ul class="left-shift admin">
     <li><%= link_to 'Edit', edit_game_path(game), :class => 'admin' %></li>
     <li><%= link_to 'Destroy', game_path(game), :class => 'admin', :confirm => 'Are you sure?', :method => :delete %></li>
     </ul>
   <% end %>
 
-	<%= link_to(game.name, game_path(game), :class => 'main') %>
-
-
+	<%= link_to(game_name, game_path(game), :class => 'main') %>
+  
 	<span class="count">
     <%= pluralize(game.playables_count, "arcade") %>
   <% if logged_in? %>
 	<span class="favorite">
 	  <% if current_user.games.include?(game) %>
-	    <%= link_to "&nbsp;", game_favorite_path(game), { :method => "delete", :class => "favorite_delete" } %>
+	    <%= link_to "&nbsp;", game_favorites_url(game), { :method => "delete", :class => "favorite_delete" } %>
 	  <% else %>
-      <%= link_to "&nbsp;", game_favorite_path(game), { :method => "post", :class => "favorite_add" } %>
+      <%= link_to "&nbsp;", game_favorites_path(game), { :method => "post", :class => "favorite_add" } %>
 	  <% end %>
 	</span>
 	<% end %>

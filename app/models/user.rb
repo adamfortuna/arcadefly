@@ -8,17 +8,27 @@ class User < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 
+  # Arcades
   has_many :frequentships
   has_many :arcades, :through => :frequentships
 
+  # Games
   has_many :favoriteships
   has_many :games, :through => :favoriteships
 
-  has_many :permissions
-  has_many :roles, :through => :permissions
+  # Friends
+  has_many :friendships, :foreign_key => 'friender_id', :conditions => "status = #{Friendship::ACCEPTED}"
+  has_many :follower_friends, :class_name => "Friendship", :foreign_key => "friendee_id", :conditions => "status = #{Friendship::PENDING}"
+  has_many :following_friends, :class_name => "Friendship", :foreign_key => "friender_id", :conditions => "status = #{Friendship::PENDING}"
   
+  has_many :friends,   :through => :friendships, :source => :friendee
+  has_many :followers, :through => :follower_friends, :source => :friender
+  has_many :followings, :through => :following_friends, :source => :friendee
+  
+  # Addresses
   has_one :address, :as => :addressable 
     
+  # Validation
   validates_presence_of     :login, :email, :name
   validates_length_of       :login, :within => 3..40
   validates_uniqueness_of   :login, :case_sensitive => false, :message => 'is already taken. Please choose another login.'
@@ -181,7 +191,6 @@ class User < ActiveRecord::Base
     self.make_password_reset_code
   end
 
-  # Role based
   def reset_password
     # First update the password_reset_code before setting the
     # reset_password flag to avoid duplicate email notifications.
@@ -191,10 +200,6 @@ class User < ActiveRecord::Base
   
   def self.find_for_forget(email)
     find :first, :conditions => ['email = ? and activation_code IS NULL', email]
-  end
-  
-  def has_role?(rolename)
-    self.roles.find_by_rolename(rolename) ? true : false
   end
   
   def to_param
@@ -242,6 +247,25 @@ class User < ActiveRecord::Base
     grav_url << "&default=#{gravatar_options[:default]}" if gravatar_options[:default]
     return grav_url
   end
+  
+  
+  
+  
+  # Friend related
+  def follower?(user)
+    followers.include?(user)
+  end
+  
+  def following?(user)
+    followings.include?(user)
+  end
+  
+  def friended?(user)
+    friends.include?(user)
+  end
+  
+  
+  
   
   protected
     # before filter 
