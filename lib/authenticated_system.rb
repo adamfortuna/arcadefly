@@ -151,7 +151,8 @@ module AuthenticatedSystem
     end
 
     def check_administrator
-      current_user.administrator?
+      permission_denied unless current_user.administrator?
+      true
     end
   private
     @@http_auth_headers = %w(Authorization HTTP_AUTHORIZATION X-HTTP_AUTHORIZATION X_HTTP_AUTHORIZATION REDIRECT_X_HTTP_AUTHORIZATION)

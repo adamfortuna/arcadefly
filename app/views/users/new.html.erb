@@ -67,13 +67,6 @@
         <%= error_message_on "user", "login", "Login " %>
         <%= f.text_field :login, { :class => 'text'} %>
       </p>
-	  
-      <p class="block required">
-        <label for="user_name">Name</label>
-        <span class="block info">This will not be public.</span>
-        <%= error_message_on "user", "name", "Name " %>
-        <%= f.text_field :name, { :class => 'text'} %>
-      </p>
 
       <p class="block required">
         <label for="user_email">Email</label>
@@ -93,6 +86,21 @@
         <label for="user_password_confirmation">Confirm your Password</label>
         <%= error_message_on "user", "password_confirmation", "Confirm password " %>
         <%= f.password_field :password_confirmation, { :class => 'text'} %>
+      </p>
+
+  
+      <p class="block">
+        <label for="user_name">Name</label>
+        <span class="block info">This will not be public. If we need to contact you we'll use this name.</span>
+        <%= error_message_on "user", "name", "Name " %>
+        <%= f.text_field :name, { :class => 'text'} %>
+      </p>
+
+      <p class="block">
+        <label for="user_name">Website</label>
+        <span class="block info">Have a website you want people to see in your profile?</span>
+        <%= error_message_on "user", "website", "Website " %>
+        <%= f.text_field :website, { :class => 'text'} %>
       </p>
 
       <p class="left shift-1">

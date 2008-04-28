@@ -33,11 +33,11 @@
     <% if logged_in? && current_user != @user %>
     <p>
       <% if current_user.friended?(@user) %>
-        <%= button_to "Remove #{@user.login} as a friend", user_friend_path(@user), { :method => 'delete', :class => 'user_delete' } %>
+        <%= button_to "Remove #{@user.login} as a friend", user_friend_path(@user), { :method => 'delete', :class => 'favorite user_delete' } %>
       <% elsif current_user.following?(@user) %>
-        <%= button_to "Withdraw friend request to #{@user.login}", user_friend_path(@user), { :method => 'delete', :class => 'user_delete' } %>
+        <%= button_to "Withdraw friend request to #{@user.login}", user_friend_path(@user), { :method => 'delete', :class => 'favorite user_delete' } %>
       <% else %>
-        <%= button_to "Add #{@user.login} as a friend", user_friends_path(@user), { :method => 'post', :class => 'user_add' } %>
+        <%= button_to "Add #{@user.login} as a friend", user_friends_path(@user), { :method => 'post', :class => 'favorite user_add' } %>
       <% end %>
     </p>
     <% end %>

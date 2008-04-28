@@ -1,4 +1,28 @@
 <% map ||= false -%>
+
+<% content_for(:header) do %>
+  <style>
+    <!--
+    #arcade_search label { position:absolute; margin:1em 0 0 .6em; color:#aaa; }
+    //-->
+  </style>
+  <script>
+  <!--
+    function toggleLabel(show) {
+      show && $F('search') == '' ? $('search_label').show() : $('search_label').hide();
+    }
+  //-->
+  </script>
+<% end %>
+
+<div id="arcade_search" class="right pull-4">
+<% form_for(:arcade, arcades_path, :html => { :method => 'get' }) do |f| %>
+    <label id="search_label" for="search">Search for an Arcade by name...</label>
+    <%= text_field_tag :search, '', { :class => 'text', :onfocus => 'toggleLabel(false);', :onblur => 'toggleLabel(true);' } %>  
+    <%= submit_tag "Search!", { :disable_with => 'Searching...' } %>
+<% end %>
+</div>
+
 <ul class="tabs">
   <%= menu_link "Browse by Location", arcades_path, { :a_class => 'arcades' } %>
   <% if addressed_in? -%>

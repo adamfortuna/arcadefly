@@ -17,7 +17,7 @@
         <%= password_field_tag :password_confirmation, "", :size => 50,  :class => 'text' %>
       </p>
       <p class="block">
-        <%= submit_tag "Change my password and log me in!" %>
+        <%= submit_tag "Change my password and log me in!", :disable_with => "Changing your password.." %>
       </p>
     </fieldset>
   <% end %>

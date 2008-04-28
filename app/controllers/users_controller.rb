@@ -2,8 +2,8 @@ class UsersController < ResourceController::Base
   belongs_to :game, :arcade
   
   before_filter :not_logged_in_required, :only => [:new, :create, :activate] 
-  before_filter :login_required, :only => [:edit, :update]
-  before_filter :check_administrator_role, :only => [:destroy, :enable]
+  before_filter :login_required, :only => [:edit, :update, :welcome]
+  before_filter :check_administrator, :only => [:destroy, :enable]
   
   def collection
     # GET /arcades/1-disney/users
@@ -16,7 +16,7 @@ class UsersController < ResourceController::Base
       @collection = @game.users.paginate :page => params[:page], :order => 'name', :per_page => User::PER_PAGE
     # GET /users
     else
-      @collection = User.find(:all, :include => { :address => [:region, :country] })
+      @collection = User.search(params[:search], params[:page])
     end
     @collection
   end
@@ -47,8 +47,6 @@ class UsersController < ResourceController::Base
 	    @map.center_zoom_init([@user.address.public_lat, @user.address.public_lng], 11)
 	    @map.overlay_init(GMarker.new([@user.address.public_lat,@user.address.public_lng], :title => @user.login))
     end
-	  
-	 
   end
     
   # render new.rhtml
@@ -66,6 +64,8 @@ class UsersController < ResourceController::Base
       @user.address = Address.new(params[:address])
       @user.address.title = "My Home"
     end
+    
+    @user.administrator = false
     @user.save!
     
     #Uncomment to have the user logged in after creating an account - Not Recommended
@@ -78,39 +78,38 @@ class UsersController < ResourceController::Base
   end
   
   def edit
+    raise if current_user.id != params[:id].to_i && !current_user.administrator?
     @user = User.find(params[:id], :include => :address)
-    raise if current_user != @user  && !check_administrator_role
+  rescue
+    permission_denied
   end
   
+  # PUT /users/1-adam
   def update
-    raise if current_user.id != params[:id].to_i
-        
+    raise if current_user.id != params[:id].to_i && !current_user.administrator?
+    
     @user = User.find(params[:id])
-    if params[:change_address]
-      @user.address = Address.new(params[:address])
-      saved = @user.address.save
-    elsif params[:change_password]
+    @user.login = params[:user][:login]
+    @user.name = params[:user][:name]
+    @user.website = params[:user][:website]
+    @user.website = nil if @user.website == 'http://'
+    @user.about = params[:user][:about]
+    @user.address = Address.new(params[:address])
+
+
+    correct_password = true
+    if params[:old_password] != '' || params[:user][:password] != ''|| params[:user][:password_confirmation] != ''
       @user.password = params[:user][:password]
       @user.password_confirmation = params[:user][:password_confirmation]
-      if !@user.authenticated?(params[:old_password])
-        @user.valid?
-        @user.errors.add('current_password', 'is not correct. Please re-enter it.')
-      else
-        saved = @user.save
-      end
-    elsif params[:change_username]
-      @user.login = params[:user][:login]
-      saved = @user.save
-    elsif params[:update_profile]
-      @user.about = params[:user][:about]
-      saved = @user.save
+      correct_password = @user.authenticated?(params[:old_password])
     end
 
-    if saved
+    if @user.save && correct_password
       flash[:notice] = (@user == current_user) ? "Your user account has been updated!" : "User updated."
       redirect_to :action => 'show', :id => @user
       return
     else
+      @user.errors.add('current_password', 'is not correct. Please re-enter it.') if !correct_password
       flash[:error] = 'There was a problem updating your account. Check out the error details below.'
       render :action => 'edit'
       return

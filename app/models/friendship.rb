@@ -50,6 +50,13 @@ class Friendship < ActiveRecord::Base
       false
     end
     
+    def remove_follower(user, target)
+      Friendship.find(:first, :conditions => {:friender_id => target.id, :friendee_id => user.id, :status => PENDING}).destroy
+      true
+    rescue
+      false
+    end
+    
     # If one user unfriends the other, update the other to follower status
     def stop_being_friends(user, target)
       transaction do

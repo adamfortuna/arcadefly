@@ -3,5 +3,19 @@
 <%= render :partial => 'menu' %>
 
 <div class="tabbed">
-	To view popular arcades or games, just click on one of the tabs above.
+  <p>In the past 24 hours, here's where the action has been...</p>
+
+  <div>
+    <h3>Hot Arcades</h3>
+    <ul class="data">
+      <%= render :partial => 'arcades/arcade', :collection => @arcades, :locals => { :count => 'frequentships_count' } %>
+    </ul>
+  </div>
+  
+  <div class="shift-2">
+    <h3>Hot Games</h3>
+    <ul class="data">
+      <%= render :partial => 'games/game', :collection => @games, :locals => { :count => 'favoriteships_count' } %>
+    </ul>
+  </div>
 </div>

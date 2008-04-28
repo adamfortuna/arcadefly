@@ -5,8 +5,8 @@
   <%= nav_link "Favorite Games", user_games_path(user), { :a_class => 'games' } %>
   <%= nav_link "Friends", user_friends_path(user), { :a_class => 'users' } %>
 
-  <% if logged_in? && current_user.administrator? -%>
-  <%= nav_link "Settings", settings_path(user) %>
+  <% if (logged_in? && current_user.id == user.id) || current_user.administrator? -%>
+  <%= nav_link "Edit Profile", user_settings_path(user) %>
   <% end %>
 
   <% if map %>

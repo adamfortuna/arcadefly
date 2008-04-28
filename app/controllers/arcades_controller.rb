@@ -4,15 +4,15 @@ class ArcadesController < ResourceController::Base
   before_filter :login_required, :only => :favorite
   
   def collection
-    # GET /arcades/1/games
+    # GET /games/1/arcades
     if parent_type == :game
       @game = Game.find(params[:game_id], :include => 'arcades')
       @collection = @game.arcades.paginate :page => params[:page], :order => 'arcades.name', :per_page => Arcade::PER_PAGE, :include => {:address => [:region, :country]}
-    # GET /users/adam/games
+    # GET /users/adam/arcades
     elsif parent_type == :user
       @user = User.find(params[:user_id])
       @collection = @user.arcades.paginate :page => params[:page], :order => 'arcades.name', :per_page => Arcade::PER_PAGE, :include => {:address => [:region, :country]}
-    # GET /games
+    # GET /arcades/distance
     else
       @collection =  Arcade.search(params[:search], params[:page])
       @collection.sort_by_distance_from(current_address) if addressed_in? && @collection.length > 1
@@ -60,6 +60,7 @@ class ArcadesController < ResourceController::Base
   def country
     @arcades = Arcade.search_by_country(params[:id], params[:page])
     @max_count = Arcade.maximum(:playables_count, :include => :address, :conditions => ['addresses.country_id = ?', params[:id]]) if @arcades.length > 0
+    @title = Country.find(params[:id]).name
     render :template => "arcades/arcades"
   end
 
@@ -69,6 +70,7 @@ class ArcadesController < ResourceController::Base
     region = params[:id].to_i
     @arcades = Arcade.search_by_region(region, params[:page])
     @max_count = Arcade.maximum(:playables_count, :include => :address, :conditions => ['addresses.region_id = ?', region]) if @arcades.length > 0
+    @title = Region.find(params[:id]).name
     render :template => "arcades/arcades"
   end
 
@@ -132,7 +134,7 @@ class ArcadesController < ResourceController::Base
     
     # Default code for mapping beyond this point
     @arcades.sort_by_distance_from(current_address) if addressed_in?
-    
+
     @map = GMap.new("arcades_map")
     @map.control_init(:small_map => true, :map_type => false)
     @map.center_zoom_init([26,-80], 13)

@@ -11,7 +11,7 @@ class GamesController < ResourceController::Base
     # GET /arcades/1-disney/games
     if parent_type == :arcade
       @arcade = Arcade.find(params[:arcade_id])
-      @collection = @arcade.games.paginate :page => params[:page], :order => 'name', :per_page => Game::PER_PAGE
+      @collection = @arcade.playables.paginate :page => params[:page], :include => :game, :order => 'games.name', :per_page => Game::PER_PAGE
     # GET /users/1-adam/games
     elsif parent_type == :user
       @user = User.find(params[:user_id])

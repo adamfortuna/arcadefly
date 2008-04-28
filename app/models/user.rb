@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   # Validation
   validates_presence_of     :login, :email, :name
   validates_length_of       :login, :within => 3..40
-  validates_uniqueness_of   :login, :case_sensitive => false, :message => 'is already taken. Please choose another login.'
+  validates_uniqueness_of   :login, :case_sensitive => false, :message => 'is already taken. Please choose another username.'
   validates_format_of       :login, :with => /^\w+$/i, :message => ' must contain only letters, numbers and underscores.'
   validates_format_of       :login, :with => /[^_]$/, :message => 'cannot end with an underscore.'
   validates_format_of       :login, :with => /^[^_]/, :message => 'cannot start with an underscore.'
@@ -67,6 +67,29 @@ class User < ActiveRecord::Base
       @message, @user = message, user
     end
   end
+
+
+
+  # Used for pagination of a search term given the current page. The number of users per page
+  # isn't customizable for the user and is set to a static number within this model.
+  #
+  # = Example
+  #  User.search("dance", 2) => Pagination Array
+  def self.search(search, page)
+    search = "%#{search}" if search and search.length >= 2
+    if search == '#'
+      paginate :per_page => PER_PAGE, :page => page,
+               :conditions => ['login regexp "^[0-9]+"'],
+               :include => { :address => [:region, :country] },
+               :order => 'login'
+    else
+      paginate :per_page => PER_PAGE, :page => page,
+             :conditions => ['login like ?', "#{search}%"],
+             :include => { :address => [:region, :country] },
+             :order => 'login'
+    end
+  end
+
 
   # Activates the user in the database. For the remainder of the life of this object it will be in a status of pending.
   def activate

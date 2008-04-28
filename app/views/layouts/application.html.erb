@@ -36,11 +36,11 @@
                 <% if current_user.follower_friends.count > 0 %>
                   <%= nav_link "Friend Requests (#{current_user.follower_friends.count})", user_friends_path(current_user), { :show_link => false } %>
                 <% end %>
-                <%= nav_link "Manage Account", settings_path(current_user), { :show_link => false } %>
+                <%= nav_link "Manage Account", user_settings_path(current_user), { :show_link => false } %>
                 <%= nav_link "Logout", "/logout", { :show_link => false } %>
               <%- else -%>
                 <%= nav_link "Register", "/signup", { :show_link => false } %>
-                <%= nav_link "Login", "/login", { :show_link => false } %>
+                <%= nav_link "Sign In", "/login", { :show_link => false } %>
               <%- end -%>
             </ul>
 

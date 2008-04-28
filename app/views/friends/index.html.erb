@@ -4,32 +4,33 @@
 
 <div class="tabbed">
 
+  <ul class="data">
+    <%= render :partial => 'friend', :collection => @user.friendships %>
+  </ul>
+
+
   <% if current_user == @user && current_user.follower_friends.count > 0 %>
-    <h2>Friend Requests</h2>
+    <h3>Friends that have added you</h3>
+    <span class="small">These are players who have added you as a friend. If you accept their request they will be added as a friend</span>
     <ul class="data">
-      <%= render :partial => 'friend', :collection => current_user.follower_friends, :locals => { :friend_request => true, :target => 'friender' } %>
+      <%= render :partial => 'friend', :collection => current_user.follower_friends, :locals => { :confirmation_request => true, :target => 'friender' } %>
     </ul>
   <% end %>
 
   <% if current_user == @user && current_user.following_friends.count > 0 %>
-    <h2>Pending Friend Requests</h2>
+    <h3>Friends You've added</h3>
+    <span class="small">As soon as these friends confirm your friend request, they will show up on your friends list, and you will show up on theirs'.</span>
     <ul class="data">
       <%= render :partial => 'friend', :collection => current_user.following_friends, :locals => { :friend_request => true } %>
     </ul>
   <% end %>
 
-  <ul class="data">
-    <%= render :partial => 'friend', :collection => @user.friendships %>
-  </ul>
-  
-  <% if @user.friends.count == 0 %>
+  <% if current_user.id != @user.id && @user.friends.count == 0 %>
     <p>
       <strong><%= @user.login %></strong> doesn't have any friends. I'm sure they're a good person though.
-      <% if current_user.id != @user.id && logged_in? && !current_user.following?(@user) %>
-        Why don't you add him so he can stop crying himself to sleep at night?
-      
-        <%= button_to "Add #{@user.login} as a friend", user_friends_path(@user), { :method => 'post', :class => 'user_delete' } %>
-        <% end %>
+      <% if logged_in? && !current_user.following?(@user) %>
+        <%= button_to "Add #{@user.login} as a friend", user_friends_path(@user), { :method => 'post', :class => 'user_add' } %>
+      <% end %>
     </p>
   <% end %>  
 </div>

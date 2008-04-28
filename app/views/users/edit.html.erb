@@ -1,80 +1,71 @@
-<% title "Settings for #{@user.login}" %>
+<% title "Edit Profile for #{@user.login}" %>
 
 <%= render :partial => 'users/menu', :locals => { :user => @user } %>
 
-
 <div class="tabbed clear">
-  <div class="span-12 column" id="address">
-  <% form_for :user, :url => user_url(@user), :html => { :method => :put } do |f| %>
-    <fieldset>
-      <legend>Change Address</legend>
-      <%= render :partial => 'shared/address', :locals => { :address => @user.address } %>
-      <p>
-        <%= submit_tag "Change Address", :name => 'change_address' %>
-      </p>
-    </fieldset>
-  <% end %> 
-  </div>
-
-  <div class="span-10 column last right">
-  <% form_for :user, :url => user_url(@user), :html => { :method => :put } do |f| %>
-    <fieldset>
-      <legend>Change Password</legend>
-      <p class="block required">
-        <label for="user_old_password">Current Password</label>
-        <%= error_message_on "user", "current_password", "Current Password " %>
-        <% if @user.errors[:current_password] %><div class="fieldWithErrors"><% end %>
-        <input class="text" id="user_old_password" name="old_password" size="30" type="password" />
-          <% if @user.errors[:current_password] %></div><% end %>
-      </p>
-      <p class="block required">
-        <label for="user_password">New Password</label>
-        <span class="block info">At least 4 characters.</span>
-        <%= error_message_on "user", "password", "Password " %>
-        <%= f.password_field :password, { :class => 'text', :value => '' } %>
-      </p>
-      <p class="block required">
-        <label for="user_password_confirmation">Confirm New Password</label>
-        <%= error_message_on "user", "password_confirmation", "Confirm password " %>
-        <%= f.password_field :password_confirmation, { :class => 'text', :value => '' } %>
-      </p>
-      <p>
-        <%= submit_tag "Change Password", :name => 'change_password' %>
-      </p>
-    </fieldset>
-  <% end %> 
-  
-  <% form_for :user, :url => user_url(@user), :html => { :method => :put } do |f| %>
-    <fieldset>
-      <legend>Change Username</legend>
-      <p class="block required">
-        <label for="user_login">New username</label>
-        <span class="block info">This must be between 3 and 40 characters.</span>
-        <%= error_message_on "user", "login", "Username " %>
-        <%= f.text_field :login, { :class => 'text', :value => ''} %>
-      </p>
-      <p>
-        <%= submit_tag "Change Username", :name => 'change_username' %>
-      </p>
-    </fieldset>
-  <% end %> 
-  </div>
-  
-
   <div class="span-23 clear">
-  <% form_for :user, :url => user_url(@user), :html => { :method => :put } do |f| %>
+  <% form_for :user, :url => user_url(@user), :html => { :method => :put } do |f| %>    
     <fieldset>
       <legend>Edit Pubic Profile</legend>
-      <p class="block required">
-        <label for="user_login">About</label>
-        <span class="block info">This will show up in your public profile.</span>
-        <%= error_message_on "user", "about", "About " %>
-        <%= f.text_area :about, { :class => 'text' } %>
-      </p>
-      <p>
-        <%= submit_tag "Update Public Profile", :name => 'update_profile' %>
-      </p>
-    </fieldset>
+      <div class="left prepend-1">
+         <p class="block required">
+           <label for="user_login">Your Username</label>
+           <span class="block info">This must be between 3 and 40 characters and will be public. You can change this later.</span>
+           <%= error_message_on "user", "login", "That username " %>
+           <%= f.text_field :login, { :class => 'text'} %>
+         </p>
+         <p class="block">
+           <label for="user_name">Name</label>
+           <span class="block info">This will not be public. If we need to contact you we'll use this name.</span>
+           <%= error_message_on "user", "name", "Name " %>
+           <%= f.text_field :name, { :class => 'text'} %>
+         </p>
+         <p class="block">
+           <label for="user_website">Website</label>
+           <span class="block info">This should probably start with http://</span>
+           <%= error_message_on "user", "website", "Website " %>
+           <%= f.text_field :website, { :class => 'text', :value => @user.website || "http://"} %>
+         </p>      
+         <p class="block">
+           <label for="user_login">About</label>
+           <span class="block info">This will show up in your public profile.</span>
+           <%= error_message_on "user", "about", "About " %>
+           <%= f.text_area :about, { :class => 'text' } %>
+         </p>
+      </div>
+      
+      <div class="right append-1" id="address">
+        <%= render :partial => 'shared/address', :locals => { :address => @user.address } %>
+        
+        <fieldset>
+        
+        <legend>Change Password</legend>
+        <p class="small">Only complete this section if you want to change your password</p>
+        <p class="block required">
+          <label for="user_old_password">Current Password</label>
+          <%= error_message_on "user", "current_password", "Current Password " %>
+          <% if @user.errors[:current_password] %><div class="fieldWithErrors"><% end %>
+          <input class="text" id="user_old_password" name="old_password" size="30" type="password" />
+            <% if @user.errors[:current_password] %></div><% end %>
+        </p>
+        <p class="block required">
+          <label for="user_password">New Password</label>
+          <span class="block info">At least 4 characters.</span>
+          <%= error_message_on "user", "password", "Password " %>
+          <%= f.password_field :password, { :class => 'text', :value => '' } %>
+        </p>
+        <p class="block required">
+          <label for="user_password_confirmation">Confirm New Password</label>
+          <%= error_message_on "user", "password_confirmation", "Confirm password " %>
+          <%= f.password_field :password_confirmation, { :class => 'text', :value => '' } %>
+        </p>
+        </fieldset>
+      <div>
+
+      <p class="center">
+        <%= submit_tag "Update Public Profile", :name => 'update_profile', :disable_with => "Updating profile..." %>
+      </p>        
+    </fieldset>    
   <% end %>
   </div>
 </div>

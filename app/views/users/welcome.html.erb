@@ -1,16 +1,21 @@
-Welcome to ArcadeFly.com! 
+<%- title "What can you do next?" %>
+  
+<% if !addressed_in? %>
+<h3>Add an Address</h3>
+<p>You can let us know your address at any time for access to additional ways of finding arcades.</p>
+<% end %>
 
-<h2>What can you do next?</h2>  
-<dl>
-  <dt>Find some arcades you frequent, or add some</dt>
-  <dd>This site is powered by the contributions from users like you.  If you can help make our list more complete is benefits everyone! Check out the <%= link_to "arcades", arcades_path %> section for locations near you.</dd>
+<h3>Complete Your profile</h3>
+<p>Add more information about yourself so people can get to know you by <%= link_to "completing your profile", user_settings_path(current_user) %>.</p>
 
-  <dt>Find a game to play</dt>
-  <dd>Ever wanted to find a place to play a game but didn't know what arcade had it? Look it up in our <%= link_to "games", games_path %> database and find arcades closeby.</dd>
+<h3>Find arcades you go to</h3>
+<p> Check out the <%= link_to "arcades", arcades_path %> section for locations<% if addressed_in? %> near you<% end %>.<% if !addressed_in? %>  If you <b><%= link_to "add your address", user_settings_path(current_user) %></b>, you'll be able to see all the arcades closeby. <% end %></p>
 
-  <dt>Add games to an arcade</dt>
-  <dd>If you know of games at an arcade that aren't listed. Just edit the arcade and add them!</dd>
+<h3>Find a game you want to play</h3>
+<p>Find a <%= link_to "game", games_path %> you like, and we'll show you<% if addressed_in? %> the closeby<% end %> arcades to play it. <% if !addressed_in? %>If you <b><%= link_to "add your address", user_settings_path(current_user) %></b>, you'll be able to see all the arcades closeby. <% end %></p>
 
-  <dt>Find gamers in your area</dt>
-  <dd>If you frequent an arcade, you can add that arcade to your list of favorites. You can also check out who else has added that arcade to their list of favorites.</dd>
-</dl>
+<h3>Find players to play with</h3>
+<p>See who goes to your hangouts and arrane a meetup.</p>
+
+<h3>Complete listings!</h3>
+<p>Found an arcade not listed here? Know of a game at an arcade not listed? Update the listing and help out everyone!</p>

@@ -13,7 +13,7 @@
  <% end %>
 
   <% if logged_in? && !current_user.has_favorite_game?(@game) %>
-    <p><%= button_to "Add this game to your favorites", game_favorite_path(@game), { :method => "post", :class => 'favorite_add' } %></p>
+    <p><%= button_to "Add to your favorites", game_favorites_path(@game), { :method => "post", :class => 'favorite game_add' } %></p>
   <% end %>
   
   <p>

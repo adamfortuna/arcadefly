@@ -30,7 +30,7 @@ ActionController::Routing::Routes.draw do |map|
   map.activate '/activate/:id',              :controller => 'users',   :action => 'activate'
   map.forgot_password '/forgot_password',    :controller => 'passwords', :action => 'new'
   map.reset_password  '/reset_password/:id', :controller => 'passwords', :action => 'edit'
-  map.settings '/users/:id/settings',        :controller => 'users', :action => 'edit'
+  map.user_settings '/users/:id/settings',        :controller => 'users', :action => 'edit'
 
   # Shortened routes
   map.about '/about',       :controller => 'home',    :action => 'about'
@@ -55,9 +55,11 @@ ActionController::Routing::Routes.draw do |map|
   map.new_arcade_3 '/arcades/new/addgames',           :controller => 'arcades', :action => 'new3'
   map.new_arcade_2 '/arcades/new/verify',             :controller => 'arcades', :action => 'new4'
   
+  # Arcade maps
   map.game_arcades_map '/games/:game_id/arcades/map', :controller => 'arcades', :action => 'list_map'
   map.user_arcades_map '/users/:user_id/arcades/map', :controller => 'arcades', :action => 'list_map'
   
+  # Browse for arcades
   map.countries_arcades '/arcades/countries',         :controller => 'arcades', :action => 'countries'
   map.country_arcades '/arcades/countries/:id',       :controller => 'arcades', :action => 'country'
   map.regions_arcades '/arcades/regions',             :controller => 'arcades', :action => 'regions'

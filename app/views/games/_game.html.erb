@@ -8,7 +8,7 @@
   count ||= "playables_count"
   
   game_name = game.name
-  game_name += " (#{playable.games_count})" if game.is_a?(Playable) && playable.games_count > 1
+  game_name += " (#{playable.games_count})" if !playable.nil? && playable.games_count > 1
 -%>
 <li class="<%= cycle("even","odd")%>">
 
@@ -26,9 +26,9 @@
   <% if logged_in? %>
 	<span class="favorite">
 	  <% if current_user.games.include?(game) %>
-	    <%= link_to "&nbsp;", game_favorites_url(game), { :method => "delete", :class => "favorite_delete" } %>
+	    <%= link_to "&nbsp;", game_favorites_url(game)+'/'+game.to_param, { :method => "delete", :class => "favorite game_delete" } %>
 	  <% else %>
-      <%= link_to "&nbsp;", game_favorites_path(game), { :method => "post", :class => "favorite_add" } %>
+      <%= link_to "&nbsp;", game_favorites_path(game), { :method => "post", :class => "favorite game_add" } %>
 	  <% end %>
 	</span>
 	<% end %>

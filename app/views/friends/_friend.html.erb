@@ -2,6 +2,7 @@
   target ||= :friendee
   user = target == :friendee ? friend.friendee : friend.friender
   friend_request ||= false
+  confirmation_request ||= false
 -%>
 <li class="<%= cycle("even","odd")%>">
   <%= link_to(user.login, user_path(user), :class => 'main' ) %>
@@ -14,19 +15,22 @@
       <% end %>
 	  <% end %>
 
-    <% if logged_in? && current_user.id != user.id %>
+    <% if logged_in? %>
   	<span class="favorite">
-  	  <% if current_user.friended?(user) %>
-        <%= button_to "Remove #{user.login} as a friend", user_friends_path(user)+'/'+user.to_param, { :method => 'delete', :class => 'user_delete' } %>
-      <% elsif current_user.following?(user) %>x
-        <%= button_to "Withdraw friend request to #{user.login}", user_friends_path(user)+'/'+user.to_param, { :method => 'delete', :class => 'user_delete' } %>
-      <% else %>
-        <%= button_to "Add #{user.login} as a friend", user_friends_path(user), { :method => 'post', :class => 'user_add' } %>
+      <% if current_user.following?(user) %>
+        <%= link_to "&nbsp", user_friends_path(user)+'/'+user.to_param, { :method => 'delete', :class => 'favorite user_delete' } %>
       <% end %>
-    
-    
+
+  	  <% if current_user.friended?(user) || confirmation_request %>
+        <%= link_to "&nbsp;", user_friends_path(user)+'/'+user.to_param, { :method => 'delete', :class => 'favorite user_delete' } %>
+      <% end %>
+      
+      <% if (!current_user.friended?(user) && !current_user.following?(user)) || confirmation_request %>
+        <%= link_to "&nbsp;", user_friends_path(user), { :method => 'post', :class => 'favorite user_add' } %>
+      <% end %>
   	</span>
-	</span>
 	<% end %>
+	</span>
+
 </li>
 

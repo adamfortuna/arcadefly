@@ -1,4 +1,8 @@
-<% title "Arcades Listing" -%>
+<%
+  page_title = "Arcades Listing"
+  page_title += " - #{@title}" unless @title.nil? 
+  title page_title 
+-%>
 
 <%= render :partial => 'arcades/list_menu', :locals => { :map => true } %>
 

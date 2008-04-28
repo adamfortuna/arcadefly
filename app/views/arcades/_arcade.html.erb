@@ -20,9 +20,9 @@
 	  <% if logged_in? %>
   	<span class="favorite">
   	  <% if current_user.arcades.include?(arcade) %>
-  	    <%= link_to "&nbsp;", arcade_favorites_path(arcade), { :method => "delete", :class => "favorite_delete" } %>
+  	    <%= link_to "&nbsp;", arcade_favorites_path(arcade)+'/'+arcade.to_param, { :method => "delete", :class => "favorite arcade_delete" } %>
   	  <% else %>
-        <%= link_to "&nbsp;", arcade_favorites_path(arcade), { :method => "post", :class => "favorite_add" } %>
+        <%= link_to "&nbsp;", arcade_favorites_path(arcade), { :method => "post", :class => "favorite arcade_add" } %>
   	  <% end %>
   	</span>
   	<% end %>
