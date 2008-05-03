@@ -10,56 +10,30 @@
     });
     <% end %>
   </script>
+  <style>
+  <!--
+  #features { font-size: 1.5em;  }
+  #features li { padding: 1em; }
+  //-->
+  </style>
 <% end %>
 
-<% title "Welcome to ArcadeFly.com!" %>
-<p>
-  We have 3 simple goals...
-</p>
+<h2>We will help you find...</h2>
 
-<ul>
-  <li>
-    <%= link_to "Help you find Arcades", arcades_path, { :class=>"box center span-7 column" } %>
-  </li>
-  <li>
-    <%= link_to "Help you find the games you want to play", games_path, { :class=>"box center span-7 column" } %>
-  </li>
-  <li>
-    <%= link_to "Help you find other gamers to hang out with", users_path, { :class=>"box center span-7 right" } %>
-  </li>
+<ul id="features">
+  <li class="box center span-7 column">Arcades where you want</li>
+  <li class="box center span-7 column">Games you want to play</li>
+  <li class="box center span-7 right">Players to hang out with</li>
 </ul>
 
-<div>
-  <fieldset class="column span-11">
-    <legend>Find an Arcade Near You</legend>
-    <% if logged_in? %>
-      <% if addressed_in? %>
-        <p>To view arcades close to your address, <em><%= current_address.single_line %></em>, check out the <%= link_to "Browse Arcades by Distance", arcades_distance_path %> page.</p>
-      <% else %>
-        <p>To view arcades by distance, we have to know your address to base it on! <%= link_to "Add an address", settings_path(current_user) %> and we'll start showing you distance calculations.</p>
-      <% end %>
-    <% else %>
-      <p>Want to see arcades in your area? Just enter your address! You can also <%= link_to "Register", signup_path %> anytime and we'll save your address for later.
-    
+<% if !logged_in? %>
+  <fieldset class="clear">
+    <legend>Enter your address to get started</legend>
       <% form_tag(addresses_path) do %>
         <p class="block">
-          <label for="address">Enter your Address</label>
           <%= text_field_tag :address, addressed_in? ? current_address.single_line : '', { :class => 'text' } %>  
           <%= submit_tag "Find!", :class => 'inline', :disable_with => 'Finding...' %>
         </p>
       <% end %>
-    <% end %>
   </fieldset>
-
-  <fieldset class="column span-11 last right">
-    <legend>Find an Arcade to Play a Game</legend>
-    <% form_tag({ :controller => 'games' }, { :method => 'get', :onsubmit => "gotoGame($F('game_id'));" } ) do %>
-    <p>Looking for a place to play a specific game? Check out the <%= link_to "Games section", games_path %> or choose from the most popular games.</p>
-    <p class="block">
-      <label for="game_id">Find a Game</label>
-      <%= select_tag :game_id, options_from_collection_for_select(@games, "to_param", "name"), { :class => "text" } %>
-      <%= submit_tag "Find!", :class => 'inline', :onclick => 'return gotoGame($F("game_id"));', :disable_with => 'Finding...' %>
-    </p>
-    <% end %>
-  </fieldset>
-</div>
+<% end %>
