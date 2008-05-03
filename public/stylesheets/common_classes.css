@@ -100,7 +100,7 @@ div.error { background-color: #FCC; border: solid 1px #C66; }
 
 /* Counts displayed on an arcade/game/user page */
 span.counts { border: 1px solid #ccc; margin-left:1em; }
-span.counts a { display:block; padding:1em 1em 1em 1em; font-weight: bold; }
+span.counts a { display:block; padding:1em 2em 1em 2em; font-weight: bold; }
 span.counts a:first-child { border-bottom: 1px solid #ccc;}
 a.arcades { background-color: #dde; }
 a.arcades:hover { background-color: #ccf; }
@@ -109,8 +109,13 @@ a.games:hover { background-color: #fcc; }
 a.users { background-color: #ded; }
 a.users:hover { background-color: #cec; }
 
+span.counts a.arcades { background: url(../../images/joystick.png) #dde no-repeat left; }
+span.counts a.games { background: url(../../images/controller.png) #fdd no-repeat left; }
+span.counts a.users { background: url(../../images/user.png) #ded no-repeat left; }
+
+
 /* Graphics for adding/removing something from favorites */
-.favorite { padding:.5em 2em; }
+.favorite { padding:0 2em .3em 2em; }
 .favorite_add { background: url(../../images/heart_add.png) no-repeat left;  }
 .favorite_delete { background: url(../../images/heart_delete.png) no-repeat left; }
 .arcade_add { background: url(../../images/joystick_add.png) no-repeat left; }
