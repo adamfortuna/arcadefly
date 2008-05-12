@@ -1,0 +1,21 @@
+<% map ||= false -%>
+<ul class="tabs">
+  <%= nav_link "Profile", profile_path(profile), { :a_class => 'users' } %>
+  <%= nav_link "Favorite Arcades", profile_arcades_path(profile), { :a_class => 'arcades' } %>
+  <%= nav_link "Favorite Games", profile_games_path(profile), { :a_class => 'games' } %>
+  <%= nav_link "Friends", profile_friends_path(profile), { :a_class => 'users' } %>
+  <%= nav_link 'Blog', profile_blogs_path(profile) %>
+  <%= nav_link 'Photos', profile_photos_path(profile) %>
+  <%= nav_link 'Network', profile_friends_path(profile) if profile.has_network? %>
+
+  <% if logged_in? && (me || administrator?) -%>
+  <%= nav_link 'Messages Center', messages_path, { :li_class => 'right' } unless profile.received_messages.empty? && !profile.has_network? %>
+  <%= nav_link 'View Public Profile', profile_path(profile).add_param(:public_view => true), { :li_class => 'right' } %>
+  <%= nav_link 'Edit Profile', edit_profile_path(profile), { :li_class => 'right' } %>
+  <% end %>
+
+  <% if map %>
+    <%= menu_link "Map", profile_arcades_map_path(profile), { :li_class => 'right' } %>
+    <%= menu_link "List", profile_arcades_path(profile), { :li_class => 'right' } %>
+  <% end %>
+</ul>

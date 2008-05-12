@@ -2,7 +2,7 @@
 <ul class="tabs">
   <%= menu_link "Game Info", game_path(game), { :a_class => 'games' } %>
   <%= menu_link "Arcades", game_arcades_path(game), { :a_class => 'arcades' } %>
-  <%= menu_link "Players", game_users_path(game), { :a_class => 'users' } %>
+  <%= menu_link "Players", game_profiles_path(game), { :a_class => 'users' } %>
   <% if map %>
     <%= menu_link "Map", game_arcades_map_path(game), { :li_class => 'right' } %>
     <%= menu_link "List", game_arcades_path(game), { :li_class => 'right' } %>

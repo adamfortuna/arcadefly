@@ -2,7 +2,7 @@ class Arcade < ActiveRecord::Base
 	has_many :playables
 	has_many :frequentships
 	has_many :games, :through => :playables
-	has_many :users, :through => :frequentships
+	has_many :profiles, :through => :frequentships
 	has_one :address, :as => :addressable
 	
 	has_many :hours, :as => :timeable, :order => 'dayofweek, start, end'

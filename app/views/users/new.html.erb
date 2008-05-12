@@ -61,19 +61,28 @@
     <% form_for :user, :url => users_path, :html => { :id => 'signup_form' } do |f| -%>
   
     <div class="left prepend-1">
-      <p class="block required">
-        <label for="user_login">Choose a Username</label>
-        <span class="block info">This must be between 3 and 40 characters and will be public. You can change this later.</span>
-        <%= error_message_on "user", "login", "Login " %>
-        <%= f.text_field :login, { :class => 'text'} %>
-      </p>
+      <% fields_for :profile, @user.profile do |p| %>
+        <p class="block required">
+          <label for="profile_display_name">Display Name</label>
+          <span class="block info">Whenever we show your name on ArcadeFly, this is what people will see.</span>
+          <%= error_message_on @user.profile, "display_name", "Display Name " %>
+          <%= p.text_field :display_name, { :class => 'text'} %>
+        </p>
 
       <p class="block required">
-        <label for="user_email">Email</label>
+        <label for="profile_email">Email Address</label>
         <span class="block info">You'll need this to login for the first time.</span>
-        <%= error_message_on "user", "email", "Email " %>
-        <%= f.text_field :email, { :class => 'text'} %>
+        <%= error_message_on @user.profile, "email", "Email " %>
+        <%= p.text_field :email, { :class => 'text'} %>
       </p>
+      
+      <p class="block required">
+        <label for="profile_email_confirmation">Confirm Email Address</label>
+        <%= error_message_on @user.profile, "email_confirmation", "Email " %>
+        <%= p.text_field :email_confirmation, { :class => 'text'} %>
+      </p>
+      
+      <% end %>
       
       <p class="block required">
         <label for="user_password">Choose a Password</label>
@@ -88,21 +97,6 @@
         <%= f.password_field :password_confirmation, { :class => 'text'} %>
       </p>
 
-  
-      <p class="block">
-        <label for="user_name">Name</label>
-        <span class="block info">This will not be public. If we need to contact you we'll use this name.</span>
-        <%= error_message_on "user", "name", "Name " %>
-        <%= f.text_field :name, { :class => 'text'} %>
-      </p>
-
-      <p class="block">
-        <label for="user_name">Website</label>
-        <span class="block info">Have a website you want people to see in your profile?</span>
-        <%= error_message_on "user", "website", "Website " %>
-        <%= f.text_field :website, { :class => 'text'} %>
-      </p>
-
       <p class="left shift-1">
         <input type="checkbox" name="add_address" id="add_address"<%= ' checked="true"' if @add_address %> />
         <label for="add_address">Add an address now?</label>
@@ -111,7 +105,7 @@
     </div>
     
     <div class="right append-1" id="address">
-      <%= render :partial => 'shared/address', :locals => { :address => @user.address } %>
+      <%= render :partial => 'shared/address', :locals => { :address => @user.profile.address } %>
     </div>
 
     <p class="shift-2 center right clear-right span-11">

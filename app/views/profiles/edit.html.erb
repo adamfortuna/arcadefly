@@ -1,0 +1,10 @@
+<% title 'Edit Profile for ' + @profile.display_name -%>
+
+<%= render :partial => 'profiles/menu', :locals => { :profile => @profile } %>
+
+<div class="tabbed">
+  <%= render :partial=>'form' %>
+</div>
+
+
+

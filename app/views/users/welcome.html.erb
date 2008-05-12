@@ -6,13 +6,13 @@
 <% end %>
 
 <h3>Complete Your profile</h3>
-<p>Add more information about yourself so people can get to know you by <%= link_to "completing your profile", user_settings_path(current_user) %>.</p>
+<p>Add more information about yourself so people can get to know you by <%= link_to "completing your profile", edit_profile_path(current_profile) %>.</p>
 
 <h3>Find arcades you go to</h3>
-<p> Check out the <%= link_to "arcades", arcades_path %> section for locations<% if addressed_in? %> near you<% end %>.<% if !addressed_in? %>  If you <b><%= link_to "add your address", user_settings_path(current_user) %></b>, you'll be able to see all the arcades closeby. <% end %></p>
+<p> Check out the <%= link_to "arcades", arcades_path %> section for locations<% if addressed_in? %> near you<% end %>.<% if !addressed_in? %>  If you <b><%= link_to "add your address", edit_profile_path(current_profile) %></b>, you'll be able to see all the arcades closeby. <% end %></p>
 
 <h3>Find a game you want to play</h3>
-<p>Find a <%= link_to "game", games_path %> you like, and we'll show you<% if addressed_in? %> the closeby<% end %> arcades to play it. <% if !addressed_in? %>If you <b><%= link_to "add your address", user_settings_path(current_user) %></b>, you'll be able to see all the arcades closeby. <% end %></p>
+<p>Find a <%= link_to "game", games_path %> you like, and we'll show you<% if addressed_in? %> the closeby<% end %> arcades to play it. <% if !addressed_in? %>If you <b><%= link_to "add your address", edit_profile_path(current_profile) %></b>, you'll be able to see all the arcades closeby. <% end %></p>
 
 <h3>Find players to play with</h3>
 <p>See who goes to your hangouts and arrane a meetup.</p>

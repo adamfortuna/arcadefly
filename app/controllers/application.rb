@@ -4,7 +4,7 @@
 class ApplicationController < ActionController::Base
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
-  include AddressSystem  
+  include AddressSystem
 
   # Pick a unique cookie name to distinguish our session data from others'
   session :session_key => 'arcadefly_session_id'

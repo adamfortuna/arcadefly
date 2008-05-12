@@ -1,6 +1,6 @@
 ---
   :address: smtp.gmail.com
   :port: 587
-  :user_name: adam@arcadefly.com
-  :password: animez
+  :user_name: outgoing@arcadefly.com
+  :password: Q1w2e3r4
   :authentication: :plain

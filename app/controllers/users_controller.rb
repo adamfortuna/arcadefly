@@ -52,33 +52,46 @@ class UsersController < ResourceController::Base
   # render new.rhtml
   def new
     @user = User.new(params[:user])
-    @user.address = current_address if addressed_in?
+    @user.profile = Profile.new()
+    @user.profile.address = current_address if addressed_in?
+    
     @add_address = params[:add_address] || true
   end
  
   def create
     @add_address = params[:add_address]
     cookies.delete :auth_token
-    @user = User.new(params[:user])
+    @user = User.new()
+    @user.profile = Profile.new()
+    
+    @user.password = params[:user][:password]
+    @user.password_confirmation = params[:user][:password_confirmation]
+    @user.profile.email = params[:profile][:email]
+    @user.profile.email_confirmation = params[:profile][:email_confirmation]
+    @user.profile.display_name = params[:profile][:display_name]
+    
     if params[:add_address]
-      @user.address = Address.new(params[:address])
-      @user.address.title = "My Home"
+      @user.profile.address = Address.new(params[:address])
+      @user.profile.address.title = "My Home"
     end
     
-    @user.administrator = false
+    raise if !@user.valid? || !@user.profile.valid?
+    
     @user.save!
     
     #Uncomment to have the user logged in after creating an account - Not Recommended
     #self.current_user = @user
-    flash[:notice] = "Thanks for signing up, <b>#{@user.login}</b>! Please check your email and click on the link we sent you to activate your account and log in."
+    flash[:notice] = "Thanks for signing up, <b>#{@user.profile.display_name}</b>! Please check your email and click on the link we sent you to activate your account and log in."
     redirect_to login_path    
   rescue ActiveRecord::RecordInvalid
+#    debugger
     flash[:error] = "There was a problem creating your account. Please correct any errors below before continuing."
+#    debugger
     render :action => 'new'
   end
   
   def edit
-    raise if current_user.id != params[:id].to_i && !current_user.administrator?
+    raise if current_user.id != params[:id].to_i && !administrator?
     @user = User.find(params[:id], :include => :address)
   rescue
     permission_denied
@@ -86,7 +99,7 @@ class UsersController < ResourceController::Base
   
   # PUT /users/1-adam
   def update
-    raise if current_user.id != params[:id].to_i && !current_user.administrator?
+    raise if current_user.id != params[:id].to_i && !administrator?
     
     @user = User.find(params[:id])
     @user.login = params[:user][:login]

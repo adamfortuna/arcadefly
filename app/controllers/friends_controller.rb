@@ -1,63 +1,47 @@
-# Controls favoriting games and arcades.
-class FriendsController < ResourceController::Base
-  belongs_to :user
-  before_filter :login_required
+class FriendsController < ApplicationController
+  before_filter :setup
+  skip_before_filter :login_required, :only=>:index
+  skip_before_filter :store_location, :only => [:create, :destroy]
+  
   
   def create
-    current_user.follower?(parent_object) ? make_friends : add_follower
-    redirect_to request.env["HTTP_REFERER"]
+    respond_to do |wants|
+      if Friend.make_friends(@p, @profile)
+        friend = @p.reload.friend_of? @profile
+        wants.js {render( :update ){|page| page.replace @p.dom_id(@profile.dom_id + '_friendship_'), get_friend_link( @p, @profile)}}
+      else
+        message = "Oops... That didn't work. Try again!"
+        wants.js {render( :update ){|page| page.alert message}}
+      end
+    end
   end
+  
   
   def destroy
-    if current_user.friended?(parent_object)
-      stop_being_friends
-    elsif current_user.following?(parent_object)
-      stop_following
-    elsif current_user.follower?(parent_object)
-      remove_follower
-    end
-
-    redirect_to request.env["HTTP_REFERER"]
-  end
-  
-  private
-  def add_follower
-    if Friendship.add_follower(current_user, parent_object)
-      flash[:notice] = "<span class=\"favorite user_add\">You have added <b>#{parent_object.login}</b> as a friend. As soon as they confirm the friend request, you will show up as friends.</span>"
-    else
-      flash[:error] = "There was problem adding that friend. Can you try again?"
+    Friend.reset @p, @profile
+    respond_to do |wants|
+      following = @p.reload.following? @profile
+      wants.js {render( :update ){|page| page.replace @p.dom_id(@profile.dom_id + '_friendship_'), get_friend_link( @p, @profile)}}
     end
   end
   
-  def make_friends
-    if Friendship.make_friends(current_user, parent_object)
-      flash[:notice] = "<span class=\"favorite user_add\">You are now friends with <b>#{parent_object.login}</b>!</span>"
-    else
-      flash[:error] = "There was problem adding that friend. Can you try again?"
-    end
+  
+  def index
+    render
   end
   
-  def stop_being_friends
-    if Friendship.stop_being_friends(current_user, parent_object)
-      flash[:notice] = "<span class=\"favorite user_delete\">You have removed <b>#{parent_object.login}</b> from your friends list.</span>"      
-    else
-      flash[:error] = "There was a problem removing that friend. Can you try again?"
-    end
+  
+  protected
+  
+  def allow_to
+    super :user, :all => true
+    super :non_user, :only => :index
   end
   
-  def stop_following
-    if Friendship.stop_following(current_user, parent_object)
-      flash[:notice] = "<span class=\"favorite user_delete\">You withdrew your friend request to <b>#{parent_object.login}</b>.</span>"      
-    else
-      flash[:error] = "There was a problem withdrawing your friend request. Can you try again?"
-    end
+  
+  def setup
+    @profile = Profile[params[:id] || params[:profile_id]]
+    @user = @profile.user
   end
   
-  def remove_follower
-    if Friendship.remove_follower(current_user, parent_object)
-      flash[:notice] = "<span class=\"favorite user_delete\">You declined the friend request from <b>#{parent_object.login}</b>.</span>"      
-    else
-      flash[:error] = "There was a problem declining that friend request. Can you try again?"
-    end
-  end
 end

@@ -3,63 +3,27 @@ require 'digest/md5'
 
 class User < ActiveRecord::Base
   
-  PER_PAGE = 50
-  
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 
-  # Arcades
-  has_many :frequentships
-  has_many :arcades, :through => :frequentships
-
-  # Games
-  has_many :favoriteships
-  has_many :games, :through => :favoriteships
-
-  # Friends
-  has_many :friendships, :foreign_key => 'friender_id', :conditions => "status = #{Friendship::ACCEPTED}"
-  has_many :follower_friends, :class_name => "Friendship", :foreign_key => "friendee_id", :conditions => "status = #{Friendship::PENDING}"
-  has_many :following_friends, :class_name => "Friendship", :foreign_key => "friender_id", :conditions => "status = #{Friendship::PENDING}"
+  has_one :profile, :dependent => :nullify   
   
-  has_many :friends,   :through => :friendships, :source => :friendee
-  has_many :followers, :through => :follower_friends, :source => :friender
-  has_many :followings, :through => :following_friends, :source => :friendee
-  
-  # Addresses
-  has_one :address, :as => :addressable 
-    
   # Validation
-  validates_presence_of     :login, :email, :name
-  validates_length_of       :login, :within => 3..40
-  validates_uniqueness_of   :login, :case_sensitive => false, :message => 'is already taken. Please choose another username.'
-  validates_format_of       :login, :with => /^\w+$/i, :message => ' must contain only letters, numbers and underscores.'
-  validates_format_of       :login, :with => /[^_]$/, :message => 'cannot end with an underscore.'
-  validates_format_of       :login, :with => /^[^_]/, :message => 'cannot start with an underscore.'
-  validates_format_of       :login, :with => /^[^0-9]/, :message => 'cannot start with a number.'
-  
-  validates_uniqueness_of   :email, :case_sensitive => false, :message => 'is taken. Do you already have an account here?'
-  validates_format_of       :email, :with => /(^([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i
-  validates_length_of       :email, :within => 6..100
-
-  # More thorough validation rules
-  #@@email_validation_regex = /^[a-z0-9][\._\-a-z0-9]+([_\-a-z0-9]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\d{1,3}\.){3}\d{1,3})(:\d{4})?$/i
-  #validates_format_of       :email,    :with => @@email_validation_regex, :message => 'is not a valid email address.'
-
-
   validates_presence_of     :password,                   :if => :password_required?
   validates_presence_of     :password_confirmation,      :if => :password_required?
   validates_length_of       :password, :within => 4..40, :if => :password_required?
   validates_confirmation_of :password,                   :if => :password_required?
   
-  validates_associated :address
-  
   before_save :encrypt_password
   before_create :make_activation_code
 
-  # prevents a user from submitting a crafted form that bypasses activation
-  # anything else you want your user to change should be added here.
-  attr_accessible :login, :email, :password, :password_confirmation, :about, :name
+  composed_of :tz, :class_name => 'TZInfo::Timezone', :mapping => %w( time_zone time_zone )
 
+  attr_accessible :password, :password_confirmation
+
+
+
+  # Errors that a user can return
   class ActivationCodeNotFound < StandardError; end
   class AlreadyActivated < StandardError
     attr_reader :user, :message;
@@ -70,27 +34,11 @@ class User < ActiveRecord::Base
 
 
 
-  # Used for pagination of a search term given the current page. The number of users per page
-  # isn't customizable for the user and is set to a static number within this model.
-  #
-  # = Example
-  #  User.search("dance", 2) => Pagination Array
-  def self.search(search, page)
-    search = "%#{search}" if search and search.length >= 2
-    if search == '#'
-      paginate :per_page => PER_PAGE, :page => page,
-               :conditions => ['login regexp "^[0-9]+"'],
-               :include => { :address => [:region, :country] },
-               :order => 'login'
-    else
-      paginate :per_page => PER_PAGE, :page => page,
-             :conditions => ['login like ?', "#{search}%"],
-             :include => { :address => [:region, :country] },
-             :order => 'login'
-    end
-  end
 
 
+
+  # User Activation
+  
   # Activates the user in the database. For the remainder of the life of this object it will be in a status of pending.
   def activate
     @activated = true
@@ -100,10 +48,6 @@ class User < ActiveRecord::Base
   end
 
   # Finds the user with the corresponding activation code, activates their account and returns the user.
-  #
-  # Raises:
-  #  +User::ActivationCodeNotFound+ if there is no user with the corresponding activation code
-  #  +User::AlreadyActivated+ if the user with the corresponding activation code has already activated their account
   def self.find_and_activate!(activation_code)
     raise ArgumentError if activation_code.nil?
     user = find_by_activation_code(activation_code)
@@ -118,35 +62,68 @@ class User < ActiveRecord::Base
     # the existence of an activation code means they have not activated yet
     activation_code.nil?
   end
-
+  
   # Returns true if the user has just been activated.
   def pending?
     @activated
   end
-
-  # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
-  def self.authenticate(login, password)
-    u = find :first, :conditions => ['login = ? and activated_at IS NOT NULL', login] # need to get the salt
-    u && u.authenticated?(password) ? u : nil
+  
+  def requested_signup_notification
+    @requested_signup = true
   end
+    
+  def recently_requested_signup_notification?
+    @requested_signup
+  end
+  
+  def self.find_for_forget(email)
+    find :first, :include => :profile, :conditions => ['profiles.email = ? and activation_code IS NULL', email]
+  end
+  
+  
+  
+  
+  
+  
+  
+  
 
-  # Encrypts some data with the salt.
-  def self.encrypt(password, salt)
-    Digest::SHA1.hexdigest("--#{salt}--#{password}--")
+
+  # Authentication
+  # Authenticates a user by their email and unencrypted password.  Returns the user or nil.
+  def self.authenticate(_email, _password)
+    profile = Profile.find(:first, :include => :user, :conditions => ['email = ? and activated_at IS NOT NULL', _email])
+    profile && profile.user.authenticated?(_password) ? profile.user : nil
   end
 
   # Encrypts the password with the user salt
-  def encrypt(password)
-    self.class.encrypt(password, salt)
+  def encrypt(_password)
+    Digest::SHA1.hexdigest("--#{salt}--#{_password}--")
   end
 
   # This will check if the current users password matches the one provided.
-  def authenticated?(password)
-    crypted_password == encrypt(password)
+  def authenticated?(_password)
+    crypted_password == encrypt(_password)
   end
-
-  # This will determine if the user has selected the "remember me" option, and whether or not
-  # their token has since expired.
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  # Remember options
+  # This will determine if the user has selected the "remember me" option, and whether or not their token has since expired.
   def remember_token?
     remember_token_expires_at && Time.now.utc < remember_token_expires_at 
   end
@@ -161,7 +138,17 @@ class User < ActiveRecord::Base
     self.remember_token            = nil
     save(false)
   end
-
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  # Reset Password
   def create_reset_code
     @reset_password = true
     make_reset_code
@@ -176,38 +163,11 @@ class User < ActiveRecord::Base
     @forgotten_password
   end
   
-  def requested_signup_notification
-    @requested_signup = true
-  end
-    
-  def recently_requested_signup_notification?
-    @requested_signup
-  end
 
   def delete_reset_code
     self.password_reset_code = nil
     save(false)
   end
-# end From
-
-# Address related
-  #def address=(attributes)
-  #  address = build_address if !address
-  #  address.attributes = attributes
-  #end
-  
-  def has_address?
-    address && (!address.nil? || address.new_record?)
-  end
-  
-  def country_id
-    address.country.id
-  end
-  
-  def region_id
-    address.region.id
-  end
-# End address related
 
   def forgot_password
     @forgotten_password = true
@@ -221,80 +181,28 @@ class User < ActiveRecord::Base
     @reset_password = true
   end  
   
-  def self.find_for_forget(email)
-    find :first, :conditions => ['email = ? and activation_code IS NULL', email]
-  end
-  
-  def to_param
-    "#{id}-#{login.downcase}"
-  end
-  
+
+
+
+
+
+
   def validate
-    if address && !address.valid?
-      address.errors.each { |attr, msg| errors.add(attr, msg) }
+    if profile && !profile.valid?
+      profile.errors.each { |attr, msg| errors.add(attr, msg) }
     end
   end
-  
-  def has_favorite_arcade?(arcade)
-    Frequentship.find_by_user_id_and_arcade_id(id, arcade.id, :select => 'true')
-    # (arcades.collect do |a| a.id end).include?(arcade.id)
-  end
-  
-  def has_favorite_game?(game)
-    Favoriteship.find_by_user_id_and_game_id(id, game.id, :select => 'true')
-    # (games.collect do |a| a.id end).include?(game.id)
-  end
 
 
-  # Returns a Gravatar URL associated with the email parameter.
-  def gravatar_url(gravatar_options={})
 
-    # Default highest rating.
-    # Rating can be one of G, PG, R X.
-    # If set to nil, the Gravatar default of X will be used.
-    gravatar_options[:rating] ||= nil
 
-    # Default size of the image.
-    # If set to nil, the Gravatar default size of 80px will be used.
-    gravatar_options[:size] ||= nil 
-
-    # Default image url to be used when no gravatar is found
-    # or when an image exceeds the rating parameter.
-    gravatar_options[:default] ||= nil
-
-    # Build the Gravatar url.
-    grav_url = 'http://www.gravatar.com/avatar.php?'
-    grav_url << "gravatar_id=#{Digest::MD5.new.update(email)}" 
-    grav_url << "&rating=#{gravatar_options[:rating]}" if gravatar_options[:rating]
-    grav_url << "&size=#{gravatar_options[:size]}" if gravatar_options[:size]
-    grav_url << "&default=#{gravatar_options[:default]}" if gravatar_options[:default]
-    return grav_url
-  end
-  
-  
-  
-  
-  # Friend related
-  def follower?(user)
-    followers.include?(user)
-  end
-  
-  def following?(user)
-    followings.include?(user)
-  end
-  
-  def friended?(user)
-    friends.include?(user)
-  end
-  
-  
   
   
   protected
     # before filter 
     def encrypt_password
       return if password.blank?
-      self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") if new_record?
+      self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{password}--") if new_record?
       self.crypted_password = encrypt(password)
     end
       
@@ -318,7 +226,7 @@ class User < ActiveRecord::Base
     # Create 
     def remember_me_until(time)
       self.remember_token_expires_at = time
-      self.remember_token            = encrypt("#{email}--#{remember_token_expires_at}")
+      self.remember_token            = encrypt("#{profile.email}--#{remember_token_expires_at}")
       save(false)
     end
     

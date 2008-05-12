@@ -1,34 +1,27 @@
-<% count ||= "playables_count" %>
-<li class="<%= cycle("even","odd")%>">
+<li class="<%= cycle("even","odd")%> clear">
 
-  <% if logged_in? && current_user.administrator? -%>
-	<ul class="left-shift admin">
-		<li><%= link_to 'Edit', edit_arcade_path(arcade), :class => 'admin' %></li>
-    <li><%= link_to 'Destroy', arcade_path(arcade), :class => 'admin', :confirm => 'Are you sure?', :method => :delete %></li>
-  </ul>
-  <% end %>
-  
-	<%= link_to(arcade.name, arcade_path(arcade), :class => 'main') %>
-
-	<span class="count"> in 
-	  <strong><%= arcade.address.city %>, <%= arcade.address.region.name %></strong>
-	  has <%= pluralize(arcade.playables_count, "game") %>
-	  <% if addressed_in? -%>
-	    and is <%= arcade.address.distance_to(current_address).round_to(2) %> miles away
-	  <% end %>
-	  
-	  <% if logged_in? %>
-  	<span class="favorite">
-  	  <% if current_user.arcades.include?(arcade) %>
-  	    <%= link_to "&nbsp;", arcade_favorites_path(arcade)+'/'+arcade.to_param, { :method => "delete", :class => "favorite arcade_delete" } %>
+  <span style="width:280px;" class="left">
+    <%= link_to(arcade.name, arcade_path(arcade)) %>
+  </span>
+    
+  <div class="clear soft">
+    <% if logged_in? %>
+  	<span>
+  	  <% if current_profile.arcades.include?(arcade) %>
+  	    <%= link_to "&nbsp;", arcade_favorites_path(arcade)+'/'+arcade.to_param, { :method => "delete", :class => "favorite_delete" } %>
   	  <% else %>
-        <%= link_to "&nbsp;", arcade_favorites_path(arcade), { :method => "post", :class => "favorite arcade_add" } %>
+        <%= link_to "&nbsp;", arcade_favorites_path(arcade), { :method => "post", :class => "favorite_add" } %>
   	  <% end %>
   	</span>
   	<% end %>
-	</span>
+
+    <span>
+      in <%= arcade.address.city %>, <%= arcade.address.region.name %><% if addressed_in? -%>, <%= arcade.address.distance_to(current_address).round_to(2) %> miles away,
+        <% end %>
+        and has <strong><%= pluralize(arcade.playables_count, "game") %></strong>
+    </span>
+  </div>
+  
+  
 	
-	<% if @max_count && @max_count > 0 %>
-	  <span class="index" style="width: <%= (arcade[count]*10/@max_count*10) %>%">(<%= ((arcade[count]*10/@max_count*10)) %>%)</span>
-	<% end %>
 </li>

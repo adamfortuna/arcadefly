@@ -6,7 +6,7 @@
 
   <span class="right counts">
   <%= link_to pluralize(@game.playables_count, "arcade"), game_arcades_path(@game), :class=>"arcades" %>
-    <%= link_to pluralize(@game.favoriteships_count, "favorite"), game_users_path(@game), :class=>"users" %>
+    <%= link_to pluralize(@game.favoriteships_count, "favorite"), game_profiles_path(@game), :class=>"users" %>
   </span>
 
   <% if @game.playables_count > 0 %>
@@ -23,7 +23,7 @@
 
 	<% if logged_in? %>
 	  <p>
-	  <% if !current_user.has_favorite_game?(@game) %>
+	  <% if !current_profile.has_favorite_game?(@game) %>
       <%= button_to "Add to your favorites", game_favorites_path(@game), { :method => "post", :class => "favorite game_add" } %>
     <% else %>
       <%= button_to "Remove from your favorites", game_favorite_path(@game), { :method => "delete", :class => "favorite game_delete" } %>

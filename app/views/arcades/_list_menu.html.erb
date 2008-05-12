@@ -14,22 +14,18 @@
   //-->
   </script>
 <% end %>
-
+<!--
 <div id="arcade_search" class="right pull-4">
 <% form_for(:arcade, arcades_path, :html => { :method => 'get' }) do |f| %>
     <label id="search_label" for="search">Search for an Arcade by name...</label>
     <%= text_field_tag :search, '', { :class => 'text', :onfocus => 'toggleLabel(false);', :onblur => 'toggleLabel(true);' } %>  
     <%= submit_tag "Search!", { :disable_with => 'Searching...' } %>
 <% end %>
-</div>
+</div>-->
 
 <ul class="tabs">
-  <%= menu_link "Browse by Location", arcades_path, { :a_class => 'arcades' } %>
   <% if addressed_in? -%>
-  <%= menu_link "Browse by Distance", arcades_distance_path, { :a_class => 'arcades' } %>
+  <%= menu_link "Map Arcades", arcades_map_path, { :a_class => 'arcades' } %>
   <% end %>
-  <% if map %>
-    <%= menu_link "Map", arcades_map_path, { :li_class => 'right' } %>
-    <%= menu_link "List", arcades_distance_path, { :li_class => 'right' } %>
-  <% end %>
+  <%= menu_link "Browse Arcades", arcades_path, { :a_class => 'arcades' } %>
 </ul>

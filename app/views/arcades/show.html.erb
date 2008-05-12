@@ -19,7 +19,7 @@
   <div class="span-14">
     <span class="right counts">
       <%= link_to pluralize(@arcade.playables_count, "game"), arcade_games_path(@arcade), :class=>"games" %>
-      <%= link_to pluralize(@arcade.frequentships_count, "favorite"), arcade_users_path(@arcade), :class=>"users" %>
+      <%= link_to pluralize(@arcade.frequentships_count, "favorite"), arcade_profiles_path(@arcade), :class=>"users" %>
     </span>
     
     <p class="adr">
@@ -51,7 +51,7 @@
     
     <% if logged_in? %>
       <p>
-      <% if !current_user.has_favorite_arcade?(@arcade) %>
+      <% if !current_profile.has_favorite_arcade?(@arcade) %>
         <%= button_to "Add to your favorites", arcade_favorites_path(@arcade), { :method => "post", :class => "favorite arcade_add" } %>
       <% else %>
         <%= button_to "Remove from your favorites", arcade_favorite_path(@arcade), { :method => "delete", :class => "favorite arcade_delete" } %>

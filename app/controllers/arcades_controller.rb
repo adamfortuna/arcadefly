@@ -1,5 +1,5 @@
 class ArcadesController < ResourceController::Base
-  belongs_to :user, :game
+  belongs_to :profile, :game
   
   before_filter :login_required, :only => :favorite
   
@@ -8,16 +8,15 @@ class ArcadesController < ResourceController::Base
     if parent_type == :game
       @game = Game.find(params[:game_id], :include => 'arcades')
       @collection = @game.arcades.paginate :page => params[:page], :order => 'arcades.name', :per_page => Arcade::PER_PAGE, :include => {:address => [:region, :country]}
-    # GET /users/adam/arcades
-    elsif parent_type == :user
-      @user = User.find(params[:user_id])
-      @collection = @user.arcades.paginate :page => params[:page], :order => 'arcades.name', :per_page => Arcade::PER_PAGE, :include => {:address => [:region, :country]}
+    # GET /profiles/1-adam/arcades
+    elsif parent_type == :profile
+      @profile = Profile.find(params[:profile_id])
+      @collection = @profile.arcades.paginate :page => params[:page], :order => 'arcades.name', :per_page => Arcade::PER_PAGE, :include => {:address => [:region, :country]}
     # GET /arcades/distance
     else
       @collection =  Arcade.search(params[:search], params[:page])
       @collection.sort_by_distance_from(current_address) if addressed_in? && @collection.length > 1
     end
-    @max_count = Arcade.maximum(:playables_count) if @collection.length > 0
     @collection
   end
   
@@ -35,9 +34,9 @@ class ArcadesController < ResourceController::Base
   # GET /games/:game_id/arcades
   index.wants.html { 
     if parent_type == :game
-      render :template => "games/arcades_list" 
-    elsif parent_type == :user
-      render :template => "users/arcades_list"
+      render :template => "games/arcades" 
+    elsif parent_type == :profile
+      render :template => "profiles/arcades"
     else
       render :template => "arcades/index"
     end
@@ -125,9 +124,9 @@ class ArcadesController < ResourceController::Base
     if parent_type == :game
       @game = Game.find(params[:game_id])
       @arcades = @game.arcades.paginate :page => params[:page], :order => 'arcades.name', :per_page => Arcade::PER_PAGE, :include => {:address => [:region, :country]}
-    elsif parent_type == :user
-      @user = User.find(params[:user_id])
-      @arcades = @user.arcades.paginate :page => params[:page], :order => 'arcades.name', :per_page => Arcade::PER_PAGE, :include => {:address => [:region, :country]}
+    elsif parent_type == :profile
+      @profile = Profile.find(params[:profile_id])
+      @arcades = profile.arcades.paginate :page => params[:page], :order => 'arcades.name', :per_page => Arcade::PER_PAGE, :include => {:address => [:region, :country]}
     else
       @arcades = Arcade.search(params[:search], params[:page])
     end
@@ -158,8 +157,8 @@ class ArcadesController < ResourceController::Base
     # Is this the an arcade listing map or a game/arcade listing map?
     if parent_type == :game
       render :template => 'games/arcades_map'
-    elsif parent_type == :user
-      render :template => 'users/arcades_map'
+    elsif parent_type == :profile
+      render :template => 'profiles/arcades_map'
     end
   end
   

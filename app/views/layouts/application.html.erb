@@ -25,28 +25,28 @@
   		  
   		  <div class="column span-12 last right">
   		    <%- if logged_in? -%>
-  		    <a href="<%= user_path(current_user) %>">
-            <img src="<%= current_user.gravatar_url %>" alt="Gravatar for <%= current_user.login %>" class="right framed" />
+  		    <a href="<%= profile_path(current_profile) %>">
+            <img src="<%= current_profile.gravatar_url %>" alt="Gravatar for <%= current_profile.display_name %>" class="right framed" />
           </a>
           <% end %>
 
           <div class="right center shift-2 append-1">
     		    <ul id="status" class="nav">
     		      <%- if logged_in? -%>
-                <% if current_user.follower_friends.count > 0 %>
-                  <%= nav_link "Friend Requests (#{current_user.follower_friends.count})", user_friends_path(current_user), { :show_link => false } %>
+                <% if current_profile.follower_friends_count > 0 %>
+                  <%= nav_link "Friend Requests (#{current_profile.follower_friends_count})", profile_friends_path(current_profile), { :show_link => false } %>
                 <% end %>
-                <%= nav_link "Manage Account", user_settings_path(current_user), { :show_link => false } %>
-                <%= nav_link "Logout", "/logout", { :show_link => false } %>
+                <%= nav_link "My Dashboard", profile_path(current_profile), { :show_link => false } %>
+                <%= nav_link "Logout", logout_path, { :show_link => false } %>
               <%- else -%>
-                <%= nav_link "Register", "/signup", { :show_link => false } %>
-                <%= nav_link "Sign In", "/login", { :show_link => false } %>
+                <%= nav_link "Register", signup_path, { :show_link => false } %>
+                <%= nav_link "Sign In", signin_path, { :show_link => false } %>
               <%- end -%>
             </ul>
 
             <% if logged_in? -%>
             <span id="login_status">
-              <em>Currently logged in as <%= link_to h(current_user.login.capitalize), user_path(current_user) %>.</em>
+              <em>Currently logged in as <%= link_to_unless_current h(current_profile.email), profile_path(current_profile) %>.</em>
             </span>
             <% end -%>
 						
@@ -64,9 +64,9 @@
   		<div class="container">
   		  <ul id="navigation" class="nav">
   		    <li><%= link_to "Home",    root_path %></li>
-  		    <li><%= link_to "Arcades", arcades_path %></li>
+  		    <li><%= link_to "Arcades", addressed_in? ? arcades_map_path : arcades_path %></li>
   		    <li><%= link_to "Games",   games_path %></li>
-  		    <li><%= link_to "Players", users_path %></li>
+  		    <li><%= link_to "Players", profiles_path %></li>
   		    <li><%= link_to "Popular", popular_path %></li>
   		  </ul>
   		</div>
@@ -78,7 +78,7 @@
   		      <%= content_tag :div, msg, :class => key %>
   		    <% end %>
   		    
-  				<h2><%= yield(:title) %></h2>
+  				<!--<h2><%= yield(:title) %></h2>-->
           <%= yield %>
       </div>
     </div>

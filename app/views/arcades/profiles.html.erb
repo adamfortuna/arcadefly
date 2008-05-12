@@ -1,0 +1,20 @@
+<% title 'Arcades - ' + @arcade.name %>
+
+<%= render :partial => 'arcades/menu', :locals => { :arcade => @arcade } %>
+
+<div class="tabbed">
+
+  <ul class="data">
+    <%= render :partial => 'profiles/profile', :collection => @profiles, :locals => { :parent => :arcade } %>
+  </ul>
+  
+  <% if @arcade.profiles.length == 0 && logged_in? %>
+    <p><%= button_to "Add to your favorites", arcade_favorites_path(@arcade), { :method => "post", :class => 'favorite arcade_add' } %></p>
+  <% end %>
+  
+  <p>
+    <%= will_paginate @profiles %>
+  </p>
+  
+  <%= render :partial => 'arcades/footer', :locals => { :arcade => @arcade } %>
+</div>

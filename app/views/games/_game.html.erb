@@ -12,7 +12,7 @@
 -%>
 <li class="<%= cycle("even","odd")%>">
 
-  <% if logged_in? && current_user.administrator? -%>
+  <% if logged_in? && administrator? -%>
     <ul class="left-shift admin">
     <li><%= link_to 'Edit', edit_game_path(game), :class => 'admin' %></li>
     <li><%= link_to 'Destroy', game_path(game), :class => 'admin', :confirm => 'Are you sure?', :method => :delete %></li>
@@ -25,7 +25,7 @@
     <%= pluralize(game.playables_count, "arcade") %>
   <% if logged_in? %>
 	<span class="favorite">
-	  <% if current_user.games.include?(game) %>
+	  <% if current_profile.games.include?(game) %>
 	    <%= link_to "&nbsp;", game_favorites_url(game)+'/'+game.to_param, { :method => "delete", :class => "favorite game_delete" } %>
 	  <% else %>
       <%= link_to "&nbsp;", game_favorites_path(game), { :method => "post", :class => "favorite game_add" } %>

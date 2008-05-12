@@ -24,7 +24,7 @@ class UserMailer < ActionMailer::Base
   
   protected
     def setup_email(user)
-      @recipients  = "#{user.email}"
+      @recipients  = "#{user.profile.email}"
       @from        = "support@arcadefly.com"
       @subject     = "ArcadeFly.com - "
       @sent_on     = Time.now

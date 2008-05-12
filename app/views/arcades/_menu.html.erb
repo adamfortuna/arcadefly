@@ -1,6 +1,6 @@
 <ul class="tabs">
   <%= menu_link "Arcade", arcade_path(arcade), { :a_class => 'arcades' } %>
   <%= menu_link "Games", arcade_games_path(arcade), { :a_class => 'games' } %>
-  <%= menu_link "Players", arcade_users_path(arcade), { :a_class => 'users' } %>
+  <%= menu_link "Players", arcade_profiles_path(arcade), { :a_class => 'users' } %>
   <%= menu_link "Map", "/arcades/#{arcade.to_param}/map" %>
 </ul>

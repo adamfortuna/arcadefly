@@ -1,23 +1,31 @@
-<% title "Choose a new Password" %>
+<% content_for(:header) do %>
+  <script>
+    Event.observe(window, 'load', function() {
+      Form.focusFirstElement('change_password_form');
+    });
+  </script>
+<% end %>
+
+<%- title "Choose a new Password" -%>
 
 <div class="column span-12">
-  <% form_for :user, :id => params[:id], :html => { :method => :put } do |f| %>
+  <% form_for :user, :id => params[:id], :html => { :method => :put, :id => 'change_password_form' } do |f| %>
        
     <fieldset>
       <legend>Create a new Password</legend>
       <p class="block required">
-        <label for="user_password">Password</label>
+        <label for="user_password">New Password</label>
 				<span class="block info">At least 4 characters.</span>
 				<%= error_message_on "user", "password", "Password " %>
-        <%= password_field_tag :password, "", :size => 50,  :class => 'text'%>
+        <%= f.password_field :password, :size => 50,  :class => 'text', :value => '' %>
       </p>
       <p class="block required">
         <label for="user_password_confirmation">Confirm Password</label>
 				<%= error_message_on "user", "password_confirmation", "Password Confirmation " %>
-        <%= password_field_tag :password_confirmation, "", :size => 50,  :class => 'text' %>
+        <%= f.password_field :password_confirmation, :size => 50,  :class => 'text', :value => '' %>
       </p>
       <p class="block">
-        <%= submit_tag "Change my password and log me in!", :disable_with => "Changing your password.." %>
+        <%= submit_tag "Change my password and sign me in!", :disable_with => "Changing your password.." %>
       </p>
     </fieldset>
   <% end %>

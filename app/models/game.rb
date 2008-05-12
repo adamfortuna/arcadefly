@@ -3,7 +3,7 @@ class Game < ActiveRecord::Base
   has_many :arcades, :through => :playables
 
   has_many :favoriteships
-  has_many :users, :through => :favoriteships
+  has_many :profiles, :through => :favoriteships
   
   validates_presence_of :name
 

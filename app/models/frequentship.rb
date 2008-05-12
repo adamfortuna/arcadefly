@@ -3,5 +3,5 @@
 # an arcade their favorite and it's associated here.
 class Frequentship < ActiveRecord::Base
   belongs_to :arcade, :counter_cache => true
-  belongs_to :user, :counter_cache => true
+  belongs_to :profile, :counter_cache => true
 end

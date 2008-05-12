@@ -1,5 +1,4 @@
 # This describes what games are available a given arcade, and which arcades have a given game.
-# 
 class Playable < ActiveRecord::Base
   belongs_to :arcade, :counter_cache => true
   belongs_to :game, :counter_cache => true

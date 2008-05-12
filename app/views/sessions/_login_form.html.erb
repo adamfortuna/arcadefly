@@ -1,9 +1,9 @@
   <fieldset>
-    <legend>Login</legend>
+    <legend>Sign In</legend>
     <% form_tag sessions_path, :id => 'login_form'  do -%>
     <p class="block">
-      <label for="login">Login</label>
-      <%= text_field_tag 'login', '', { :class => 'text' } %>
+      <label for="email">Email Address</label>
+      <%= text_field_tag 'email', params[:email], { :class => 'text' } %>
     </p>
     
     <p class="block">
@@ -15,6 +15,8 @@
       <%= check_box_tag 'remember_me' %> <label for="remember_me">Remember me</label>
     </p>
     
-    <p class="block"><%= submit_tag 'Log in', { :class => 'button', :disable_with => 'Logging in...' } %></p>
+    <p class="block">
+      <%= submit_tag 'Sign in', { :class => 'button', :disable_with => 'Signing in...' } %>
+    </p>
     <% end -%>
   </fieldset>

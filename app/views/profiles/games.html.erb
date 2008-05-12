@@ -1,0 +1,17 @@
+<% title 'Favorite Games for ' + @profile.display_name -%>
+
+<%= render :partial => 'profiles/menu', :locals => { :profile => @profile } %>
+
+<div class="tabbed">
+  <ul class="data">
+    <%= render :partial => 'games/game', :collection => @games %>
+  </ul>
+  
+  <% if @profile.favoriteships_count == 0 %>
+  <p><%= @profile.display_name %> doesn't have any favorite games</p>
+  <% end %>
+  
+  <p>
+    <%= will_paginate @games %>
+  </p>
+</div>

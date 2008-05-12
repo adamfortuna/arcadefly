@@ -11,7 +11,7 @@
   <div class="clear soft">
     <% if logged_in? %>
   	<span>
-  	  <% if current_user.arcades.include?(arcade_map) %>
+  	  <% if current_profile.arcades.include?(arcade_map) %>
   	    <%= link_to "&nbsp;", arcade_favorites_path(arcade_map)+'/'+arcade_map.to_param, { :method => "delete", :class => "favorite_delete" } %>
   	  <% else %>
         <%= link_to "&nbsp;", arcade_favorites_path(arcade_map), { :method => "post", :class => "favorite_add" } %>

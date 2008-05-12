@@ -4,7 +4,7 @@
 #include Amazon::AWS::Search
 
 class GamesController < ResourceController::Base
-  belongs_to :arcade, :user
+  belongs_to :arcade, :profile
   
   # Override the helper method so that we can get a collection object for when Game isn't the parent. 
   def collection
@@ -12,10 +12,10 @@ class GamesController < ResourceController::Base
     if parent_type == :arcade
       @arcade = Arcade.find(params[:arcade_id])
       @collection = @arcade.playables.paginate :page => params[:page], :include => :game, :order => 'games.name', :per_page => Game::PER_PAGE
-    # GET /users/1-adam/games
-    elsif parent_type == :user
-      @user = User.find(params[:user_id])
-      @collection = @user.games.paginate :page => params[:page], :order => 'name', :per_page => Game::PER_PAGE
+    # GET /profiles/1-adam/games
+    elsif parent_type == :profile
+      @profile = Profile.find(params[:profile_id])
+      @collection = @profile.games.paginate :page => params[:page], :order => 'name', :per_page => Game::PER_PAGE
     # GET /games
     else
       @collection ||= Game.search(params[:search], params[:page])
@@ -32,8 +32,8 @@ class GamesController < ResourceController::Base
     if parent_type == :arcade
       render :template => "arcades/games" 
     # GET /users/:user_id/games
-    elsif parent_type == :user
-      render :template => "users/games" 
+    elsif parent_type == :profile
+      render :template => "profiles/games" 
     # GET /games
     else
       render :template => "games/index"

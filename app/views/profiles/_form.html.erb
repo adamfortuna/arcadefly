@@ -1,0 +1,184 @@
+<fieldset class="span-11 left">
+  <legend>General Info</legend>
+  
+  <% form_for :profile, :html=>{:method=>:put } do |p| %>    
+    
+    <p class="block required">
+      <label for="profile_display_name">Display Name</label>
+      <span class="block info">Whenever we show your name on ArcadeFly, this is what people will see.</span>
+      <%= error_message_on "profile", "display_name", "Display Name " %>
+      <%= p.text_field :display_name, { :class => 'text'} %>
+    </p>
+
+    <p class="block">
+      <label for="profile_full_name">Full Name</label>
+      <span class="block info">If you want people to be able to search for you by name. This will never be shown.</span>
+      <%= error_message_on "profile", "full_name", "Full Name " %>
+      <%= p.text_field :full_name, { :class => 'text'} %>
+    </p>
+    
+    <p class="block">
+      <label for="profile_website">Website</label>
+      <span class="block info">This should start with http://</span>
+      <%= error_message_on "profile", "website", "Website " %>
+      <%= p.text_field :website, { :class => 'text'} %>
+    </p>
+    
+    <p class="block">
+      <label for="profile_flickr_username">Flickr Username</label>
+      <span class="block info">We'll show pictures from this flickr account in your profile.</span>
+      <%= error_message_on "profile", "flickr_username", "Flickr Username " %>
+      <%= p.text_field :flickr_username, { :class => 'text'} %>
+    </p>
+
+    <p class="block">
+      <label for="profile_youtube_username">Youtube Username</label>
+      <span class="block info">We'll show videos from this youtube account in your profile.</span>
+      <%= error_message_on "profile", "youtube_username", "Youtube Username " %>
+      <%= p.text_field :youtube_username, { :class => 'text'} %>
+    </p>
+
+    <p class="block">
+      <label for="profile_blog">Blog</label>
+      <span class="block info">If your website isn't blog, you can include your blog itself here.</span>
+      <%= error_message_on "profile", "blog", "Blog " %>
+      <%= p.text_field :blog, { :class => 'text'} %>
+    </p>
+    
+    <p class="block">
+      <label for="profile_aim_name">AIM Name</label>
+      <%= error_message_on "profile", "aim_name", "AIM Name " %>
+      <%= p.text_field :aim_name, { :class => 'text'} %>
+    </p>
+    
+    <p class="block">
+      <label for="profile_gtalk_name">GTalk Name</label>
+      <span class="block info">Only logged in users will be able to view this.</span>
+      <%= error_message_on "profile", "gtalk_name", "GTalk Name " %>
+      <%= p.text_field :gtalk_name, { :class => 'text'} %>
+    </p>
+
+    <p class="block">
+      <label for="profile_msn_name">MSN Chat Name</label>
+      <span class="block info">Only logged in users will be able to view this.</span>
+      <%= error_message_on "profile", "msn_name", "MSN Name " %>
+      <%= p.text_field :msn_name, { :class => 'text'} %>
+    </p>
+
+    <p class="block">
+      <label for="profile_ichat_name">iChat Name</label>
+      <%= error_message_on "profile", "ichat_name", "iChat Name " %>
+      <%= p.text_field :ichat_name, { :class => 'text'} %>
+    </p>
+
+    <p class="block">
+      <label for="profile_about_me">About Me</label>
+      <%= error_message_on "profile", "about_me", "About Me " %>
+      <%= p.text_area :about_me, { :class => 'text'} %>
+    </p>
+     
+    <p>
+      <%= p.submit "Save", :class => "button" %>
+      <input type="hidden" name="switch" value="name" />
+    </p>
+    
+  <% end %>
+</fieldset>
+
+<div class="right span-11">
+
+  <fieldset id="upload_icon">
+    <legend>Upload Icon</legend>
+    <% less_form_for current_user.profile, :html=>{:method=>:put, :multipart=>true } do |p| %>
+      <%= p.front :icon, :label => 'Upload your Icon' %>
+      <%= file_column_field( "profile", "icon", :size => 15)%>
+      <div class="clear"></div>
+      <% unless current_user.profile.icon.blank? %>
+      <div id="avatar_edit">
+        <span id="profile_icon_picture">
+          <%= icon current_user.profile %>
+          <%= link_to_remote 'delete icon', :url=>delete_icon_profile_path(current_user.profile), :confirm=>DELETE_CONFIRM  %>
+        </span>
+      </div>
+      <% end %>
+      <%= p.back :icon %>
+
+      <div class="row button">
+      <%= p.submit 'Save', :class => 'button' %>
+      </div>
+
+      <input type="hidden" name="switch" value="image" />
+    <% end %>
+  </fieldset>
+
+
+  <fieldset id="change_passwords">
+    <legend>Change Password</legend>
+    <% form_for :profile, :html=>{:method=>:put } do |p| %>
+      
+      <p class="block required">
+        <label for="password_verify_password">Current Password</label>
+        <%= error_message_on "user", "password" %>
+        <input type="password" name="verify_password" id="password_verify_password" class="text" />
+      </p>
+
+      <p class="block required">
+        <label for="new_password">New Password</label>
+        <%= error_message_on "user", "new_password" %>
+        <input type="password" name="verify_password" id="new_password" class="text" />
+      </p>
+
+      <p class="block required">
+        <label for="confirm_new_password">Confirm New Password</label>
+        <%= error_message_on "user", "confirm_new_password" %>
+        <input type="password" name="new_password" id="confirm_new_password" class="text" />
+      </p>
+    
+      <p>
+        <%= p.submit 'Save', :class => 'button' %>
+        <input type="hidden" name="switch" value="password" />
+      </p>
+    <% end %>
+  </fieldset>
+
+
+  <fieldset id="change_emails">
+    <legend>Change Email</legend>
+    <p>You'll be able to log in with your old email address until this is confirmed.</p>
+    <% form_for :profile, :html=>{:method=>:put } do |p| %>
+      
+      <p class="block required">
+        <label for="email_verify_password">Current Password</label>
+        <%= error_message_on "profile", "password" %>
+        <input type="password" name="email_verify_password" id="email_verify_password" class="text" />
+      </p>
+      
+      <p class="block required">
+        <label for="profile_email">New Email Address</label>
+        <%= error_message_on "profile", "email", "Email " %>
+        <input type="password" name="new_email" id="new_email" class="text" />
+      </p>
+        
+      <p class="block required">
+        <label for="profile_email_confirmation">Confirm New Email Address</label>
+        <%= error_message_on "profile", "email_confirmation", "Email Confirmation " %>
+        <input type="password" name="new_email_confirmation" id="new_email_confirmation" class="text" />
+      </p>
+        
+      <p class="block required">
+        <%= p.submit "Save", :class => "button" %>
+        <input type="hidden" name="switch" value="email" />
+      </p>
+      
+    <% end %>
+  </fieldset>
+
+
+  <fieldset id="delete_account">
+    <legend>Delete Account</legend>
+    <p>This will completely remove your account and all information about it. This can cannot be undone!</p>
+    <form>
+      <%= link_to_remote 'Delete my user account and all my data.', :url=>profile_path(current_user.profile), :method=>:delete, :confirm=>DELETE_CONFIRM  %>
+    </form>
+  </div>
+</div>

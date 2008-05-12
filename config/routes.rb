@@ -22,7 +22,8 @@ ActionController::Routing::Routes.draw do |map|
 
   # Custom Routes
   map.signup '/signup',   :controller => 'users',    :action => 'new'
-  map.login  '/login',    :controller => 'sessions', :action => 'new'
+  map.signin '/signin',    :controller => 'sessions', :action => 'new'
+  map.login '/login',    :controller => 'sessions', :action => 'new'
   map.logout '/logout',   :controller => 'sessions', :action => 'destroy'
   map.address '/address', :controller => 'sessions', :action => 'address', :method => 'post'
 
@@ -30,7 +31,7 @@ ActionController::Routing::Routes.draw do |map|
   map.activate '/activate/:id',              :controller => 'users',   :action => 'activate'
   map.forgot_password '/forgot_password',    :controller => 'passwords', :action => 'new'
   map.reset_password  '/reset_password/:id', :controller => 'passwords', :action => 'edit'
-  map.user_settings '/users/:id/settings',        :controller => 'users', :action => 'edit'
+  map.user_settings '/users/:id/settings',   :controller => 'users', :action => 'edit'
 
   # Shortened routes
   map.about '/about',       :controller => 'home',    :action => 'about'
@@ -47,7 +48,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Better named arcade routes
   map.arcades '/arcades',                             :controller => 'arcades', :action => 'browse'
-  map.arcades_distance '/arcades/distace',            :controller => 'arcades', :action => 'distance'
+#  map.arcades_distance '/arcades/distance',           :controller => 'arcades', :action => 'distance'
   map.arcades_map '/arcades/map',                     :controller => 'arcades', :action => 'list_map'
   map.arcade_map '/arcades/:id/map',                  :controller => 'arcades', :action => 'map'
   map.new_arcade_1 '/arcades/new/details',            :controller => 'arcades', :action => 'new1'
@@ -57,7 +58,7 @@ ActionController::Routing::Routes.draw do |map|
   
   # Arcade maps
   map.game_arcades_map '/games/:game_id/arcades/map', :controller => 'arcades', :action => 'list_map'
-  map.user_arcades_map '/users/:user_id/arcades/map', :controller => 'arcades', :action => 'list_map'
+  map.profile_arcades_map '/users/:user_id/arcades/map', :controller => 'arcades', :action => 'list_map'
   
   # Browse for arcades
   map.countries_arcades '/arcades/countries',         :controller => 'arcades', :action => 'countries'
@@ -69,15 +70,31 @@ ActionController::Routing::Routes.draw do |map|
   map.games_update '/games/update', :controller => 'gateway', :action => 'update_games'
   
   # Resources
-  map.resources :arcades, :has_many => [ :games, :users, :favorites ],
+  map.resources :arcades, :has_many => [ :games, :profiles, :favorites ],
                           :has_one => :address
-  map.resources :games,   :has_many => [ :arcades, :users, :favorites ]
-  map.resources :users,   :has_many => [ :arcades, :games, :friends ],
-                          :has_one => :address
+  map.resources :games,   :has_many => [ :arcades, :profiles, :favorites ]
 
-  map.resources :users, :alias => :friends
+  map.resources :users,   :alias => :friends
   
   map.resources :addresses, :sessions, :passwords, :favorites
+
+
+
+  map.namespace :admin do |a|
+    a.resources :users, :collection => {:search => :post}
+  end
+
+  map.resources :profiles, 
+  :member => {:delete_icon=>:post}, :collection=>{:search=>:get}, 
+  :has_many => [:friends, :blogs, :photos, :comments, :feed_items, :messages, :arcades, :games],
+  :has_one => :address
+
+  map.resources :messages, :collection => {:sent => :get}
+  map.resources :blogs do |blog|
+    blog.resources :comments
+  end
+
+
 
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'

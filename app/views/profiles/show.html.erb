@@ -1,0 +1,17 @@
+<%- title "Profile for #{@profile.display_name}" -%>
+<h1><%= icon @profile %> <%= "Profile for #{@profile.display_name}" %></h1>
+
+<% content_for :head do  -%>
+<%= auto_discovery_link_tag :rss, formatted_profile_url(@profile, :rss), :title=>"#{@profile.display_name}'s recent activity" %>
+<%= auto_discovery_link_tag :rss, formatted_profile_blogs_url(@profile, :rss), :title=>"#{@profile.display_name}'s Blogs" %>
+<%= auto_discovery_link_tag :rss, formatted_profile_photos_url(@profile, :rss), :title=>"#{@profile.display_name}'s Photos" %>
+<% end -%>
+
+
+<%= render :partial => 'menu', :locals => { :profile => @profile} %>
+
+<% if params[:public_view].blank? && logged_in? && me %>
+  <%= render :partial => "profiles/private" %>
+<% else %>
+  <%= render :partial => "profiles/public" %>
+<% end %>

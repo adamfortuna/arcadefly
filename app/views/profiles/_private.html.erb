@@ -1,0 +1,24 @@
+<%= render :partial => 'profiles/getting_started' %>
+
+
+<div class="half left">
+  <%= render :partial => 'profiles/recent_activity' %>
+</div>
+
+
+
+
+
+
+<div class="half right">
+
+<%= render :partial => 'friends/list', :locals => {:type => 'friends'} %>
+<%= render :partial => 'friends/list', :locals => {:type => 'followers'} %>
+<%= render :partial => 'friends/list', :locals => {:type => 'followings'} %>
+
+</div>
+
+
+  <div class="clear"></div>
+
+
