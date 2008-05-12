@@ -1,9 +1,25 @@
 module AuthenticatedSystem
   protected
+    # Inclusion hook to make #current_user and #logged_in?
+    # available as ActionView helper methods.
+    def self.included(base)
+      base.send :helper_method, :current_user, :logged_in?, :current_profile, :administrator?
+    end
+
+
+
+
+
     # Returns true or false if the user is logged in.
     # Preloads @current_user with the user model if they're logged in.
     def logged_in?
-      current_user != :false
+      current_profile != :false
+    end
+    
+    # Accesses the current user from the session.  Set it to :false if login fails
+    # so that future calls do not hit the database.
+    def current_profile
+      @current_profile ||= (profile_from_session  || profile_from_cookie || :false)
     end
     
     # Accesses the current user from the session.  Set it to :false if login fails
@@ -16,38 +32,22 @@ module AuthenticatedSystem
     def current_user=(new_user)
       session[:user] = (new_user.nil? || new_user.is_a?(Symbol)) ? nil : new_user.id
       @current_user = new_user
+      @current_profile = new_user.profile
     end
     
-    # Check if the user is authorized
-    #
-    # Override this method in your controllers if you want to restrict access
-    # to only a few actions or if you want to check if the user
-    # has the correct rights.
-    #
-    # Example:
-    #
-    #  # only allow nonbobs
-    #  def authorized?
-    #    current_user.login != "bob"
-    #  end
-    def authorized?
-      logged_in?
-    end
+    
+    
+    
+    
+    
+    
+    
 
-    # Filter method to enforce a login requirement.
-    #
-    # To require logins for all actions, use this in your controllers:
-    #
-    #   before_filter :login_required
-    #
-    # To require logins for specific actions, use this in your controllers:
-    #
-    #   before_filter :login_required, :only => [ :edit, :update ]
-    #
-    # To skip this in a subclassed controller:
-    #
-    #   skip_before_filter :login_required
-    #
+    # Before filters for controllers
+    def administrator?
+      current_profile.administrator?
+    end
+    
     def login_required
       authorized? || access_denied
     end
@@ -56,6 +56,15 @@ module AuthenticatedSystem
       !logged_in? || permission_denied
     end
     
+    def check_administrator
+      permission_denied unless current_profile.administrator?
+      true
+    end
+    
+    
+    
+  
+
     # Redirect as appropriate when an access request fails.
     #
     # The default action is to redirect to the login screen.
@@ -122,22 +131,40 @@ module AuthenticatedSystem
       redirect_to(session[:return_to] || default)
       session[:return_to] = nil
     end
+
+
+
+
+
+
     
-    # Inclusion hook to make #current_user and #logged_in?
-    # available as ActionView helper methods.
-    def self.included(base)
-      base.send :helper_method, :current_user, :logged_in?
+
+    # Called from #current_profile.  First attempt to login by the user id stored in the session.
+    def profile_from_session
+      Profile.find_by_user_id(session[:user]) if session[:user]
     end
+
+    # Called from #current_profile.  Finaly, attempt to login by an expiring token in the cookie.
+    def profile_from_cookie      
+      user = cookies[:auth_token] && User.find_by_remember_token(cookies[:auth_token])
+      if user && user.remember_token?
+        user.remember_me
+        cookies[:auth_token] = { :value => user.remember_token, :expires => user.remember_token_expires_at }
+        self.current_user = user
+        self.current_profile = user.profile
+      end
+    end
+
+
+
+
+
+
+
 
     # Called from #current_user.  First attempt to login by the user id stored in the session.
     def login_from_session
       self.current_user = User.find_by_id(session[:user]) if session[:user]
-    end
-
-    # Called from #current_user.  Now, attempt to login by basic authentication information.
-    def login_from_basic_auth
-      username, passwd = get_auth_data
-      self.current_user = User.authenticate(username, passwd) if username && passwd
     end
 
     # Called from #current_user.  Finaly, attempt to login by an expiring token in the cookie.
@@ -150,10 +177,10 @@ module AuthenticatedSystem
       end
     end
 
-    def check_administrator
-      permission_denied unless current_user.administrator?
-      true
-    end
+
+
+
+
   private
     @@http_auth_headers = %w(Authorization HTTP_AUTHORIZATION X-HTTP_AUTHORIZATION X_HTTP_AUTHORIZATION REDIRECT_X_HTTP_AUTHORIZATION)
 
