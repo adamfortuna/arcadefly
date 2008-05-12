@@ -125,7 +125,6 @@ span.counts a.users { background: url(../../images/user.png) #ded no-repeat left
 .game_add { background: url(../../images/controller_add.png) no-repeat left; }
 .game_delete { background: url(../../images/controller_delete.png) no-repeat left; }
 
-
 /* Global Map settings */
 .map { border: 1px solid #ccc; margin-bottom: 1em; }
 div.map_big { width: 100%; height: 350px; padding-bottom: 1em; } /* Entire Page Map */
