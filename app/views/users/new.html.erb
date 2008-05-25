@@ -55,6 +55,7 @@
 <% end %>
 
 <% title "Signup for an Account" %>
+<h2>Signup for an Account</h2>
 
   <fieldset id="registercontainer" style="margin:0 auto;">
     <legend>Register</legend>
@@ -64,14 +65,14 @@
       <% fields_for :profile, @user.profile do |p| %>
         <p class="block required">
           <label for="profile_display_name">Display Name</label>
-          <span class="block info">Whenever we show your name on ArcadeFly, this is what people will see.</span>
+          <span class="block info">Whenever we show your name on ArcadeFly, this is what people will see. You can change this whenever.</span>
           <%= error_message_on @user.profile, "display_name", "Display Name " %>
           <%= p.text_field :display_name, { :class => 'text'} %>
         </p>
 
       <p class="block required">
         <label for="profile_email">Email Address</label>
-        <span class="block info">You'll need this to login for the first time.</span>
+        <span class="block info">You'll use this to login and to activate your account.</span>
         <%= error_message_on @user.profile, "email", "Email " %>
         <%= p.text_field :email, { :class => 'text'} %>
       </p>

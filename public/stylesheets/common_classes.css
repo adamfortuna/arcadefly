@@ -95,7 +95,7 @@ ul.scrollable li label { display: block; font-weight:normal; }
 /* Notices */
 .error, .notice, .warning    { padding: .8em; margin-bottom: 1em; }
 div.notice { background-color: #CFC; border: solid 1px #6C6; }	
-div.warning { background-color: #DD9A24; border: solid 1px #DD9A24; }
+div.warning { background-color: #ff9; border: solid 1px #fc0; }
 div.error { background-color: #FCC; border: solid 1px #C66; }
 
 /* Counts displayed on an arcade/game/user page */
@@ -133,3 +133,6 @@ div.map_small { width: 300px; height:250px; padding: 1em; } /* Profile Map */
 div.map_small_width { width: 300px; }
 
 ul.map_list li { clear: both; padding:.2em .2em .2em .5em; }
+
+
+.breadcrumbs { margin: -1.1em 0 0 0; padding: .5em; background-color: #eee; border:1px solid #ccc; border-top:none;}

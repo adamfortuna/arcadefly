@@ -3,7 +3,11 @@
   <span style="width:280px;" class="left">
     <%= link_to(arcade.name, arcade_path(arcade)) %>
   </span>
-    
+  
+  <span style="width:80px;" class="right">
+    <a href="#" onclick="arcades_map.showMarker(1);return false;">Show on Map</a>
+  </span>
+  
   <div class="clear soft">
     <% if logged_in? %>
   	<span>
@@ -16,12 +20,9 @@
   	<% end %>
 
     <span>
-      in <%= arcade.address.city %>, <%= arcade.address.region.name %><% if addressed_in? -%>, <%= arcade.address.distance_to(current_address).round_to(2) %> miles away,
+      in <%= arcade.address.short_line -%><% if addressed_in? -%>, <%= arcade.address.distance_to(current_address).round_to(2) %> miles away,
         <% end %>
         and has <strong><%= pluralize(arcade.playables_count, "game") %></strong>
     </span>
   </div>
-  
-  
-	
 </li>

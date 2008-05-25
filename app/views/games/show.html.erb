@@ -1,4 +1,4 @@
-<% title "Games - " + @game.name -%>
+<% title "Games" + separator + @game.name -%>
 
 <%= render :partial => 'menu', :locals => { :game => @game } %>
 
@@ -34,6 +34,4 @@
 	<p class="shift-2">
 	  <a href="http://www.gamefaqs.com/coinop/arcade/data/<%= @game.gamefaqs_id %>.html" target="_blank">View this game on GameFaqs</a>
 	</p>
-	
-	<%= render :partial => 'games/footer', :locals => { :game => @game } %>
 </div>

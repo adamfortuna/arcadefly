@@ -1,5 +1,4 @@
-<% map ||= false -%>
-
+<h2><%= @title %></h2>
 <% content_for(:header) do %>
   <style>
     <!--
@@ -25,7 +24,7 @@
 
 <ul class="tabs">
   <% if addressed_in? -%>
-  <%= menu_link "Map Arcades", arcades_map_path, { :a_class => 'arcades' } %>
+  <%= menu_link "Map Arcades", arcades_path, { :a_class => 'arcades' } %>
   <% end %>
-  <%= menu_link "Browse Arcades", arcades_path, { :a_class => 'arcades' } %>
+  <%= menu_link "Browse Arcades", browse_arcades_path, { :a_class => 'arcades' } %>
 </ul>

@@ -1,4 +1,4 @@
-<% title 'Games - ' + @game.name -%>
+<% title 'Games' + separator + @game.name + separator + "Players who Favorited this Game" -%>
 
 <%= render :partial => 'games/menu', :locals => { :game => @game } %>
 
@@ -19,5 +19,4 @@
   <p>
     <%= will_paginate @profiles %>
   </p>
-  <%= render :partial => 'games/footer', :locals => { :game => @game } %>
 </div>

@@ -6,6 +6,10 @@ module ApplicationHelper
   include FriendsHelper
   include PhotosHelper
   
+  def separator
+    " &#8250; "
+  end
+  
   def less_form_for name, *args, &block
     options = args.last.is_a?(Hash) ? args.pop : {}
     options = options.merge(:builder=>LessFormBuilder)
@@ -53,6 +57,7 @@ module ApplicationHelper
   
   # Used in views to set the page title for the layout
   def title(page_title)
+    @title = page_title
     content_for(:title) { page_title }
   end
   

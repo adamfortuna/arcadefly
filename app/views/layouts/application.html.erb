@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 	<head>
-		<title>ArcadeFly - <%= yield(:title) || "Tracking the arcade buzz!" %></title>
+		<title>ArcadeFly<%= separator -%><%= yield(:title) || "Tracking the arcade buzz!" %></title>
     
     <%= stylesheet_link_tag 'blueprint/screen.css' %>
     <%= stylesheet_link_tag 'application' %>
@@ -19,7 +19,7 @@
 		<div id="header_row"> 
   		<div id="header" class="container">
   		  <div id="title" class="column span-12">
-  		    <h1>ArcadeFly.com</h1>
+  		    <h1><a href="/">ArcadeFly.com</a></h1>
   		    <span>Mapping the arcade buzz!</span>
   		  </div>
   		  
@@ -64,7 +64,7 @@
   		<div class="container">
   		  <ul id="navigation" class="nav">
   		    <li><%= link_to "Home",    root_path %></li>
-  		    <li><%= link_to "Arcades", addressed_in? ? arcades_map_path : arcades_path %></li>
+  		    <li><%= link_to "Arcades", addressed_in? ? arcades_path : browse_arcades_path %></li>
   		    <li><%= link_to "Games",   games_path %></li>
   		    <li><%= link_to "Players", profiles_path %></li>
   		    <li><%= link_to "Popular", popular_path %></li>

@@ -23,7 +23,6 @@ ActionController::Routing::Routes.draw do |map|
   # Custom Routes
   map.signup '/signup',   :controller => 'users',    :action => 'new'
   map.signin '/signin',    :controller => 'sessions', :action => 'new'
-  map.login '/login',    :controller => 'sessions', :action => 'new'
   map.logout '/logout',   :controller => 'sessions', :action => 'destroy'
   map.address '/address', :controller => 'sessions', :action => 'address', :method => 'post'
 
@@ -47,9 +46,7 @@ ActionController::Routing::Routes.draw do |map|
   map.popular_games '/popular/games',       :controller => 'popular',    :action => 'games'
 
   # Better named arcade routes
-  map.arcades '/arcades',                             :controller => 'arcades', :action => 'browse'
-#  map.arcades_distance '/arcades/distance',           :controller => 'arcades', :action => 'distance'
-  map.arcades_map '/arcades/map',                     :controller => 'arcades', :action => 'list_map'
+  map.browse_arcades '/arcades/browse',               :controller => 'arcades', :action => 'browse'
   map.arcade_map '/arcades/:id/map',                  :controller => 'arcades', :action => 'map'
   map.new_arcade_1 '/arcades/new/details',            :controller => 'arcades', :action => 'new1'
   map.new_arcade_2 '/arcades/new/verifydetails',      :controller => 'arcades', :action => 'new2'
@@ -57,13 +54,13 @@ ActionController::Routing::Routes.draw do |map|
   map.new_arcade_2 '/arcades/new/verify',             :controller => 'arcades', :action => 'new4'
   
   # Arcade maps
-  map.game_arcades_map '/games/:game_id/arcades/map', :controller => 'arcades', :action => 'list_map'
-  map.profile_arcades_map '/users/:user_id/arcades/map', :controller => 'arcades', :action => 'list_map'
+  #map.game_arcades '/games/:game_id/arcades', :controller => 'arcades', :action => 'list_map'
+  #map.profile_arcades '/users/:user_id/arcades', :controller => 'arcades', :action => 'list_map'
   
   # Browse for arcades
-  map.countries_arcades '/arcades/countries',         :controller => 'arcades', :action => 'countries'
+  #map.countries_arcades '/arcades/countries',         :controller => 'arcades', :action => 'countries'
   map.country_arcades '/arcades/countries/:id',       :controller => 'arcades', :action => 'country'
-  map.regions_arcades '/arcades/regions',             :controller => 'arcades', :action => 'regions'
+  #map.regions_arcades '/arcades/regions',             :controller => 'arcades', :action => 'regions'
   map.region_arcades '/arcades/regions/:id',          :controller => 'arcades', :action => 'region'
   
   # Remote procedures
@@ -95,6 +92,8 @@ ActionController::Routing::Routes.draw do |map|
   end
 
 
+  # Since a lot of people tend to use /login as the login path, add it here just in case.
+  map.connect '/login',    :controller => 'sessions', :action => 'new'
 
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'

@@ -23,10 +23,6 @@ class ProfilesController < ResourceController::Base
     @collection
   end
 
-  def object
-    User.find(param, :include => { :address => [:region, :country] })
-  end
-
   index.wants.html { 
     # GET /arcades/:arcade_id/users
     if parent_type == :arcade
@@ -82,24 +78,29 @@ class ProfilesController < ResourceController::Base
   
   def update
     case params[:switch]
-    when 'name','image'
-      if @profile.update_attributes params[:profile]
-        flash[:notice] = "Settings have been saved."
-        redirect_to edit_profile_url(@profile)
-      else
-        flash.now[:error] = @profile.errors
-        render :action => :edit
-      end
-    when 'password'
-      if @user.change_password(params[:verify_password], params[:new_password], params[:confirm_password])
-        flash[:notice] = "Password has been changed."
-        redirect_to edit_profile_url(@profile)
-      else
-        flash.now[:error] = @user.errors
-        render :action=> :edit
-      end
+      when 'name'
+        if @profile.update_attributes params[:profile]
+          flash[:notice] = "Your profile has been updated! These changes will take effect immediately."
+        end
+      when 'image'
+        if @profile.update_attributes params[:profile]
+          flash[:notice] = "Your avatar has been updated."
+        end      
+      when 'password'
+        if @user.change_password(params[:verify_password], params[:user][:password], params[:user][:password_confirmation])
+          flash[:notice] = "Password has been changed."
+        end
+      when 'address'
+        if @profile.address.update_attributes params[:address]
+          flash[:notice] = "Your address has been updated. All maps will show relative to your new address."
+        end
+    end
+    
+    if @user.errors.length > 0 || @profile.errors.length > 0
+      flash.now[:error] = @user.errors
+      render :action=> :edit
     else
-      RAILS_ENV == 'test' ? render( :text=>'') : raise( 'Unsupported swtich in action')
+      redirect_to edit_profile_url(@profile)
     end
   end
 

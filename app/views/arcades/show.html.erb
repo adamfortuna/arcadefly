@@ -1,10 +1,9 @@
-<% title 'Arcades - ' + @arcade.name %>
-
+<% title 'Arcades' + separator + @arcade.name %>
 <%= render :partial => 'menu', :locals => { :arcade => @arcade } %>
 
 <% content_for(:header) do %>
   <%= GMap.header %>
-	
+
 	<%= @map.to_html %>
 <% end %>
 

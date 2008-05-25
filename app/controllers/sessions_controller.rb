@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
     if logged_in?
       successful_login
     else
-      failed_login("Either your email and password was entered incorrectly, or you may not have activated your account.")
+      failed_login("Either your email and password was entered incorrectly, or you may not have activated your account. If you're having problems signing in, try retrieving your password.")
     end
   end
   

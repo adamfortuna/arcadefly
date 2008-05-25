@@ -1,6 +1,7 @@
 <%- javascript 'dynamic_regions'
     address ||= Address.new
-    @address = address %>
+    @address = address
+%>
     
 <%- address.title = "My Home" if address.title.nil? %>
   <% fields_for :address, address do |a| %>
@@ -18,14 +19,14 @@
     <p class="block required">
       <label for="address_country_id">Country</label>
       <%= error_message_on "address", "country_id", "Country " %>
-      <%= a.select :country_id, Country.find(:all).collect {|r| [ r.name, r.id ] }, 
+      <%= a.select :country_id, Country.find(:all, :order => 'name').collect {|r| [ r.name, r.id ] }, 
                                 { :include_blank => true },
                                 { :class => "text", :id => "address_country_id" } %>
     </p>
     <p class="block required" id="address_region_id_field">
       <label for="address_region_id">State/Region</label>
       <%= error_message_on "address", "region_id", "State/Region " %>
-      <%= a.select :region_id, Region.find(:all).collect {|r| [ r.name, r.id ] }, 
+      <%= a.select :region_id, Region.find(:all, :order => 'name').collect {|r| [ r.name, r.id ] }, 
                                { :include_blank => true },
                                { :class => "text", :id => "address_region_id" } %>
     </p>

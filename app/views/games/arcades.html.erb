@@ -1,4 +1,4 @@
-<% title "Games - " + @game.name -%>
+<% title "Games" + separator + @game.name + separator + "Arcades with this Game" -%>
 
 <% content_for(:header) do %>
   <%= GMap.header %>
@@ -10,10 +10,8 @@
 
 <div class="clear">
   <ul class="left data span-10 scrollable content-height map shift-1 content map_list">
-    <%= render :partial => 'arcades/arcade_map', :collection => @arcades %>
+    <%= render :partial => 'arcades/arcade', :collection => @arcades %>
   </ul>
 
   <%= @map.div(:class => 'right prepend-1 span-13 last map_medium content-height map') %>
 </div>
-
-<%= render :partial => 'games/footer', :locals => { :game => @game } %>

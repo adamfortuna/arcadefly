@@ -13,14 +13,14 @@ class PasswordsController < ApplicationController
       @user.forgot_password
       @user.save      
       flash[:notice] = "We sent an email to <b>#{@user.profile.email}</b> with instructions on how to change your password."
-    elsif @user = Profile.find_by_email(params[:email], :include => :user).user
-      @user.requested_signup_notification
-      @user.save
-      flash[:error] = "It looks like you never activated your account. We sent an email to <b>#{@user.profile.email}</b> with instructions on how to activate and change the password for your account."
+    elsif @profile = Profile.find_by_email(params[:email], :include => :user)      
+      @profile.user.requested_signup_notification
+      @profile.user.save
+      flash[:error] = "It looks like you never activated your account. We sent an email to <b>#{@profile.email}</b> with instructions on how to activate and change the password for your account."
     else
-      flash[:error] = "We couldn't find a user with the email address <b>#{params[:email]}</b>. Do you want to try <a href=\"#{signup_url}?user[email]=#{params[:email]}\">signing up</a>?"
+      flash[:error] = "We couldn't find a user with the email address <b>#{params[:email]}</b>. Do you want to try <a href=\"#{signup_url}?profile[email]=#{params[:email]}\">signing up</a>?"
     end  
-    redirect_to login_path
+    redirect_to signin_path
   end
   
   # GET /reset_password/:id

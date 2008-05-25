@@ -1,7 +1,7 @@
 <fieldset class="span-11 left">
   <legend>General Info</legend>
   
-  <% form_for :profile, :html=>{:method=>:put } do |p| %>    
+  <% form_for :profile, :url => profile_url(@profile), :html => {:method=>:put } do |p| %>    
     
     <p class="block required">
       <label for="profile_display_name">Display Name</label>
@@ -77,7 +77,7 @@
       <%= p.text_area :about_me, { :class => 'text'} %>
     </p>
      
-    <p>
+    <p class="block">
       <%= p.submit "Save", :class => "button" %>
       <input type="hidden" name="switch" value="name" />
     </p>
@@ -89,52 +89,73 @@
 
   <fieldset id="upload_icon">
     <legend>Upload Icon</legend>
-    <% less_form_for current_user.profile, :html=>{:method=>:put, :multipart=>true } do |p| %>
-      <%= p.front :icon, :label => 'Upload your Icon' %>
-      <%= file_column_field( "profile", "icon", :size => 15)%>
+
+    <% form_for :profile, :url => profile_url(@profile), :html=>{:method=>:put, :multipart=>true } do |p| %>
+       <p class="block required">
+          <label for="profile_icon">Upload your Icon</label>
+          <%= error_message_on "profile", "icon", "Icon " %>
+          <%= file_column_field("profile", "icon", :class => 'text')%>
+        </p>
+        
       <div class="clear"></div>
+      
       <% unless current_user.profile.icon.blank? %>
       <div id="avatar_edit">
         <span id="profile_icon_picture">
           <%= icon current_user.profile %>
-          <%= link_to_remote 'delete icon', :url=>delete_icon_profile_path(current_user.profile), :confirm=>DELETE_CONFIRM  %>
+          <%= link_to_remote 'delete icon', :url => delete_icon_profile_path(current_user.profile), :confirm=>DELETE_CONFIRM  %>
         </span>
       </div>
       <% end %>
-      <%= p.back :icon %>
+      
+      
+      <p class="block">
+        <%= p.submit 'Save', :class => 'button' %>
+        <input type="hidden" name="switch" value="image" />
+      </p>
 
-      <div class="row button">
-      <%= p.submit 'Save', :class => 'button' %>
-      </div>
-
-      <input type="hidden" name="switch" value="image" />
+    <% end %>
+  </fieldset>
+  
+  <fieldset id="change_address">
+    <legend>Change My Address</legend>
+    <% form_for :profile, :url => profile_url(@profile), :html=>{:method=>:put } do |p| %>
+      <%= render :partial => 'shared/address', :locals => { :address => @profile.address } %>
+    
+      <p class="block">
+        <input type="hidden" name="switch" value="address" />
+        <%= p.submit 'Save', :class => 'button' %>
+      </p>
     <% end %>
   </fieldset>
 
 
   <fieldset id="change_passwords">
     <legend>Change Password</legend>
-    <% form_for :profile, :html=>{:method=>:put } do |p| %>
+    <% form_for :user, :url => profile_url(@profile), :html=>{:method=>:put } do |p| %>
       
       <p class="block required">
-        <label for="password_verify_password">Current Password</label>
+        <label for="verify_password">Current Password</label>
+        <%= error_message_on "user", "verify_password" %>
+    
+        <% if @user.errors[:verify_password] %><div class="fieldWithErrors"><% end %>
+          <input type="password" name="verify_password" id="verify_password" class="text" />
+        <% if @user.errors[:verify_password] %></div><% end %>        
+      </p>
+
+      <p class="block required">
+        <label for="password">New Password</label>
         <%= error_message_on "user", "password" %>
-        <input type="password" name="verify_password" id="password_verify_password" class="text" />
+         <%= p.password_field :password, { :class => 'text'} %>
       </p>
 
       <p class="block required">
-        <label for="new_password">New Password</label>
-        <%= error_message_on "user", "new_password" %>
-        <input type="password" name="verify_password" id="new_password" class="text" />
-      </p>
-
-      <p class="block required">
-        <label for="confirm_new_password">Confirm New Password</label>
-        <%= error_message_on "user", "confirm_new_password" %>
-        <input type="password" name="new_password" id="confirm_new_password" class="text" />
+        <label for="confirm_password">Confirm New Password</label>
+        <%= error_message_on "user", "confirm_password" %>
+         <%= p.password_field :password_confirmation, { :class => 'text'} %>
       </p>
     
-      <p>
+      <p class="block">
         <%= p.submit 'Save', :class => 'button' %>
         <input type="hidden" name="switch" value="password" />
       </p>
@@ -145,7 +166,7 @@
   <fieldset id="change_emails">
     <legend>Change Email</legend>
     <p>You'll be able to log in with your old email address until this is confirmed.</p>
-    <% form_for :profile, :html=>{:method=>:put } do |p| %>
+    <% form_for :profile, :url => profile_url(@profile), :html=>{:method=>:put } do |p| %>
       
       <p class="block required">
         <label for="email_verify_password">Current Password</label>
@@ -165,7 +186,7 @@
         <input type="password" name="new_email_confirmation" id="new_email_confirmation" class="text" />
       </p>
         
-      <p class="block required">
+      <p class="block">
         <%= p.submit "Save", :class => "button" %>
         <input type="hidden" name="switch" value="email" />
       </p>

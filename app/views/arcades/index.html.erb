@@ -1,4 +1,4 @@
-<% title "Arcades Map" -%>
+<%- title "Map Arcades" -%>
 
 <% content_for(:header) do %>
   <%= GMap.header %>
@@ -6,11 +6,11 @@
 	<%= @map.to_html %>
 <% end %>
 
-<%= render :partial => 'arcades/list_menu', :locals => { :map => true } %>
+<%= render :partial => 'arcades/list_menu' %>
 
 <div class="tabbed-map">
   <ul class="left data span-10 scrollable content-height map shift-1 content map_list">
-    <%= render :partial => 'arcades/arcade_map', :collection => @arcades %>
+    <%= render :partial => 'arcades/arcade', :collection => @arcades %>
   </ul>
   <%= @map.div(:class => 'right prepend-1 span-13 last map_medium content-height map') %>
 

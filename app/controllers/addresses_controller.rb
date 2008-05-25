@@ -1,6 +1,7 @@
 class AddressesController < ResourceController::Base
+  before_filter :not_logged_in_required, :only => :create
   belongs_to :user, :game, :session
- 
+  
   # GET /users/1/addresses/new
   # Todo: Add the ability for users to add multiple addresses
   def new
@@ -18,26 +19,38 @@ class AddressesController < ResourceController::Base
   def create
     raise if !params[:address]
     loc = Address.geocode(params[:address])
+
+    # If this is the same address they're logged in with, don't do anything
+    if addressed_in? && (current_address.lat == loc.lat) && (current_address.lng == loc.lng)
+      # Maybe give an additional notice here eventually letting them know nothing happend?
+      flash[:warning] = "It looks like this is the same location you have on file, so we decided not to change anything."
+    else      
+      region = Region.find_by_abbreviation(loc.state)
+      country = Country.find_by_alpha_2_code(loc.country_code)
+
+      self.current_address = Address.create(:title => 'Quick Lookup',
+                                            :addressable_type => 'Session', 
+                                           #:addressable_id => session,
+                                            :region => region,
+                                            :country => country,
+                                            :street => loc.street_address,
+                                            :postal_code => loc.zip,
+                                            :city => loc.city)
+    end
+    flash[:notice] = "Thanks for entering your location in <strong>#{current_address.short_line}</strong>. We'll use this location for the remainder of your visit here, but you can feel free to change it at any time from the <a href=\"/\">home page</a>. If you decide to <a href=\"/signup\">register</a> we'll save your address and you'll get access to even cooler features."
     
-    region = Region.find_by_abbreviation(loc.state)
-    country = Country.find_by_alpha_2_code(loc.country_code)
-    
-    current_address = Address.create(:addressable_type => 'Session', 
-                                     :region => region,
-                                     :country => country,
-                                     :street => loc.street_address,
-                                     :postal_code => loc.zip,
-                                     :city => loc.city)
-    if current_address.valid?
+    if addressed_in?
       session[:address] = current_address.id
-      redirect_to arcades_distance_path
+      redirect_to arcades_map_path
+      return
     else
       flash[:error] = "We had trouble finding out just where your address is. Are you sure you typed it correctly?"
       redirect_to request.env["HTTP_REFERER"]
+      return
     end
-  rescue
-    flash[:error] = "We had trouble finding out just where your address is. Are you sure you typed it correctly?"
-    redirect_to request.env["HTTP_REFERER"]
+#  rescue
+#    flash[:error] = "Not sure what happend actually... We had trouble finding out just where your address is. Are you sure you typed it correctly?"
+#    redirect_to request.env["HTTP_REFERER"]
   end
 
   # PUT users/1-adam/addresses/1

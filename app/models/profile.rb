@@ -3,7 +3,7 @@ class Profile < ActiveRecord::Base
   
   PER_PAGE = 50
   
-  validates_uniqueness_of   :email, :case_sensitive => false, :message => 'is taken. Do you already have an account here?'
+  validates_uniqueness_of   :email, :case_sensitive => false, :message => "is taken. Do you already have an account here? <a href=\"/signin\">Yes i do!</a>"
   validates_format_of :email, :with => /^([^@\s]{1}+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message=>'does not look like an email address.'
   validates_length_of :email, :within => 3..100    
   validates_confirmation_of :email,                   :if => :email_required?

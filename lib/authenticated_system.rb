@@ -3,7 +3,7 @@ module AuthenticatedSystem
     # Inclusion hook to make #current_user and #logged_in?
     # available as ActionView helper methods.
     def self.included(base)
-      base.send :helper_method, :current_user, :logged_in?, :current_profile, :administrator?
+      base.send :helper_method, :current_user, :logged_in?, :current_profile, :administrator?, :addressed_in?, :current_address
     end
 
 
@@ -14,6 +14,11 @@ module AuthenticatedSystem
     # Preloads @current_user with the user model if they're logged in.
     def logged_in?
       current_profile != :false
+    end
+    
+    # Returns true or false if the user has an address
+    def addressed_in?
+      current_address != :false
     end
     
     # Accesses the current user from the session.  Set it to :false if login fails
@@ -28,11 +33,22 @@ module AuthenticatedSystem
       @current_user ||= (login_from_session  || login_from_cookie || :false)
     end
     
+    # Accessed the current profile from the profile or session
+    def current_address 
+      @current_address ||= (address_from_profile || address_from_session || :false)
+    end
+    
     # Store the given user in the session.
     def current_user=(new_user)
       session[:user] = (new_user.nil? || new_user.is_a?(Symbol)) ? nil : new_user.id
+      @current_profile = new_user.profile if !new_user.nil?
       @current_user = new_user
-      @current_profile = new_user.profile
+    end
+    
+    # Store the given address in the session
+    def current_address=(new_address)
+      session[:address] = (new_address.nil? || new_address.is_a?(Symbol)) ? nil : new_address.id
+      @current_address = new_address
     end
     
     
@@ -155,6 +171,15 @@ module AuthenticatedSystem
       end
     end
 
+    # Called from #current_address. Will get the address form the profile if the user is logged in and has an address
+    def address_from_profile
+      current_profile.address if (logged_in? && current_profile.has_address?)
+    end
+
+    # Called from #current_address. Will get an address from the users session if they have one.
+    def address_from_session
+      Address.find(session[:address], :conditions => 'addressable_type="Session"') if session[:address]
+    end
 
 
 

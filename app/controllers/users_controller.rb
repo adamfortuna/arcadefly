@@ -83,7 +83,7 @@ class UsersController < ResourceController::Base
     #self.current_user = @user
     flash[:notice] = "Thanks for signing up, <b>#{@user.profile.display_name}</b>! Please check your email and click on the link we sent you to activate your account and log in."
     redirect_to login_path    
-  rescue ActiveRecord::RecordInvalid
+  rescue
 #    debugger
     flash[:error] = "There was a problem creating your account. Please correct any errors below before continuing."
 #    debugger
@@ -96,39 +96,6 @@ class UsersController < ResourceController::Base
   rescue
     permission_denied
   end
-  
-  # PUT /users/1-adam
-  def update
-    raise if current_user.id != params[:id].to_i && !administrator?
-    
-    @user = User.find(params[:id])
-    @user.login = params[:user][:login]
-    @user.name = params[:user][:name]
-    @user.website = params[:user][:website]
-    @user.website = nil if @user.website == 'http://'
-    @user.about = params[:user][:about]
-    @user.address = Address.new(params[:address])
-
-
-    correct_password = true
-    if params[:old_password] != '' || params[:user][:password] != ''|| params[:user][:password_confirmation] != ''
-      @user.password = params[:user][:password]
-      @user.password_confirmation = params[:user][:password_confirmation]
-      correct_password = @user.authenticated?(params[:old_password])
-    end
-
-    if @user.save && correct_password
-      flash[:notice] = (@user == current_user) ? "Your user account has been updated!" : "User updated."
-      redirect_to :action => 'show', :id => @user
-      return
-    else
-      @user.errors.add('current_password', 'is not correct. Please re-enter it.') if !correct_password
-      flash[:error] = 'There was a problem updating your account. Check out the error details below.'
-      render :action => 'edit'
-      return
-    end
-  end
-
   
   def destroy
     @user = User.find(params[:id])
@@ -153,8 +120,8 @@ class UsersController < ResourceController::Base
   def activate
     # Uncomment and change paths to have user logged in after activation - not recommended
     self.current_user = User.find_and_activate!(params[:id])
-    flash[:notice] = "Your account has been activated and you've been logged in!"
-    redirect_to welcome_url
+    flash[:notice] = "Your account has been activated and you've been logged in! Try filling out your public profile so people know a little more about you!"
+    redirect_to edit_profile_path @current_profile
   rescue User::ArgumentError
     flash[:error] = 'Activation code invalid or not found. Please try creating a new account.'
     redirect_to '/signup'

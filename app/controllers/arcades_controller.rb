@@ -12,11 +12,14 @@ class ArcadesController < ResourceController::Base
     elsif parent_type == :profile
       @profile = Profile.find(params[:profile_id])
       @collection = @profile.arcades.paginate :page => params[:page], :order => 'arcades.name', :per_page => Arcade::PER_PAGE, :include => {:address => [:region, :country]}
-    # GET /arcades/distance
+    # GET /arcades
     else
       @collection =  Arcade.search(params[:search], params[:page])
-      @collection.sort_by_distance_from(current_address) if addressed_in? && @collection.length > 1
     end
+    
+    @collection = sort_arcades_by_distance(@collection)
+    @map = map_for_arcades(@collection)
+    
     @collection
   end
   
@@ -42,41 +45,95 @@ class ArcadesController < ResourceController::Base
     end
   }
 
+
+
+
+
+
+
+
+  
+  # GET /arcades/1-rockys
   def show
     @arcade = object
-
     @games_popularity =  Arcade.count(:conditions => ['playables_count > ?', @arcade.playables_count])+1
     @users_popularity =  Arcade.count(:conditions => ['frequentships_count > ?', @arcade.frequentships_count])+1
   end
+
+  # Map for an arcade
+  # GET /arcades/:id/map
+  def map
+    @arcade = Arcade.find(params[:id], :include => { :address => [:region, :country]} )
+
+    @map = GMap.new("arcade_map")
+    @map.control_init(:large_map => true, :map_type => true)
+    @map.center_zoom_init([@arcade.address.lat, @arcade.address.lng], 13)
+    @map.overlay_init(GMarker.new([@arcade.address.lat,@arcade.address.lng],
+                      :title => @arcade.name,
+                      :info_window => arcade_info_window(@arcade)))
+  end
+
   
+  
+  
+  
+  
+  # GET /arcades/countries/:id
+  # :id will be the country id
+  def country
+    @arcades = sort_arcades_by_distance Arcade.search_by_country(params[:id], params[:page])
+    @map = map_for_arcades(@arcades)
+    @title = Country.find(params[:id]).name
+    render :template => "arcades/arcades"
+  end
+  
+  # GET /arcades/regions/:id
+  # :id will be the region id
+  def region
+    @arcades = sort_arcades_by_distance Arcade.search_by_region(params[:id], params[:page])
+    @map = map_for_arcades(@arcades)
+    @title = Region.find(params[:id].to_s).name
+    render :template => "arcades/arcades"
+  end
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  # GET /arcades/browse
   def browse
     @countries = Country.find(:all, :include => :addresses, :conditions => 'addresses.addressable_type="Arcade"', :order => 'countries.name')
     @regions = Region.find(:all, :include => :addresses, :conditions => 'addresses.addressable_type="Arcade"', :order => 'regions.name')
   end
-  
-  # GET /arcades/countries/:id
-  # :id will be the region id
-  def country
-    @arcades = Arcade.search_by_country(params[:id], params[:page])
-    @max_count = Arcade.maximum(:playables_count, :include => :address, :conditions => ['addresses.country_id = ?', params[:id]]) if @arcades.length > 0
-    @title = Country.find(params[:id]).name
-    render :template => "arcades/arcades"
-  end
 
-  # GET /arcades/regions/:id
-  # :id will be the region id
-  def region
-    region = params[:id].to_i
-    @arcades = Arcade.search_by_region(region, params[:page])
-    @max_count = Arcade.maximum(:playables_count, :include => :address, :conditions => ['addresses.region_id = ?', region]) if @arcades.length > 0
-    @title = Region.find(params[:id]).name
-    render :template => "arcades/arcades"
-  end
 
-  def distance
-    @arcades = collection
-    render :template => "arcades/arcades"
-  end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   # One page form for creating a new arcade (currently doesnt work with games or address)
   def new
@@ -108,75 +165,67 @@ class ArcadesController < ResourceController::Base
     end
   end
   
-  
-  
   def new2
     @arcade = Arcade.new(params[:arcade])
   end
   
   
   
-  # Additional actions
-  # GET /arcades/map
-  # GET /games/:game_id/arcades/map
-  # GET /user/:user_id/arcades/map
-  def list_map
-    if parent_type == :game
-      @game = Game.find(params[:game_id])
-      @arcades = @game.arcades.paginate :page => params[:page], :order => 'arcades.name', :per_page => Arcade::PER_PAGE, :include => {:address => [:region, :country]}
-    elsif parent_type == :profile
-      @profile = Profile.find(params[:profile_id])
-      @arcades = profile.arcades.paginate :page => params[:page], :order => 'arcades.name', :per_page => Arcade::PER_PAGE, :include => {:address => [:region, :country]}
-    else
-      @arcades = Arcade.search(params[:search], params[:page])
-    end
-    
-    # Default code for mapping beyond this point
-    @arcades.sort_by_distance_from(current_address) if addressed_in?
 
-    @map = GMap.new("arcades_map")
-    @map.control_init(:small_map => true, :map_type => false)
-    @map.center_zoom_init([26,-80], 13)
-	  
-	  markers = []
-	  for arcade in @arcades
-      markers << GMarker.new([arcade.address.lat,arcade.address.lng],
-	                           :title => arcade.name,
-	                           :info_window => arcade_info_window(arcade))
-    end
-    managed_markers = ManagedMarker.new(markers,0,13)
-    
-    mm = GMarkerManager.new(@map,:managed_markers => [managed_markers])
-    @map.declare_init(mm,"arcades")
-    
-    sorted_latitudes = @arcades.collect(&:address).collect(&:lat).compact.sort
-    sorted_longitudes = @arcades.collect(&:address).collect(&:lng).compact.sort
-    @map.center_zoom_on_bounds_init([ [sorted_latitudes.first, sorted_longitudes.first], 
-                                      [sorted_latitudes.last, sorted_longitudes.last]])
-
-    # Is this the an arcade listing map or a game/arcade listing map?
-    if parent_type == :game
-      render :template => 'games/arcades_map'
-    elsif parent_type == :profile
-      render :template => 'profiles/arcades_map'
-    end
-  end
   
-  # Map for an arcade
-  # GET /arcades/:id/map
-  def map
-    @arcade = Arcade.find(params[:id], :include => { :address => [:region, :country]} )
-    
-    @map = GMap.new("arcade_map")
-	  @map.control_init(:large_map => true, :map_type => true)
-	  @map.center_zoom_init([@arcade.address.lat, @arcade.address.lng], 13)
-	  @map.overlay_init(GMarker.new([@arcade.address.lat,@arcade.address.lng],
-	                    :title => @arcade.name,
-	                    :info_window => arcade_info_window(@arcade)))
-  end
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   private
   def arcade_info_window(arcade)
     "<strong>#{arcade.name}</strong> <p>#{arcade.address.street}<br />#{arcade.address.city}, #{arcade.address.region.name} #{arcade.address.postal_code}</p><p><strong>Games:</strong> #{arcade.playables_count}</p>"
   end 
+  
+  def map_for_arcades(arcades)
+    map = GMap.new("arcades_map")
+    map.control_init(:small_map => true, :map_type => false)
+    map.center_zoom_init([26,-80], 13)
+
+    markers = []
+    for arcade in arcades
+      markers << GMarker.new([arcade.address.lat,arcade.address.lng],
+                             :title => arcade.name,
+                             :info_window => arcade_info_window(arcade))
+    end
+    managed_markers = ManagedMarker.new(markers,0,13)
+
+    mm = GMarkerManager.new(map,:managed_markers => [managed_markers])
+    map.declare_init(mm,"arcades")
+
+    sorted_latitudes = arcades.collect(&:address).collect(&:lat).compact.sort
+    sorted_longitudes = arcades.collect(&:address).collect(&:lng).compact.sort
+    map.center_zoom_on_bounds_init([ [sorted_latitudes.first, sorted_longitudes.first], 
+                                      [sorted_latitudes.last, sorted_longitudes.last]])
+    map
+  end
+  
+  def sort_arcades_by_distance(arcades)
+    (arcades && arcades.length > 1 && addressed_in?) ? arcades.sort_by_distance_from(current_address) : arcades
+  end
+    
 end

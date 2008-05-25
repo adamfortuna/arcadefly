@@ -25,7 +25,7 @@ input.title               { font-size:1.5em; }
 
 /* Textareas */
 textarea            { width: 400px; height: 250px; margin:0.5em 0.5em 0.5em 0; }
-textarea            { border:1px solid #bbb; background:#eee; padding:5px; }
+textarea            { border:1px solid #bbb; background:#f6f6f6; padding:5px; }
 textarea:focus      { border:1px solid #999; background:#fff; }
 
 /* Select fields */

@@ -80,7 +80,18 @@ class User < ActiveRecord::Base
     find :first, :include => :profile, :conditions => ['profiles.email = ? and activation_code IS NULL', email]
   end
   
-  
+  def change_password(current_password, new_password, confirm_password)
+    
+    sp = encrypt(current_password)
+    errors.add(:verify_password, "The password you supplied is not the correct password.") and
+      return false unless sp == self.crypted_password
+    
+    self.password = new_password
+    self.password_confirmation = confirm_password
+
+    return false unless self.valid?
+    self.save!
+  end
   
   
   
@@ -207,7 +218,7 @@ class User < ActiveRecord::Base
     end
       
     def password_required?
-      crypted_password.blank? || !password.nil? || !password_confirmation.nil?
+      crypted_password.blank? || password.nil? || password_confirmation.nil?
     end
     
     def make_activation_code

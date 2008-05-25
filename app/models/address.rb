@@ -64,21 +64,21 @@ class Address < ActiveRecord::Base
     lines
   end
   
-  def geocode(address)
+  def self.geocode(address)
     GeoKit::Geocoders::GoogleGeocoder.geocode(address)
   end
   
   protected
   def auto_geocode
     # Exact location
-    loc = GeoKit::Geocoders::GoogleGeocoder.geocode(single_line)
-    self.lat = loc.lat
-    self.lng  = loc.lng
+    exact_loc = Address.geocode(single_line)
+    self.lat = exact_loc.lat
+    self.lng  = exact_loc.lng
 
     # General Location
-    loc = GeoKit::Geocoders::GoogleGeocoder.geocode(short_line)
-    self.public_lat = loc.lat
-    self.public_lng  = loc.lng
+    public_loc = Address.geocode(short_line)
+    self.public_lat = public_loc.lat
+    self.public_lng  = public_loc.lng
   end
   
   private
