@@ -11,5 +11,5 @@
     <%= will_paginate @games %>
   </p>
   
-  <%= render :partial => 'arcades/footer', :locals => { :arcade => @arcade } %>
+  <%= button_to "Manage Games at this Arcade", edit_arcade_games_path(@arcade), { :method => "get", :class => "games" } %>
 </div>  

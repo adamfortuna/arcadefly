@@ -14,7 +14,6 @@
   #features li { padding: 1em; }
   #location_search label { position:absolute; margin:.8em 0 0 .6em; color:#aaa; font-size:1.8em }
   #location_search input#address { width: 80%; font-size:2em; }
-  #location_search input#find { font-size:1.6em; margin-top:.5em }
   //-->
   </style>
 <% end %>
@@ -33,9 +32,9 @@
 <h2>We will help you find...</h2>
 
 <ul id="features">
-  <li class="box center span-7 column">Arcades where you want</li>
-  <li class="box center span-7 column">Games you want to play</li>
-  <li class="box center span-7 right">Players to hang out with</li>
+  <li class="box center span-7 column arcades">Arcades that are closeby</li>
+  <li class="box center span-7 column games">Games in your area</li>
+  <li class="box center span-7 right users">Players to hang out with</li>
 </ul>
 
 <% if !logged_in? %>
@@ -44,7 +43,7 @@
       <% form_tag(addresses_path) do %>
           <label id="address_label" for="address">Enter your address to get started...</label>
           <%= text_field_tag :address, addressed_in? ? current_address.single_line : '', { :class => 'text', :onfocus => 'toggleLabel(false);', :onblur => 'toggleLabel(true);' } %>  
-          <%= submit_tag "Find Arcades!", :class => 'inline', :disable_with => 'Finding...', :id => 'find' %>
+          <%= submit_tag "Find Arcades!", :class => 'inline big-button', :disable_with => 'Finding...', :id => 'find' %>
       <% end %>
   </fieldset>
   

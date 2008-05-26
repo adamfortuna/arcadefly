@@ -6,7 +6,6 @@ class Address < ActiveRecord::Base
   acts_as_mappable
 
   validates_presence_of :city,
-                        :postal_code,
                         :country_id
   validates_presence_of :region_id,
                         :if => :known_region_required?

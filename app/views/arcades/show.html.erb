@@ -12,6 +12,8 @@
     <%= @map.div(:class => 'right prepend-1 span-13 last map_small map') %>
     <div>
   	  <strong><%= @arcade.name %></strong> is in <em><%= @arcade.address.city %>, <%= @arcade.address.region.name %></em>.
+  	  
+  	  <%= button_to "Edit this Arcade", edit_arcade_path(@arcade), { :method => "get", :class => "arcades" } %>
     </div>
   </div>
   
@@ -58,6 +60,4 @@
       </p>
      <% end %>
   </div>
-  
-  <%= render :partial => 'footer', :locals => { :arcade => @arcade } %>
 </div>  

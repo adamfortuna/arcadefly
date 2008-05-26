@@ -83,8 +83,7 @@ class ArcadesController < ResourceController::Base
   def country
     @arcades = sort_arcades_by_distance Arcade.search_by_country(params[:id], params[:page])
     @map = map_for_arcades(@arcades)
-    @title = Country.find(params[:id]).name
-    render :template => "arcades/arcades"
+    @country = Country.find(params[:id])
   end
   
   # GET /arcades/regions/:id
@@ -92,8 +91,7 @@ class ArcadesController < ResourceController::Base
   def region
     @arcades = sort_arcades_by_distance Arcade.search_by_region(params[:id], params[:page])
     @map = map_for_arcades(@arcades)
-    @title = Region.find(params[:id].to_s).name
-    render :template => "arcades/arcades"
+    @region = Region.find(params[:id].to_s)
   end
   
   
@@ -153,7 +151,8 @@ class ArcadesController < ResourceController::Base
           @arcade.hours << new_hour
         end
       end
-      debugger
+      
+      redirect_to new_arcade_2_path
     elsif request.get?
       @arcade.hours << Hour.new(:dayofweek => 'mon')
       @arcade.hours << Hour.new(:dayofweek => 'tue')
@@ -165,10 +164,40 @@ class ArcadesController < ResourceController::Base
     end
   end
   
+  # Review information
   def new2
     @arcade = Arcade.new(params[:arcade])
+    
+    if request.post?
+      
+      debugger
+      if params[:commit_back]
+        redirect_to new_arcade_1_path
+      else
+        redirect_to new_arcade_3_path
+      end
+    end
   end
   
+  # Add games to a new arcade
+  def new3
+    @games = Game.find(:all, :order => 'name')
+    
+    if request.post?
+      @arcade = Arcade.new(params[:arcade])
+      
+      if params[:commit_back]
+        redirect_to new_arcade_2_path
+      else
+        redirect_to arcades_path
+      end
+    end
+  end
+  
+  # Manage games at an existing arcade
+  def edit_games
+    
+  end
   
   
 

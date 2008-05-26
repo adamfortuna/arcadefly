@@ -82,11 +82,9 @@ class UsersController < ResourceController::Base
     #Uncomment to have the user logged in after creating an account - Not Recommended
     #self.current_user = @user
     flash[:notice] = "Thanks for signing up, <b>#{@user.profile.display_name}</b>! Please check your email and click on the link we sent you to activate your account and log in."
-    redirect_to login_path    
+    redirect_to signin_path    
   rescue
-#    debugger
     flash[:error] = "There was a problem creating your account. Please correct any errors below before continuing."
-#    debugger
     render :action => 'new'
   end
   

@@ -22,6 +22,14 @@
 <% end %>
 </div>-->
 
+<% if !addressed_in? %>
+<div class="box">
+  <strong>Want to see which arcades are closest to you?</strong> <%= link_to "Register", signup_path %>, <%= link_to "sign in", signin_path %> or <%= link_to "set your address", root_path %>
+  to enable browsing by distance and to see how many miles away each arcade is.
+</div>
+<% end %>
+
+
 <ul class="tabs">
   <% if addressed_in? -%>
   <%= menu_link "Map Arcades", arcades_path, { :a_class => 'arcades' } %>

@@ -1,0 +1,41 @@
+<% javascript 'dynamic_games' -%>
+
+<% title "Create a New Arcade" + separator + "Add Games" -%>
+<h2><%= @title %></h2>
+
+<ul class="wizard clear">
+  <li class="complete">1) Basic Info</li>
+  <li class="complete">2) Verify Info</li>
+  <li class="active">3) Add Games</li>
+</ul>
+
+<fieldset class="span-24 clear">
+  <legend>Add Games</legend>
+
+  <% form_for(:arcade, :url => new_arcade_3_path, :html => { :id => 'new_arcade_form' }) do |f| %>
+    
+    
+    <div class="column span-8">
+      Available Games<!-- (<a href="javascript:showAllGames();" id="show_all_games">Show all games</a><a href="javascript:showPopularGames();" id="show_popular_games">Show only games already in arcades</a>)-->
+      <%= f.select :game_id, @games.collect {|r| [ r.name, r.id ] }, 
+                                { :include_blank => false },
+                                { :class => "text", :id => "address_country_id", :multiple => "true" } %>
+    </div>
+    
+    <div class="column span-4">
+      <input type="button" name="add" value="Add Selected Games »"/>
+      <input type="button" name="remove" value="« Remove Selected Games"/>
+    </div>
+    
+    <div class="column span-8">
+      <ul class="scrollable content-height">
+    	</ul>
+    </div>
+    
+    
+    <p class="clear">
+      <%= submit_tag "« Edit Details", :class => "big-button left", :disable_with => 'Submitting...', :name => 'commit_back' %>
+      <%= submit_tag "Create this Arcade!", :class => "big-button right", :disable_with => 'Creating...', :name => 'commit_next' %>
+    </p>
+  <% end %>
+</fieldset>

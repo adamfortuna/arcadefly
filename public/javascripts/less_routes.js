@@ -111,12 +111,15 @@ function arcade_map_ajaxx(id, verb, params, options){ return less_ajaxx('/arcade
 function new_arcade_1_path(verb){ return '/arcades/new/details';}
 function new_arcade_1_ajax(verb, params, options){ return less_ajax('/arcades/new/details', verb, params, options);}
 function new_arcade_1_ajaxx(verb, params, options){ return less_ajaxx('/arcades/new/details', verb, params, options);}
-function new_arcade_3_path(verb){ return '/arcades/new/addgames';}
-function new_arcade_3_ajax(verb, params, options){ return less_ajax('/arcades/new/addgames', verb, params, options);}
-function new_arcade_3_ajaxx(verb, params, options){ return less_ajaxx('/arcades/new/addgames', verb, params, options);}
-function new_arcade_2_path(verb){ return '/arcades/new/verify';}
-function new_arcade_2_ajax(verb, params, options){ return less_ajax('/arcades/new/verify', verb, params, options);}
-function new_arcade_2_ajaxx(verb, params, options){ return less_ajaxx('/arcades/new/verify', verb, params, options);}
+function new_arcade_2_path(verb){ return '/arcades/new/review';}
+function new_arcade_2_ajax(verb, params, options){ return less_ajax('/arcades/new/review', verb, params, options);}
+function new_arcade_2_ajaxx(verb, params, options){ return less_ajaxx('/arcades/new/review', verb, params, options);}
+function new_arcade_3_path(verb){ return '/arcades/new/games';}
+function new_arcade_3_ajax(verb, params, options){ return less_ajax('/arcades/new/games', verb, params, options);}
+function new_arcade_3_ajaxx(verb, params, options){ return less_ajaxx('/arcades/new/games', verb, params, options);}
+function edit_arcade_games_path(id, verb){ return '/arcades/' + id + '/games/edit';}
+function edit_arcade_games_ajax(id, verb, params, options){ return less_ajax('/arcades/' + id + '/games/edit', verb, params, options);}
+function edit_arcade_games_ajaxx(id, verb, params, options){ return less_ajaxx('/arcades/' + id + '/games/edit', verb, params, options);}
 function country_arcades_path(id, verb){ return '/arcades/countries/' + id + '';}
 function country_arcades_ajax(id, verb, params, options){ return less_ajax('/arcades/countries/' + id + '', verb, params, options);}
 function country_arcades_ajaxx(id, verb, params, options){ return less_ajaxx('/arcades/countries/' + id + '', verb, params, options);}
@@ -504,18 +507,18 @@ function new_profile_ajaxx(verb, params, options){ return less_ajaxx('/profiles/
 function formatted_new_profile_path(format, verb){ return '/profiles/new.' + format + '';}
 function formatted_new_profile_ajax(format, verb, params, options){ return less_ajax('/profiles/new.' + format + '', verb, params, options);}
 function formatted_new_profile_ajaxx(format, verb, params, options){ return less_ajaxx('/profiles/new.' + format + '', verb, params, options);}
-function edit_profile_path(id, verb){ return '/profiles/' + id + '/edit';}
-function edit_profile_ajax(id, verb, params, options){ return less_ajax('/profiles/' + id + '/edit', verb, params, options);}
-function edit_profile_ajaxx(id, verb, params, options){ return less_ajaxx('/profiles/' + id + '/edit', verb, params, options);}
-function formatted_edit_profile_path(id, format, verb){ return '/profiles/' + id + '/edit.' + format + '';}
-function formatted_edit_profile_ajax(id, format, verb, params, options){ return less_ajax('/profiles/' + id + '/edit.' + format + '', verb, params, options);}
-function formatted_edit_profile_ajaxx(id, format, verb, params, options){ return less_ajaxx('/profiles/' + id + '/edit.' + format + '', verb, params, options);}
 function delete_icon_profile_path(id, verb){ return '/profiles/' + id + '/delete_icon';}
 function delete_icon_profile_ajax(id, verb, params, options){ return less_ajax('/profiles/' + id + '/delete_icon', verb, params, options);}
 function delete_icon_profile_ajaxx(id, verb, params, options){ return less_ajaxx('/profiles/' + id + '/delete_icon', verb, params, options);}
 function formatted_delete_icon_profile_path(id, format, verb){ return '/profiles/' + id + '/delete_icon.' + format + '';}
 function formatted_delete_icon_profile_ajax(id, format, verb, params, options){ return less_ajax('/profiles/' + id + '/delete_icon.' + format + '', verb, params, options);}
 function formatted_delete_icon_profile_ajaxx(id, format, verb, params, options){ return less_ajaxx('/profiles/' + id + '/delete_icon.' + format + '', verb, params, options);}
+function edit_profile_path(id, verb){ return '/profiles/' + id + '/edit';}
+function edit_profile_ajax(id, verb, params, options){ return less_ajax('/profiles/' + id + '/edit', verb, params, options);}
+function edit_profile_ajaxx(id, verb, params, options){ return less_ajaxx('/profiles/' + id + '/edit', verb, params, options);}
+function formatted_edit_profile_path(id, format, verb){ return '/profiles/' + id + '/edit.' + format + '';}
+function formatted_edit_profile_ajax(id, format, verb, params, options){ return less_ajax('/profiles/' + id + '/edit.' + format + '', verb, params, options);}
+function formatted_edit_profile_ajaxx(id, format, verb, params, options){ return less_ajaxx('/profiles/' + id + '/edit.' + format + '', verb, params, options);}
 function profile_path(id, verb){ return '/profiles/' + id + '';}
 function profile_ajax(id, verb, params, options){ return less_ajax('/profiles/' + id + '', verb, params, options);}
 function profile_ajaxx(id, verb, params, options){ return less_ajaxx('/profiles/' + id + '', verb, params, options);}

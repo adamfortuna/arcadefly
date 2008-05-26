@@ -109,9 +109,9 @@ a.games:hover { background-color: #fcc; }
 a.users { background-color: #ded; }
 a.users:hover { background-color: #cec; }
 
-span.counts a.arcades { background: url(../../images/joystick.png) #dde no-repeat left; }
-span.counts a.games { background: url(../../images/controller.png) #fdd no-repeat left; }
-span.counts a.users { background: url(../../images/user.png) #ded no-repeat left; }
+.arcades { background: url(../../images/joystick.png) #dde no-repeat left; }
+.games { background: url(../../images/controller.png) #fdd no-repeat left; }
+.users { background: url(../../images/user.png) #ded no-repeat left; }
 
 
 /* Graphics for adding/removing something from favorites */
@@ -134,5 +134,8 @@ div.map_small_width { width: 300px; }
 
 ul.map_list li { clear: both; padding:.2em .2em .2em .5em; }
 
-
-.breadcrumbs { margin: -1.1em 0 0 0; padding: .5em; background-color: #eee; border:1px solid #ccc; border-top:none;}
+  
+ul.wizard { margin:0; padding:0; border:1px solid red; border: 1px solid #ccc; width:985px; }
+ul.wizard li { margin: 0; padding: .5em; float:left; width: 300px; }
+ul.wizard li.active { background-color: #efefef; }
+ul.wizard li.complete { background-color: #ededed; }

@@ -4,11 +4,11 @@ class CreateAddresses < ActiveRecord::Migration
       t.timestamps
       t.references :addressable,  :polymorphic => true,  :null => true
       t.string :title,            :null => true
-      t.string :street,           :null => false
+      t.string :street,           :null => true
       t.string :city,             :null => false,        :limit => 255
       t.belongs_to :region,       :null => true
-      t.integer :postal_code,     :null => false,        :limit => 5
-      t.belongs_to :country,      :null => true,         :default => 1
+      t.integer :postal_code,     :null => true,        :limit => 5
+      t.belongs_to :country,      :null => false,         :default => 1
       t.float :lat, :lng, :public_lat, :public_lng
     end
   end

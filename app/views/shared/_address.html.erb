@@ -30,7 +30,7 @@
                                { :include_blank => true },
                                { :class => "text", :id => "address_region_id" } %>
     </p>
-    <p class="block required">
+    <p class="block">
       <label for="address_postal_code">Zip/Postal Code</label>
       <%= error_message_on "address", "postal_code", "Zip/Postal Code " %>
       <%= a.text_field :postal_code, { :class => "text" } %>

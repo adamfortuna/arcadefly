@@ -20,4 +20,4 @@ config.action_controller.perform_caching             = true
 #RAILS_ROOT = "/home/arcadefly/alpha.arcadefly.com/current"
 
 
-HOST = 'http://alpha.arcadefly.com'
+HOST = 'http://www.arcadefly.com'

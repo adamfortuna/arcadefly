@@ -1,6 +1,10 @@
 <% title "Games" -%>
 <h2>Games</h2>
 
+<%- if params[:search].nil? -%>
+<div class="box"><strong>Want to see only popular games?</strong> Check out which games have been <%= link_to "favorited by the most players", popular_games_path %>!</div>
+<%- end -%>
+
 <% content_for(:header) do %>
   <style>
     <!--

@@ -17,11 +17,11 @@ ActiveRecord::Schema.define(:version => 117) do
     t.integer  "addressable_id"
     t.string   "addressable_type"
     t.string   "title"
-    t.string   "street",                                       :null => false
+    t.string   "street"
     t.string   "city",                                         :null => false
     t.integer  "region_id"
-    t.integer  "postal_code",      :limit => 5,                :null => false
-    t.integer  "country_id",                    :default => 1
+    t.integer  "postal_code",      :limit => 5
+    t.integer  "country_id",                    :default => 1, :null => false
     t.float    "lat"
     t.float    "lng"
     t.float    "public_lat"

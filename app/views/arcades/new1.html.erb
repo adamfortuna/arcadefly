@@ -1,4 +1,6 @@
-<% title "Create a New Arcade" -%>
+<% title "Create a New Arcade" + separator + "Basic Info" -%>
+<h2><%= @title %></h2>
+
 <%- javascript 'dynamic_regions' %>
 
 <% content_for(:header) do %>
@@ -74,8 +76,14 @@
   </style>
 <% end %>
 
-<fieldset class="span-24">
-  <legend>Editing <%= @arcade.name %></legend>
+<ul class="wizard clear">
+  <li class="active">1) Basic Info</li>
+  <li>2) Verify Info</li>
+  <li>3) Add Games</li>
+</ul>
+
+<fieldset class="span-24 clear">
+  <legend>Basic Info</legend>
 
   <% form_for(:arcade, :url => new_arcade_1_path, :html => { :id => 'new_arcade_form' }) do |f| %> 
   
@@ -150,17 +158,12 @@
         </li>
         <% end %>
         <% end %>
-      </ul>
-      
-      <p>
-        <%= submit_tag "Next »" %>
-      </p>
-        
+      </ul>        
     </div>
+    
+    <p>
+      <%= submit_tag "Review »", :class => "big-button right", :disable_with => 'Submitting...' %>
+    </p>
+    
   <% end %>
 </fieldset>
-
-<%= link_to 'Back', arcades_path %>
-
-
-<!--  « Back-->

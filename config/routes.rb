@@ -37,7 +37,7 @@ ActionController::Routing::Routes.draw do |map|
   map.contact  '/contact',  :controller => 'home',    :action => 'contact'
   map.terms '/terms',       :controller => 'home',    :action => 'terms'
   map.privacy '/privacy',   :controller => 'home',    :action => 'privacy'
-  map.welcome '/welcome',   :controller => 'users',    :action => 'welcome'
+  map.welcome '/welcome',   :controller => 'users',   :action => 'welcome'
   map.help '/help',         :controller => 'help',    :action => 'index'
 
   # Popular 
@@ -49,9 +49,9 @@ ActionController::Routing::Routes.draw do |map|
   map.browse_arcades '/arcades/browse',               :controller => 'arcades', :action => 'browse'
   map.arcade_map '/arcades/:id/map',                  :controller => 'arcades', :action => 'map'
   map.new_arcade_1 '/arcades/new/details',            :controller => 'arcades', :action => 'new1'
-  map.new_arcade_2 '/arcades/new/verifydetails',      :controller => 'arcades', :action => 'new2'
-  map.new_arcade_3 '/arcades/new/addgames',           :controller => 'arcades', :action => 'new3'
-  map.new_arcade_2 '/arcades/new/verify',             :controller => 'arcades', :action => 'new4'
+  map.new_arcade_2 '/arcades/new/review',             :controller => 'arcades', :action => 'new2'
+  map.new_arcade_3 '/arcades/new/games',              :controller => 'arcades', :action => 'new3'
+  map.edit_arcade_games '/arcades/:id/games/edit',    :controller => 'arcades', :action => 'edit_games'
   
   # Arcade maps
   #map.game_arcades '/games/:game_id/arcades', :controller => 'arcades', :action => 'list_map'

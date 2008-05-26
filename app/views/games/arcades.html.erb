@@ -1,17 +1,3 @@
 <% title "Games" + separator + @game.name + separator + "Arcades with this Game" -%>
-
-<% content_for(:header) do %>
-  <%= GMap.header %>
-  <%= javascript_include_tag("markerGroup") %>
-	<%= @map.to_html %>
-<% end %>
-
-<%= render :partial => 'games/menu', :locals => { :game => @game, :map => true } %>
-
-<div class="clear">
-  <ul class="left data span-10 scrollable content-height map shift-1 content map_list">
-    <%= render :partial => 'arcades/arcade', :collection => @arcades %>
-  </ul>
-
-  <%= @map.div(:class => 'right prepend-1 span-13 last map_medium content-height map') %>
-</div>
+<%= render :partial => 'games/menu', :locals => { :game => @game } %>
+<%= render :partial => 'arcades/arcades', :locals => { :arcades => @arcades, :map => @map } %>

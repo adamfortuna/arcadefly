@@ -51,7 +51,7 @@ class Profile < ActiveRecord::Base
   has_many :private_feed_items, :through => :feeds, :source => :feed_item, :conditions => {:is_public => false}, :order => 'created_at desc'
   has_many :public_feed_items, :through => :feeds, :source => :feed_item, :conditions => {:is_public => true}, :order => 'created_at desc'
   
-  acts_as_ferret :fields => [ :f, :about_me ], :remote=>true
+  #acts_as_ferret :fields => [ :f, :about_me ], :remote=>true
   
   file_column :icon, :magick => {
     :versions => { 

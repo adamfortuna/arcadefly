@@ -20,7 +20,7 @@ class Arcade < ActiveRecord::Base
 	validates_presence_of :address
 	validates_associated :address
 	
-	PER_PAGE = 30
+	PER_PAGE = 2
 	
 	# Method for paginating search. This will return a Pagination object
 	# which can be used in the same way as the result of a regular find

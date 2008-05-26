@@ -182,7 +182,7 @@ class User < ActiveRecord::Base
 
   def forgot_password
     @forgotten_password = true
-    self.make_password_reset_code
+    make_password_reset_code
   end
 
   def reset_password
@@ -218,7 +218,7 @@ class User < ActiveRecord::Base
     end
       
     def password_required?
-      crypted_password.blank? || password.nil? || password_confirmation.nil?
+      crypted_password.blank? || (!password.nil? || !password_confirmation.nil?)
     end
     
     def make_activation_code

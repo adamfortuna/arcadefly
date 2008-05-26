@@ -1,7 +1,3 @@
-<%
-  page_title = "Arcades Listing"
-  page_title += separator + @title unless @title.nil? 
-  title page_title 
--%>
+<%- title "Browse Arcades" + separator + "Regions" + separator + @region.name -%>
 <%= render :partial => 'arcades/list_menu', :locals => { :map => true } %>
 <%= render :partial => 'arcades/arcades', :locals => { :arcades => @arcades, :map => @map } %>

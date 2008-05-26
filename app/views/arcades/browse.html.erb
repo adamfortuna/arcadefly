@@ -1,15 +1,7 @@
 <% title "Browse Arcades" -%>
-
 <%= render :partial => 'arcades/list_menu' %>
 
 <div class="tabbed">
-
-  <% if !addressed_in? %>
-  <p>
-    <strong>Quick Tip:</strong> <%= link_to "Register", signup_path %>, <%= link_to "login", login_path %> or <%= link_to "set your address", root_path %>
-    to enable browsing by distance and to show distance calculations.
-  </p>
-  <% end %>
   
   <h3>Countries</h3>
   <hr />

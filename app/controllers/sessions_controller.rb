@@ -16,8 +16,9 @@ class SessionsController < ApplicationController
     self.current_user.forget_me if logged_in? && current_user.remember_token?
     cookies.delete :auth_token
     reset_session
-    flash[:notice] = "You have been logged out. Come back again soon!"
-    redirect_to login_path
+    flash[:notice] = logged_in? ? "You have been logged out." : "Your address has been cleared out."
+    flash[:notice] += "<br/><br/>ArcadeFly is possible because of gamers like you -- please come back again and see us!"
+    redirect_to root_path
   end
   
   protected

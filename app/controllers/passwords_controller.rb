@@ -12,7 +12,7 @@ class PasswordsController < ApplicationController
     if @user = User.find_for_forget(params[:email])
       @user.forgot_password
       @user.save      
-      flash[:notice] = "We sent an email to <b>#{@user.profile.email}</b> with instructions on how to change your password."
+      flash[:notice] = "We sent an email to <b>#{@user.profile.email}</b> with instructions on how to change your password. Please give it a few minutes to arrive, then you should be able to sign in."
     elsif @profile = Profile.find_by_email(params[:email], :include => :user)      
       @profile.user.requested_signup_notification
       @profile.user.save
@@ -29,6 +29,7 @@ class PasswordsController < ApplicationController
       update
     else
       raise if params[:id].nil? || !(@user = User.find_by_password_reset_code(params[:id]))
+      flash[:notice] = "Welcome back <strong>#{@user.profile.email}</strong>! Please choose a new password."
     end
   rescue
     logger.error "Invalid Reset Code entered."

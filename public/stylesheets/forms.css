@@ -26,3 +26,5 @@ p.block { margin: 0 0 .3em 0; }
 p.block label { display:block; padding:0; margin:0; }
 
 form.button-to input.favorite { padding-left:1.5em; }
+
+.big-button { font-size:1.6em; margin-top:.5em; }
