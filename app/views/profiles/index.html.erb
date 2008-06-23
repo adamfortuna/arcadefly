@@ -29,10 +29,10 @@
 
 <div<%= ' class="right-space"' if logged_in? %>>
   <ul class="data">
-    <%= render :partial => 'user', :collection => @users %>
+    <%= render :partial => 'profiles/profile', :collection => @profiles %>
   </ul>
 
   <p>
-    <%= will_paginate @users %>
+    <%= will_paginate @profiles %>
   </p>
 </div>

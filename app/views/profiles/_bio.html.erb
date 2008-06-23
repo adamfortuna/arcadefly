@@ -6,7 +6,7 @@ profile ||= @profile
   <div class="right bio_stuff">
     <h1><%= h profile.full_name %></h1> 
 	  <h3><%= location_link profile %></h3>
-		<% unless profile.about_me.blank? %><div><strong>About:</strong> <%= sanitize(textilize(profile.about_me)) %></div><% end %>
+		<% unless profile.about_me.blank? %><div><strong>About:</strong> <%= sanitize(profile.about_me) %></div><% end %>
 		<% unless profile.website.blank? %><div><strong>Website:</strong> <%= link_to h(profile.website), h(profile.website) %></div><% end %>
 		<% unless profile.blog.blank? %><div><strong>Blog:</strong> <%= link_to h(profile.blog), h(profile.blog) %></div><% end %>
 		<% unless profile.aim_name.blank? %><div><strong>AIM:</strong> <a href="aim:goim?screenname=<%= h profile.aim_name %>"><%= h profile.aim_name %></a></div><% end %>

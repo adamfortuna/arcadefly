@@ -1,8 +1,0 @@
-
-  <h1>New Post</h1>
-  <div id="sub_nav">
-    	<%= link_to('&larr; Back to Dashboard', current_user.profile) if current_user.profile %>  
-      <%= link_to '&larr; Back to Blogs', profile_blogs_path(current_user.profile) unless current_user.profile.blogs.empty? %>
-  </div>  
-<%= render :partial => 'form' %>
-
