@@ -88,33 +88,15 @@
 <div class="right span-11">
 
   <fieldset id="upload_icon">
-    <legend>Upload Icon</legend>
-
-    <% form_for :profile, :url => profile_url(@profile), :html=>{:method=>:put, :multipart=>true } do |p| %>
-       <p class="block required">
-          <label for="profile_icon">Upload your Icon</label>
-          <%= error_message_on "profile", "icon", "Icon " %>
-          <%= file_column_field("profile", "icon", :class => 'text')%>
-        </p>
-        
-      <div class="clear"></div>
-      
-      <% unless current_user.profile.icon.blank? %>
-      <div id="avatar_edit">
-        <span id="profile_icon_picture">
-          <%= icon current_user.profile %>
-          <%= link_to_remote 'delete icon', :url => delete_icon_profile_path(current_user.profile), :confirm=>DELETE_CONFIRM  %>
-        </span>
-      </div>
-      <% end %>
-      
-      
-      <p class="block">
-        <%= p.submit 'Upload', :class => 'button', :disable_with => 'Uploading...' %>
-        <input type="hidden" name="switch" value="image" />
-      </p>
-
-    <% end %>
+    <legend>Set Your Icon</legend>
+    <p>
+      Avatars for ArcadeFly are currently set using <a href="http://en.gravatar.com/">Gravatar</a>. Here's what you need to do to setup a Gravatar:
+      <ol>
+        <li>Create an account on <a href="http://en.gravatar.com/">Gravatar</a>.
+        <li>Add the email address you used to signup here at ArcadeFly -- <strong><%= @profile.email %></strong>.
+        <li>Upload an icon! It should show up here on ArcadeFly in the top right corner while you're logged in.</li>
+      </ol>
+    </p>
   </fieldset>
   
   <fieldset id="change_address">

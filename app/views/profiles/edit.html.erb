@@ -1,4 +1,5 @@
-<% title 'Edit Profile for ' + @profile.display_name -%>
+<% title @profile.display_name + separator + 'Edit Profile' -%>
+<h2><%= @title -%></h2>
 
 <%= render :partial => 'profiles/menu', :locals => { :profile => @profile } %>
 
