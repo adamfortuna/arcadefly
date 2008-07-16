@@ -21,7 +21,7 @@ end
   </div>
 <% end %>
 
-<div class="thickbox_form">
+<div>
 	<% less_remote_form_for :message, :url => messages_path do |f| %>
 	<%= f.wrap('To') {to_list.to_select :message, :receiver_id, :selected=>(params[:message][:receiver_id].to_i rescue ''), :name => :full_name} %>
 	<%= f.text_field :subject %>

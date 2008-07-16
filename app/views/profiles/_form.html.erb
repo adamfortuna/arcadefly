@@ -1,29 +1,37 @@
-<fieldset class="span-11 left">
+<fieldset class="left column">
   <legend>General Info</legend>
   
   <% form_for :profile, :url => profile_url(@profile), :html => {:method=>:put } do |p| %>    
     
     <p class="block required">
-      <label for="profile_display_name">Display Name</label>
-      <span class="block info">Whenever we show your name on ArcadeFly, this is what people will see.</span>
+      <label for="profile_display_name">Alias</label>
+      <span class="block info">This is your nickname, if you go by one. Across the site this is what people will see. This can be your real name or an alias, but must be unique here on ArcadeFly.</span>
       <%= error_message_on "profile", "display_name", "Display Name " %>
       <%= p.text_field :display_name, { :class => 'text'} %>
     </p>
 
     <p class="block">
-      <label for="profile_full_name">Full Name</label>
-      <span class="block info">If you want people to be able to search for you by name. This will never be shown.</span>
+      <label for="profile_full_name">Real Name</label>
+      <span class="block info">We'll show your real name in your profile if you want people to see it. Some people put first, some put last -- whatever works for you.</span>
       <%= error_message_on "profile", "full_name", "Full Name " %>
       <%= p.text_field :full_name, { :class => 'text'} %>
+    </p>
+    
+    <p class="block">
+      <label for="profile_initials">Initials</label>
+      <span class="block info">The initials you leave when you get a high score.</span>
+      <%= error_message_on "profile", "initials", "Initials " %>
+      <%= p.text_field :initials, { :class => 'text'} %>
     </p>
     
     <p class="block">
       <label for="profile_website">Website</label>
       <span class="block info">This should start with http://</span>
       <%= error_message_on "profile", "website", "Website " %>
-      <%= p.text_field :website, { :class => 'text'} %>
+      <%= p.text_field :website, { :class => 'text' } %>
     </p>
 
+<!--
     <p class="block">
       <label for="profile_blog">Blog</label>
       <span class="block info">If your website isn't blog, you can include your blog itself here.</span>
@@ -44,6 +52,7 @@
       <%= error_message_on "profile", "youtube_username", "Youtube Username " %>
       <%= p.text_field :youtube_username, { :class => 'text'} %>
     </p>
+-->
 
     <p class="block">
       <label for="profile_aim_name">AIM Name</label>
@@ -66,13 +75,10 @@
     </p>
 
     <p class="block">
-      <label for="profile_ichat_name">iChat Name</label>
-      <%= error_message_on "profile", "ichat_name", "iChat Name " %>
-      <%= p.text_field :ichat_name, { :class => 'text'} %>
-    </p>
-
-    <p class="block">
       <label for="profile_about_me">About Me</label>
+      <span class="block info">This is for info about you, not javascript, styles or forms. This isn't MySpace after all.<br/>Want something to write about? Here's a few ideas to get those brain juices flowing... 
+      What arcades and games do you love? Do you prefer arcades or console games -- and why? How long have you been gaming? If people in your area want to hang out, how shouold they contact you?
+       </span>
       <%= error_message_on "profile", "about_me", "About Me " %>
       <%= p.text_area :about_me, { :class => 'text'} %>
     </p>
@@ -85,7 +91,7 @@
   <% end %>
 </fieldset>
 
-<div class="right span-11">
+<div class="right column">
 
   <fieldset id="upload_icon">
     <legend>Set Your Icon</legend>
@@ -94,7 +100,7 @@
       <ol>
         <li>Create an account on <a href="http://en.gravatar.com/">Gravatar</a>.
         <li>Add the email address you used to signup here at ArcadeFly -- <strong><%= @profile.email %></strong>.
-        <li>Upload an icon! It should show up here on ArcadeFly in the top right corner while you're logged in.</li>
+        <li>Upload an icon! It should show up in your profile here on ArcadeFly right away!</li>
       </ol>
     </p>
   </fieldset>
@@ -147,7 +153,7 @@
 
   <fieldset id="change_emails">
     <legend>Change Email</legend>
-    <p>You'll be able to log in with your old email address until this is confirmed.</p>
+    <p>You'll still need to use your current email address to sign in until your new email address is confirmed.</p>
     <% form_for :profile, :url => profile_url(@profile), :html=>{:method=>:put } do |p| %>
       
       <p class="block required">
@@ -159,13 +165,13 @@
       <p class="block required">
         <label for="profile_email">New Email Address</label>
         <%= error_message_on "profile", "email", "Email " %>
-        <input type="password" name="new_email" id="new_email" class="text" />
+        <input type="text" name="new_email" id="new_email" class="text" />
       </p>
         
       <p class="block required">
         <label for="profile_email_confirmation">Confirm New Email Address</label>
         <%= error_message_on "profile", "email_confirmation", "Email Confirmation " %>
-        <input type="password" name="new_email_confirmation" id="new_email_confirmation" class="text" />
+        <input type="text" name="new_email_confirmation" id="new_email_confirmation" class="text" />
       </p>
         
       <p class="block">
@@ -179,9 +185,9 @@
 
   <fieldset id="delete_account">
     <legend>Delete Account</legend>
-    <p>This will completely remove your account and all information about it. This can cannot be undone!</p>
+    <p>This will completely remove your account and all information about it. This cannot be undone!</p>
     <form>
-      <%= link_to_remote 'Delete my user account and all my data.', :url=>profile_path(current_user.profile), :method=>:delete, :confirm=>DELETE_CONFIRM  %>
+      <%= link_to_remote 'Delete my user account and all my data.', :url => profile_path(current_user.profile), :method => :delete, :confirm => DELETE_CONFIRM  %>
     </form>
   </div>
 </div>

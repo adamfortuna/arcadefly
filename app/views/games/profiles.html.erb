@@ -2,15 +2,16 @@
 
 <%= render :partial => 'games/menu', :locals => { :game => @game } %>
 
-<div class="tabbed">
+<% tabbed_box do %>
+  <h2><%= @title %></h2>
+  
+  <ul class="data">
+    <%= render :partial => 'profiles/profile', :collection => @profiles, :locals => { :parent => :game } %>
+  </ul> 
 
- <ul class="data">
-   <%= render :partial => 'profiles/profile', :collection => @profiles, :locals => { :parent => :game } %>
- </ul> 
-
- <% if @game.favoriteships_count == 0 %>
- <p>No one has favorited <strong><%= @game.name %></strong> just yet.</p>
- <% end %>
+  <% if @game.favoriteships_count == 0 %>
+  <p>No one has favorited <strong><%= @game.name %></strong> just yet.</p>
+  <% end %>
 
   <% if logged_in? && !current_profile.has_favorite_game?(@game) %>
     <p><%= button_to "Add to your favorites", game_favorites_path(@game), { :method => "post", :class => 'favorite game_add' } %></p>
@@ -19,4 +20,4 @@
   <p>
     <%= will_paginate @profiles %>
   </p>
-</div>
+<% end %>

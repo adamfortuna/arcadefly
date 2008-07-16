@@ -6,13 +6,12 @@
   </script>
 <% end %>
 
-<%- title "Choose a new Password" -%>
+<%- title "Create a new Password" -%>
 
-<div class="column span-12">
-  <% form_for :user, :id => params[:id], :html => { :method => :put, :id => 'change_password_form' } do |f| %>
-       
-    <fieldset>
-      <legend>Create a new Password</legend>
+<div class="block_outside focus left">
+  <div class="block_inside">
+    <h2>Create a new Password</h2>
+    <% form_for :user, :id => params[:id], :html => { :method => :put, :id => 'change_password_form' } do |f| %>       
       <p class="block required">
         <label for="user_password">New Password</label>
 				<span class="block info">At least 4 characters.</span>
@@ -27,10 +26,12 @@
       <p class="block">
         <%= submit_tag "Change my password and sign me in!", :disable_with => "Changing your password.." %>
       </p>
-    </fieldset>
-  <% end %>
+    <% end %>
+  </div>
 </div>
 
-<div class="column span-10 last box right shift-1">
-  <span>After choosing your new password you will immediately be logged in and sent an email reminding you that your password changed.</span>
+<div class="block_outside_dark gutter right">
+  <div class="block_inside">
+    <span>After choosing your new password you will immediately be logged in and sent an email reminding you that your password changed.</span>
+  </div>
 </div>

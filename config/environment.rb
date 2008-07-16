@@ -66,7 +66,7 @@ GeoKit::default_formula = :sphere
 # This is the timeout value in seconds to be used for calls to the geocoder web
 # services.  For no timeout at all, comment out the setting.  The timeout unit
 # is in seconds. 
-GeoKit::Geocoders::timeout = 3
+GeoKit::Geocoders::timeout = 1
 
 # These settings are used if web service calls must be routed through a proxy.
 # These setting can be nil if not needed, otherwise, addr and port must be 
@@ -128,3 +128,6 @@ end
 
 AMS_KEY = "096RRJ93PTDQPZZ44802"
 AMAZON_ASSOCIATES_ID = "adamfortuna-20"
+
+gem 'mislav-will_paginate', '~> 2.2'
+require 'will_paginate'

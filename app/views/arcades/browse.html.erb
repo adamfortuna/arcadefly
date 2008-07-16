@@ -1,19 +1,17 @@
 <% title "Browse Arcades" -%>
+
 <%= render :partial => 'arcades/list_menu' %>
 
-<div class="tabbed">
-  
+<% tabbed_box do %>  
   <h3>Countries</h3>
-  <hr />
   <ul class="data">
     <%= render :partial => 'arcades/country', :collection => @countries %>
   </ul>
   
-  <br/><br/>
-  <h3>Regions/States</h3>
   <hr />
+
+  <h3>Regions/States</h3>
   <ul class="data">
     <%= render :partial => 'arcades/region', :collection => @regions %>
   </ul>
-
-</div>
+<% end %>

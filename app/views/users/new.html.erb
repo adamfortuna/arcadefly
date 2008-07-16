@@ -55,13 +55,12 @@
 <% end %>
 
 <% title "Signup for an Account" %>
-<h2>Signup for an Account</h2>
-
-  <fieldset id="registercontainer" style="margin:0 auto;">
-    <legend>Register</legend>
+<div class="block_outside">
+  <div class="block_inside">
+    <h2>Signup for an Account</h2>
     <% form_for :user, :url => users_path, :html => { :id => 'signup_form' } do |f| -%>
   
-    <div class="left prepend-1">
+    <div class="left">
       <% fields_for :profile, @user.profile do |p| %>
         <p class="block required">
           <label for="profile_display_name">Display Name</label>
@@ -105,13 +104,14 @@
       </p>
     </div>
     
-    <div class="right append-1" id="address">
+    <div class="right" id="address">
       <%= render :partial => 'shared/address', :locals => { :address => @user.profile.address } %>
     </div>
 
-    <p class="shift-2 center right clear-right span-11">
+    <p class="right">
       <%= submit_tag 'Register', { :disable_with => 'Registering...' } %>
     </p
 
     <% end -%>
-  </fieldset>
+  </div>
+</div>

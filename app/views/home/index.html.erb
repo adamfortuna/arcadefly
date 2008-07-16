@@ -12,43 +12,51 @@
   <!--
   #features { font-size: 1.5em;  }
   #features li { padding: 1em; }
-  #location_search label { position:absolute; margin:.8em 0 0 .6em; color:#aaa; font-size:1.8em }
-  #location_search input#address { width: 80%; font-size:2em; }
+  #address_form label { position:absolute; margin:1em 0 0 .2em; color:#aaa; font-size:2em }
+  #address_form input#address { width: 80%; font-size:2em; }
   //-->
   </style>
 <% end %>
 
-
-<style>
-  <!--
-  //-->
-</style>
-<script>
-<!--
-//-->
-</script>
-
-
-<h2>We will help you find...</h2>
-
-<ul id="features">
-  <li class="box center span-7 column arcades">Arcades that are closeby</li>
-  <li class="box center span-7 column games">Games in your area</li>
-  <li class="box center span-7 right users">Players to hang out with</li>
-</ul>
-
-<% if !logged_in? %>
-  <fieldset class="clear" id="location_search">
-    <legend>Find arcades in your area!</legend>
-      <% form_tag(addresses_path) do %>
-          <label id="address_label" for="address">Enter your address to get started...</label>
-          <%= text_field_tag :address, addressed_in? ? current_address.single_line : '', { :class => 'text', :onfocus => 'toggleLabel(false);', :onblur => 'toggleLabel(true);' } %>  
-          <%= submit_tag "Find Arcades!", :class => 'inline big-button', :disable_with => 'Finding...', :id => 'find' %>
-      <% end %>
-  </fieldset>
-  
-<% else %>
-  <div class="box clear">
-    Looking to change your address? Or view arcades close to a different address? Just <%= link_to "change the address associated with your account", edit_profile_path(current_profile) %>.
-  </div>
+<% box do %>
+  <% if !logged_in? %>
+    <% form_tag(addresses_path, :id => "address_form") do %>
+        <label id="address_label" for="address">Enter your address to get started...</label>
+        <%= text_field_tag :address, addressed_in? ? current_address.single_line : '', { :class => 'text', :onfocus => 'toggleLabel(false);', :onblur => 'toggleLabel(true);' } %>
+        <%= submit_tag "Find Arcades!", :class => 'inline big-button', :disable_with => 'Finding...', :id => 'find' %>
+    <% end %>
+  <% else %>
+    <p>
+      Looking to change your address? Or view arcades close to a different address? Just <%= link_to "change the address associated with your account", edit_profile_path(current_profile) %>.
+    </p>
+  <% end %>
 <% end %>
+
+<div id="block_portfolio">
+	<div id="featured_column" class="features">
+	  <% list_box do %>
+      <img src="images/sample_mini_portfolio3.jpg" class="thumbnail" alt="AudioJungle" />
+      <h3>Arcades that are closeby</h3>
+      <p>Want to find some arcades closeby? We'll help you find what's hiding all around you.</p>
+    <% end %>
+    
+	  <% list_box do %>
+      <img src="images/sample_mini_portfolio2.jpg" class="thumbnail"  alt="CollisTaeed" />
+      <h3>Games in your area</h3>
+      <p>Ever know of a game but didn't know where to play it? We'll show you places closeby to go!</p>
+    <% end %>
+    
+	  <% list_box do %>
+      <img src="images/sample_mini_portfolio.jpg" class="thumbnail" alt="PSDTUTS"  />
+      <h3>Players to hang out with</h3>
+      <p>See who plays at the same arcades as you, or who plays the same games -- then meetup.</p>
+    <% end %>
+  </div>
+    
+  <div id="text_column">
+    <h2 id="text_title">ArcadeFly is social networking site for arcade goers</h2>
+    <p>You can use it to quickly turn WordPress into a portfolio website.  Not familiar with WordPress? Fear not, the theme accompanies a book called <a href="#">How to Be a Rockstar Wordpress Designer</a> by Rockstar Resources due for release in 2008.</p>
+    <p>The book teaches you to use WordPress theming to take advantage of this flexible CMS product to create dynamic sites.</p>
+    <p>And as if that’s not enough, you can see a photoshop to HTML tutorial on designing the theme over at <a href="http://psdtuts.com">PSDTUTS</a> and <a href="http://nettuts.com">NETTUTS</a>.</p>
+  </div>
+</div>

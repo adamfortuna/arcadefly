@@ -6,6 +6,8 @@
 class GamesController < ResourceController::Base
   belongs_to :arcade, :profile
   
+  before_filter :check_administrator, :only => [:new, :create]
+  
   # Override the helper method so that we can get a collection object for when Game isn't the parent. 
   def collection
     # GET /arcades/1-disney/games
@@ -57,5 +59,9 @@ class GamesController < ResourceController::Base
     #@items = resp.item_search_response[0].items[0].item
   #rescue
     #@items = []
+  end
+  
+  def new
+    @game = Game.new
   end
 end

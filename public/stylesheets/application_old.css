@@ -1,0 +1,23 @@
+/* Layout related css */
+ul { margin: 0; list-style: none; padding: 0; }
+fieldset p label { font-size: 120%; }
+
+/* Header */
+#header div#title span { font-style: italic; }
+
+ul#status li { font-weight: bold; }
+
+span#login_status { font-size: 90%; }
+
+/* Navigation */
+#navigation_row { background-color: #3b5998;}
+#navigation { padding: .5em 0; }
+ul#navigation li.current a { background-color: #2C4272; }
+ul#navigation li a { padding: .5em; font-size: 130%; color: white;}
+ul#navigation li a, ul#navigation li a:visited { text-decoration: none; }
+ul#navigation li a:hover, ul#navigation li a:active { background-color: #6d84b4; }
+
+/* Content */
+#content_row { background-color: white; margin:0; padding-bottom: 5em; border:1px solid white; }
+#content { padding-top: 1em; position:relative; }
+

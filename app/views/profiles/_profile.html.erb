@@ -1,13 +1,6 @@
 <%- parent ||= :user -%>
 
 <li class="<%= cycle("even","odd")%>">
-  <% if logged_in? && administrator? -%>
-  <ul class="left-shift admin">
-    <li><%= link_to 'Edit', edit_profile_path(profile), :class => 'admin' %></li>
-    <li><%= link_to 'Destroy', profile_path(profile), :class => 'admin', :confirm => 'Are you sure?', :method => :delete %></li>
-  </ul>
-  <% end %>
-
 	<%= link_to(profile.display_name, profile_path(profile), :class => 'main' ) %>
 	
 	<span class="count">
@@ -19,14 +12,15 @@
 	    <%= pluralize(profile.favoriteships_count, "favorite games") %>
 	  <% end %>
 	
-  	<span class="favorite">
-  	  <% if logged_in? && me %>
+	  <% if logged_in? && me %>
+  	  <span class="favorite">
   	    <% if current_profile.friend_of?(profile) || current_profile.following?(profile) %>
   	      <%= link_to "&nbsp;", profile_friends_path(profile)+'/'+profile.to_param, { :method => "delete", :class => "favorite user_delete" } %>
   	    <% else %>
           <%= link_to "&nbsp;", profile_friends_path(profile), { :method => "post", :class => "favorite user_add" } %>
   	    <% end %>
-  	  <% end %>
-  	</span>
+  	  </span>
+	  <% end %>
+
   </span>
 </li>

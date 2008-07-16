@@ -2,11 +2,11 @@
 
 <%= render :partial => 'menu' %>
 
-<div class="tabbed">
+<% tabbed_box do %>
   <ul class="data">
     <%= render :partial => 'arcades/arcade', :collection => @arcades, :locals => { :count => 'frequentships_count' } %>
   </ul>
   <p>
     <%= will_paginate @arcades %>
   </p>
-</div>
+<% end %>

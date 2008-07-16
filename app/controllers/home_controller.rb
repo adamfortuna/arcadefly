@@ -15,4 +15,7 @@ class HomeController < ApplicationController
   def privacy
   end
 
+  def site_map
+  end
+    
 end

@@ -1,15 +1,11 @@
-<h2>New Game</h2>
-<% @game = Game.new %>
-<div class="tabbed">
+<% box do %>
+  <h2>New Game</h2>
   <%= error_messages_for :game %>
 
   <% form_for(:game, :url => games_path) do |f| %>
-    <fieldset>
-      <legend>New</legend>
-      <%= render :partial => 'form', :locals => { :game => @game, :f => f } %>
-      <p>
-        <%= submit_tag "Create" %>
-      </p>
-  </fieldset>
+    <%= render :partial => 'form', :locals => { :game => @game, :f => f } %>
+    <p>
+      <%= submit_tag "Create" %>
+    </p>
   <% end %>
-</div>
+<% end %>

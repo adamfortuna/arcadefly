@@ -9,6 +9,11 @@ class User < ActiveRecord::Base
   has_one :profile, :dependent => :nullify   
   
   # Validation
+  validates_uniqueness_of   :email, :case_sensitive => false, :message => "is taken. Do you already have an account here? <a href=\"/signin\">Yes i do!</a>"
+  validates_format_of :email, :with => /^([^@\s]{1}+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => 'does not look like an email address.'
+  validates_length_of :email, :within => 3..100    
+  validates_confirmation_of :email,                   :if => :email_required?
+
   validates_presence_of     :password,                   :if => :password_required?
   validates_presence_of     :password_confirmation,      :if => :password_required?
   validates_length_of       :password, :within => 4..40, :if => :password_required?
@@ -19,8 +24,9 @@ class User < ActiveRecord::Base
 
   composed_of :tz, :class_name => 'TZInfo::Timezone', :mapping => %w( time_zone time_zone )
 
-  attr_accessible :password, :password_confirmation
+  attr_accessible :password, :password_confirmation, :email
 
+  before_save :cascade_changes
 
 
   # Errors that a user can return
@@ -42,8 +48,7 @@ class User < ActiveRecord::Base
   # Activates the user in the database. For the remainder of the life of this object it will be in a status of pending.
   def activate
     @activated = true
-    self.activated_at = Time.now.utc
-    self.activation_code = nil
+    update_attributes({:activated_at => Time.now.utc, :activation_code => nil})
     save(false)
   end
 
@@ -76,8 +81,8 @@ class User < ActiveRecord::Base
     @requested_signup
   end
   
-  def self.find_for_forget(email)
-    find :first, :include => :profile, :conditions => ['profiles.email = ? and activation_code IS NULL', email]
+  def self.find_for_forget(_email)
+    find :first, :conditions => ['email = ? and activation_code IS NULL', _email]
   end
   
   def change_password(current_password, new_password, confirm_password)
@@ -103,8 +108,8 @@ class User < ActiveRecord::Base
   # Authentication
   # Authenticates a user by their email and unencrypted password.  Returns the user or nil.
   def self.authenticate(_email, _password)
-    profile = Profile.find(:first, :include => :user, :conditions => ['email = ? and activated_at IS NOT NULL', _email])
-    profile && profile.user.authenticated?(_password) ? profile.user : nil
+    user = User.find(:first, :conditions => ['email = ? and activated_at IS NOT NULL', _email])
+    user && user.authenticated?(_password) ? user : nil
   end
 
   # Encrypts the password with the user salt
@@ -203,6 +208,13 @@ class User < ActiveRecord::Base
       profile.errors.each { |attr, msg| errors.add(attr, msg) }
     end
   end
+  
+  
+  # Since email is used so much across the site, make it easier by storing it in both places
+  def cascade_changes
+    profile[:email] = email if email_changed?
+    profile[:administrator] = administrator if administrator_changed?
+  end
 
 
 
@@ -237,7 +249,7 @@ class User < ActiveRecord::Base
     # Create 
     def remember_me_until(time)
       self.remember_token_expires_at = time
-      self.remember_token            = encrypt("#{profile.email}--#{remember_token_expires_at}")
+      self.remember_token            = encrypt("#{email}--#{remember_token_expires_at}")
       save(false)
     end
     
@@ -248,4 +260,9 @@ class User < ActiveRecord::Base
       self.activation_code = nil
       self.save!
     end
+    
+    def email_required?
+      email.blank? || !email_confirmation.nil?
+    end
+
 end

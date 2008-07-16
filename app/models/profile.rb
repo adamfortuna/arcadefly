@@ -2,11 +2,6 @@ class Profile < ActiveRecord::Base
   belongs_to :user
   
   PER_PAGE = 50
-  
-  validates_uniqueness_of   :email, :case_sensitive => false, :message => "is taken. Do you already have an account here? <a href=\"/signin\">Yes i do!</a>"
-  validates_format_of :email, :with => /^([^@\s]{1}+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message=>'does not look like an email address.'
-  validates_length_of :email, :within => 3..100    
-  validates_confirmation_of :email,                   :if => :email_required?
 
   validates_length_of :display_name, :within => 3..100
   
@@ -46,10 +41,10 @@ class Profile < ActiveRecord::Base
   has_many :photos, :order => 'created_at DESC'
   
   # Feeds
-  has_many :feeds
-  has_many :feed_items, :through => :feeds, :order => 'created_at desc'
-  has_many :private_feed_items, :through => :feeds, :source => :feed_item, :conditions => {:is_public => false}, :order => 'created_at desc'
-  has_many :public_feed_items, :through => :feeds, :source => :feed_item, :conditions => {:is_public => true}, :order => 'created_at desc'
+  #has_many :feeds
+  #has_many :feed_items, :through => :feeds, :order => 'created_at desc'
+  #has_many :private_feed_items, :through => :feeds, :source => :feed_item, :conditions => {:is_public => false}, :order => 'created_at desc'
+  #has_many :public_feed_items, :through => :feeds, :source => :feed_item, :conditions => {:is_public => true}, :order => 'created_at desc'
   
   #acts_as_ferret :fields => [ :f, :about_me ], :remote=>true
   
@@ -85,12 +80,12 @@ class Profile < ActiveRecord::Base
     if search == '#'
       paginate :per_page => PER_PAGE, :page => page,
                :conditions => ['display_name regexp "^[0-9]+"'],
-               :include => { :profile => [:address => [:region, :country]] },
+               :include => { :address => [:region, :country] },
                :order => 'display_name'
     else
       paginate :per_page => PER_PAGE, :page => page,
                :conditions => ['display_name like ?', "#{search}%"],
-               :include => { :profile => [:address => [:region, :country]] },
+               :include => { :address => [:region, :country] },
                :order => 'display_name'
     end
   end
@@ -155,15 +150,23 @@ class Profile < ActiveRecord::Base
   
   
   
-  
+  # ==============================
+  # = Favorite Arcades and Games =
+  # ==============================
   def has_favorite_arcade?(arcade)
-    Frequentship.find_by_profile_id_and_arcade_id(id, arcade.id, :select => 'true')
-    # (arcades.collect do |a| a.id end).include?(arcade.id)
+    favorite_arcade_ids.include?(arcade.id)
+  end
+
+  def favorite_arcade_ids
+    frequentships.collect(&:arcade_id)
   end
   
   def has_favorite_game?(game)
-    Favoriteship.find_by_profile_id_and_game_id(id, game.id, :select => 'true')
-    # (games.collect do |a| a.id end).include?(game.id)
+    favorite_game_ids.include?(game.id)
+  end
+
+  def favorite_game_ids
+    favoriteships.collect(&:game_id)
   end
   
   
@@ -227,6 +230,15 @@ class Profile < ActiveRecord::Base
   
   
   
+  # These files are set through the user account. They're also included in profile for performance reasons
+  def email=(_email)
+    raise "Email should only be set through user."
+  end
+  def administrator=(_administrator)
+    raise "Administrator should only be set through user."
+  end
+  
+  
   
   def validate
     if address && !address.valid?
@@ -236,17 +248,7 @@ class Profile < ActiveRecord::Base
   
   
   
-  
-  
-  def self.search query = '', options = {}
-    query ||= ''
-    q = '*' + query.gsub(/[^\w\s-]/, '').gsub(' ', '* *') + '*'
-    options.each {|key, value| q += " #{key}:#{value}"}
-    arr = find_by_contents q, :limit=>:all
-    logger.debug arr.inspect
-    arr
-  end
-  
+    
   
   
   protected
@@ -254,10 +256,5 @@ class Profile < ActiveRecord::Base
     return '' if str.blank?
     str.starts_with?('http') ? str : "http://#{str}"
   end
-  
-  def email_required?
-    email.blank? || !email_confirmation.nil?
-  end
-  
-  
+    
 end

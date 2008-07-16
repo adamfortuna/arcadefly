@@ -1,0 +1,4 @@
+<% letters = ('a'..'z').to_a << '#' -%>
+<div class="pagination">
+  <%= render :partial => "shared/letter", :collection => letters, :locals => { :controller => controller } %>
+</div>

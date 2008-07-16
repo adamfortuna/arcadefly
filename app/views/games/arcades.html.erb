@@ -1,3 +1,8 @@
 <% title "Games" + separator + @game.name + separator + "Arcades with this Game" -%>
+
 <%= render :partial => 'games/menu', :locals => { :game => @game } %>
-<%= render :partial => 'arcades/arcades', :locals => { :arcades => @arcades, :map => @map } %>
+
+<% tabbed_box do %>
+  <h2><%= @title %></h2>
+  <%= render :partial => 'arcades/arcades', :locals => { :arcades => @arcades, :map => @map } %>
+<% end %>

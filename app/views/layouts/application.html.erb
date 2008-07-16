@@ -1,106 +1,83 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
   "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-	<head>
-		<title>ArcadeFly<%= separator -%><%= yield(:title) || "Tracking the arcade buzz!" %></title>
-    
-    <%= stylesheet_link_tag 'blueprint/screen.css' %>
-    <%= stylesheet_link_tag 'application' %>
-    <%= stylesheet_link_tag 'common_classes' %>
-    <%= stylesheet_link_tag 'forms' %>
+<head>
+	<title>ArcadeFly<%= separator -%><%= yield(:title) || "Tracking the arcade buzz!" %></title>
+  
+  <%= stylesheet_link_tag 'application', 'common_classes', 'forms' %>
 
-    <%= javascript_include_tag 'prototype' %>
+  <%= javascript_include_tag 'prototype', 'application' %>
 
-    <%= yield(:head) %>
-	  <%= yield(:header) %>
-	</head>
-	<body>
-		
-		<div id="header_row"> 
-  		<div id="header" class="container">
-  		  <div id="title" class="column span-12">
-  		    <h1><a href="/">ArcadeFly.com</a></h1>
-  		    <span>Mapping the arcade buzz!</span>
-  		  </div>
-  		  
-  		  <div class="column span-12 last right">
-  		    <%- if logged_in? -%>
-  		    <a href="<%= profile_path(current_profile) %>">
-            <img src="<%= current_profile.gravatar_url %>" alt="Gravatar for <%= current_profile.display_name %>" class="right framed" />
-          </a>
-          <% end %>
-
-          <div class="right center shift-2 append-1">
-    		    <ul id="status" class="nav">
-    		      <%- if logged_in? -%>
-                <% if current_profile.follower_friends_count > 0 %>
-                  <%= nav_link "Friend Requests (#{current_profile.follower_friends_count})", profile_friends_path(current_profile), { :show_link => false } %>
-                <% end %>
-                <%= nav_link "My Dashboard", profile_path(current_profile), { :show_link => false } %>
-                <%= nav_link "Logout", logout_path, { :show_link => false } %>
-              <%- else -%>
-                <%= nav_link "Register", signup_path, { :show_link => false } %>
-                <%= nav_link "Sign In", signin_path, { :show_link => false } %>
-                <%- if addressed_in? %>
-                <%= nav_link "Clear Address", logout_path, { :show_link => false } %>
-                <%- end -%>
-              <%- end -%>
-            </ul>
-
-            <% if logged_in? -%>
-            <span id="login_status">
-              <em>Currently logged in as <%= link_to_unless_current h(current_profile.email), profile_path(current_profile) %>.</em>
-            </span>
-            <% end -%>
-						
-            <% if !logged_in? && addressed_in? -%>
-						<span id="login_status">
-							<em>Currently browsing from the address<br/><%= current_address.single_line %>. <%= link_to "Change Address?", root_path %></em>
-						</span>
-						<% end %>
-          </div>
-        </div>
-  		</div>
-  	</div>
-  	
-		<div id="navigation_row">
-  		<div class="container">
-  		  <ul id="navigation" class="nav">
-  		    <li><%= link_to "Home",    root_path %></li>
+  <%= yield(:head) %>
+  <%= yield(:header) %>
+</head>
+<body>
+	<div id="main">
+    <div class="container">
+    	<div id="header">        
+        <ul id="menu">
   		    <li><%= link_to "Arcades", addressed_in? ? arcades_path : browse_arcades_path %></li>
   		    <li><%= link_to "Games",   games_path %></li>
   		    <li><%= link_to "Players", profiles_path %></li>
   		    <li><%= link_to "Popular", popular_path %></li>
-  		  </ul>
-  		</div>
-		</div>
-		
-		<div id="content_row">
-  		<div id="content" class="container">
-  		    <% flash.each do |key, msg| %>
-  		      <%= content_tag :div, msg, :class => key %>
-  		    <% end %>
-  		    
-  				<!--<h2><%= yield(:title) %></h2>-->
-          <%= yield %>
-      </div>
-    </div>
+          <%- if logged_in? -%>
+            <li><%= link_to "My Profile", profile_path(current_profile) %></li>
+            <li><%= link_to "Logout", logout_path %></li>
+          <%- elsif addressed_in? %>
+            <li><%= link_to "Clear Address", logout_path %></li>
+          <%- else -%>
+            <li><%= link_to "Register", signup_path %></li>
+            <li><%= link_to "Sign In", signin_path %></li>
+  		    <%- end -%>
+        </ul><!-- end ul#menu -->
+            
+      	<div id="logo">
+          <a href="/">
+            <h1>ArcadeFly.com</h1>
+            <small>Mapping the arcade buzz!</small>
+          </a>
+        </div>
+      </div><!-- end div#header -->
+  
+      <div id="content">
+    		<% flash.each do |key, msg| %>
+    		  <%= content_tag :div, msg, :class => key %>
+    		<% end %>
+		    <%= yield %>
+      </div><!-- end div#{content} -->
     
-    <div id="footer_row">
-  		<div id="footer" class="container">
-  		    <ul class="nav">
-  		      <%= nav_link "About ArcadeFly", about_path %>
-            <%= nav_link "Help", help_path %>
-  		      <%= nav_link "Contact Us", contact_path %>
-  		      <%= nav_link "Terms of Use", terms_path %>
-  		      <%= nav_link "Privacy Policy", privacy_path %>
-  		      <li><a href="http://blog.arcadefly.com">Blog</a></li>
-  		    </ul>
-  		    <%- if not logged_in? -%>
-  		    <p><%= link_to_unless_current "Register", :id => nil, :action => 'index', :controller => 'signup' %> and submit some arcades! What are you waiting for?</p>
-  		    <%- end %>
-  		    <p>Copyright &copy; 2007 ArcadeFly. Design and development by <a href="http://www.adamfortuna.com">Adam Fortuna</a>.</p>
+    </div><!-- div#main .container -->
+  </div><!-- div#main -->
+  
+    
+  <div id="footer">
+    <div class="container">
+      <div class="footer_column long">
+        <h3>Copyright &copy; 2007 ArcadeFly. Development by <a href="http://www.adamfortuna.com">Adam Fortuna</a>.</h3>
+        <p>You can read more about ArcadeFly on our <a href="http://blog.arcadefly.com">Blog</a></p>
+  		</div>
+      <div class="footer_column">
+        <h3>More Links</h3>
+  			<ul>
+  	      <li><%= link_to "About ArcadeFly", about_path %></li>
+          <li><%= link_to "Help", help_path %></li>
+  	      <li><%= link_to "Contact Us", contact_path %></li>
+  	      <li><%= link_to "Terms of Use", terms_path %></li>
+  	      <li><%= link_to "Privacy Policy", privacy_path %></li>
+  	      <li><%= link_to "Site Map", site_map_path %></li>
+  	      <li><a href="http://blog.arcadefly.com">Blog</a></li>
+        </ul>
       </div>
-    </div>
-	</body>
+      <div class="footer_column">
+        <h3>Quick Links</h3>
+  			<ul>
+          <li><%= link_to "Home", root_path %></li>
+          <li><%= link_to "Arcades", arcades_path %></li>
+          <li><%= link_to "Games", games_path %></li>
+          <li><%= link_to "Players", profiles_path %></li>
+        </ul>
+      </div>
+    </div><!-- end container -->
+  </div><!-- end footer -->
+</body>
 </html>

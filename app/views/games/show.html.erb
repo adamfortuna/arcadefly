@@ -2,8 +2,10 @@
 
 <%= render :partial => 'menu', :locals => { :game => @game } %>
 
-<div class="tabbed">
-
+<% tabbed_box do %>
+  
+  <h2><%= @title %></h2>
+  
   <span class="right counts">
   <%= link_to pluralize(@game.playables_count, "arcade"), game_arcades_path(@game), :class=>"arcades" %>
     <%= link_to pluralize(@game.favoriteships_count, "favorite"), game_profiles_path(@game), :class=>"users" %>
@@ -34,4 +36,4 @@
 	<p class="shift-2">
 	  <a href="http://www.gamefaqs.com/coinop/arcade/data/<%= @game.gamefaqs_id %>.html" target="_blank">View this game on GameFaqs</a>
 	</p>
-</div>
+<% end %>

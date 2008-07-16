@@ -1,10 +1,10 @@
 <% title @profile.display_name + separator + " Friends" -%>
-<h2><%= @title %></h2>
 
 <%= render :partial => 'profiles/menu', :locals => { :profile => @profile } %>
+<% tabbed_box do %>
+  <h2><%= @title %></h2>
 
-<div class="tabbed">
   <%= render :partial => 'friends/list', :locals => {:type => 'friends', :with_friending => true, :size => nil} %>
   <%= render :partial => 'friends/list', :locals => {:type => 'followers', :with_friending => true, :size => nil} %>
   <%= render :partial => 'friends/list', :locals => {:type => 'followings', :with_friending => true, :size => nil} %>
-</div>
+<% end %>

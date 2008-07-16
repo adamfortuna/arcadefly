@@ -11,6 +11,8 @@ class CreateAddresses < ActiveRecord::Migration
       t.belongs_to :country,      :null => false,         :default => 1
       t.float :lat, :lng, :public_lat, :public_lng
     end
+    
+    add_index :addresses, [ :addressable_id, :addressable_type]
   end
 
   def self.down

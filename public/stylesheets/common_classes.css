@@ -1,4 +1,6 @@
 /* Very general classes */
+.left { float:left; }
+.right { float:right; }
 .clear { clear: both; }
 .clear-left { clear: left; }
 .clear-right { clear: right; }
@@ -12,7 +14,7 @@
 .content-height { height: 400px; }
 span.info, div.info { font-size: .8em; line-height: 1.875em; }
 legend { padding: 0 .5em; }
-.framed { border:1px solid #ccc; background-color:#ddd; padding:.5em;}
+.framed { border:1px solid #ccc; background-color:#ddd; }
 img { margin:0; padding:0; }
 
 /*  For general horizontal lists */
@@ -26,6 +28,7 @@ a:hover, a:active { text-decoration: underline; }
 
 
 /* Data lists */
+ul.data { margin:1em 0 0 0; padding:0; }
 ul.data a { color: #2D7BB2; text-decoration: none; font-weight: bold; }
 ul.data a:hover { color: #333; }
 ul.data li { position: relative; display: block; border-bottom: 1px solid #EEE; _zoom: 1;}
@@ -42,11 +45,11 @@ ul.content li a { display: inline; }
 ul.left-shift { position:absolute; left:-150px; } /* Used to shirt some menus beyond the main data */
 
 /* Very cool tabs from  http://www.simplebits.com/bits/css_tabs.html */
-ul.tabs { height: 2.6em; padding: 0 20px; background: url(../images/tab_bottom.gif) repeat-x bottom; clear: both; }
+ul.tabs { height: 2.6em; padding: 0 20px; background: url(../images/tab_bottom.gif) repeat-x bottom; clear: both; margin:0px; }
 ul.tabs li { margin: 0; padding: 0; display: inline; list-style-type: none; }
-ul.tabs a:link, ul.tabs a:visited { float: left; font-weight: bold; padding: .5em 1.2em; margin-right: 8px; border: 1px solid #ccc; text-decoration: none; color: #666; }
+ul.tabs a:link, ul.tabs a:visited { float: left; font-weight: bold; padding: .5em 1.2em; margin-right: 8px; border: 1px solid #a3a09e; text-decoration: none; color: #666; }
 ul.tabs a { background-color: #f3f3f3; }
-ul.tabs li.current a:link, ul.tabs li.current a:visited { border-bottom: 1px solid #fff; background: #fff; color: #000; }
+ul.tabs li.current a:link, ul.tabs li.current a:visited { border-bottom: 1px solid #ececec; background: #ececec; color: #000; }
 ul.tabs a:hover { background-color: #fff;	}
 ul.tabs a.arcades { background-color: #dde; }
 ul.tabs a.arcades:hover { background-color: #ccf; }
@@ -109,33 +112,49 @@ a.games:hover { background-color: #fcc; }
 a.users { background-color: #ded; }
 a.users:hover { background-color: #cec; }
 
-.arcades { background: url(../../images/joystick.png) #dde no-repeat left; }
-.games { background: url(../../images/controller.png) #fdd no-repeat left; }
-.users { background: url(../../images/user.png) #ded no-repeat left; }
+.arcades { background: url(/images/joystick.png) #dde no-repeat left; }
+.games { background: url(/images/controller.png) #fdd no-repeat left; }
+.users { background: url(/images/user.png) #ded no-repeat left; }
 
 
 /* Graphics for adding/removing something from favorites */
 .favorite { padding:0 2em .3em 2em; }
-.favorite_add { background: url(../../images/heart_add.png) no-repeat left;  }
-.favorite_delete { background: url(../../images/heart_delete.png) no-repeat left; }
-.arcade_add { background: url(../../images/joystick_add.png) no-repeat left; }
-.arcade_delete { background: url(../../images/joystick_delete.png) no-repeat left; }
-.user_add { background: url(../../images/user_add.png) no-repeat left; }
-.user_delete { background: url(../../images/user_delete.png) no-repeat left; }
-.game_add { background: url(../../images/controller_add.png) no-repeat left; }
-.game_delete { background: url(../../images/controller_delete.png) no-repeat left; }
+.favorite_add { background: url(/images/heart_add.png) no-repeat left;  }
+.favorite_delete { background: url(/images/heart_delete.png) no-repeat left; }
+.arcade_add { background: url(/images/joystick_add.png) no-repeat left; }
+.arcade_delete { background: url(/images/joystick_delete.png) no-repeat left; }
+.user_add { background: url(/images/user_add.png) no-repeat left; }
+.user_delete { background: url(/images/user_delete.png) no-repeat left; }
+.game_add { background: url(/images/controller_add.png) no-repeat left; }
+.game_delete { background: url(/images/controller_delete.png) no-repeat left; }
 
 /* Global Map settings */
-.map { border: 1px solid #ccc; margin-bottom: 1em; }
+.map_box { height: 400px; padding:0; margin:0; }
+.map_box ul { width:360px; list-style:none; margin:0; padding:0; float:left; }
+.map_box ul li { clear: both; padding:.2em .2em .2em .5em; }
+
+.map_box ul, .map_box div.map { border: 1px solid #ccc; margin-bottom: 1em; }
+.map_box div.map { float:right; }
+
 div.map_big { width: 100%; height: 350px; padding-bottom: 1em; } /* Entire Page Map */
-div.map_medium { margin-top: 1em; } /* List Map */
+div.map_medium { width:510px; } /* List Map */
 div.map_small { width: 300px; height:250px; padding: 1em; } /* Profile Map */
 div.map_small_width { width: 300px; }
-
-ul.map_list li { clear: both; padding:.2em .2em .2em .5em; }
 
   
 ul.wizard { margin:0; padding:0; border:1px solid red; border: 1px solid #ccc; width:985px; }
 ul.wizard li { margin: 0; padding: .5em; float:left; width: 300px; }
 ul.wizard li.active { background-color: #efefef; }
 ul.wizard li.complete { background-color: #ededed; }
+
+.focus { width:580px; }
+.gutter { width: 340px; }
+.half { width:470px; }
+
+ul.features { list-style:none; margin:0; display:inline; }
+ul.features li { border: 1px solid #ccc; background-color:#f6f6f6; padding:1em; margin-bottom:1em;}
+ul.features li img { border:1px solid #b5b5b5; margin:20px; }
+
+div.left_column { width:500px; float:left;}
+div.right_column { width:300px; float:right; }
+

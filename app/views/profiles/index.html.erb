@@ -1,38 +1,26 @@
-<% title 'Players' -%>
-<% content_for(:header) do %>
-  <style>
-    <!--
-    #user_search label { position:absolute; margin:1em 0 0 .6em; color:#aaa; }
-    //-->
-  </style>
-  <script>
-  <!--
-    function toggleLabel(show) {
-      show && $F('search') == '' ? $('search_label').show() : $('search_label').hide();
-    }
-  //-->
-  </script>
+<% title "Players" %>
+
+<% box do %>
+  <h2>Players</h2>
+  
+  <div id="controller_search">
+    <% form_for(:profile, profiles_path, :html => { :method => 'get' }) do |f| %>
+      <label id="search_label" for="search">Search for a profile...</label>
+      <%= text_field_tag :search, '', { :class => 'text', :onfocus => 'toggleLabel(false);', :onblur => 'toggleLabel(true);' } %>  
+      <%= submit_tag "Search!", { :disable_with => 'Searching...', :class => 'inline' } %>
+    <% end %>
+  </div>
+
+  <%= render :partial => 'shared/letters', :locals => { :controller => 'profiles' } %>
+
+  <div<%= ' class="right-space"' if logged_in? %>>
+    <ul class="data">
+      <%= render :partial => 'profile', :collection => @profiles %>
+    </ul>
+
+    <p>
+      <%= will_paginate @profiles %>
+    </p>
+  </div>
+
 <% end %>
-
-<div id="user_search">
-<% form_for(:user, users_path, :html => { :method => 'get' }) do |f| %>
-    <label id="search_label" for="search">Search for a Player...</label>
-    <%= text_field_tag :search, '', { :class => 'text', :onfocus => 'toggleLabel(false);', :onblur => 'toggleLabel(true);' } %>  
-    <%= submit_tag "Search!", { :disable_with => 'Searching...', :class => 'inline' } %>
-<% end %>
-</div>
-
-<% letters = ('a'..'z').to_a << '#' -%>
-<div class="pagination">
-  <%= render :partial => "shared/letter", :collection => letters, :locals => { :controller => 'users' } %>
-</div>
-
-<div<%= ' class="right-space"' if logged_in? %>>
-  <ul class="data">
-    <%= render :partial => 'profiles/profile', :collection => @profiles %>
-  </ul>
-
-  <p>
-    <%= will_paginate @profiles %>
-  </p>
-</div>

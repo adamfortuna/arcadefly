@@ -4,8 +4,8 @@ class ProfilesController < ResourceController::Base
   include ApplicationHelper
     
   before_filter :setup, :except => [:index, :search]
-  before_filter :search_results, :only => [:index, :search]
-  skip_filter :login_required, :only=>[:show, :index, :feed, :search]
+  before_filter :check_permissions, :only => [:edit, :update]
+  skip_filter :login_required, :only => [:show, :index, :feed, :search]
 
   def collection
     # GET /arcades/1-disney/users
@@ -32,7 +32,7 @@ class ProfilesController < ResourceController::Base
       render :template => "games/profiles"
     # GET /users
     else
-      render :template => "profiles/search"
+      render :template => "profiles/index"
     end
   }
   
@@ -51,17 +51,22 @@ class ProfilesController < ResourceController::Base
     rescue Exception, OpenURI::HTTPError
       @flickr = []
     end
-      
-      
 
     @comments = @profile.comments.paginate(:page => @page, :per_page => @per_page)
+
+    if @profile.has_address?
+      @map = GMap.new("user_map")
+      @map.control_init(:map_type => false, :small_zoom => true)
+      @map.center_zoom_init([@profile.address.public_lat, @profile.address.public_lng], 11)
+      @map.overlay_init(GMarker.new([@profile.address.public_lat, @profile.address.public_lng], :title => @profile.display_name))
+    end
     
     respond_to do |wants|
       wants.html do
-        @feed_items = @profile.feed_items
+        #@feed_items = @profile.feed_items
       end
       wants.rss do 
-        @feed_items = @profile.feed_items
+        #@feed_items = @profile.feed_items
         render :layout => false
       end
     end
@@ -97,8 +102,8 @@ class ProfilesController < ResourceController::Base
     end
     
     if @user.errors.length > 0 || @profile.errors.length > 0
-      flash.now[:error] = @user.errors
-      render :action=> :edit
+      flash.now[:error] = "There was a problem updating your profile. Errors should be highlighted in red below."
+      render :action => :edit
     else
       redirect_to edit_profile_url(@profile)
     end
@@ -133,7 +138,7 @@ class ProfilesController < ResourceController::Base
 
 
   private
-  
+
   def allow_to
     super :owner, :all => true
     super :all, :only => [:show, :index, :search]
@@ -144,6 +149,10 @@ class ProfilesController < ResourceController::Base
     @user = @profile.user
   end
   
+  def check_permissions
+    permission_denied unless (administrator? || current_profile == @profile)
+  end
+
   def search_results
     if params[:search]
       p = params[:search].dup

@@ -22,6 +22,18 @@ class Address < ActiveRecord::Base
 #  end
 #  alias_method_chain :country, :region_check
 
+  def shortest_line
+    line = ''
+    line << city if city?
+    if region
+      line << ', ' if !line.blank?
+      line << region.abbreviation
+    end
+    line << ', ' if !line.blank?
+    line << country.alpha_3_code if country
+    line
+  end
+  
   # This is the default way an address will be displayed.
   # Currently: Orlando, Florida United States of America
   def short_line

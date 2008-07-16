@@ -1,12 +1,12 @@
 <% title @profile.display_name + separator + 'Favorite Arcades' -%>
-<h2><%= @title %></h2>
 
 <%= render :partial => 'profiles/menu', :locals => { :profile => @profile, :map => true } %>
 
-<%- if @arcades.length > 0 -%>
-  <%= render :partial => 'arcades/arcades', :locals => { :arcades => @arcades, :map => @map } %>
-<%- else -%>
-  <div class="tabbed">
+<% tabbed_box do %>
+  <h2><%= @title %></h2>
+  <%- if @arcades.length > 0 -%>
+    <%= render :partial => 'arcades/arcades', :locals => { :arcades => @arcades, :map => @map } %>
+  <%- else -%>
     <p><%= @profile.display_name %> doesn't have any favorite arcades.</p>
-  </div>
-<%- end -%>
+  <%- end -%>
+<% end %>

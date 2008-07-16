@@ -1,12 +1,11 @@
 <% title "Popular Games" -%>
 
 <%= render :partial => 'menu' %>
-  
-<div class="tabbed">
+<% tabbed_box do %>
   <ul class="data">
     <%= render :partial => 'games/game', :collection => @games, :locals => { :count => 'favoriteships_count' } %>
   </ul>
   <p>
     <%= will_paginate @games %>
   </p>
-</div>
+<% end %>

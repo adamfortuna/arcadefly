@@ -1,3 +1,6 @@
 <%- title "Browse Arcades" + separator + "Countries" + separator + @country.name -%>
 <%= render :partial => 'arcades/list_menu', :locals => { :map => true } %>
-<%= render :partial => 'arcades/arcades', :locals => { :arcades => @arcades, :map => @map } %>
+
+<% tabbed_box do %>
+  <%= render :partial => 'arcades/arcades', :locals => { :arcades => @arcades, :map => @map } %>
+<% end %>

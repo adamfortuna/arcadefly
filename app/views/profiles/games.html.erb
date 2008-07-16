@@ -1,18 +1,12 @@
 <% title @profile.display_name + separator + 'Favorite Games' -%>
-<h2><%= @title %></h2>
 
 <%= render :partial => 'profiles/menu', :locals => { :profile => @profile } %>
 
-<div class="tabbed">
-  <ul class="data">
-    <%= render :partial => 'games/game', :collection => @games %>
-  </ul>
-  
-  <% if @profile.favoriteships_count == 0 %>
-  <p><%= @profile.display_name %> doesn't have any favorite games</p>
+<% tabbed_box do %>
+  <h2><%= @title %></h2>
+  <% if @profile.favoriteships_count > 0 %>
+    <%= render :partial => 'games/games', :object => @games %>
+  <% else %>  
+    <p><%= @profile.display_name %> doesn't have any favorite games</p>
   <% end %>
-  
-  <p>
-    <%= will_paginate @games %>
-  </p>
-</div>
+<% end %>

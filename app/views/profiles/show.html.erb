@@ -1,70 +1,69 @@
 <%- title "Profile for #{@profile.display_name}" -%>
-<h2><%= icon @profile %> <%= "Profile for #{@profile.display_name}" %></h2>
-
-<% content_for :head do  -%>
-<%= auto_discovery_link_tag :rss, formatted_profile_url(@profile, :rss), :title=>"#{@profile.display_name}'s recent activity" %>
-<% end -%>
 
 <%= render :partial => 'menu', :locals => { :profile => @profile} %>
 
-<%
-can_send = logged_in?
-%>
-<div id="sub_nav">
-<%= link_to( 'Edit this page', edit_profile_path(current_user.profile)) if me %>
-</div>
-<div class="left" id="column_l">
-  
-  <%= render :partial => 'profiles/bio' %>
-  <div class="clear"></div>  
-  <%= render :partial => 'comments/list', :locals => {:with_form => true, :with_wall_to_wall => true} %>	
-  <%- if @video -%>
-  <div class="activity_box">
-    <h2>Latest YouTube Video</h2>
-    <%= @video.embed_html %>
-  </div>
-  <%- end -%>
-
-  <% if @flickr %>  
-  <div class="activity_box">
-    <h2>Latest Flickr Pictures</h2>
-    <% @flickr.each do |flickr|%>
-    <div class="flickr left">
-      <div>
-        <a href="http://www.flickr.com/photos/<%= flickr.owner_id %>/<%= flickr.id %>" target="_blank">
-          <%= image_tag flickr.url('t'), :alt => 'FlickrHolder', :class => 'flickr_image' %>
-        </a>
-      </div>
-    </div>
-    <%end%>
-  </div>
+<% if @profile.has_address? %>
+  <% content_for(:header) do %>
+    <%= GMap.header %>
+  	<%= @map.to_html %>
   <% end %>
+<% end %>
 
-
-
-  <%- if can_send -%>
-  <div id="new_direct_message" class="hidden">
-    <%= render :partial => 'messages/form', :locals => {:hide_header => true} %>
+<% tabbed_box do %>
+  
+  <div id="profile_overview" class="map_box">
+    <div class="overview left_column">
+      <div class="left avatar"><%= icon @profile, :big %></div>
+      <div class="right bio_stuff">
+        <h2><%= h @profile.display_name %></h2>
+        <% unless @profile.full_name.blank? %><div><strong>Real Name:</strong> <%=@profile.full_name%></div><% end %>
+    	  <% if @profile.has_address? %><h3><%= location_link @profile %></h3><% end %>
+    		<% unless @profile.website.blank? %><div><strong>Website:</strong> <%= link_to h(@profile.website), h(@profile.website) %></div><% end %>
+    		<% unless @profile.blog.blank? %><div><strong>Blog:</strong> <%= link_to h(@profile.blog), h(@profile.blog) %></div><% end %>
+    		<% unless @profile.aim_name.blank? %><div><strong>AIM:</strong> <a href="aim:goim?screenname=<%= h @profile.aim_name %>"><%= h @profile.aim_name %></a></div><% end %>
+    		<% unless @profile.gtalk_name.blank? %><div><strong>GTalk:</strong> <a href="xmpp:<%= h @profile.gtalk_name %>"><%=h @profile.gtalk_name %></a></div><% end %>
+    	</div>
+    	<% unless @profile.about_me.blank? %>
+    	<div class="clear">
+    	  <div>
+    	    <h3>About:</h3>
+    	    <%= sanitize(@profile.about_me) %>
+    	  </div>
+    	</div>
+    	<% end %>
+    </div>
+  
+    <% if @profile.has_address? %>
+    <div class="map_box right_column">
+      <%= @map.div(:class => 'map map_small') %>
+      <p class="center">
+        <%= h @profile.full_name %> lives in <%= @profile.address.shortest_line %>
+      </p>
+    </div>
+    <% end %>
   </div>
-  <%- end -%>
-
-  <div class="clear"></div>
+  
+  
+  <div class="clear">
+    <div class="left_column">
+      <%- if logged_in?  && !me -%>
+      <div id="new_direct_message">
+        <%= render :partial => 'messages/form', :locals => {:hide_header => true} %>
+      </div>
+      <%- end -%>
+    </div>
+    <%- if logged_in?  && !me -%>
+    <div class="right_column">
+      <% if !current_profile.following?(@profile) %>
+        <%= button_to "Add to your friends", friends_path(@profile), { :method => "post", :class => "favorite user_add" } %>
+      <% else %>
+        <%= button_to "Remove from your friends", friends_path(@pofile), { :method => "delete", :class => "favorite user_delete" } %>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
 </div>
 
-<div class="right" id="column_r">
-  <ul>
-    <%- if logged_in? &&!me -%>
-	    <li><%= get_friend_link current_user.profile, @profile %></li>
-	    <%- if can_send -%>
-	    <li><%= inline_tb_link 'Direct Message', "new_direct_message", {:title => "New Message To #{h @profile.full_name}"}, {:height => 380} %></li>
-	    <li><%= inline_tb_link 'Leave a Comment', "new_comment", {:title => "Leaving A Comment On #{h @profile.full_name}'s Wall"}, {:height => 330, :width => 430} if logged_in? %></li>
-	    <%- end -%>
-	    <%- if can_send && !me && current_user.profile.has_wall_with(@profile) -%>
-	    <li><%= link_to 'Our Wall-to-Wall', profile_comments_path(@profile) %></li>
-	    <%- end -%>
-	<%- end -%>
-  </ul>
-  <%= render :partial => 'friends/list', :locals => {:type => 'friends'} %>
-  <%= render :partial => 'friends/list', :locals => {:type => 'followers'} %>
-  <%= render :partial => 'friends/list', :locals => {:type => 'followings'} %> 
-</div>
+
+
+<% end %>

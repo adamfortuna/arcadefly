@@ -73,7 +73,7 @@ module AuthenticatedSystem
     end
     
     def check_administrator
-      permission_denied unless current_profile.administrator?
+      permission_denied if !logged_in? || current_profile.administrator?
       true
     end
     

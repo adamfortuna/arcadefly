@@ -1,5 +1,5 @@
 <ul class="tabs">
-  <%= nav_link "Profile", profile_path(profile), { :a_class => 'users' } %>
+  <%= nav_link "#{profile.display_name}'s Profile", profile_path(profile), { :a_class => 'users' } %>
   <%= nav_link "Favorite Arcades", profile_arcades_path(profile), { :a_class => 'arcades' } %>
   <%= nav_link "Favorite Games", profile_games_path(profile), { :a_class => 'games' } %>
   <%= nav_link "Friends", profile_friends_path(profile), { :a_class => 'users' } %>

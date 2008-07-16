@@ -2,7 +2,7 @@
 
 <%= render :partial => 'menu' %>
 
-<div class="tabbed">
+<% tabbed_box do %>
   <dl>
     <dt>I lost my password and cannot sign in.</dt>
     <dd>The <%= link_to "sign in page", signin_path %> has what you need! Complete the Forgotten Password form and we'll email you with directions on how to reset your password.</dd>
@@ -16,4 +16,4 @@
     <dt>I have another question not on here...</dt>
     <dd>Feel free to contact us directly using the <a href="/contact">Contact Us</a> page. We'll see what we can do to resolve your issue as quick as possible.</dd>
   </dl>
-</div>
+<% end %>

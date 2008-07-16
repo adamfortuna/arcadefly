@@ -5,6 +5,7 @@ module ApplicationHelper
   include Avatar::View::ActionViewSupport
   include FriendsHelper
   include PhotosHelper
+  include TemplateHelper
   
   def separator
     " &#8250; "
@@ -117,5 +118,4 @@ module ApplicationHelper
     end
     html
   end
-  
 end

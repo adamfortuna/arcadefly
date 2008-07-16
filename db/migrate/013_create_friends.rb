@@ -7,8 +7,7 @@ class CreateFriends < ActiveRecord::Migration
       t.integer :status,     :default => 0
     end
     
-    add_index :friends, [:inviter_id, :invited_id], :unique
-    add_index :friends, [:invited_id, :inviter_id], :unique    
+    add_index :friends, [:inviter_id, :invited_id], :unique    
   end
 
   def self.down

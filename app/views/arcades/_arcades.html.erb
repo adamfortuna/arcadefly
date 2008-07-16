@@ -7,37 +7,45 @@
 	<%= map.to_html %>
 <% end %>
 
-<div class="tabbed-map">
-  <ul class="left data span-10 scrollable content-height map shift-1 content map_list">
+<div class="map_box">
+  <ul class="scrollable content content-height">
     <%= render :partial => 'arcades/arcade', :collection => arcades %>
   </ul>
-  <%= map.div(:class => 'right prepend-1 span-13 last map_medium content-height map') %>
+  <%= map.div(:class => 'map map_medium content-height') %>
+</div>
 
 
-  <p>
-    <%= will_paginate arcades %>
-    <div class="box clear">
-      <span class="left">
-        Arcades are sorted by <em>
-        <%- if addressed_in? -%>
-          distance from your location
-        <%- else -%>
-          arcade name
-        <%- end -%>
-        </em>.
-     </span>
+<p>
+  <%= will_paginate arcades %>
+</p>
 
-      <ul class="nav right">
-        <%= nav_link "Sort by Name", arcades_path %>
-        <%- if addressed_in? %>
-        <%= nav_link "Sort by Distance", arcades_path %>
-        <%- end -%>
-        <%= nav_link "Sort by Number of Favorites", arcades_path %>
-        <%= nav_link "Sort by Number of Games", arcades_path %>
-      <ul>
-    </div>
-    
-    
+<hr class="clear" />
+
+<div>
+
+  <p class="left">
     <%= link_to 'Create a new arcade', new_arcade_path%>
   </p>
+
+
+  <div class="right">
+    <p class="center">
+      Arcades are sorted by <em>
+      <%- if addressed_in? -%>
+        distance from your location.
+      <%- else -%>
+        arcade name.
+      <%- end -%>
+      </em>
+   </p>
+
+    <ul class="nav">
+      <%= nav_link "Sort by Name", arcades_path %>
+      <%- if addressed_in? %>
+      <%= nav_link "Sort by Distance", arcades_path %>
+      <%- end -%>
+      <%= nav_link "Sort by Number of Favorites", arcades_path %>
+      <%= nav_link "Sort by Number of Games", arcades_path %>
+    <ul>
+  </div>
 </div>

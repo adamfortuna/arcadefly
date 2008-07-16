@@ -51,7 +51,7 @@ class UsersController < ResourceController::Base
     
   # render new.rhtml
   def new
-    @user = User.new(params[:user])
+    @user = User.new(params[:profile])
     @user.profile = Profile.new()
     @user.profile.address = current_address if addressed_in?
     

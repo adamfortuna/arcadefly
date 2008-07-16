@@ -2,7 +2,7 @@
 
 <%= render :partial => 'menu' %>
 
-<div class="tabbed">
+<% tabbed_box do %>
   <p>In the past 24 hours, here's where the action has been...</p>
 
   <div>
@@ -18,4 +18,4 @@
       <%= render :partial => 'games/game', :collection => @games, :locals => { :count => 'favoriteships_count' } %>
     </ul>
   </div>
-</div>
+<% end %>

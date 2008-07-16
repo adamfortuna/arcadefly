@@ -1,44 +1,31 @@
 <% title "Games" -%>
-<h2>Games</h2>
 
-<%- if params[:search].nil? -%>
-<div class="box"><strong>Want to see only popular games?</strong> Check out which games have been <%= link_to "favorited by the most players", popular_games_path %>!</div>
-<%- end -%>
+<% box do %>
+  <h2>Games <%= separator + params[:search] unless params[:search].blank? %>
+  </h2>
 
-<% content_for(:header) do %>
-  <style>
-    <!--
-    #game_search label { position:absolute; margin:1em 0 0 .6em; color:#aaa; }
-    //-->
-  </style>
-  <script>
-  <!--
-    function toggleLabel(show) {
-      show && $F('search') == '' ? $('search_label').show() : $('search_label').hide();
-    }
-  //-->
-  </script>
+  <%- if params[:search].nil? -%>
+    <div><strong>Want to see only popular games?</strong> Check out which games have been <%= link_to "favorited by the most players", popular_games_path %>!</div>
+  <%- end -%>
+
+  <div id="controller_search">
+    <% form_for(:game, games_path, :html => { :method => 'get' }) do |f| %>
+      <label id="search_label" for="search">Search for a Game...</label>
+      <%= text_field_tag :search, '', { :class => 'text', :onfocus => 'toggleLabel(false);', :onblur => 'toggleLabel(true);' } %>  
+      <%= submit_tag "Search!", { :disable_with => 'Searching...', :class => 'inline' } %>
+    <% end %>
+  </div>
+
+  <%= render :partial => 'shared/letters', :locals => { :controller => 'games' } %>
+
+  <div<%= ' class="right-space"' if logged_in? %>>
+    <ul class="data">
+      <%= render :partial => 'game', :collection => @games %>
+    </ul>
+
+    <p>
+      <%= will_paginate @games %>
+    </p>
+  </div>
+
 <% end %>
-
-<div id="game_search">
-<% form_for(:game, games_path, :html => { :method => 'get' }) do |f| %>
-    <label id="search_label" for="search">Search for a Game...</label>
-    <%= text_field_tag :search, '', { :class => 'text', :onfocus => 'toggleLabel(false);', :onblur => 'toggleLabel(true);' } %>  
-    <%= submit_tag "Search!", { :disable_with => 'Searching...', :class => 'inline' } %>
-<% end %>
-</div>
-
-<% letters = ('a'..'z').to_a << '#' -%>
-<div class="pagination">
-  <%= render(:partial => "shared/letter", :collection => letters) %>
-</div>
-
-<div<%= ' class="right-space"' if logged_in? %>>
-  <ul class="data">
-    <%= render :partial => 'game', :collection => @games %>
-  </ul>
-
-  <p>
-    <%= will_paginate @games %>
-  </p>
-</div>

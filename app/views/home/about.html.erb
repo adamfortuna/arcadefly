@@ -1,31 +1,29 @@
 <%- title "About ArcadeFly.com" %>
-<h2><%= @title %></h2>
 
-<div class="span-10 column">
+<% content_area do %>
+  <h2><%= @title -%></h2>
   <p>
     ArcadeFly is run by the community. It's thanks to passionate gamers and arcade goers that this site is even possible. It was founded by 
     <a href="/profiles/1-adam-fortuna">Adam Fortuna</a> and launched publically in July 2008. The goal of this site is to bring gamers 
     together to play and have fun, while also providing people a one stop place for arcade and game locations across the world.
   </p>
-  
+
   <p>
-    We're always looking for people to help out around here. The best way to get involved is to start adding new arcades and adding new games for the arcades listed.
-  </p>
-</div>
+    We're always looking for arcades and people to help out around here. The best way to get involved is to start adding new arcades and adding new games for the arcades listed.
+    If you're an intereseted in partnering with us, please check out the <%= link_to "contact", contact_path %> page.
+  </p>   
+<% end %>
 
-
-
-<div class="span-9 column last right">
-  <div class="box">
-    <h3>Technical Details</h3>
-    <span class="info">These are the technologies that make this site possible.</span>
-    <ul class="normal">
-      <li>Framework: <a href="http://www.rubyonrails.com">Ruby on Rails</a></li>
-      <li>Webserver: <a href="http://nginx.net/">Nginx</a> with <a href="http://mongrel.rubyforge.org/">Mongrel</a></li>
-      <li>Database: <a href="http://www.mysql.com">MySQL</a></li>
-      <li>Webhost: <a href="http://www.slicehost.com">Slicehost</a> runs the main www site, while <a href="http://www.dreamhost.com/r.cgi?150228">Dreamhost</a> runs the <a href="http://blog.arcadefly.com">blog</a>, <a href="http://trac.arcadefly.com">trac</a> and subversion.
-      <li>Editor for Choice: <a href="http://www.macromates.com">Textmate</a></li>
-    </ul>
-    <p class="shift-1">Check out the <a href="http://blog.arcadefly.com/category/development/">Development Category on the ArcadeFly Blog</a> for more about, well, development.</p>
-  </div>
-</div>
+<% sidebar do %>
+  <h3>Technical Details</h3>
+  <span class="info">These technologies make this site possible.</span>
+  <ul>
+    <li>Framework: <a href="http://www.rubyonrails.com">Ruby on Rails</a></li>
+    <li>Webserver: <a href="http://nginx.net/">Nginx</a> with <a href="http://mongrel.rubyforge.org/">Mongrel</a></li>
+    <li>Database: <a href="http://www.mysql.com">MySQL</a></li>
+    <li>Webhost: <a href="http://www.slicehost.com">Slicehost</a> runs the main www site, while <a href="http://www.dreamhost.com/r.cgi?150228">Dreamhost</a> runs the <a href="http://blog.arcadefly.com">blog</a>, <a href="http://trac.arcadefly.com">trac</a> and subversion.
+    <li>Editor for Choice: <a href="http://www.macromates.com">Textmate</a></li>
+    <li>Template is based on Cratif, a theme by <a href="http://nettuts.com">NETTUTS</a>.</li>
+  </ul>
+  <p>Check out the <a href="http://blog.arcadefly.com/category/development/">Development Category on the ArcadeFly Blog</a> for more about, well, development.</p> 
+<% end %>
