@@ -6,25 +6,12 @@ module ApplicationHelper
   include FriendsHelper
   include PhotosHelper
   include TemplateHelper
+  include GamesHelper
+  include ArcadesHelper
   
   def separator
     " &#8250; "
   end
-  
-  def less_form_for name, *args, &block
-    options = args.last.is_a?(Hash) ? args.pop : {}
-    options = options.merge(:builder=>LessFormBuilder)
-    args = (args << options)
-    form_for name, *args, &block
-  end
-  
-  def less_remote_form_for name, *args, &block
-    options = args.last.is_a?(Hash) ? args.pop : {}
-    options = options.merge(:builder=>LessFormBuilder)
-    args = (args << options)
-    remote_form_for name, *args, &block
-  end
-  
   
   # Return a link for use in site navigation.
   def nav_link(text, link, options = {})
@@ -72,50 +59,13 @@ module ApplicationHelper
     content_for(:head) { stylesheet_link_tag(*files) }
   end
 
-  def me
-    logged_in? && @profile == current_user.profile
-  end
-  
-  def inline_tb_link link_text, inlineId, html = {}, tb = {}
-    html_opts = {
-      :title => '',
-      :class => 'thickbox'
-    }.merge!(html)
-    tb_opts = {
-      :height => 300,
-      :width => 400,
-      :inlineId => inlineId
-    }.merge!(tb)
-    
-    path = '#TB_inline'.add_param(tb_opts)
-    link_to(link_text, path, html_opts)
-  end
-  
-  def tb_video_link youtube_unique_path
-    return if youtube_unique_path.blank?
-    youtube_unique_id = youtube_unique_path.split(/\/|\?v\=/).last.split(/\&/).first
-    p youtube_unique_id
-    client = YouTubeG::Client.new
-    video = client.video_by YOUTUBE_BASE_URL+youtube_unique_id rescue return "(video not found)"
-    id = Digest::SHA1.hexdigest("--#{Time.now}--#{video.title}--")
-    inline_tb_link(video.title, h(id), {}, {:height => 355, :width => 430}) + %(<div id="#{h id}" style="display:none;">#{video.embed_html}</div>)
-  end
-  
   def icon profile, size = :small, img_opts = {}
     return "" if profile.nil?
-    img_opts = {:title => profile.full_name, :alt => profile.full_name, :class => "#{size} framed left"}.merge(img_opts)
+    img_opts = {:title => profile.display_name, :alt => profile.display_name, :class => "#{size} framed left"}.merge(img_opts)
     link_to(avatar_tag(profile, {:size => size, :file_column_version => size }, img_opts), profile_path(profile))
   end
   
-  def x_feed_link feed_item
-    link_to_remote image_tag('delete.png', :class => 'png', :width=>'12', :height=>'12'), :url => profile_feed_item_path(@profile, feed_item), :method => :delete
-  end
-  
-  def blogs_li blogs
-    html = ''
-    blogs.each do |b|
-      html += "<li>#{link_to b.title, profile_blog_path(@profile, b)} written #{time_ago_in_words b.created_at} ago</li>"
-    end
-    html
+  def me
+    logged_in? && !@profile.nil? && (@profile == current_profile)
   end
 end

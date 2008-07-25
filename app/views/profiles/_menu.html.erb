@@ -4,8 +4,8 @@
   <%= nav_link "Favorite Games", profile_games_path(profile), { :a_class => 'games' } %>
   <%= nav_link "Friends", profile_friends_path(profile), { :a_class => 'users' } %>
 
-  <% if logged_in? && (me || administrator?) -%>
-  <%= nav_link 'Messages', messages_path, { :li_class => 'right' } unless profile.received_messages.empty? %>
-  <%= nav_link 'Edit Profile', edit_profile_path(profile), { :li_class => 'right' } %>
+  <% if me || (logged_in? && current_profile.administrator?) -%>
+  <%= nav_link 'Messages', messages_path, { :a_class => 'users', :li_class => 'right' } unless profile.unread_messages? %>
+  <%= nav_link 'Edit Profile', edit_profile_path(profile), { :a_class => 'users', :li_class => 'right' } %>
   <% end %>
 </ul>

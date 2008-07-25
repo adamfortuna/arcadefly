@@ -1,6 +1,7 @@
-<%- title "Map Arcades" -%>
+<%- title "Arcades" -%>
 <%= render :partial => 'arcades/list_menu' %>
 
 <% tabbed_box do %>
+  <h2><%= @title %></h2>
   <%= render :partial => 'arcades/arcades', :locals => { :arcades => @arcades, :map => @map } %>
 <% end %>

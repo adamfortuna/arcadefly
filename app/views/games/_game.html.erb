@@ -15,16 +15,8 @@
   
 	<span class="count">
     <%= pluralize(game.playables_count, "arcade") %>
-  <% if logged_in? %>
-	<span class="favorite">
-	  <% if current_profile.has_favorite_game?(game) %>
-	    <%= link_to "&nbsp;", game_favorites_url(game)+'/'+game.to_param, { :method => "delete", :class => "favorite game_delete" } %>
-	  <% else %>
-      <%= link_to "&nbsp;", game_favorites_path(game), { :method => "post", :class => "favorite game_add" } %>
-	  <% end %>
-	</span>
-	<% end %>
-	</span>
+    <%= render :partial => 'games/favorite', :locals => { :show_text => false, :game => game } %>
+  </span>
 	
 	<% if @max_count&& @max_count > 0 %>
     <span class="index" style="width: <%= (game[count]*10/@max_count*10) %>%">(<%= (game[count]*10/@max_count*10) %>%)</span>

@@ -22,36 +22,32 @@ ActionController::Routing::Routes.draw do |map|
 
   # Custom Routes
   map.signup '/signup',   :controller => 'users',    :action => 'new'
-  map.signin '/signin',    :controller => 'sessions', :action => 'new'
+  map.signin '/signin',   :controller => 'sessions', :action => 'new'
   map.logout '/logout',   :controller => 'sessions', :action => 'destroy'
   map.address '/address', :controller => 'sessions', :action => 'address', :method => 'post'
 
   # User account controls
   map.activate '/activate/:id',              :controller => 'users',   :action => 'activate'
-  map.forgot_password '/forgot_password',    :controller => 'passwords', :action => 'new'
-  map.reset_password  '/reset_password/:id', :controller => 'passwords', :action => 'edit'
-  map.user_settings '/users/:id/settings',   :controller => 'users', :action => 'edit'
+  map.forgot_password '/forgot_password',    :controller => 'password', :action => 'new'
+  map.reset_password  '/reset_password/:id', :controller => 'password', :action => 'edit'
 
   # Shortened routes
-  map.about '/about',       :controller => 'home',    :action => 'about'
-  map.contact  '/contact',  :controller => 'home',    :action => 'contact'
-  map.terms '/terms',       :controller => 'home',    :action => 'terms'
-  map.privacy '/privacy',   :controller => 'home',    :action => 'privacy'
-  map.welcome '/welcome',   :controller => 'users',   :action => 'welcome'
-  map.help '/help',         :controller => 'help',    :action => 'index'
+  map.about '/about',           :controller => 'home',    :action => 'about'
+  map.contact  '/contact',      :controller => 'home',    :action => 'contact'
+  map.terms '/terms',           :controller => 'home',    :action => 'terms'
+  map.privacy '/privacy',       :controller => 'home',    :action => 'privacy'
+  map.welcome '/welcome',       :controller => 'users',   :action => 'welcome'
+  map.help '/help',             :controller => 'help',    :action => 'index'
   map.site_map '/site_map',     :controller => 'home',    :action => 'site_map'
 
   # Popular 
   map.popular '/popular',                   :controller => 'popular',    :action => 'index'
-  map.popular_arcades '/popular/arcades',   :controller => 'popular',    :action => 'arcades'
-  map.popular_games '/popular/games',       :controller => 'popular',    :action => 'games'
 
   # Better named arcade routes
   map.browse_arcades '/arcades/browse',               :controller => 'arcades', :action => 'browse'
-  map.arcade_map '/arcades/:id/map',                  :controller => 'arcades', :action => 'map'
-  map.new_arcade_1 '/arcades/new/details',            :controller => 'arcades', :action => 'new1'
-  map.new_arcade_2 '/arcades/new/review',             :controller => 'arcades', :action => 'new2'
-  map.new_arcade_3 '/arcades/new/games',              :controller => 'arcades', :action => 'new3'
+  #map.new_arcade_1 '/arcades/new/details',            :controller => 'arcades', :action => 'new1'
+  #map.new_arcade_2 '/arcades/new/review',             :controller => 'arcades', :action => 'new2'
+  #map.new_arcade_3 '/arcades/new/games',              :controller => 'arcades', :action => 'new3'
   map.edit_arcade_games '/arcades/:id/games/edit',    :controller => 'arcades', :action => 'edit_games'
   
   # Arcade maps
@@ -60,41 +56,42 @@ ActionController::Routing::Routes.draw do |map|
   
   # Browse for arcades
   #map.countries_arcades '/arcades/countries',         :controller => 'arcades', :action => 'countries'
-  map.country_arcades '/arcades/countries/:id',       :controller => 'arcades', :action => 'country'
+  #map.country_arcades '/arcades/countries/:id',       :controller => 'arcades', :action => 'country'
   #map.regions_arcades '/arcades/regions',             :controller => 'arcades', :action => 'regions'
-  map.region_arcades '/arcades/regions/:id',          :controller => 'arcades', :action => 'region'
+  #map.region_arcades '/arcades/regions/:id',          :controller => 'arcades', :action => 'region'
   
   # Remote procedures
   map.games_update '/games/update', :controller => 'gateway', :action => 'update_games'
   
   # Resources
-  map.resources :arcades, :has_many => [ :games, :profiles, :favorites ],
-                          :has_one => :address
-  map.resources :games,   :has_many => [ :arcades, :profiles, :favorites ]
+  map.resources :arcades, :has_many => [ :games, :profiles ],
+                          :has_one => :address,
+                          :collection => [ :popular ],
+                          :member => [ :map, :claim, :favorite, :unfavorite, :review ]
+  map.resources :games,   :has_many => [ :arcades, :profiles ],
+                          :collection => [ :popular ],
+                          :member => [ :favorite, :unfavorite ]
 
   map.resources :users,   :alias => :friends
   
-  map.resources :addresses, :sessions, :passwords, :favorites
+  map.resources :addresses, :sessions, :password, :comments, :messages
 
+  map.resources :sessions, :object => [ :address ]
 
 
   map.namespace :admin do |a|
     a.resources :users, :collection => {:search => :post}
   end
 
-  map.resources :profiles, 
-  :member => {:delete_icon=>:post}, :collection=>{:search=>:get}, 
-  :has_many => [:friends, :blogs, :photos, :comments, :feed_items, :messages, :arcades, :games],
-  :has_one => :address
+  map.resources :profiles, :has_many => [:friends, :comments, :messages, :arcades, :games],
+                           :has_one => :address,
+                           :collection=>{:search=>:get}
 
-  map.resources :messages, :collection => {:sent => :get}
-  map.resources :blogs do |blog|
-    blog.resources :comments
-  end
+  map.resources :messages
 
 
   # Since a lot of people tend to use /login as the login path, add it here just in case.
-  map.connect '/login',    :controller => 'sessions', :action => 'new'
+  map.connect '/login',    :controller => 'redirect', :action => 'login'
 
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'

@@ -1,4 +1,7 @@
 <% letters = ('a'..'z').to_a << '#' -%>
 <div class="pagination">
   <%= render :partial => "shared/letter", :collection => letters, :locals => { :controller => controller } %>
+  <% if params[:search] %>
+    <%= link_to "No filter", :controller => controller %>
+  <% end %>
 </div>

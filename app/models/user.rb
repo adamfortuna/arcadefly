@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :email, :case_sensitive => false, :message => "is taken. Do you already have an account here? <a href=\"/signin\">Yes i do!</a>"
   validates_format_of :email, :with => /^([^@\s]{1}+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => 'does not look like an email address.'
   validates_length_of :email, :within => 3..100    
-  validates_confirmation_of :email,                   :if => :email_required?
+  validates_confirmation_of :email,                      :if => :email_required?
 
   validates_presence_of     :password,                   :if => :password_required?
   validates_presence_of     :password_confirmation,      :if => :password_required?
@@ -39,7 +39,10 @@ class User < ActiveRecord::Base
   end
 
 
-
+  def make_administrator!
+    update_attribute(:administrator, true)
+    profile.update_attribute(:administrator, true)
+  end
 
 
 
@@ -49,7 +52,10 @@ class User < ActiveRecord::Base
   def activate
     @activated = true
     update_attributes({:activated_at => Time.now.utc, :activation_code => nil})
-    save(false)
+    save!
+    
+    profile.active = true
+    profile.save!
   end
 
   # Finds the user with the corresponding activation code, activates their account and returns the user.
@@ -64,8 +70,7 @@ class User < ActiveRecord::Base
   
   # This checks to see if the user is activated.
   def active?
-    # the existence of an activation code means they have not activated yet
-    activation_code.nil?
+    !activated_at.nil?
   end
   
   # Returns true if the user has just been activated.
@@ -213,9 +218,11 @@ class User < ActiveRecord::Base
   # Since email is used so much across the site, make it easier by storing it in both places
   def cascade_changes
     profile[:email] = email if email_changed?
-    profile[:administrator] = administrator if administrator_changed?
   end
-
+  
+  def cascade_create_changes
+    profile.active = false
+  end
 
 
 
@@ -259,6 +266,9 @@ class User < ActiveRecord::Base
       self.activated_at = Time.now.utc
       self.activation_code = nil
       self.save!
+
+      profile.active = true
+      profile.save!
     end
     
     def email_required?

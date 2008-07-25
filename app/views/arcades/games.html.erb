@@ -2,14 +2,10 @@
 
 <%= render :partial => 'arcades/menu', :locals => { :arcade => @arcade } %>
 
-<div class="tabbed">
-  <ul class="data">
-    <%= render :partial => 'games/game', :collection => @games %>
-  </ul>
+<% tabbed_box do %>
+  <h2><%= @title %></h2>
+
+  <%= render :partial => 'games/games', :object => @games %>
   
-  <p>
-    <%= will_paginate @games %>
-  </p>
-  
-  <%= button_to "Manage Games at this Arcade", edit_arcade_games_path(@arcade), { :method => "get", :class => "games" } %>
-</div>  
+  <%= button_to "Manage Games at this Arcade", edit_arcade_games_path(@arcade), { :method => "get" } %>
+<% end %>

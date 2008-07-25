@@ -1,7 +1,19 @@
 /* Very general classes */
 .left { float:left; }
 .right { float:right; }
-.clear { clear: both; }
+
+.clear { display: inline-block; }   
+.clear:after, .container:after {
+  content: "."; 
+  display: block; 
+  height: 0; 
+  clear: both; 
+  visibility: hidden;
+}
+* html .clear { height: 1%; }
+.clear { display: block; }
+
+/*.clear { clear: both; } */
 .clear-left { clear: left; }
 .clear-right { clear: right; }
 .block { display: block; }
@@ -28,10 +40,11 @@ a:hover, a:active { text-decoration: underline; }
 
 
 /* Data lists */
+ul.logged_in { width:880px;}
 ul.data { margin:1em 0 0 0; padding:0; }
 ul.data a { color: #2D7BB2; text-decoration: none; font-weight: bold; }
 ul.data a:hover { color: #333; }
-ul.data li { position: relative; display: block; border-bottom: 1px solid #EEE; _zoom: 1;}
+ul.data li { position: relative; display: block; border-bottom: 1px solid #EEE; _zoom: 1; }
 ul.data li a.main {display: block;  padding: 0.4em 4.5em 0.4em 0.5em; position: relative; z-index: 2; }
 ul.data li .count { display: block; position: absolute; top: 0; right: 0; margin: 0 0.3em; text-align: right; color: #999; font-weight: bold; font-size: 0.875em; line-height: 3em; z-index:2; }
 ul.data li .favorite { display: inline; position:absolute; top:0; padding-left:1em; }
@@ -70,6 +83,18 @@ div.tabbed { padding: 1em 0 1em 20px; margin-right:20px; }
 div.right-space { padding: 1em 0 1em 0; margin-right:20px; }
 div.tabbed-map { padding: 0em 0 1em 0; clear:both; }
 
+body.games ul.tabs li.current a { background-color: #fdd; border-bottom: 1px solid #fdd; }
+body.games .block_inside_topless, body.games .block_inside { display:block; background: #ffffff url(/images/background_block_slice_games.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
+
+body.arcades ul.tabs li.current a { background-color: #dde; border-bottom: 1px solid #dde; }
+body.arcades .block_inside_topless, body.arcades .block_inside { display:block; background: #ffffff url(/images/background_block_slice_arcades.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
+
+body.profiles ul.tabs li.current a, body.friends ul.tabs li.current a, body.users ul.tabs li.current a, body.sessions ul.tabs li.current a { background-color: #ded; border-bottom: 1px solid #ded; }
+body.profiles .block_inside_topless, body.friends .block_inside_topless, body.users .block_inside_topless, body.sessions .block_inside_topless,
+body.profiles .block_inside, body.friends .block_inside, body.users .block_inside, body.sessions .block_inside { display:block; background: #ffffff url(/images/background_block_slice_users.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
+
+
+
 /* Styled boxes, usually on the right with additional text */
 .box { border: 1px solid #ccc; background-color:#f6f6f6; }
 
@@ -103,8 +128,13 @@ div.error { background-color: #FCC; border: solid 1px #C66; }
 
 /* Counts displayed on an arcade/game/user page */
 span.counts { border: 1px solid #ccc; margin-left:1em; }
-span.counts a { display:block; padding:1em 2em 1em 2em; font-weight: bold; }
+span.counts a { display:block; padding:1em 2em 1em 3em; font-weight: bold; }
 span.counts a:first-child { border-bottom: 1px solid #ccc;}
+
+span.counts a.arcades { background: url(/images/joystick.png) #dde no-repeat left; background-position: 1em; }
+span.counts a.games { background: url(/images/controller.png) #fdd no-repeat left; background-position: 1em; }
+span.counts a.users { background: url(/images/user.png) #ded no-repeat left; background-position: 1em; }
+
 a.arcades { background-color: #dde; }
 a.arcades:hover { background-color: #ccf; }
 a.games { background-color: #fdd; }
@@ -112,13 +142,10 @@ a.games:hover { background-color: #fcc; }
 a.users { background-color: #ded; }
 a.users:hover { background-color: #cec; }
 
-.arcades { background: url(/images/joystick.png) #dde no-repeat left; }
-.games { background: url(/images/controller.png) #fdd no-repeat left; }
-.users { background: url(/images/user.png) #ded no-repeat left; }
-
 
 /* Graphics for adding/removing something from favorites */
-.favorite { padding:0 2em .3em 2em; }
+
+.favorite_left { padding:0 1em .3em 0px; }
 .favorite_add { background: url(/images/heart_add.png) no-repeat left;  }
 .favorite_delete { background: url(/images/heart_delete.png) no-repeat left; }
 .arcade_add { background: url(/images/joystick_add.png) no-repeat left; }
@@ -129,8 +156,8 @@ a.users:hover { background-color: #cec; }
 .game_delete { background: url(/images/controller_delete.png) no-repeat left; }
 
 /* Global Map settings */
-.map_box { height: 400px; padding:0; margin:0; }
-.map_box ul { width:360px; list-style:none; margin:0; padding:0; float:left; }
+.map_box { padding:0; margin:0; }
+.map_box ul { width:370px; list-style:none; margin:0; padding:0; float:left; }
 .map_box ul li { clear: both; padding:.2em .2em .2em .5em; }
 
 .map_box ul, .map_box div.map { border: 1px solid #ccc; margin-bottom: 1em; }
@@ -149,12 +176,20 @@ ul.wizard li.complete { background-color: #ededed; }
 
 .focus { width:580px; }
 .gutter { width: 340px; }
-.half { width:470px; }
+.half { width:440px; }
 
 ul.features { list-style:none; margin:0; display:inline; }
 ul.features li { border: 1px solid #ccc; background-color:#f6f6f6; padding:1em; margin-bottom:1em;}
 ul.features li img { border:1px solid #b5b5b5; margin:20px; }
 
-div.left_column { width:500px; float:left;}
+div.large_left_column { width:640px; float:left;}
+div.left_column { width:540px; float:left;}
+div.left_column .short_description { width:370px; float: right; }
+div.left_column .left_column_content { clear: both; padding-top: 2em; }
 div.right_column { width:300px; float:right; }
 
+
+div.autocomplete { margin:0px; padding:0px; width:250px; background:#fff; border:1px solid #888; position:absolute; max-height:300px; overflow-y:auto; }
+div.autocomplete ul { margin:0px; padding:0px; list-style-type:none; }
+div.autocomplete ul li.selected {  background-color:#ffb; }
+div.autocomplete ul li { margin:0; padding:2px; height:32px; display:block; list-style-type:none; cursor:pointer; }

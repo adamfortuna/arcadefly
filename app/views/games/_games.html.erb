@@ -1,4 +1,4 @@
-<ul class="data">
+<ul class="data<%= " logged_in" if logged_in? %>">
   <%= render :partial => 'games/game', :collection => games %>
 </ul>
 

@@ -1,13 +1,12 @@
 class Profile < ActiveRecord::Base
-  belongs_to :user
-  
   PER_PAGE = 50
+  PUBLIC_FIELDS = [:created_at, :display_name, :favoriteships_count, :frequentships_count, :friendships_count, :full_name, :initials, :permalink, :website]
 
-  validates_length_of :display_name, :within => 3..100
-  
-  
-  validates_associated :address
-  
+  has_permalink :display_name
+
+  # User
+  belongs_to :user  
+
   # Arcades
   has_many :frequentships
   has_many :arcades, :through => :frequentships
@@ -15,6 +14,18 @@ class Profile < ActiveRecord::Base
   # Games
   has_many :favoriteships
   has_many :games, :through => :favoriteships
+
+  # Addresses
+  has_one :address, :as => :addressable
+  delegate [:country_id, :region_id], :to => :address
+  
+  # Messages
+  has_many :sent_messages,     :class_name => 'Message', :order => 'created_at desc', :foreign_key => 'sender_id'
+  has_many :received_messages, :class_name => 'Message', :order => 'created_at desc', :foreign_key => 'receiver_id'
+  has_many :unread_messages,   :class_name => 'Message', :conditions => ["read=?",false] 
+  
+  # Comments 
+  has_many :comments, :as => :commentable, :order => 'created_at desc'
 
   # Friends
   has_many :friendships, :class_name  => "Friend", :foreign_key => 'inviter_id', :conditions => "status = #{Friend::ACCEPTED}"
@@ -25,109 +36,27 @@ class Profile < ActiveRecord::Base
   has_many :followers, :through => :follower_friends, :source => :inviter
   has_many :followings, :through => :following_friends, :source => :invited
   
-  # Addresses
-  has_one :address, :as => :addressable
-  
-  # Messages
-  has_many :sent_messages,     :class_name => 'Message', :order => 'created_at desc', :foreign_key => 'sender_id'
-  has_many :received_messages, :class_name => 'Message', :order => 'created_at desc', :foreign_key => 'receiver_id'
-  has_many :unread_messages,   :class_name => 'Message', :conditions => ["read=?",false] 
-  
-  # Comments and Blogs
-  has_many :comments, :as => :commentable, :order => 'created_at desc'
-  has_many :blogs, :order => 'created_at desc'
-  
-  # Photos
-  has_many :photos, :order => 'created_at DESC'
-  
-  # Feeds
-  #has_many :feeds
-  #has_many :feed_items, :through => :feeds, :order => 'created_at desc'
-  #has_many :private_feed_items, :through => :feeds, :source => :feed_item, :conditions => {:is_public => false}, :order => 'created_at desc'
-  #has_many :public_feed_items, :through => :feeds, :source => :feed_item, :conditions => {:is_public => true}, :order => 'created_at desc'
-  
-  #acts_as_ferret :fields => [ :f, :about_me ], :remote=>true
+  # Validation
+  validates_length_of :display_name, :within => 3..100
+  validates_associated :address
   
   file_column :icon, :magick => {
-    :versions => { 
-      :big => {:crop => "1:1", :size => "150x150", :name => "big"},
-      :medium => {:crop => "1:1", :size => "100x100", :name => "medium"},
-      :small => {:crop => "1:1", :size => "50x50", :name => "small"}
+      :versions => { 
+        :big => {:crop => "1:1", :size => "150x150", :name => "big"},
+        :medium => {:crop => "1:1", :size => "100x100", :name => "medium"},
+        :small => {:crop => "1:1", :size => "50x50", :name => "small"}
+      }
     }
-  }
-  
-  cattr_accessor :featured_profile
-  @@featured_profile = {:date=>Date.today-4, :profile=>nil}
   Profile::NOWHERE = 'Nowhere'
-
+  
+  
   def to_param
-    "#{id}-#{url_safe(display_name)}"
-  end
-  
-  
-  def url_safe(param)
-    param.downcase.gsub(/[^[:alnum:]]/,'-').gsub(/-{2,}/,'-')
-  end
-  
-  
-  # Used for pagination of a search term given the current page. The number of users per page
-  # isn't customizable for the user and is set to a static number within this model.
-  #
-  # = Example
-  #  User.search("dance", 2) => Pagination Array
-  def self.search(search, page)
-    search = "%#{search}" if search and search.length >= 2
-    if search == '#'
-      paginate :per_page => PER_PAGE, :page => page,
-               :conditions => ['display_name regexp "^[0-9]+"'],
-               :include => { :address => [:region, :country] },
-               :order => 'display_name'
-    else
-      paginate :per_page => PER_PAGE, :page => page,
-               :conditions => ['display_name like ?', "#{search}%"],
-               :include => { :address => [:region, :country] },
-               :order => 'display_name'
-    end
-  end
-
-
-  
-  
-  def has_network?
-    !Friend.find(:first, :conditions => ["inviter_id = ? or invited_id = ?", id, id]).blank?
-  end
-  
-  
-  
-  def self.featured
-    find_options = {
-      :include => :user,
-      :conditions => ["users.active = ? and about_me IS NOT NULL and user_id is not null", true],
-    }
-    find(:first, find_options.merge(:offset => rand( count(find_options) - 1)))
-  end  
-  
-  def no_data?
-    (created_at <=> updated_at) == 0
-  end
-  
-  
-  
-  
-  def has_wall_with profile
-    return false if profile.blank?
-    !Comment.between_profiles(self, profile).empty?
-  end
-  
-  
-  
+    permalink
+  end    
   
   
   def website= val
     write_attribute(:website, fix_http(val))
-  end
-  def blog= val
-    write_attribute(:blog, fix_http(val))
   end
   
   
@@ -135,15 +64,19 @@ class Profile < ActiveRecord::Base
   
   
   # Friend Methods
-  def friend_of? user
+  def has_network?
+    !Friend.find(:first, :conditions => ["inviter_id = ? or invited_id = ?", id, id]).blank?
+  end
+
+  def friend_of? profile
     user.in? friends
   end
   
-  def followed_by? user
+  def followed_by? profile
     user.in? followers
   end
   
-  def following? user
+  def following? profile
     user.in? followings
   end
   
@@ -153,21 +86,30 @@ class Profile < ActiveRecord::Base
   # ==============================
   # = Favorite Arcades and Games =
   # ==============================
+  def has_arcades?
+    frequentships.length > 0
+  end
+
   def has_favorite_arcade?(arcade)
     favorite_arcade_ids.include?(arcade.id)
   end
 
   def favorite_arcade_ids
-    frequentships.collect(&:arcade_id)
+    @cached_favorite_arcade_ids ||= frequentships.find(:all, :select => :arcade_id).collect(&:arcade_id)
   end
   
+  def has_games?
+    favoriteships.length > 0
+  end
+
   def has_favorite_game?(game)
     favorite_game_ids.include?(game.id)
   end
 
   def favorite_game_ids
-    favoriteships.collect(&:game_id)
+    @cached_favorite_game_ids ||= favoriteships.find(:all, :select => :game_id).collect(&:game_id)
   end
+  
   
   
   
@@ -177,19 +119,6 @@ class Profile < ActiveRecord::Base
   def has_address?
     address && (!address.nil? || address.new_record?)
   end
-  
-  def country_id
-    address.country.id
-  end
-  
-  def region_id
-    address.region.id
-  end
-  
-  
-  
-  
-  
   
   
   
@@ -223,23 +152,19 @@ class Profile < ActiveRecord::Base
   
   
   
-  
+  # Messaging
   def can_send_messages
     user.can_send_messages
   end
   
-  
-  
-  # These files are set through the user account. They're also included in profile for performance reasons
-  def email=(_email)
-    raise "Email should only be set through user."
-  end
-  def administrator=(_administrator)
-    raise "Administrator should only be set through user."
+  def unread_messages?
+    unread_messages_count > 0
   end
   
   
   
+  
+    
   def validate
     if address && !address.valid?
       address.errors.each { |attr, msg| errors.add(attr, msg) }
@@ -256,5 +181,4 @@ class Profile < ActiveRecord::Base
     return '' if str.blank?
     str.starts_with?('http') ? str : "http://#{str}"
   end
-    
 end

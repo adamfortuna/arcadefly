@@ -1,6 +1,5 @@
-<h2><%= @title %></h2>
 <ul class="tabs">
   <%= menu_link "What's Hot", popular_path %>
-  <%= menu_link "Most Favorited Arcades", popular_arcades_path %>
-  <%= menu_link "Most Favorited Games", popular_games_path %>
+  <%= menu_link "Most Favorited Arcades", popular_arcades_path, { :a_class => 'arcades' } %>
+  <%= menu_link "Most Favorited Games", popular_games_path, { :a_class => 'games' } %>
 </ul>

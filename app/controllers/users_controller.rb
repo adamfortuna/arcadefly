@@ -5,24 +5,24 @@ class UsersController < ResourceController::Base
   before_filter :login_required, :only => [:edit, :update, :welcome]
   before_filter :check_administrator, :only => [:destroy, :enable]
   
+
+
+
   def collection
-    # GET /arcades/1-disney/users
-    if parent_type == :arcade
-      @arcade = Arcade.find(params[:arcade_id], :include => 'users')
-      @collection = @arcade.users.paginate :page => params[:page], :order => 'name', :per_page => User::PER_PAGE
-    #GET /games/1-ABC/users
-    elsif parent_type == :game
-      @game = Game.find(params[:game_id], :include => 'users')
-      @collection = @game.users.paginate :page => params[:page], :order => 'name', :per_page => User::PER_PAGE
-    # GET /users
-    else
-      @collection = User.search(params[:search], params[:page])
-    end
-    @collection
+    parent? ? parent_object.users.paginate(options) : User.paginate(options)    
   end
 
-  def object
-    User.find(param, :include => { :address => [:region, :country] })
+  # Setup up the possible options for getting a collection, with defaults
+  def options
+    search = params[:search] 
+    search = "%" + search if search and params[:search].length >= 2
+
+    collection_options = {}
+    collection_options[:page] = params[:page] || 1
+    collection_options[:per_page] = params[:per_page] || User::PER_PAGE
+    collection_options[:order] = params[:order] || 'users.name'
+    collection_options[:conditions] = ['profiles.display_name like ? OR profiles.full_name like ?', "#{search}%", "#{search}%" ] unless search.blank?
+    collection_options
   end
 
   index.wants.html { 
@@ -38,6 +38,14 @@ class UsersController < ResourceController::Base
     end
   }
   
+
+
+
+
+  def object
+    User.find(param, :include => { :address => [:region, :country] })
+  end
+
   def show
     @user =  User.find(params[:id], :include => [ { :address => [:region] }])
 
@@ -61,13 +69,13 @@ class UsersController < ResourceController::Base
   def create
     @add_address = params[:add_address]
     cookies.delete :auth_token
-    @user = User.new()
-    @user.profile = Profile.new()
+    @user = User.new(params)
+    @user.profile = Profile.new
     
+    @user.email = params[:user][:email]
+    @user.email_confirmation = params[:profile][:email_confirmation]
     @user.password = params[:user][:password]
     @user.password_confirmation = params[:user][:password_confirmation]
-    @user.profile.email = params[:profile][:email]
-    @user.profile.email_confirmation = params[:profile][:email_confirmation]
     @user.profile.display_name = params[:profile][:display_name]
     
     if params[:add_address]
@@ -82,10 +90,10 @@ class UsersController < ResourceController::Base
     #Uncomment to have the user logged in after creating an account - Not Recommended
     #self.current_user = @user
     flash[:notice] = "Thanks for signing up, <b>#{@user.profile.display_name}</b>! Please check your email and click on the link we sent you to activate your account and log in."
-    redirect_to signin_path    
+    redirect_to signin_path
   rescue
     flash[:error] = "There was a problem creating your account. Please correct any errors below before continuing."
-    render :action => 'new'
+    redirect_to signup_path
   end
   
   def edit

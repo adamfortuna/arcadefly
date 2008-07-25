@@ -4,7 +4,7 @@
 
 <% tabbed_box do %>
   <h2><%= @title %></h2>
-  <% if @profile.favoriteships_count > 0 %>
+  <% if @profile.has_games? %>
     <%= render :partial => 'games/games', :object => @games %>
   <% else %>  
     <p><%= @profile.display_name %> doesn't have any favorite games</p>

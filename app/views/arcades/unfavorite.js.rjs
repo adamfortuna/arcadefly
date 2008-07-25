@@ -1,0 +1,1 @@
+page.replace_html "favorite_arcade_#{@arcade.id}", favorite_arcade_link(@arcade, { :show_text => params[:show_text] == "true" })

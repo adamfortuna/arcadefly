@@ -11,20 +11,19 @@
 
 <% tabbed_box do %>
   
-  <div id="profile_overview" class="map_box">
-    <div class="overview left_column">
-      <div class="left avatar"><%= icon @profile, :big %></div>
-      <div class="right bio_stuff">
+  <div id="profile_overview">
+    <div class="left_column">
+      <div class="left"><%= icon @profile, :big %></div>
+      <div class="short_description">
         <h2><%= h @profile.display_name %></h2>
         <% unless @profile.full_name.blank? %><div><strong>Real Name:</strong> <%=@profile.full_name%></div><% end %>
     	  <% if @profile.has_address? %><h3><%= location_link @profile %></h3><% end %>
     		<% unless @profile.website.blank? %><div><strong>Website:</strong> <%= link_to h(@profile.website), h(@profile.website) %></div><% end %>
-    		<% unless @profile.blog.blank? %><div><strong>Blog:</strong> <%= link_to h(@profile.blog), h(@profile.blog) %></div><% end %>
     		<% unless @profile.aim_name.blank? %><div><strong>AIM:</strong> <a href="aim:goim?screenname=<%= h @profile.aim_name %>"><%= h @profile.aim_name %></a></div><% end %>
     		<% unless @profile.gtalk_name.blank? %><div><strong>GTalk:</strong> <a href="xmpp:<%= h @profile.gtalk_name %>"><%=h @profile.gtalk_name %></a></div><% end %>
     	</div>
     	<% unless @profile.about_me.blank? %>
-    	<div class="clear">
+    	<div class="left_column_content">
     	  <div>
     	    <h3>About:</h3>
     	    <%= sanitize(@profile.about_me) %>
@@ -37,7 +36,7 @@
     <div class="map_box right_column">
       <%= @map.div(:class => 'map map_small') %>
       <p class="center">
-        <%= h @profile.full_name %> lives in <%= @profile.address.shortest_line %>
+        <%= h @profile.display_name %> lives in <%= @profile.address.shortest_line %>
       </p>
     </div>
     <% end %>

@@ -1,0 +1,4 @@
+<%- parent ||= :user -%>
+<ul class="data">
+  <%= render :partial => 'profiles/profile', :collection => profiles, :locals => { :parent => parent } %>
+</ul> 

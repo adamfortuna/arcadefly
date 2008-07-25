@@ -3,6 +3,7 @@
 <%= render :partial => 'menu' %>
 
 <% tabbed_box do %>
+  <h2><%= @title %></h2>
   <dl>
     <dt>I lost my password and cannot sign in.</dt>
     <dd>The <%= link_to "sign in page", signin_path %> has what you need! Complete the Forgotten Password form and we'll email you with directions on how to reset your password.</dd>
@@ -13,7 +14,15 @@
     <dt>My Address isn't showing up at the right location.</dt>
     <dd>First, try changing your address. If it still doesn't work, that probably means Google can't find your address. You might want to try entering a general address in your area.</dd>
     
+    <dt>I want to use an avatar, but not the one associated with the email I signed up with?</dt>
+    <dd>
+      That's a tricky one. Since we use Gravatar right now, you can only use the one associated with your email address. For now I recommend changing your email
+      address used here on ArcadeFly. There's a little trick you can use and keep the same email address though! If you use the address <strong>myname@example.org</strong>,
+      you can change this to <strong>myname+arcadefly@example.org</strong>.  This is actually a trick you can use with a lot of sites! Anything after the + can be whatever
+      you want and it'll still go to the same address. Add this new address to Gravatar and there you have it -- same email address, 2 gravatars.
+    </dd>
+
     <dt>I have another question not on here...</dt>
-    <dd>Feel free to contact us directly using the <a href="/contact">Contact Us</a> page. We'll see what we can do to resolve your issue as quick as possible.</dd>
+    <dd>Feel free to contact us directly using the <a href="/contact">Contact Us</a> page. We'll see what we can do to resolve your issue as quick as possible.</dd>  
   </dl>
 <% end %>

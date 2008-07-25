@@ -6,6 +6,8 @@ class CreateFavoriteships < ActiveRecord::Migration
     end
     
     add_index :favoriteships, [:profile_id, :game_id], :unique
+    add_index :favoriteships, :profile_id
+    add_index :favoriteships, :game_id
   end
 
   def self.down

@@ -16,8 +16,6 @@ a.button:hover { background:#007de2 url(/images/button_bg_o.jpg) repeat-x; borde
 /* Fix up IE6 PNG Support */
 img, #logo { behavior: url(/scripts/iepngfix.htc); }
 
-
-
 /* layout */
 .container { width:960px; margin:0 auto; position:relative; }
 #main { background:#c4c0be url(/images/background_light_slice.jpg) repeat-x; padding-bottom:30px; }

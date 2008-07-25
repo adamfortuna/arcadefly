@@ -1,0 +1,174 @@
+<%- javascript 'dynamic_regions' %>
+
+<% content_for(:header) do %>
+  <script>
+  
+	function fill_down(start, stop) {
+	  $$('#hours select.start').each( function(e) {
+  	  $(e).selectedIndex = start;
+	  });
+	  $$('#hours select.end').each( function(e) {
+  	  $(e).selectedIndex = stop;
+	  });
+	}
+	
+	
+	function closedChanged(day, show) {
+	  if (show)
+	    $(day+'_hours').style.visibility = '';
+	  else
+	    $(day+'_hours').style.visibility = 'hidden';
+	}
+	
+	function hoursChanged(showAddHours) {
+	  $$('#hours input').each( function(e) {
+      if (showAddHours) {
+  			$(e).removeClassName('disabled');
+  			$(e).disabled = '';
+  		}	else {
+  			$(e).addClassName('disabled');
+  			$(e).disabled = 'disabled';
+  		}	
+	  });
+	  $$('#hours select').each( function(e) {
+      if (showAddHours) {
+  			$(e).removeClassName('disabled');
+  			$(e).disabled = '';
+  		}	else {
+  			$(e).addClassName('disabled');
+  			$(e).disabled = 'disabled';
+  		}	
+	  });
+	  $$('#hours label').each( function(e) {
+      if (showAddHours) {
+  			$(e).removeClassName('disabled');
+  		}	else {
+  			$(e).addClassName('disabled');
+  		}	
+	  });
+	}
+	
+	  Event.observe(window, 'load', function() {
+      Form.focusFirstElement('arcade_form');
+      hoursChanged(false);
+      $('hide_hours').observe('click', function() {
+        hoursChanged(false);
+      });
+      $('show_hours').observe('click', function() {
+        hoursChanged(true);
+      });
+
+    });
+  </script>
+  
+  <style>
+  ul#hours { list-style:none; margin:0; padding:0; }
+  ul#hours li span.dayofweek {
+    width:40px;
+    display:block;
+    float:left;
+    text-align:right;
+    padding-right:.4em;
+    margin-top:.8em;
+  }
+  ul#hours li span.from_to {
+    display:block;
+    width:250px;
+    float:left;    
+  }
+  ul#hours li span.options {
+    margin-top:.8em;
+    diplay:block;
+    float:left;
+  }
+  ul#hours li input.text, ul#hours li select.text { width:100px; }
+  
+  </style>
+<% end %>
+
+<div class="left half">
+  <p class="block required">
+    <label for="arcade_name">Arcade Name</label>
+    <span class="info">If this arcade is in a mall, please include the mall name in the arcade name.<br/>Example: <em>Gameworks at West Oaks Mall</em>.</span>
+    <%= error_message_on "arcade", "name", "Arcade Name " %>
+    <%= f.text_field :name, { :class => 'text' } %>
+  </p>
+      
+  <% fields_for 'arcade[address]', @arcade.address do |a| %>
+  <p class="block">	
+    <label for="address_street">Street</label>
+    <%= error_message_on "address", "street", "Street " %>
+    <%= a.text_field :street, { :class => "text" } %>
+  </p>
+  <p class="block required">
+    <label for="address_city">City</label>
+    <%= error_message_on "address", "city", "City " %>
+    <%= a.text_field :city, { :class => "text" } %>
+  </p>
+  <p class="block required">
+    <label for="address_country_id">Country</label>
+    <%= error_message_on "address", "country_id", "Country " %>
+    <%= a.select :country_id, Country.find(:all).collect {|r| [ r.name, r.id ] }, 
+                              { :include_blank => true },
+                              { :class => "text", :id => "address_country_id" } %>
+  </p>
+  <p class="block required" id="address_region_id_field">
+    <label for="address_region_id">State/Region</label>
+    <%= error_message_on "address", "region_id", "State/Region " %>
+    <%= a.select :region_id, Region.find(:all).collect {|r| [ r.name, r.id ] }, 
+                             { :include_blank => true },
+                             { :class => "text", :id => "address_region_id" } %>
+  </p>
+  <p class="block required">
+    <label for="address_postal_code">Zip/Postal Code <a href="http://zip4.usps.com/zip4/welcome.jsp" target="_blank">[?]</a></label>
+    <%= error_message_on "address", "postal_code", "Zip/Postal Code " %>
+    <%= a.text_field :postal_code, { :class => "text" } %>
+  </p>
+<% end %>
+</div>
+
+<div class="right half">
+  <h3>Hours</h3>
+
+  <p>
+    <input id="hide_hours" name="add_hours" type="radio" value="false" checked="true" />
+    <label for="hide_hours">Don't specify hours for this location right now.</label>
+  </p>
+  <p>
+    <input id="show_hours" name="add_hours" type="radio" value="true" />
+    <label for="show_hours">Specify hours for this arcade now.</label>
+  </p>
+  
+ 
+  <ul id="hours">
+    <% @arcade.hours.each do |hour| %>
+    <% fields_for 'hours', hour do |h| %>
+    <li class="clear">
+      <span class="dayofweek"><%= hour.dayofweek.capitalize %>:</span>
+      <span id="<%= hour.dayofweek %>_hours" class="from_to">
+      
+      <%= h.select :start, Hour::START_OPTIONS,
+        { :include_blank => false },
+        { :class => "start text", :value => "12:00 PM", :id => "hour_start_#{hour.dayofweek}" } %>
+          
+      to&nbsp;&nbsp;
+
+      <%= h.select :end, Hour::END_OPTIONS,
+         { :include_blank => false },
+         { :class => "end text", :value => "12:00 PM", :id => "hour_end_#{hour.dayofweek}" } %>
+      
+      </span>
+      <span class="options">
+        <%= check_box_tag 'hours[][closed]', true, false, { :id => "hours_#{hour.dayofweek}_closed", :onchange => "javascript:closedChanged(\"#{hour.dayofweek}\", !this.checked);" } %>
+        <label for="hours_<%= hour.dayofweek %>_closed">Closed</label>
+        <% if hour.dayofweek == 'mon' -%><a href="javascript:fill_down($('hour_start_mon').selectedIndex, $('hour_end_mon').selectedIndex);" class="down">Copy to all</a><% end %>
+      </span>
+    </li>
+    <% end %>
+    <% end %>
+  </ul>        
+</div>
+
+<p class="clear right">
+  <%= submit_tag "Review »", :class => "big-button right", :disable_with => 'Submitting...' %>
+</p>

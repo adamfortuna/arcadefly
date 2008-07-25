@@ -2,19 +2,18 @@
 
 <%= render :partial => 'arcades/menu', :locals => { :arcade => @arcade } %>
 
-<div class="tabbed">
+<% tabbed_box do %>
+  <h2><%= @title %></h2>
 
-  <ul class="data">
-    <%= render :partial => 'profiles/profile', :collection => @profiles, :locals => { :parent => :arcade } %>
-  </ul>
+  <%= render :partial => 'profiles/profiles', :object => @profiles, :locals => { :parent => :arcade } %>
   
-  <% if @arcade.profiles.length == 0 && logged_in? %>
-    <p><%= button_to "Add to your favorites", arcade_favorites_path(@arcade), { :method => "post", :class => 'favorite arcade_add' } %></p>
+  <% if !@arcade.has_profiles? %>
+  <p>No one has favorited <strong><%= @arcade.name %></strong> just yet.</p>
   <% end %>
   
   <p>
     <%= will_paginate @profiles %>
   </p>
   
-  <%= render :partial => 'arcades/footer', :locals => { :arcade => @arcade } %>
-</div>
+  <%= render :partial => 'arcades/favorite', :locals => { :show_text => true, :arcade => @arcade } %>
+<% end %>

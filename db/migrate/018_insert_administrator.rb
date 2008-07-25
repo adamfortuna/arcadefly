@@ -8,8 +8,7 @@ class InsertAdministrator < ActiveRecord::Migration
     
     user = User.new :email => 'adam@fortuna.name',
                     :password => 'password',
-                    :password_confirmation => 'password',
-                    :administrator => true
+                    :password_confirmation => 'password'
 
     user.profile = Profile.new :display_name => 'Adam',
                                :full_name => 'Adam Fortuna',
@@ -17,7 +16,8 @@ class InsertAdministrator < ActiveRecord::Migration
                                :about_me => 'I\'m the creator of this site.',
                                :aim_name => 'Dyogenez',
                                :gtalk_name => 'adam@fortuna.name',
-                               :msn_name => 'adam@fortuna.name'
+                               :msn_name => 'adam@fortuna.name',
+                               :initials => 'dyo'
                                
     
     user.profile.address = Address.new :title => 'Home',
@@ -28,6 +28,8 @@ class InsertAdministrator < ActiveRecord::Migration
                                        :postal_code => 32835
     user.save!
     user.send(:activate!)
+    
+    user.make_administrator!
   end
  
   def self.down

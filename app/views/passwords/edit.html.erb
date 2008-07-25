@@ -1,3 +1,5 @@
+<%- title "Create a new Password" -%>
+
 <% content_for(:header) do %>
   <script>
     Event.observe(window, 'load', function() {
@@ -6,32 +8,30 @@
   </script>
 <% end %>
 
-<%- title "Create a new Password" -%>
-
-<div class="block_outside focus left">
-  <div class="block_inside">
+<div class="large_left_column">
+  <% box do %>
     <h2>Create a new Password</h2>
     <% form_for :user, :id => params[:id], :html => { :method => :put, :id => 'change_password_form' } do |f| %>       
       <p class="block required">
         <label for="user_password">New Password</label>
-				<span class="block info">At least 4 characters.</span>
-				<%= error_message_on "user", "password", "Password " %>
+  			<span class="block info">At least 4 characters.</span>
+  			<%= error_message_on "user", "password", "Password " %>
         <%= f.password_field :password, :size => 50,  :class => 'text', :value => '' %>
       </p>
       <p class="block required">
         <label for="user_password_confirmation">Confirm Password</label>
-				<%= error_message_on "user", "password_confirmation", "Password Confirmation " %>
+  			<%= error_message_on "user", "password_confirmation", "Password Confirmation " %>
         <%= f.password_field :password_confirmation, :size => 50,  :class => 'text', :value => '' %>
       </p>
       <p class="block">
         <%= submit_tag "Change my password and sign me in!", :disable_with => "Changing your password.." %>
       </p>
     <% end %>
-  </div>
+  <% end %>
 </div>
 
-<div class="block_outside_dark gutter right">
-  <div class="block_inside">
-    <span>After choosing your new password you will immediately be logged in and sent an email reminding you that your password changed.</span>
-  </div>
+<div class="right_column">
+  <% box do %>
+    <span>After choosing your new password you will immediately be logged in and sent an email letting you know that your password changed.</span>
+  <% end %>
 </div>

@@ -1,0 +1,35 @@
+<%- title "Help" + separator + "Arcades Help" %>
+
+<%= render :partial => 'menu' %>
+
+<% tabbed_box do %>
+  <h2><%= @title %></h2>
+  <p>
+    All arcades on the site are added and manipulated by ArcadeFly members, so take that into account when planning your trips. Although we try to be 100% 
+    accurate, as with any user edited sites there's a degree of mystery. If you spot something that isn't accurate, feel feel to change it. Also, a few things
+    might help for finding the most useful information:
+    <ul>
+      <li>The arcade has a star by it. This indicates that someone on the staff at that arcade registered here and claimed it.</li>
+      <li>The last modified date on an arcade is a while ago.</li>
+      <li>In the game listing page, we show when the game was added to this arcade. Games that have been there longer are more likely to be correct.</li>
+    </ul>
+  </p>
+
+  <h3>Add and Modifying Arcades</h3>
+  <p>
+    Anyone who has signed up is allowed to modify or add arcades and the games in any arcade. Only do this if you know the right information! It's better to have
+    less information than wrong information after all. If you notice something wrong with an arcade, feel free to make a small edit and correct the problem. 
+  </p>
+  <p>
+    Some arcades will be locked, and not editable. These are arcades that have been claimed by the staff. That just means they've taken on responsibility
+    for the basic information and the games list rather than leaving it up to the public. 
+  </p>
+  
+  <h3>Claiming an Arcade</h3>
+  <p>
+    Claimed arcades have a star by them, indicating that someone that works at that arcade is signed up here on ArcadeFly. This doesn't have to be an owner or a
+    manager -- it can be anyone that's passionate about arcades and wants to keep the information up to date. You don't even have to work at the arcade as long as
+    you make a good case. To claim an arcade, click on the claim link at the bottom and complete the claim form. Claiming an arcade as an owner/operator/manager
+    will require phone verification with the phone number we list here on ArcadeFly.
+  </p>
+<% end %>

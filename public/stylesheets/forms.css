@@ -54,3 +54,8 @@ textarea:focus      { border:1px solid #999; background:#fff; }
 /* Select fields */
 select              { border:1px solid #ccc; background:#eee; width:200px; }
 select:focus        { border:1px solid #999; background:#fff; }
+
+input.arcades { background: url(/images/joystick.png) #dde no-repeat left; background-position: 1em; padding-left: 40px; }
+input.games { background: url(/images/controller.png) #fdd no-repeat left; background-position: 1em; padding-left: 40px; }
+input.users { background: url(/images/user.png) #ded no-repeat left; background-position: 1em; padding-left: 40px; }
+

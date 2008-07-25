@@ -1,6 +1,4 @@
-<% box do %>
-	<h2>Sign In</h2>
-  <% form_tag sessions_path, :id => 'login_form'  do -%>
+<% form_tag sessions_path, :id => 'login_form'  do -%>
   <p class="block">
     <label for="email">Email Address</label>
     <%= text_field_tag 'email', params[:email], { :class => 'text' } %>
@@ -18,5 +16,4 @@
   <p class="block">
     <%= submit_tag 'Sign in', { :class => 'button', :disable_with => 'Signing in...' } %>
   </p>
-  <% end %>
 <% end %>

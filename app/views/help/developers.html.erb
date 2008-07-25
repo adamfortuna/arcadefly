@@ -1,0 +1,32 @@
+<%- title "Help" + separator + "Developers" %>
+
+<%= render :partial => 'menu' %>
+
+<% tabbed_box do %>
+  <h2><%= @title %></h2>
+  <p>
+    Just about every page with useful information on this site has an XML representation, although it's not yet easily visible. Whenever you're viewing
+    a list of arcades, games or users, just add in .xml to the URL and bam! There's the xml equivalent. This'll work with searches too. For instance,
+    if you're looking for an xml feed of all games with "dance" in them, just head to <%= link_to "#{HOST}/games.xml?search=dance", "#{HOST}/games.xml?search=dance" %>.
+  </p>
+  
+  <p>
+    You might also notice that games on this site are available by ID in the URL rather than by game name. This ID is actually the same ID that GameFAQS uses. If
+    you're already building a site that links to GameFAQs, linking to ArcadeFly or utilizing arcade data on that game should be just as easy.
+  </p>
+  
+  <h3>Disclosure</h3>
+  <p>
+    There are a few rules to using the ArcadeFly API; but nothing out of the ordinary. You have to have some kind of link back to <%= link_to "ArcadeFly", root_url %>
+    on each page that uses data from ArcadeFly or makes a request to our API. If you're building a hugely popular system that's going to be hitting us hard, be sure
+    <%= link_to "contact us", contact_url %> so we know to expect it. Other than that just be smart in your requests! If you're wanting a list, get a list; if you're
+    wanting a single item, request a single item.
+  </p>
+  
+  <h3>New API Requests</h3>
+  <p>
+    APIs are based around need. I'd like to say we're using our API, but we're just using the underlying data and exposing that data via XML. For this reason the people
+    who know best about the API are those that are consuming it. If you're working with it and realize there's some extra bit of data that would be nice to have, 
+    or there's some other listing of data that is useful, just <%= link_to "let us know", contact_url %> and we'll see what we can do.
+  </p>
+<% end %>

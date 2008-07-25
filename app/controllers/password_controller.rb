@@ -1,5 +1,4 @@
-class PasswordsController < ApplicationController
-  layout 'application'
+class PasswordController < ApplicationController
   before_filter :not_logged_in_required, :only => [:new, :create]
   
   # Enter email address to recover password 
@@ -23,25 +22,27 @@ class PasswordsController < ApplicationController
     redirect_to signin_path
   end
   
+  # A user cliks a link from an email to get to this form used to reset their email
   # GET /reset_password/:id
   def edit
-    if request.put?
-      update
-    else
+    if request.get?
       raise if params[:id].nil? || !(@user = User.find_by_password_reset_code(params[:id]))
-      flash[:notice] = "Welcome back <strong>#{@user.profile.email}</strong>! Please choose a new password."
+      flash.now[:notice] = "Welcome back <strong>#{@user.profile.email}</strong>! Please choose a new password."
+    else
+      update
     end
   rescue
     logger.error "Invalid Reset Code entered."
-    flash[:error] = "Sorry, that is an invalid password reset code. Please check your code and try again. Perhaps the link was split over multiple lines and didn't come over correctly?"
-    redirect_to login_path
+    flash[:error] = "Sorry, that is an invalid password reset code. Please check your code and try again. Perhaps the link was split over multiple lines and didn't come over correctly? You might want to try copy and pasting the link rather than clicking on it."
+    redirect_to signin_path
   end
     
-  # PUT /passwords/:id
+  # PUT /password/:id
   def update
     raise if !(@user = User.find_by_password_reset_code(params[:id]))
-    @user.password_confirmation = params[:user][:password_confirmation]
+
     @user.password = params[:user][:password]
+    @user.password_confirmation = params[:user][:password_confirmation]
 
     if @user.valid?
       @user.reset_password
@@ -52,6 +53,7 @@ class PasswordsController < ApplicationController
       return
     else
       flash[:error] = "There was a problem changing your password. Please correct the errors below and continue."
+      render :template => :edit
     end
   rescue
     @user.errors.add(:password, "must match and be at least 4 characters.")

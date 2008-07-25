@@ -1,40 +1,6 @@
 class ArcadesController < ResourceController::Base
   belongs_to :profile, :game
-  
-  before_filter :login_required, :only => :favorite
-  
-  def collection
-    # GET /games/1/arcades
-    if parent_type == :game
-      @game = Game.find(params[:game_id], :include => 'arcades')
-      @collection = @game.arcades.paginate :page => params[:page], :order => 'arcades.name', :per_page => Arcade::PER_PAGE, :include => {:address => [:region, :country]}
-    # GET /profiles/1-adam/arcades
-    elsif parent_type == :profile
-      @profile = Profile.find(params[:profile_id])
-      @collection = @profile.arcades.paginate :page => params[:page], :order => 'arcades.name', :per_page => Arcade::PER_PAGE, :include => {:address => [:region, :country]}
-    # GET /arcades
-    else
-      @collection =  Arcade.search(params[:search], params[:page])
-    end
     
-    @collection = sort_arcades_by_distance(@collection)
-    @map = map_for_arcades(@collection)
-    
-    @collection
-  end
-  
-  def object
-    @arcade = Arcade.find(params[:id], :include => [ { :address => [:country, :region] }] )
-    @map = GMap.new("arcade_map")
-    @map.control_init(:map_type => false, :small_zoom => true)
-    @map.center_zoom_init([@arcade.address.lat, @arcade.address.lng], 11)
-    @map.overlay_init(GMarker.new([@arcade.address.lat, @arcade.address.lng], :title => @arcade.name))
-    @arcade
-  end
-  
-  # index can be called from the following:
-  # GET /arcades
-  # GET /games/:game_id/arcades
   index.wants.html { 
     if parent_type == :game
       render :template => "games/arcades" 
@@ -45,25 +11,18 @@ class ArcadesController < ResourceController::Base
     end
   }
 
-
-
-
-
-
-
-
+  index.wants.xml {
+    render :text => @arcades.to_xml(:dasherize => false, :only => Arcade::PUBLIC_FIELDS)
+  }
   
-  # GET /arcades/1-rockys
-  def show
-    @arcade = object
-    @games_popularity =  Arcade.count(:conditions => ['playables_count > ?', @arcade.playables_count])+1
-    @users_popularity =  Arcade.count(:conditions => ['frequentships_count > ?', @arcade.frequentships_count])+1
-  end
-
+  show.wants.xml {
+    render :text => @arcade.to_xml(:dasherize => false, :only => Arcade::PUBLIC_FIELDS_WITH_ADDRESS, :include => [:address], :methods => [:region, :country])
+  }
+  
   # Map for an arcade
   # GET /arcades/:id/map
   def map
-    @arcade = Arcade.find(params[:id], :include => { :address => [:region, :country]} )
+    @arcade = Arcade.find_by_permalink(params[:id], :include => { :address => [:region, :country]} )
 
     @map = GMap.new("arcade_map")
     @map.control_init(:large_map => true, :map_type => true)
@@ -73,64 +32,18 @@ class ArcadesController < ResourceController::Base
                       :info_window => arcade_info_window(@arcade)))
   end
 
-  
-  
-  
-  
-  
-  # GET /arcades/countries/:id
-  # :id will be the country id
-  def country
-    @arcades = sort_arcades_by_distance Arcade.search_by_country(params[:id], params[:page])
+
+  def popular
+    @arcades = Arcade.paginate(:all, :order => 'frequentships_count desc, playables_count desc', :include => [ { :address => :region } ], :page => params[:page], :per_page => Arcade::PER_PAGE )
+    @arcades = sort_arcades_by_distance(arcades) if params[:order] == 'distance'
+    @max_count = Arcade.maximum(:frequentships_count)
     @map = map_for_arcades(@arcades)
-    @country = Country.find(params[:id])
-  end
-  
-  # GET /arcades/regions/:id
-  # :id will be the region id
-  def region
-    @arcades = sort_arcades_by_distance Arcade.search_by_region(params[:id], params[:page])
-    @map = map_for_arcades(@arcades)
-    @region = Region.find(params[:id].to_s)
-  end
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  # GET /arcades/browse
-  def browse
-    @countries = Country.find(:all, :include => :addresses, :conditions => 'addresses.addressable_type="Arcade"', :order => 'countries.name')
-    @regions = Region.find(:all, :include => :addresses, :conditions => 'addresses.addressable_type="Arcade"', :order => 'regions.name')
   end
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  def claim
+    @arcade = object
+  end
 
 
   # One page form for creating a new arcade (currently doesnt work with games or address)
@@ -194,12 +107,46 @@ class ArcadesController < ResourceController::Base
     end
   end
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  #Editing
   # Manage games at an existing arcade
   def edit_games
-    
+    @arcade = object
   end
   
+  def edit
+    @arcade = object
+    @arcade.hours = Hour.create_week(@arcade) if @arcade.hours.size != 7
+  end
   
+  def update
+    @arcade = object
+    debugger
+    
+    @arcade.name = params[:arcade][:name]
+    @arcade.address.attributes.merge!(params[:arcade][:address])
+    
+    if @arcade.valid?      
+      flash[:notice] = "All information looks right! Please verify it's still looking good. If all is well, we'll update this location right away!"
+      redirect_to review_arcade_path(@arcade)
+    else
+      flash[:error] = "There was an error in the form you submitted. Please fix it below."
+      redirect_to edit_arcade_path(@arcade)
+    end
+  end
+
+
+  def verify
+    
+  end
 
   
   
@@ -207,7 +154,73 @@ class ArcadesController < ResourceController::Base
   
   
   
+
   
+  def unfavorite
+    if favorite_arcade = Frequentship.find_by_arcade_id_and_profile_id(object.id,current_profile.id)
+      favorite_arcade.destroy
+      flash[:notice] = "<span class=\"favorite arcade_delete\">You removed <b>#{object.name}</b> from your list of favorite arcades. <a href=\"#{profile_arcades_path(current_profile)}\">View your favorite arcades</a>.</span>"
+    else
+      flash[:error] = "You have not added <b>#{object.name}</b> to your list of favorite arcades, so how could you remove it? <a href=\"#{profile_arcades_path(current_profile)}\">View your favorite arcades</a>."
+    end
+    redirect_to request.env["HTTP_REFERER"]
+  end
+  
+  
+  
+  def favorite
+    @arcade = object
+    if !current_profile.has_favorite_arcade?(@arcade)
+      current_profile.arcades << @arcade
+    end
+
+    respond_to do |format|
+      format.html {
+        if current_profile.arcades.include?(@arcade)
+          flash[:notice] = "<span class=\"favorite arcade_add\">You added <b>#{@arcade.name}</b> to your list of favorite arcades! <a href=\"#{profile_arcade_path(current_profile)}\">View your favorite arcade</a>.</span>"
+        else
+          flash[:error] = "You have already added <b>#{@arcade.name}</b> to your list of favorite arcades. <a href=\"#{profile_arcades_path(current_profile)}\">View your favorite arcade</a>."
+        end
+        redirect_to request.env["HTTP_REFERER"]
+      }
+      format.js {
+        if current_profile.arcades.include?(@arcade)
+          render
+        else
+          render :update do |page|
+            page.alert("You have already added \"#{@arcade.name}\" to your list of favorite arcades. Try refreshing the page and trying again.")
+          end
+        end
+      }
+    end    
+  end
+  
+  def unfavorite
+    @arcade = object
+    if favorite_arcade = Frequentship.find_by_arcade_id_and_profile_id(@arcade.id,current_profile.id)
+      favorite_arcade.destroy
+    end
+
+    respond_to do |format|
+      format.html {
+        if !favorite_arcade.nil? && favorite_arcade.frozen?
+          flash[:notice] = "<span class=\"favorite arcade_delete\">You removed <b>#{@arcade.name}</b> from your list of favorite arcades. <a href=\"#{profile_arcades_path(current_profile)}\">View your favorite arcades</a>.</span>"
+        else
+          flash[:error] = "You have not added <b>#{@arcade.name}</b> to your list of favorite arcades, so how could you remove it? <a href=\"#{profile_arcades_path(current_profile)}\">View your favorite arcades</a>."
+        end
+        redirect_to request.env["HTTP_REFERER"]
+      }
+      format.js {
+        if !favorite_arcade.nil? && favorite_arcade.frozen?
+          render
+        else
+          render :update do |page|
+            page.alert("You have not added \"#{@arcade.name}\" to your list of favorite arcades, so you can't remove it. Try refreshing the page and trying again.")
+          end
+        end
+      }
+    end
+  end
   
   
   
@@ -226,10 +239,54 @@ class ArcadesController < ResourceController::Base
   
   
   private
+  # GET /arcades
+  # GET /profiles/:profile_id/arcades
+  # GET /games/:game_id/arcades
+  def collection
+    arcades = parent? ? parent_object.arcades.paginate(options) : Arcade.paginate(options)    
+    arcades = sort_arcades_by_distance(arcades) if params[:order] == 'distance'
+    @map = map_for_arcades(arcades)
+    arcades
+  end
+
+  # Setup up the possible options for getting a collection, with defaults
+  def options
+    search = params[:search] 
+    search = "%" + search if search and params[:search].length >= 2
+
+    collection_options = {}
+    collection_options[:page] = params[:page] || 1
+    collection_options[:per_page] = params[:per_page] || Arcade::PER_PAGE
+    collection_options[:order] = params[:order] || 'arcades.name, frequentships_count desc'
+    collection_options[:include] = {:address => [:region, :country]}      
+    collection_options[:conditions] = ['arcades.name like ?', "#{search}%"] unless search.blank?
+    collection_options
+  end
+  
+
+  def parent_object
+    return Game.find_by_permalink(params[:game_id]) if parent_type == :game
+    return Profile.find_by_permalink(params[:profile_id]) if parent_type == :profile
+  end
+
+  # GET /arcades/1-arcade-name
+  # This will set an arcade object
+  def object
+    arcade = Arcade.find_by_permalink(params[:id], :include => [ { :address => [:country, :region] }] )
+    @map = GMap.new("arcade_map")
+    @map.control_init(:map_type => false, :small_zoom => true)
+    @map.center_zoom_init([arcade.address.lat, arcade.address.lng], 10)
+    @map.overlay_init(GMarker.new([arcade.address.lat, arcade.address.lng], :title => arcade.name))
+    arcade
+  end
+  
+
+
   def arcade_info_window(arcade)
     "<strong>#{arcade.name}</strong> <p>#{arcade.address.street}<br />#{arcade.address.city}, #{arcade.address.region.name} #{arcade.address.postal_code}</p><p><strong>Games:</strong> #{arcade.playables_count}</p>"
   end 
   
+  # Create a map object for an array of arcades
   def map_for_arcades(arcades)
     map = GMap.new("arcades_map")
     map.control_init(:small_map => true, :map_type => false)
@@ -256,5 +313,4 @@ class ArcadesController < ResourceController::Base
   def sort_arcades_by_distance(arcades)
     (arcades && arcades.length > 1 && addressed_in?) ? arcades.sort_by_distance_from(current_address) : arcades
   end
-    
 end

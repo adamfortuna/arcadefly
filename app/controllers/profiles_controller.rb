@@ -1,27 +1,8 @@
 class ProfilesController < ResourceController::Base
   belongs_to :game, :arcade
-  
-  include ApplicationHelper
     
-  before_filter :setup, :except => [:index, :search]
   before_filter :check_permissions, :only => [:edit, :update]
   skip_filter :login_required, :only => [:show, :index, :feed, :search]
-
-  def collection
-    # GET /arcades/1-disney/users
-    if parent_type == :arcade
-      @arcade = Arcade.find(params[:arcade_id], :include => 'profiles')
-      @collection = @arcade.profiles.paginate :page => params[:page], :order => 'display_name', :per_page => Profile::PER_PAGE
-    #GET /games/1-ABC/users
-    elsif parent_type == :game
-      @game = Game.find(params[:game_id], :include => 'profiles')
-      @collection = @game.profiles.paginate :page => params[:page], :order => 'display_name', :per_page => Profile::PER_PAGE
-    # GET /users
-    else
-      @collection = Profile.search(params[:search], params[:page])
-    end
-    @collection
-  end
 
   index.wants.html { 
     # GET /arcades/:arcade_id/users
@@ -34,54 +15,30 @@ class ProfilesController < ResourceController::Base
     else
       render :template => "profiles/index"
     end
+  }  
+  index.wants.xml { 
+    render :text => @profiles.to_xml(:dasherize => false, :only => Profile::PUBLIC_FIELDS)
   }
-  
-  
+
   def show
-    unless @profile.youtube_username.blank?
-      begin
-        client = YouTubeG::Client.new
-        @video = client.videos_by(:user => @profile.youtube_username).videos.first
-      rescue Exception, OpenURI::HTTPError
-      end
-    end
+    @profile = object
+    create_map(@profile) if @profile.has_address?
     
-    begin
-      @flickr = @profile.flickr_username.blank? ? [] : flickr_images(flickr.people.findByUsername(@profile.flickr_username))
-    rescue Exception, OpenURI::HTTPError
-      @flickr = []
+    respond_to do |format|
+      format.xml { render :text => @profile.to_xml(:dasherize => false, :only => Profile::PUBLIC_FIELDS) }
+      format.html { render }
     end
-
-    @comments = @profile.comments.paginate(:page => @page, :per_page => @per_page)
-
-    if @profile.has_address?
-      @map = GMap.new("user_map")
-      @map.control_init(:map_type => false, :small_zoom => true)
-      @map.center_zoom_init([@profile.address.public_lat, @profile.address.public_lng], 11)
-      @map.overlay_init(GMarker.new([@profile.address.public_lat, @profile.address.public_lng], :title => @profile.display_name))
-    end
-    
-    respond_to do |wants|
-      wants.html do
-        #@feed_items = @profile.feed_items
-      end
-      wants.rss do 
-        #@feed_items = @profile.feed_items
-        render :layout => false
-      end
-    end
-  end
-  
-  def search
-    render
   end
   
   def edit
-    render
+    @profile = object
+    @user = @profile.user
   end
-    
   
   def update
+    @profile = object
+    @user = @profile.user
+
     case params[:switch]
       when 'name'
         if @profile.update_attributes params[:profile]
@@ -110,15 +67,6 @@ class ProfilesController < ResourceController::Base
   end
 
 
-  def delete_icon
-    respond_to do |wants|
-      @p.update_attribute :icon, nil
-      wants.js {render :update do |page| page.visual_effect 'Puff', 'profile_icon_picture' end  }
-    end      
-  end
-
-
-
   def destroy
     respond_to do |wants|
      @user.destroy
@@ -138,27 +86,46 @@ class ProfilesController < ResourceController::Base
 
 
   private
-
-  def allow_to
-    super :owner, :all => true
-    super :all, :only => [:show, :index, :search]
-  end
-  
-  def setup
-    @profile = Profile[params[:id]]
-    @user = @profile.user
-  end
-  
   def check_permissions
     permission_denied unless (administrator? || current_profile == @profile)
   end
-
-  def search_results
-    if params[:search]
-      p = params[:search].dup
-    else
-      p = []
-    end
-    @results = Profile.search((p.delete(:q) || ''), p).paginate(:page => @page, :per_page => @per_page)
+  
+  def create_map(profile)
+    @map = GMap.new("user_map")
+    @map.control_init(:map_type => false, :small_zoom => true)
+    @map.center_zoom_init([profile.address.public_lat, profile.address.public_lng], 11)
+    @map.overlay_init(GMarker.new([profile.address.public_lat, profile.address.public_lng], :title => profile.display_name))
   end
+  
+  # GET /profiles
+  # GET /arcades/:arcade_id/profiles
+  # GET /games/:game_id/profiles
+  def collection
+    profiles = parent? ? parent_object.profiles.paginate(options) : Profile.paginate(options)
+  end
+
+  def object
+    Profile.find_by_permalink(params[:id])
+  end
+
+  def parent_object
+    return Game.find_by_permalink(params[:game_id]) if parent_type == :game
+    return Arcade.find_by_permalink(params[:arcade_id]) if parent_type == :arcade
+  end
+  
+  # Setup up the possible options for getting a collection, with defaults
+  def options
+    search = params[:search] 
+    search = "%" + search if search and params[:search].length >= 2
+
+    collection_options = {}
+    collection_options[:page] = params[:page] || 1
+    collection_options[:per_page] = params[:per_page] || Profile::PER_PAGE
+    collection_options[:order] = params[:order] || 'profiles.display_name'
+    collection_options[:conditions] = ['profiles.active = 1']
+    collection_options[:conditions] << ['profiles.display_name like ? OR profiles.full_name like ?', "#{search}%", "#{search}%" ] unless search.blank?
+    collection_options[:conditions] << ['profiles.display_name regexp "^[0-9]+"'] if search == '#'
+    collection_options
+  end
+  
 end

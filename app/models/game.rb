@@ -1,40 +1,34 @@
 class Game < ActiveRecord::Base
+  PER_PAGE = 100
+  PUBLIC_FIELDS = [:name, :gamefaqs_id, :favoriteships_count, :playables_count, :permalink]
+  has_permalink :gamefaqs_id
+  
   has_many :playables
   has_many :arcades, :through => :playables
 
   has_many :favoriteships
   has_many :profiles, :through => :favoriteships
   
+  # Validation
   validates_presence_of :name
 
-  # This controls how many ames will be shown per page to the user.
-  cattr_reader :per_page
-  PER_PAGE = 50
-  
-  # Used for pagination of a search term given the current page. The number of games per page
-  # isn't customizable for the user and is set to a static number within this model.
-  #
-  # = Example
-  #  Game.search("dance", 2) => Pagination Array
-  def self.search(search, page)
-    search = "%#{search}" if search and search.length >= 2
-    if search == '#'
-      paginate :per_page => PER_PAGE, :page => page,
-             :conditions => ['name regexp "^[0-9]+"'],
-             :order => 'name'
-    else
-      paginate :per_page => PER_PAGE, :page => page,
-             :conditions => ['name like ?', "#{search}%"],
-             :order => 'name'
-    end
-  end
-  
   def to_param
-    "#{id}-#{url_safe(name)}"
+    permalink
+  end    
+    
+  def has_arcades?
+    playables.size > 0
   end
   
+  def has_users?
+    favoriteships.size > 0
+  end
+
+  def favoriteships_rank
+    Game.count(:conditions => ['favoriteships_count > ?', favoriteships_count]) + 1
+  end
   
-  def url_safe(param)
-    param.downcase.gsub(/[^[:alnum:]]/,'-').gsub(/-{2,}/,'-')
+  def playables_rank
+    Game.count(:conditions => ['playables_count > ?', playables_count]) + 1
   end
 end

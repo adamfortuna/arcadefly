@@ -7,10 +7,11 @@
 	  <% if parent == :profile %>
 	    <% if profile.has_address? %>Lives in <%= profile.address.short_line %><% end %>
 	  <% elsif parent == :arcade %>
-	    <%= pluralize(profile.frequentships_count, "favorite arcade") %>
+	    <%= pluralize(profile.frequentships.size, "favorite arcade") %>
 	  <% elsif parent == :game %>
-	    <%= pluralize(profile.favoriteships_count, "favorite games") %>
+	    <%= pluralize(profile.favoriteships.size, "favorite games") %>
 	  <% end %>
+	
 	
 	  <% if logged_in? && me %>
   	  <span class="favorite">

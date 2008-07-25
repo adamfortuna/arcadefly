@@ -1,28 +1,27 @@
 <li class="<%= cycle("even","odd")%> clear">
 
-  <span style="width:280px;" class="left">
+  <span style="width:280px;" class="left clear">
     <%= link_to(arcade.name, arcade_path(arcade)) %>
   </span>
   
-  <span style="width:80px;" class="right">
-    <a href="#" onclick="arcades_map.showMarker(1);return false;">Show on Map</a>
+  <span style="width:50px;" class="right">
+    <a href="#" onclick="arcades_map.showMarker(1);return false;">Show »</a>
   </span>
   
   <div class="clear soft">
-    <% if logged_in? %>
-  	<span>
-  	  <% if current_profile.arcades.include?(arcade) %>
-  	    <%= link_to "&nbsp;", arcade_favorites_path(arcade)+'/'+arcade.to_param, { :method => "delete", :class => "favorite_delete" } %>
-  	  <% else %>
-        <%= link_to "&nbsp;", arcade_favorites_path(arcade), { :method => "post", :class => "favorite_add" } %>
-  	  <% end %>
+  	<span class="left">
+      <%= render :partial => 'arcades/favorite', :locals => { :show_text => false, :arcade => arcade } %>
+      <p><%= arcade.address.shortest_line -%></p>
   	</span>
-  	<% end %>
+  	
+  	<span class="right">
+      <% if addressed_in? -%>
+        <%= arcade.address.distance_to(current_address).round_to(2) %> miles away<br />
+      <% end %>
 
-    <span>
-      in <%= arcade.address.short_line -%><% if addressed_in? -%>, <%= arcade.address.distance_to(current_address).round_to(2) %> miles away,
-        <% end %>
-        and has <strong><%= pluralize(arcade.playables_count, "game") %></strong>
+        <%= link_to pluralize(arcade.playables.size, "game"), arcade_games_path(arcade), :class => 'games' %> 
+        <%= link_to pluralize(arcade.frequentships.size, "favorites"), arcade_profiles_path(arcade), :class => 'users' %> 
+
     </span>
   </div>
 </li>

@@ -6,9 +6,9 @@ class CreatePlayables < ActiveRecord::Migration
       t.integer :games_count, :default => 1
     end
     
-    add_index :playables, [:arcade_id]
-    add_index :playables, [:game_id]
     add_index :playables, [:arcade_id, :game_id], :unique
+    add_index :playables, :arcade_id
+    add_index :playables, :game_id
   end
 
   def self.down

@@ -6,6 +6,8 @@ class CreateFrequentships < ActiveRecord::Migration
     end
     
     add_index :frequentships, [:profile_id, :arcade_id], :unique
+    add_index :frequentships, :profile_id
+    add_index :frequentships, :arcade_id
   end
 
   def self.down

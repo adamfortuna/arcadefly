@@ -3,13 +3,17 @@
   <script>Event.observe(window, 'load', function() { Form.focusFirstElement('login_form'); });</script>
 <%- end -%>
 
-<div style="width:460px;" class="left">
-  <%= render :partial => 'form' %>
+<div class="left half">
+  <% box do %>
+    <h2>Sign In</h2>
+    <%= render :partial => 'form' %>
+  <% end %>
 </div>
 
-<div style="width:460px;" class="right">
-    <%= render :partial => 'passwords/form' %>
-
+<div class="right half">
+  <% box do %>
+    <%= render :partial => 'password/forgot_form' %>
+  <% end %>
   
   <% box do %>
     <h3>Don't have an account?</h3>

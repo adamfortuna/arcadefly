@@ -3,7 +3,6 @@
 <html>
 <head>
 	<title>ArcadeFly<%= separator -%><%= yield(:title) || "Tracking the arcade buzz!" %></title>
-  
   <%= stylesheet_link_tag 'application', 'common_classes', 'forms' %>
 
   <%= javascript_include_tag 'prototype', 'application' %>
@@ -11,12 +10,12 @@
   <%= yield(:head) %>
   <%= yield(:header) %>
 </head>
-<body>
+<body<%= " class=\"#{params[:controller]}\"" unless params[:controller].nil? %>>
 	<div id="main">
     <div class="container">
     	<div id="header">        
         <ul id="menu">
-  		    <li><%= link_to "Arcades", addressed_in? ? arcades_path : browse_arcades_path %></li>
+  		    <li><%= link_to "Arcades", logged_in? ? arcades_path : browse_arcades_path %></li>
   		    <li><%= link_to "Games",   games_path %></li>
   		    <li><%= link_to "Players", profiles_path %></li>
   		    <li><%= link_to "Popular", popular_path %></li>

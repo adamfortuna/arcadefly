@@ -3,61 +3,71 @@
 
 <% content_for(:header) do %>
   <%= GMap.header %>
-
 	<%= @map.to_html %>
 <% end %>
 
-<div class="tabbed">
-  <div class="right map_small_width center">
-    <%= @map.div(:class => 'right prepend-1 span-13 last map_small map') %>
-    <div>
-  	  <strong><%= @arcade.name %></strong> is in <em><%= @arcade.address.city %>, <%= @arcade.address.region.name %></em>.
-  	  
-  	  <%= button_to "Edit this Arcade", edit_arcade_path(@arcade), { :method => "get", :class => "arcades" } %>
-    </div>
-  </div>
-  
-  <div class="span-14">
-    <span class="right counts">
-      <%= link_to pluralize(@arcade.playables_count, "game"), arcade_games_path(@arcade), :class=>"games" %>
-      <%= link_to pluralize(@arcade.frequentships_count, "favorite"), arcade_profiles_path(@arcade), :class=>"users" %>
-    </span>
-    
-    <p class="adr">
-      <b>Address:</b><br/>
-      <span class="street-address"><%= @arcade.address.street %></span><br/>
-      <span class="locality"><%= @arcade.address.city %></span>, <span class="region"><%= @arcade.address.region.name %></span> <span class="postal-code"><%= @arcade.address.postal_code %></span><br/>
-      <span class="country-name"><%= @arcade.address.country.name %></span><br/>
-      <%= link_to "View Larger Map", arcade_map_path(@arcade) %>
-    </p>
+<% tabbed_box do %>
+  <div id="profile_overview">
+    <div class="overview left_column">
+      <span class="counts left shift-1">
+        <%= link_to pluralize(@arcade.playables.size, "game"), arcade_games_path(@arcade), :class=>"games" %>
+        <%= link_to pluralize(@arcade.frequentships.size, "favorite"), arcade_profiles_path(@arcade), :class=>"users" %>
+      </span>
+      <div class="short_description">
+        <h2><%= h @arcade.name %></h2>
+        <p class="adr">
+          <b>Address:</b><br/>
+          <span class="street-address"><%= @arcade.address.street %></span><br/>
+          <span class="locality"><%= @arcade.address.city %></span>, <span class="region"><%= @arcade.address.region.name %></span> <span class="postal-code"><%= @arcade.address.postal_code %></span><br/>
+          <span class="country-name"><%= @arcade.address.country.name %></span><br/>
+          <%= link_to "View Larger Map", map_arcade_path(@arcade) %>
+        </p>
+    	</div>
+    	<div class="left_column_content">
+        <% if @arcade.has_profiles? -%>
+          <p>
+            Having been favorited by <em><%= pluralize(@arcade.frequentships.size, "user") %></em>,
+            <%= @arcade.name %> is the <em>#<%= @arcade.frequentships_rank %> most favorited arcade</em>.
+          </p>
+        <% end -%>
 
-    <% if @arcade.frequentships_count > 0 -%>
-    <p>
-      Having been favorited by <em><%= pluralize(@arcade.frequentships_count, "user") %></em>, <%= @arcade.name %> is the <em>#<%= @users_popularity %> most favorited arcade</em>.
-    </p>
-    <% end -%>
-    
-    <% if @arcade.playables_count > 0 -%>
-    <p>
-      With <em><%= pluralize(@arcade.playables_count, "game") %></em>, <%= @arcade.name %> comes in with the <em>#<%= @games_popularity %> most games</em>.
-    </p>
+        <% if @arcade.has_games? -%>
+          <p>With <em><%= pluralize(@arcade.playables.size, "game") %></em>, <%= @arcade.name %> comes in with the <em>#<%= @arcade.playables_rank %> most games</em>.</p>
+        <% end -%>
+
+        <% if addressed_in? -%>
+          <p>
+            <strong>Distance Away: </strong>
+            <%= @arcade.address.distance_to(current_address).round_to(2) %> miles
+          </p>
+        <% end -%>
+
+        <%= render :partial => 'arcades/favorite', :locals => { :show_text => true, :arcade => @arcade } %>
+    	</div>
+    </div>
+  
+    <% if @arcade.has_address? -%>
+      <div class="map_box right_column">
+        <%= @map.div(:class => 'right prepend-1 span-13 last map_small map') %>
+        <p class="center">
+          <strong><%= @arcade.name %></strong> is in <em><%= @arcade.address.city %>, <%= @arcade.address.region.name %></em>.
+        </p>
+        
+        <% if @arcade.has_hours? %>
+        <ul style="margin:0 0 0 50px; border:0; width:250px;">
+          <% @arcade.hours.each do |hour| %>
+            <li>
+              <strong><%= hour.dayofweek.capitalize %></strong>: 
+              <% if hour.closed? %>
+                Closed
+              <% else %>
+                <%= hour.start.strftime("%I:%M %p") %> to <%= hour.end.strftime("%I:%M %p") %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+        <% end %>
+      </div>
     <% end %>
-    
-    <% if addressed_in? -%>
-    <p>
-      <strong>Distance Away: </strong>
-      <%= @arcade.address.distance_to(current_address).round_to(2) %> miles
-    </p>
-    <% end %>
-    
-    <% if logged_in? %>
-      <p>
-      <% if !current_profile.has_favorite_arcade?(@arcade) %>
-        <%= button_to "Add to your favorites", arcade_favorites_path(@arcade), { :method => "post", :class => "favorite arcade_add" } %>
-      <% else %>
-        <%= button_to "Remove from your favorites", arcade_favorite_path(@arcade), { :method => "delete", :class => "favorite arcade_delete" } %>
-      <% end %>
-      </p>
-     <% end %>
   </div>
-</div>  
+<% end %>

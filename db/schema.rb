@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 23) do
+ActiveRecord::Schema.define(:version => 21) do
 
   create_table "addresses", :force => true do |t|
     t.datetime "created_at"
@@ -28,10 +28,13 @@ ActiveRecord::Schema.define(:version => 23) do
     t.float    "public_lng"
   end
 
+  add_index "addresses", ["addressable_id", "addressable_type"], :name => "index_addresses_on_addressable_id_and_addressable_type"
+
   create_table "arcades", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name",                                             :null => false
+    t.string   "permalink",                                        :null => false
     t.string   "phone"
     t.string   "website"
     t.text     "notes"
@@ -40,6 +43,7 @@ ActiveRecord::Schema.define(:version => 23) do
     t.integer  "frequentships_count", :limit => 11, :default => 0
   end
 
+  add_index "arcades", ["permalink"], :name => "index_arcades_on_permalink", :unique => true
   add_index "arcades", ["name"], :name => "index_arcades_on_name"
 
   create_table "comments", :force => true do |t|
@@ -76,6 +80,8 @@ ActiveRecord::Schema.define(:version => 23) do
   end
 
   add_index "favoriteships", ["profile_id", "game_id"], :name => "index_favoriteships_on_profile_id_and_game_id", :unique => true
+  add_index "favoriteships", ["profile_id"], :name => "index_favoriteships_on_profile_id"
+  add_index "favoriteships", ["game_id"], :name => "index_favoriteships_on_game_id"
 
   create_table "frequentships", :force => true do |t|
     t.datetime "created_at"
@@ -85,6 +91,8 @@ ActiveRecord::Schema.define(:version => 23) do
   end
 
   add_index "frequentships", ["profile_id", "arcade_id"], :name => "index_frequentships_on_profile_id_and_arcade_id", :unique => true
+  add_index "frequentships", ["profile_id"], :name => "index_frequentships_on_profile_id"
+  add_index "frequentships", ["arcade_id"], :name => "index_frequentships_on_arcade_id"
 
   create_table "friends", :force => true do |t|
     t.datetime "created_at"
@@ -95,19 +103,20 @@ ActiveRecord::Schema.define(:version => 23) do
   end
 
   add_index "friends", ["inviter_id", "invited_id"], :name => "index_friends_on_inviter_id_and_invited_id", :unique => true
-  add_index "friends", ["invited_id", "inviter_id"], :name => "index_friends_on_invited_id_and_inviter_id", :unique => true
 
   create_table "games", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name",                                             :null => false
     t.integer  "gamefaqs_id",         :limit => 11,                :null => false
+    t.string   "permalink",                                        :null => false
     t.integer  "playables_count",     :limit => 11, :default => 0
     t.integer  "favoriteships_count", :limit => 11, :default => 0
   end
 
   add_index "games", ["name"], :name => "index_games_on_name", :unique => true
   add_index "games", ["gamefaqs_id"], :name => "index_games_on_gamefaqs_id", :unique => true
+  add_index "games", ["permalink"], :name => "index_games_on_permalink", :unique => true
 
   create_table "hours", :force => true do |t|
     t.datetime "created_at"
@@ -136,16 +145,6 @@ ActiveRecord::Schema.define(:version => 23) do
   add_index "messages", ["sender_id"], :name => "index_messages_on_sender_id"
   add_index "messages", ["receiver_id"], :name => "index_messages_on_receiver_id"
 
-  create_table "photos", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "profile_id", :limit => 11
-    t.string   "caption",    :limit => 1000
-    t.string   "image"
-  end
-
-  add_index "photos", ["profile_id"], :name => "index_photos_on_profile_id"
-
   create_table "playables", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -158,48 +157,32 @@ ActiveRecord::Schema.define(:version => 23) do
   add_index "playables", ["arcade_id"], :name => "index_playables_on_arcade_id"
   add_index "playables", ["game_id"], :name => "index_playables_on_game_id"
 
-  create_table "products", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "game_id",        :limit => 11,                                :null => false
-    t.string   "name"
-    t.decimal  "purchase_price",               :precision => 10, :scale => 2
-    t.decimal  "sale_price",                   :precision => 10, :scale => 2
-    t.integer  "parent_id",      :limit => 11
-    t.string   "content_type"
-    t.string   "filename"
-    t.string   "thumbnail"
-    t.integer  "size",           :limit => 11
-    t.integer  "width",          :limit => 11
-    t.integer  "height",         :limit => 11
-  end
-
   create_table "profiles", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id",                 :limit => 11
-    t.string   "email"
-    t.string   "display_name",                                             :null => false
+    t.integer  "user_id",               :limit => 11
+    t.boolean  "active",                              :default => false, :null => false
+    t.boolean  "administrator",                       :default => false, :null => false
+    t.string   "email",                                                  :null => false
+    t.string   "display_name",                                           :null => false
+    t.string   "permalink",                                              :null => false
+    t.string   "initials"
     t.string   "full_name"
     t.string   "website"
-    t.string   "blog"
     t.text     "about_me"
-    t.string   "initials"
     t.string   "aim_name"
     t.string   "gtalk_name"
     t.string   "msn_name"
-    t.string   "icon"
-    t.string   "youtube_username"
-    t.string   "flickr_username"
-    t.integer  "frequentships_count",     :limit => 11, :default => 0
-    t.integer  "favoriteships_count",     :limit => 11, :default => 0
-    t.integer  "friendships_count",       :limit => 11, :default => 0
-    t.integer  "follower_friends_count",  :limit => 11, :default => 0
-    t.integer  "following_friends_count", :limit => 11, :default => 0
-    t.boolean  "administrator",                         :default => false, :null => false
+    t.integer  "frequentships_count",   :limit => 11, :default => 0
+    t.integer  "favoriteships_count",   :limit => 11, :default => 0
+    t.integer  "friendships_count",     :limit => 11, :default => 0
+    t.integer  "unread_messages_count", :limit => 11, :default => 0,     :null => false
   end
 
+  add_index "profiles", ["permalink"], :name => "index_profiles_on_permalink", :unique => true
   add_index "profiles", ["user_id"], :name => "index_profiles_on_user_id"
+  add_index "profiles", ["email"], :name => "index_profiles_on_email"
+  add_index "profiles", ["display_name"], :name => "index_profiles_on_display_name"
 
   create_table "regions", :force => true do |t|
     t.datetime "created_at"
@@ -225,7 +208,7 @@ ActiveRecord::Schema.define(:version => 23) do
   create_table "users", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "email"
+    t.string   "email",                                                      :null => false
     t.string   "new_email"
     t.string   "crypted_password",          :limit => 40
     t.string   "salt",                      :limit => 40
@@ -235,8 +218,12 @@ ActiveRecord::Schema.define(:version => 23) do
     t.datetime "activated_at"
     t.string   "password_reset_code",       :limit => 40
     t.boolean  "enabled",                                 :default => true
+    t.boolean  "administrator",                           :default => false, :null => false
     t.boolean  "can_send_messages",                       :default => true
     t.string   "time_zone",                               :default => "UTC"
   end
+
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["email", "crypted_password"], :name => "index_users_on_email_and_crypted_password"
 
 end

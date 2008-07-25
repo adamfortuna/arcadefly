@@ -1,39 +1,40 @@
 <% title "Games" + separator + @game.name -%>
+<%- @body_class = "games" %>
 
 <%= render :partial => 'menu', :locals => { :game => @game } %>
 
 <% tabbed_box do %>
-  
-  <h2><%= @title %></h2>
-  
-  <span class="right counts">
-  <%= link_to pluralize(@game.playables_count, "arcade"), game_arcades_path(@game), :class=>"arcades" %>
-    <%= link_to pluralize(@game.favoriteships_count, "favorite"), game_profiles_path(@game), :class=>"users" %>
-  </span>
+  <div id="profile_overview">
+    <div class="left_column">
+      <span class="counts left shift-1">
+        <%= link_to pluralize(@game.playables.size, "arcade"), game_arcades_path(@game), :class => "arcades" %>
+        <%= link_to pluralize(@game.favoriteships.size, "favorite"), game_profiles_path(@game), :class => "users" %>
+      </span>
+      <div class="right short_description">
+        <h2><%= @game.name %></h2>
+      	<p><a href="http://www.gamefaqs.com/coinop/arcade/data/<%= @game.gamefaqs_id %>.html" target="_blank">Find out more about this game on GameFaqs</a></p>
+      	<%= render :partial => 'favorite', :locals => { :show_text => true, :game => @game } %>
+    	</div>
+    	
+    	<div class="left_column_content">
+      	<% if @game.has_arcades? %>
+        <p>
+          With availability at <em><%= pluralize(@game.playables.size, "arcade") %></em>, <%= @game.name %> is the <em>#<%= @game.playables_rank %> most available</em> game.
+        </p>
+        <% end %>
 
-  <% if @game.playables_count > 0 %>
-  <p>
-    With availability at <em><%= pluralize(@game.playables_count, "arcade") %></em>, <%= @game.name %> is the <em>#<%= @arcades_popularity %> most available</em> game.
-  </p>
-  <% end %>
-  
-  <% if @game.favoriteships_count > 0 %>
-  <p>
-    <%= @game.name %> has been favorited by <em><%= pluralize(@game.favoriteships_count, "player") %></em>, making it the <em>#<%= @users_popularity %> most favorited</em> game.
-  </p>
-  <% end %>
-
-	<% if logged_in? %>
-	  <p>
-	  <% if !current_profile.has_favorite_game?(@game) %>
-      <%= button_to "Add to your favorites", game_favorites_path(@game), { :method => "post", :class => "favorite game_add" } %>
-    <% else %>
-      <%= button_to "Remove from your favorites", game_favorite_path(@game), { :method => "delete", :class => "favorite game_delete" } %>
-    <% end %>
-  </p>
-  <% end %>
+        <% if @game.has_users? %>
+        <p>
+          <%= @game.name %> has been favorited by <em><%= pluralize(@game.favoriteships.size, "player") %></em>, making it the <em>#<%= @game.favoriteships_rank %> most favorited</em> game.
+        </p>
+        <% end %>
+      </div>
+    </div>
     
-	<p class="shift-2">
-	  <a href="http://www.gamefaqs.com/coinop/arcade/data/<%= @game.gamefaqs_id %>.html" target="_blank">View this game on GameFaqs</a>
-	</p>
+    <div class="right_column">
+      <p class="center shift-2">
+        Want to see locations near you with this game? <%= link_to "Check out arcades with this game!", game_arcades_path(@game) %>
+      </p>
+    </div>
+  </div>
 <% end %>
