@@ -14,4 +14,4 @@ role :app, "67.207.148.138"
 role :web, "67.207.148.138"
 role :db,  "67.207.148.138", :primary => true
 
-#depend :remote, :gem, "mislav-will_paginate", "~> 2.2"
+depend :remote, :gem, "mislav-will_paginate", "~> 2.2"
