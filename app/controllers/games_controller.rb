@@ -26,8 +26,7 @@ class GamesController < ResourceController::Base
   }
   
   def popular
-    @games = Game.paginate(:all, :order => 'favoriteships_count desc, playables_count desc', :page => params[:page], :per_page => Game::PER_PAGE)
-    @max_count = Game.maximum(:favoriteships_count)
+    @games = Game.paginate(:all, :order => 'favoriteships_count desc, playables_count desc', :page => params[:page])
   end
   
     
@@ -102,9 +101,14 @@ class GamesController < ResourceController::Base
   end
   
   def collection
-    games = parent? ? parent_object.games.paginate(options) : Game.paginate(options)
-    @max_count = Game.maximum(:playables_count, :conditions => ['games.id IN (?)', games.collect(&:id)]) if games.size > 0
-    games
+    if parent_type == :arcade
+      objects = parent_object.playables.paginate(options)
+    elsif parent_type == :profile
+      objects = parent_object.games.paginate(options)
+    else
+      objects = Game.paginate(options)
+    end
+    objects
   end
     
   # Setup up the possible options for getting a collection, with defaults
@@ -113,8 +117,9 @@ class GamesController < ResourceController::Base
     search = "%" + search if search and params[:search].length >= 2
 
     collection_options = {}
+    collection_options[:include] = :game if parent?
     collection_options[:page] = params[:page] || 1
-    collection_options[:per_page] = params[:per_page] || Game::PER_PAGE
+    #collection_options[:per_page] = params[:per_page] if params[:per_page]
     collection_options[:order] = params[:order] || 'games.name'
     if search == '#'
       collection_options[:conditions] = ['games.name regexp "^[0-9]+"']

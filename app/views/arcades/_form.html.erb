@@ -95,7 +95,7 @@
   </p>
       
   <% fields_for 'arcade[address]', @arcade.address do |a| %>
-  <p class="block">	
+  <p class="block required">	
     <label for="address_street">Street</label>
     <%= error_message_on "address", "street", "Street " %>
     <%= a.text_field :street, { :class => "text" } %>

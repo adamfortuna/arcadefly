@@ -1,5 +1,4 @@
 class Game < ActiveRecord::Base
-  PER_PAGE = 100
   PUBLIC_FIELDS = [:name, :gamefaqs_id, :favoriteships_count, :playables_count, :permalink]
   has_permalink :gamefaqs_id
   
@@ -11,6 +10,10 @@ class Game < ActiveRecord::Base
   
   # Validation
   validates_presence_of :name
+
+  def self.per_page
+    100
+  end
 
   def to_param
     permalink

@@ -101,3 +101,9 @@ ul#menu li a.active, ul#menu li a:hover { color:#211e1e; }
 
 #text_column img { margin-bottom:20px; position:relative; left:-3px;}
 */
+
+
+#features { font-size: 1.5em;  }
+#features li { padding: 1em; }
+#address_form label { position:absolute; margin:1em 0 0 .2em; color:#aaa; font-size:2em }
+#address_form input#address { width: 80%; font-size:2em; }

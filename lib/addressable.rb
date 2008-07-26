@@ -5,26 +5,27 @@ module Addressable
       acts_as_mappable
       
       has_one :address, :as => :addressable, :accessible => true
-    	delegate [:lat, :lng], :to => :address
-    	#after_create :update_address
-
+    	delegate [:lat, :lng, :country_id, :region_id], :to => :address
+      
+      before_validation :validate_address
+      
       validates_presence_of :address
     	validates_associated :address
-    
-    
     end
   end
   
-    
-    
-    def has_address?
-      !address.nil?
+  def map_bubble
+    raise "Map bubble"
+  end
+
+  def has_address?
+    !address.nil?
+  end
+
+  def validate_address
+    if address && !address.valid?
+      address.errors.each { |attr, msg| errors.add(attr, msg) }
     end
-
-
-  	# def update_address
-  	#      address.save!
-  	#    end
-	
+  end
   
 end

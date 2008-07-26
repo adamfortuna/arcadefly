@@ -3,3 +3,4 @@
   <%= menu_link "Arcades with this Game", game_arcades_path(game), { :a_class => 'arcades' } %>
   <%= menu_link "Players who Favorited this Game", game_profiles_path(game), { :a_class => 'users' } %>
 </ul>
+<div id="game_<%= @game.id %>"></div>

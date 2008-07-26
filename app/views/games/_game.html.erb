@@ -5,21 +5,16 @@
     playable = game
     game = playable.game
   end
-  count ||= "playables_count"
-  
-  game_name = game.name
-  game_name += " (#{playable.games_count})" if !playable.nil? && playable.games_count > 1
 -%>
-<li class="<%= cycle("even","odd")%>">
-	<%= link_to(game_name, game_path(game), :class => 'main') %>
+<li id="game_<%= game.id %>" class="<%= cycle("even","odd")%><%= " favorited" if logged_in? && current_profile.has_favorite_game?(game) %>">
+	<%= link_to(game.name, game_path(game), :class => 'main') %>
   
 	<span class="count">
-    <%= pluralize(game.playables_count, "arcade") %>
+	  <% if playable %>
+	    <%= pluralize(playable.games_count, "game") %>
+    <% else %>
+      in <%= pluralize(game.playables_count, "arcade") %>
+    <% end %>
     <%= render :partial => 'games/favorite', :locals => { :show_text => false, :game => game } %>
   </span>
-	
-	<% if @max_count&& @max_count > 0 %>
-    <span class="index" style="width: <%= (game[count]*10/@max_count*10) %>%">(<%= (game[count]*10/@max_count*10) %>%)</span>
-  <% end %>
 </li>
-

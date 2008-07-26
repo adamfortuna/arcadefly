@@ -1,10 +1,9 @@
 class Arcade < ActiveRecord::Base
   include Addressable
+	attr_accessor :game_ids
 
-	PER_PAGE = 25
 	PUBLIC_FIELDS = [:created_at, :updated_at, :permalink, :name, :phone, :website, :notes, :playables_count, :frequentships_count]
 	PUBLIC_FIELDS_WITH_ADDRESS = [PUBLIC_FIELDS, :street, :city, :postal_code, :lat, :lng].flatten
-	attr_accessor :game_ids
 
 	has_permalink :name
   
@@ -16,7 +15,7 @@ class Arcade < ActiveRecord::Base
 
 	has_many :hours, :as => :timeable, :order => 'day, start, end'
 	
-	after_save :update_games
+	#after_save :update_games
 	
 	# Validations
 	validates_presence_of :name, :message => "is required."
@@ -24,6 +23,10 @@ class Arcade < ActiveRecord::Base
 	
 	def to_param
     permalink
+  end
+
+  def self.per_page
+    25
   end
 
   def has_profiles?
@@ -48,6 +51,10 @@ class Arcade < ActiveRecord::Base
   
   def has_hours?
     true
+  end
+
+  def map_bubble
+    "<strong>#{self.name}</strong> <p>#{self.address.street}<br />#{self.address.city}, #{self.address.region.name} #{self.address.postal_code}</p><p><strong>Games:</strong> #{self.playables_count}</p>"
   end
 
 	private

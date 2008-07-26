@@ -24,6 +24,7 @@ class CreateProfiles < ActiveRecord::Migration
       t.integer  :favoriteships_count,        :default => 0
       t.integer  :friendships_count,          :default => 0
       
+      t.integer  :messages_count,             :default => 0, :null => false
       t.integer  :unread_messages_count,      :default => 0, :null => false
     end
 

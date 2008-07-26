@@ -64,38 +64,32 @@ ActionController::Routing::Routes.draw do |map|
   map.games_update '/games/update', :controller => 'gateway', :action => 'update_games'
   
   # Resources
-  map.resources :arcades, :has_many => [ :games, :profiles ],
-                          :has_one => :address,
-                          :collection => [ :popular ],
-                          :member => [ :map, :claim, :favorite, :unfavorite, :review ]
-  map.resources :games,   :has_many => [ :arcades, :profiles ],
-                          :collection => [ :popular ],
-                          :member => [ :favorite, :unfavorite ]
+  map.resources :arcades, :has_many    => [ :games, :profiles ],
+                          :has_one     => :address,
+                          :collection  => [ :popular ],
+                          :member      => [ :map, :claim, :favorite, :unfavorite ]
+
+  map.resources :games,   :has_many    => [ :arcades, :profiles ],
+                          :collection  => [ :popular ],
+                          :member      => [ :favorite, :unfavorite ]
+
+  map.resources :profiles, :has_many   => [:friends, :comments, :messages, :arcades, :games],
+                           :has_one    => :address,
+                           :collection =>{:search=>:get}
 
   map.resources :users,   :alias => :friends
-  
   map.resources :addresses, :sessions, :password, :comments, :messages
-
   map.resources :sessions, :object => [ :address ]
-
-
-  map.namespace :admin do |a|
-    a.resources :users, :collection => {:search => :post}
-  end
-
-  map.resources :profiles, :has_many => [:friends, :comments, :messages, :arcades, :games],
-                           :has_one => :address,
-                           :collection=>{:search=>:get}
-
-  map.resources :messages
 
 
   # Since a lot of people tend to use /login as the login path, add it here just in case.
   map.connect '/login',    :controller => 'redirect', :action => 'login'
 
   # Install the default routes as the lowest priority.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action.:format'
-  map.connect ':controller/:action/:id.:format'
-  map.connect ':controller', :action => 'index'
+  map.connect 'help/:action', :controller => 'help'
+
+  # map.connect ':controller/:action/:id'
+  # map.connect ':controller/:action.:format'
+  # map.connect ':controller/:action/:id.:format'
+  # map.connect ':controller', :action => 'index'
 end 

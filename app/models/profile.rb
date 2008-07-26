@@ -1,8 +1,11 @@
 class Profile < ActiveRecord::Base
+  include Addressable
+
   PER_PAGE = 50
   PUBLIC_FIELDS = [:created_at, :display_name, :favoriteships_count, :frequentships_count, :friendships_count, :full_name, :initials, :permalink, :website]
 
   has_permalink :display_name
+  attr_accessor :icon
 
   # User
   belongs_to :user  
@@ -14,10 +17,6 @@ class Profile < ActiveRecord::Base
   # Games
   has_many :favoriteships
   has_many :games, :through => :favoriteships
-
-  # Addresses
-  has_one :address, :as => :addressable
-  delegate [:country_id, :region_id], :to => :address
   
   # Messages
   has_many :sent_messages,     :class_name => 'Message', :order => 'created_at desc', :foreign_key => 'sender_id'
@@ -38,17 +37,6 @@ class Profile < ActiveRecord::Base
   
   # Validation
   validates_length_of :display_name, :within => 3..100
-  validates_associated :address
-  
-  file_column :icon, :magick => {
-      :versions => { 
-        :big => {:crop => "1:1", :size => "150x150", :name => "big"},
-        :medium => {:crop => "1:1", :size => "100x100", :name => "medium"},
-        :small => {:crop => "1:1", :size => "50x50", :name => "small"}
-      }
-    }
-  Profile::NOWHERE = 'Nowhere'
-  
   
   def to_param
     permalink
@@ -110,17 +98,11 @@ class Profile < ActiveRecord::Base
     @cached_favorite_game_ids ||= favoriteships.find(:all, :select => :game_id).collect(&:game_id)
   end
   
-  
-  
-  
-  
-  
-  
-  def has_address?
-    address && (!address.nil? || address.new_record?)
+  def can_edit?(editable)
+    true
   end
   
-  
+    
   
   
   # Returns a Gravatar URL associated with the email parameter.
@@ -159,6 +141,10 @@ class Profile < ActiveRecord::Base
   
   def unread_messages?
     unread_messages_count > 0
+  end
+  
+  def messages?
+    messages_count > 0
   end
   
   

@@ -1,5 +1,5 @@
 class FriendsController < ApplicationController
-  before_filter :setup
+  before_filter :get_profile
   skip_before_filter :login_required, :only=>:index
   skip_before_filter :store_location, :only => [:create, :destroy]
   
@@ -39,9 +39,8 @@ class FriendsController < ApplicationController
   end
   
   
-  def setup
-    @profile = Profile[params[:id] || params[:profile_id]]
-    @user = @profile.user
+  def get_profile
+    @profile = Profile.find_by_permalink(params[:profile_id])
   end
   
 end

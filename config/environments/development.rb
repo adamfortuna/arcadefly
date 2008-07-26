@@ -15,7 +15,11 @@ config.action_controller.perform_caching             = false
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
-
 config.action_controller.asset_host                  = "http://localhost:3000"
+
+
+# ActiveRecord
+config.active_record.timestamped_migrations = true
+
 
 HOST = 'http://localhost:3000'

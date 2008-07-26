@@ -1,28 +1,19 @@
-<% content_for(:header) do %>
-  <script>
-    Event.observe(window, 'load', function() {
-      if($F('address') != '')
-        toggleLabel(false);
-    });
-    function toggleLabel(show) {
-      show && $F('address') == '' ? $('address_label').show() : $('address_label').hide();
-    }
-  </script>
-  <style>
-  <!--
-  #features { font-size: 1.5em;  }
-  #features li { padding: 1em; }
-  #address_form label { position:absolute; margin:1em 0 0 .2em; color:#aaa; font-size:2em }
-  #address_form input#address { width: 80%; font-size:2em; }
-  //-->
-  </style>
+<% if !logged_in? %>
+  <% content_for(:header) do %>
+    <script>
+      Event.observe(window, 'load', function() {
+        if($F('address') != '')
+          toggleLabel("address", false);
+      });
+    </script>
+  <% end %>
 <% end %>
 
 <% box do %>
   <% if !logged_in? %>
     <% form_tag(addresses_path, :id => "address_form") do %>
         <label id="address_label" for="address">Enter your address to get started...</label>
-        <%= text_field_tag :address, addressed_in? ? current_address.single_line : '', { :class => 'text', :onfocus => 'toggleLabel(false);', :onblur => 'toggleLabel(true);' } %>
+        <%= text_field_tag :address, addressed_in? ? current_address.single_line : '', { :class => 'text', :onfocus => 'toggleLabel("address", false);', :onblur => 'toggleLabel("address", true);' } %>
         <%= submit_tag "Find Arcades!", :class => 'inline big-button', :disable_with => 'Finding...', :id => 'find' %>
     <% end %>
   <% else %>

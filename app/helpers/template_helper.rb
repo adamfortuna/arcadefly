@@ -6,7 +6,7 @@ module TemplateHelper
     res = header + data + footer
 
     # Use concat method to pass text back to the view 
-    concat(res, block.binding)
+    concat(res)
   end
 
   def tabbed_box(&block)

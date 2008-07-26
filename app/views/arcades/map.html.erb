@@ -10,11 +10,4 @@
 <% tabbed_box do %>  
   <h2><%= @title %></h2>
   <%= @map.div(:class => 'map_big map') %>
-  
-  <div class="shift-2">
-    <b>View this Map by itself on...</b>
-    <ul>
-      <li><a href="http://maps.google.com/?ie=UTF8&hl=en&q=<%= @arcade.address.single_line %>" target="_blank">Google Maps</a></li>
-    </ul>
-  </div>
 <% end %>

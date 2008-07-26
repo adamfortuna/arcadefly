@@ -7,14 +7,14 @@ module PhotosHelper
     img_tag
   end
   
-  def photo_path photo = nil, size = :square
-    path = nil
-    unless photo.nil? || photo.image.blank?
-      path = url_for_file_column(photo, :image, size.to_s) rescue nil
-    end
-    path = missing_photo_path(size) if path.nil?
-    return path
-  end
+  # def photo_path photo = nil, size = :square
+  #   path = nil
+  #   unless photo.nil? || photo.image.blank?
+  #     path = url_for_file_column(photo, :image, size.to_s) rescue nil
+  #   end
+  #   path = missing_photo_path(size) if path.nil?
+  #   return path
+  # end
  
   def allowed_photo_sizes
     [:square, :small]
