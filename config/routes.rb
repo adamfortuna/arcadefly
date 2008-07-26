@@ -38,6 +38,7 @@ ActionController::Routing::Routes.draw do |map|
   map.privacy '/privacy',       :controller => 'home',    :action => 'privacy'
   map.welcome '/welcome',       :controller => 'users',   :action => 'welcome'
   map.help '/help',             :controller => 'help',    :action => 'index'
+  map.features '/features',     :controller => 'help',    :action => 'features'
   map.site_map '/site_map',     :controller => 'home',    :action => 'site_map'
 
   # Popular 
