@@ -4,7 +4,6 @@ require 'avatar/view/action_view_support'
 module ApplicationHelper
   include Avatar::View::ActionViewSupport
   include FriendsHelper
-  include PhotosHelper
   include TemplateHelper
   include GamesHelper
   include ArcadesHelper
