@@ -17,3 +17,8 @@ role :db,  "67.207.148.138", :primary => true
 set :runner, "adam"
 
 depend :remote, :gem, "mislav-will_paginate", "~> 2.2"
+
+desc "Create a symlink to the current version of rails"
+task :after_update_code, :except => { :no_release => true } do
+  run "sudo ln -s #{release_path}/vendor/rails #{shared_dir}/rails"
+end
