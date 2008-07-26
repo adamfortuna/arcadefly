@@ -1,6 +1,6 @@
 <%= error_messages_for :user %>
 <h2>Forget Your Password?</h2>
-<% form_tag url_for(:controller => 'passwords', :action => 'create') do -%>
+<% form_tag url_for(:controller => 'password', :action => 'create') do -%>
   <p>
     <label for="email">Enter Your Email Address</label>
     <%= text_field_tag :email, params[:email], :size => 50, :class => 'text' %>
