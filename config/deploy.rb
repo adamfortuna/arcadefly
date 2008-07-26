@@ -17,3 +17,11 @@ role :db,  "67.207.148.138", :primary => true
 set :runner, "adam"
 
 depend :remote, :gem, "mislav-will_paginate", "~> 2.2"
+
+
+after "deploy:update_code", "deploy:symlink"
+namespace :deploy do
+  task :symlink do
+    run "ln -nfs #{deploy_to}/#{shared_dir}/rails #{release_path}/vendor/rails"
+  end
+end
