@@ -65,7 +65,7 @@ module AuthenticatedSystem
     end
     
     def login_required
-      authorized? || access_denied
+      logged_in? || addressed_in? || permission_denied
     end
 
     def not_logged_in_required

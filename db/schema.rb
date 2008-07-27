@@ -9,19 +9,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 21) do
+ActiveRecord::Schema.define(:version => 18) do
 
   create_table "addresses", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "addressable_id",   :limit => 11
+    t.integer  "addressable_id"
     t.string   "addressable_type"
     t.string   "title"
     t.string   "street"
-    t.string   "city",                                          :null => false
-    t.integer  "region_id",        :limit => 11
-    t.integer  "postal_code",      :limit => 5
-    t.integer  "country_id",       :limit => 11, :default => 1, :null => false
+    t.string   "city",                                         :null => false
+    t.integer  "region_id"
+    t.integer  "postal_code",      :limit => 8
+    t.integer  "country_id",                    :default => 1, :null => false
     t.float    "lat"
     t.float    "lng"
     t.float    "public_lat"
@@ -33,14 +33,14 @@ ActiveRecord::Schema.define(:version => 21) do
   create_table "arcades", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name",                                             :null => false
-    t.string   "permalink",                                        :null => false
+    t.string   "name",                               :null => false
+    t.string   "permalink",                          :null => false
     t.string   "phone"
     t.string   "website"
     t.text     "notes"
-    t.integer  "profile_id",          :limit => 11
-    t.integer  "playables_count",     :limit => 11, :default => 0
-    t.integer  "frequentships_count", :limit => 11, :default => 0
+    t.integer  "profile_id"
+    t.integer  "playables_count",     :default => 0
+    t.integer  "frequentships_count", :default => 0
   end
 
   add_index "arcades", ["permalink"], :name => "index_arcades_on_permalink", :unique => true
@@ -49,12 +49,12 @@ ActiveRecord::Schema.define(:version => 21) do
   create_table "comments", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "profile_id",       :limit => 11
-    t.integer  "commentable_id",   :limit => 11
+    t.integer  "profile_id"
+    t.integer  "commentable_id"
     t.string   "commentable_type"
     t.text     "comment"
-    t.integer  "is_denied",        :limit => 11, :default => 0,     :null => false
-    t.boolean  "is_reviewed",                    :default => false
+    t.integer  "is_denied",        :default => 0,     :null => false
+    t.boolean  "is_reviewed",      :default => false
   end
 
   add_index "comments", ["profile_id"], :name => "index_comments_on_profile_id"
@@ -73,8 +73,8 @@ ActiveRecord::Schema.define(:version => 21) do
   add_index "countries", ["alpha_3_code"], :name => "index_countries_on_alpha_3_code", :unique => true
 
   create_table "favoriteships", :force => true do |t|
-    t.integer  "game_id",    :limit => 11, :null => false
-    t.integer  "profile_id", :limit => 11, :null => false
+    t.integer  "game_id",    :null => false
+    t.integer  "profile_id", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -86,8 +86,8 @@ ActiveRecord::Schema.define(:version => 21) do
   create_table "frequentships", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "arcade_id",  :limit => 11, :null => false
-    t.integer  "profile_id", :limit => 11, :null => false
+    t.integer  "arcade_id",  :null => false
+    t.integer  "profile_id", :null => false
   end
 
   add_index "frequentships", ["profile_id", "arcade_id"], :name => "index_frequentships_on_profile_id_and_arcade_id", :unique => true
@@ -97,9 +97,9 @@ ActiveRecord::Schema.define(:version => 21) do
   create_table "friends", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "inviter_id", :limit => 11,                :null => false
-    t.integer  "invited_id", :limit => 11,                :null => false
-    t.integer  "status",     :limit => 11, :default => 0
+    t.integer  "inviter_id",                :null => false
+    t.integer  "invited_id",                :null => false
+    t.integer  "status",     :default => 0
   end
 
   add_index "friends", ["inviter_id", "invited_id"], :name => "index_friends_on_inviter_id_and_invited_id", :unique => true
@@ -107,11 +107,11 @@ ActiveRecord::Schema.define(:version => 21) do
   create_table "games", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name",                                             :null => false
-    t.integer  "gamefaqs_id",         :limit => 11,                :null => false
-    t.string   "permalink",                                        :null => false
-    t.integer  "playables_count",     :limit => 11, :default => 0
-    t.integer  "favoriteships_count", :limit => 11, :default => 0
+    t.string   "name",                               :null => false
+    t.integer  "gamefaqs_id",                        :null => false
+    t.string   "permalink",                          :null => false
+    t.integer  "playables_count",     :default => 0
+    t.integer  "favoriteships_count", :default => 0
   end
 
   add_index "games", ["name"], :name => "index_games_on_name", :unique => true
@@ -121,13 +121,13 @@ ActiveRecord::Schema.define(:version => 21) do
   create_table "hours", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "timeable_id",   :limit => 11
+    t.integer  "timeable_id"
     t.string   "timeable_type"
-    t.string   "dayofweek",                                     :null => false
-    t.integer  "day",           :limit => 11,                   :null => false
-    t.time     "start",                                         :null => false
-    t.time     "end",                                           :null => false
-    t.boolean  "closed",                      :default => true, :null => false
+    t.string   "dayofweek",                       :null => false
+    t.integer  "day",                             :null => false
+    t.time     "start",                           :null => false
+    t.time     "end",                             :null => false
+    t.boolean  "closed",        :default => true, :null => false
   end
 
   add_index "hours", ["timeable_id", "timeable_type", "day"], :name => "index_hours_on_timeable_id_and_timeable_type_and_day", :unique => true
@@ -137,9 +137,9 @@ ActiveRecord::Schema.define(:version => 21) do
     t.datetime "updated_at"
     t.string   "subject"
     t.text     "body"
-    t.integer  "sender_id",   :limit => 11
-    t.integer  "receiver_id", :limit => 11
-    t.boolean  "read",                      :default => false, :null => false
+    t.integer  "sender_id"
+    t.integer  "receiver_id"
+    t.boolean  "read",        :default => false, :null => false
   end
 
   add_index "messages", ["sender_id"], :name => "index_messages_on_sender_id"
@@ -148,9 +148,9 @@ ActiveRecord::Schema.define(:version => 21) do
   create_table "playables", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "arcade_id",   :limit => 11,                :null => false
-    t.integer  "game_id",     :limit => 11,                :null => false
-    t.integer  "games_count", :limit => 11, :default => 1
+    t.integer  "arcade_id",                  :null => false
+    t.integer  "game_id",                    :null => false
+    t.integer  "games_count", :default => 1
   end
 
   add_index "playables", ["arcade_id", "game_id"], :name => "index_playables_on_arcade_id_and_game_id", :unique => true
@@ -160,12 +160,12 @@ ActiveRecord::Schema.define(:version => 21) do
   create_table "profiles", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id",               :limit => 11
-    t.boolean  "active",                              :default => false, :null => false
-    t.boolean  "administrator",                       :default => false, :null => false
-    t.string   "email",                                                  :null => false
-    t.string   "display_name",                                           :null => false
-    t.string   "permalink",                                              :null => false
+    t.integer  "user_id"
+    t.boolean  "active",                :default => false, :null => false
+    t.boolean  "administrator",         :default => false, :null => false
+    t.string   "email",                                    :null => false
+    t.string   "display_name",                             :null => false
+    t.string   "permalink",                                :null => false
     t.string   "initials"
     t.string   "full_name"
     t.string   "website"
@@ -173,10 +173,11 @@ ActiveRecord::Schema.define(:version => 21) do
     t.string   "aim_name"
     t.string   "gtalk_name"
     t.string   "msn_name"
-    t.integer  "frequentships_count",   :limit => 11, :default => 0
-    t.integer  "favoriteships_count",   :limit => 11, :default => 0
-    t.integer  "friendships_count",     :limit => 11, :default => 0
-    t.integer  "unread_messages_count", :limit => 11, :default => 0,     :null => false
+    t.integer  "frequentships_count",   :default => 0
+    t.integer  "favoriteships_count",   :default => 0
+    t.integer  "friendships_count",     :default => 0
+    t.integer  "messages_count",        :default => 0,     :null => false
+    t.integer  "unread_messages_count", :default => 0,     :null => false
   end
 
   add_index "profiles", ["permalink"], :name => "index_profiles_on_permalink", :unique => true
@@ -187,7 +188,7 @@ ActiveRecord::Schema.define(:version => 21) do
   create_table "regions", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "country_id",   :limit => 11
+    t.integer  "country_id"
     t.string   "name",         :limit => 50, :null => false
     t.string   "abbreviation", :limit => 5,  :null => false
   end

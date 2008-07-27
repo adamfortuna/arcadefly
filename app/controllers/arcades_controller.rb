@@ -103,7 +103,7 @@ class ArcadesController < ResourceController::Base
 
     respond_to do |format|
       format.html {
-        if current_profile.arcades.include?(@arcade)
+        if current_profile.arcades && current_profile.arcades.length && current_profile.arcades.include?(@arcade)
           flash[:notice] = "<span class=\"favorite arcade_add\">You added <b>#{@arcade.name}</b> to your list of favorite arcades! <a href=\"#{profile_arcade_path(current_profile)}\">View your favorite arcade</a>.</span>"
         else
           flash[:error] = "You have already added <b>#{@arcade.name}</b> to your list of favorite arcades. <a href=\"#{profile_arcades_path(current_profile)}\">View your favorite arcade</a>."
@@ -111,7 +111,7 @@ class ArcadesController < ResourceController::Base
         redirect_to request.env["HTTP_REFERER"]
       }
       format.js {
-        if current_profile.arcades.include?(@arcade)
+        if current_profile.arcades && current_profile.arcades.length > 0 && current_profile.arcades.include?(@arcade)
           render
         else
           render :update do |page|
@@ -159,6 +159,8 @@ class ArcadesController < ResourceController::Base
     arcades = sort_by_distance(arcades) if params[:order] == 'distance'
     @map = map_for_array(arcades)
     arcades
+  rescue
+    []
   end
 
   # Setup up the possible options for getting a collection, with defaults

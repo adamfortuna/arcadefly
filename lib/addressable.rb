@@ -6,11 +6,8 @@ module Addressable
       
       has_one :address, :as => :addressable#, :accessible => true
     	delegate [:lat, :lng, :country_id, :region_id], :to => :address
-      
-      before_validation :validate_address
-      
-      validates_presence_of :address
-    	validates_associated :address
+
+      after_validation :add_address_errors_to_base
     end
   end
   
@@ -22,8 +19,8 @@ module Addressable
     !address.nil?
   end
 
-  def validate_address
-    if address && !address.valid?
+  def add_address_errors_to_base
+    if address && address.errors
       address.errors.each { |attr, msg| errors.add(attr, msg) }
     end
   end

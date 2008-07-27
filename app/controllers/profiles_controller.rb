@@ -87,7 +87,8 @@ class ProfilesController < ResourceController::Base
 
   private
   def check_permissions
-    permission_denied unless (administrator? || current_profile == @profile)
+    debugger
+    permission_denied unless (administrator? || current_profile == object || (@current_profile && current_profile == object))
   end
   
   def create_map(profile)

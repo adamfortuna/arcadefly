@@ -82,18 +82,19 @@ class UsersController < ResourceController::Base
       @user.profile.address = Address.new(params[:address])
       @user.profile.address.title = "My Home"
     end
-    
+
     raise if !@user.valid? || !@user.profile.valid?
-    
+    raise if !@user.profile.address.vaid? if params[:add_address]
+
     @user.save!
-    
+
     #Uncomment to have the user logged in after creating an account - Not Recommended
     #self.current_user = @user
-    flash[:notice] = "Thanks for signing up, <b>#{@user.profile.display_name}</b>! Please check your email and click on the link we sent you to activate your account and log in."
+    flash[:notice] = "Thanks for signing up, <strong>#{@user.profile.display_name}</strong>! Please check your email and <strong>click on the link we sent you</strong> to activate your account and log in."
     redirect_to signin_path
   rescue
     flash[:error] = "There was a problem creating your account. Please correct any errors below before continuing."
-    redirect_to signup_path
+    render :action => 'new'
   end
   
   def edit

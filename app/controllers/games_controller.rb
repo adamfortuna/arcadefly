@@ -42,7 +42,7 @@ class GamesController < ResourceController::Base
 
     respond_to do |format|
       format.html {
-        if current_profile.games.include?(@game)
+        if current_profile.games && current_profile.games.length > 0 && current_profile.games.include?(@game)
           flash[:notice] = "<span class=\"favorite game_add\">You added <b>#{@game.name}</b> to your list of favorite games! <a href=\"#{profile_games_path(current_profile)}\">View your favorite games</a>.</span>"
         else
           flash[:error] = "You have already added <b>#{@game.name}</b> to your list of favorite games. <a href=\"#{profile_games_path(current_profile)}\">View your favorite games</a>."
@@ -50,7 +50,7 @@ class GamesController < ResourceController::Base
         redirect_to request.env["HTTP_REFERER"]
       }
       format.js {
-        if current_profile.games.include?(@game)
+        if current_profile.games && current_profile.games.length > 0 && current_profile.games.include?(@game)
           render
         else
           render :update do |page|
@@ -101,6 +101,7 @@ class GamesController < ResourceController::Base
   end
   
   def collection
+    debugger
     if parent_type == :arcade
       objects = parent_object.playables.paginate(options)
     elsif parent_type == :profile
@@ -109,6 +110,8 @@ class GamesController < ResourceController::Base
       objects = Game.paginate(options)
     end
     objects
+  rescue
+    []
   end
     
   # Setup up the possible options for getting a collection, with defaults
@@ -117,7 +120,7 @@ class GamesController < ResourceController::Base
     search = "%" + search if search and params[:search].length >= 2
 
     collection_options = {}
-    collection_options[:include] = :game if parent?
+    collection_options[:include] = :game if parent_type == :arcade
     collection_options[:page] = params[:page] || 1
     #collection_options[:per_page] = params[:per_page] if params[:per_page]
     collection_options[:order] = params[:order] || 'games.name'

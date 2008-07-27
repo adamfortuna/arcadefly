@@ -9,8 +9,7 @@
   <% end %>
 <% end %>
 
-<% tabbed_box do %>
-  
+<% tabbed_box do %>  
   <div id="profile_overview">
     <div class="left_column">
       <div class="left"><%= icon @profile, :big %></div>
@@ -41,28 +40,4 @@
     </div>
     <% end %>
   </div>
-  
-  
-  <div class="clear">
-    <div class="left_column">
-      <%- if logged_in?  && !me -%>
-      <div id="new_direct_message">
-        <%= render :partial => 'messages/form', :locals => {:hide_header => true} %>
-      </div>
-      <%- end -%>
-    </div>
-    <%- if logged_in?  && !me -%>
-    <div class="right_column">
-      <% if !current_profile.following?(@profile) %>
-        <%= button_to "Add to your friends", friends_path(@profile), { :method => "post", :class => "favorite user_add" } %>
-      <% else %>
-        <%= button_to "Remove from your friends", friends_path(@pofile), { :method => "delete", :class => "favorite user_delete" } %>
-      <% end %>
-    </div>
-    <% end %>
-  </div>
-</div>
-
-
-
 <% end %>
