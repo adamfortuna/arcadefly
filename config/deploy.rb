@@ -19,9 +19,9 @@ set :runner, "adam"
 depend :remote, :gem, "mislav-will_paginate", "~> 2.2"
 
 
-after "deploy:update_code", "deploy:symlink"
+after "deploy:update_code", "deploy:rails_symlink"
 namespace :deploy do
-  task :symlink do
+  task :rails_symlink do
     run "ln -nfs #{deploy_to}/#{shared_dir}/rails #{release_path}/vendor/rails"
   end
 end
