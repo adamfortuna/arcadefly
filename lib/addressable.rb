@@ -10,6 +10,14 @@ module Addressable
       after_validation :add_address_errors_to_base
     end
   end
+
+  def lat
+    address.lat
+  end
+  
+  def lng
+    address.lng
+  end
   
   def map_bubble
     raise "Map bubble"
