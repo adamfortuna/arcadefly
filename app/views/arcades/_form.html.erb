@@ -2,7 +2,7 @@
 
 <% content_for(:header) do %>
   <script>
-  
+/*  
 	function fill_down(start, stop) {
 	  $$('#hours select.start').each( function(e) {
   	  $(e).selectedIndex = start;
@@ -47,9 +47,10 @@
   		}	
 	  });
 	}
-	
+	*/
 	  Event.observe(window, 'load', function() {
       Form.focusFirstElement('arcade_form');
+      /*
       hoursChanged(false);
       $('hide_hours').observe('click', function() {
         hoursChanged(false);
@@ -57,6 +58,7 @@
       $('show_hours').observe('click', function() {
         hoursChanged(true);
       });
+      */
 
     });
   </script>
@@ -127,6 +129,7 @@
 <% end %>
 </div>
 
+<!--
 <div class="right half">
   <h3>Hours</h3>
 
@@ -168,7 +171,7 @@
     <% end %>
   </ul>        
 </div>
-
+-->
 <p class="clear right">
   <%= submit_tag "Review »", :class => "big-button right", :disable_with => 'Submitting...' %>
 </p>

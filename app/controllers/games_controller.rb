@@ -1,7 +1,8 @@
 class GamesController < ResourceController::Base
   belongs_to :arcade, :profile
   
-  before_filter :check_administrator, :only => [:new, :create]
+  before_filter :check_administrator, :only => [:destroy, :new, :create, :edit, :update]
+
   
   # This controls what views will be used depending on where the request is from.
   index.wants.html {
@@ -101,7 +102,6 @@ class GamesController < ResourceController::Base
   end
   
   def collection
-    debugger
     if parent_type == :arcade
       objects = parent_object.playables.paginate(options)
     elsif parent_type == :profile

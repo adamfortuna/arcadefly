@@ -14,13 +14,12 @@
   <%= map.div(:class => 'map map_medium content-height') %>
 </div>
 
-
 <p>
   <%= will_paginate arcades %>
 </p>
 
-
 <div>
+<!--
   <div class="right">
     <p class="center">
       Arcades are sorted by <em>
@@ -41,11 +40,10 @@
       <%= nav_link "Sort by Number of Games", arcades_path %>
     <ul>
   </div>
-  
+-->  
   <%- if logged_in? && current_profile.administrator? %>
   <p class="rights">
     <%= link_to 'Create a new arcade', new_arcade_path%>
   </p>
   <% end -%>
-  
 </div>

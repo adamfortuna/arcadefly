@@ -1,5 +1,9 @@
 class ArcadesController < ResourceController::Base
   belongs_to :profile, :game
+  
+  auto_complete_for :game, :name, :limit => 10, :order => 'playables_count DESC'
+  
+  before_filter :check_administrator, :only => [:destroy, :new, :create, :edit, :update]
     
   index.wants.html { 
     if parent_type == :game
@@ -38,9 +42,10 @@ class ArcadesController < ResourceController::Base
   # Edit the games at an arcade
   # GET /arcades/rockys-replay/games/edit
   def edit_games
-    @arcade = object
+    @arcade = Arcade.find_by_permalink(params[:id], :include => :playables)
+    @games = Game.find(:all, :order => 'name', :limit => 100)
   end
-
+    
 
   # Map for an arcade
   # GET /arcades/:rockys-replay/map
@@ -62,6 +67,17 @@ class ArcadesController < ResourceController::Base
     @arcade = Arcade.new(params[:arcade])
   end
   
+  # POST /arcades
+  def create
+    debugger
+    
+    if @arcade = Arcade.create(params[:arcade])
+      redirect_to arcade_url(@arcade)
+    else
+      notice[:error] = "There was a problem creating the arcade. Please fix any errors below and give it another try."
+      render :action => 'new'
+    end
+  end
   
   # Show arcades ordered by frequenthips (user favorites)
   # GET /popular/arcades
@@ -87,7 +103,7 @@ class ArcadesController < ResourceController::Base
       redirect_to arcade_url(@arcade)
     elsif @arcade.update_attributes(params[:arcade])
       flash[:notice] = "<span class=\"icon arcade_add\">Arcade updated! Please review the changes below and make sure everything looks as you'd expect.</span>"
-      render :action => 'show'
+      redirect_to arcade_url(@arcade)
     else
       flash[:error] = "<span class=\"icon arcade_delete\">Looks like some required information was missing. Please check below and fix any errors before going on.</span>"
       render :action => 'edit'

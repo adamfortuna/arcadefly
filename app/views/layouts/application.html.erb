@@ -4,11 +4,23 @@
 <head>
 	<title>ArcadeFly<%= separator -%><%= yield(:title) || "Tracking the arcade buzz!" %></title>
   <%= stylesheet_link_tag 'application', 'common_classes', 'forms' %>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
+  <%= javascript_include_tag 'application' %>
 
-  <%= javascript_include_tag 'prototype', 'application' %>
-
-  <%= yield(:head) %>
+  <%= yield(:header_files) %>
   <%= yield(:header) %>
+
+  <% if Rails.env.production? %>
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+    var pageTracker = _gat._getTracker("UA-90326-5");
+    pageTracker._initData();
+    pageTracker._trackPageview();
+    </script>
+  <% end %>
 </head>
 <body<%= " class=\"#{params[:controller]}\"" unless params[:controller].nil? %>>
 	<div id="main">
@@ -63,7 +75,7 @@
   	      <li><%= link_to "Contact Us", contact_path %></li>
   	      <li><%= link_to "Terms of Use", terms_path %></li>
   	      <li><%= link_to "Privacy Policy", privacy_path %></li>
-  	      <li><%= link_to "Site Map", site_map_path %></li>
+  	      <!--<li><%= link_to "Site Map", site_map_path %></li>-->
   	      <li><a href="http://blog.arcadefly.com">Blog</a></li>
         </ul>
       </div>

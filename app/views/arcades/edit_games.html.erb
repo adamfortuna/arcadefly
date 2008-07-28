@@ -1,6 +1,77 @@
 <% title 'Arcades' + separator + @arcade.name + separator + "Modify Games" %>
+<% javascript 'effects', 'controls' -%>
+
+<% content_for(:header) do %>
+  <script>
+  Event.observe(window, 'load', function() {
+    Form.focusFirstElement('arcade_form');
+    new Ajax.Autocompleter('game_name', 'game_name_auto_complete', '/arcades/auto_complete_for_game_name', {
+        minChars: 3, 
+        indicator: 'game_indicator'
+        });
+    //Event.observe('game_name', 'change', verifyAddComplete);
+  });
+/*  
+  function verifyAddComplete() {
+    if($F('game_name').length > 0 && $F('playable_count').length > 0) {
+      $('add_game').disabled = false;
+    } else {
+      $('add_game').disabled = true;      
+    }
+  }
+*/
+  </script>
+  <style>
+    #new_playable { }
+    #new_playable span input { }
+    #playables li { padding:10px 0;}
+  </style>
+<% end %>
+
+
+
 <%= render :partial => 'menu', :locals => { :arcade => @arcade } %>
 
 <% tabbed_box do %>
   <h2><%= @title%></h2>
+  <p class="info">
+    Thanks for wanting to lend a hand! We're powered completely by user submissions, so every little bit helps.
+    <strong>New to modifing arcades here? You might want to read the help docs on <%= link_to "editing arcades", "/help/arcades"%>.</strong>
+  </p>
+
+  <% remote_form_for(:arcade, :playables, :url => arcade_playables_path(@arcade), :html => { :id => 'arcade_form' }) do |f| -%>
+    <div id="new_playable">
+      <span class="left">
+        <p class="block required" style="width:400px;">
+          <label for="game_name">Game Name:</label>
+          <span class="block info">Start typing some of a game name and we'll do the rest...</span>
+          <input id="game_name" name="game[name]" size="30" type="text" class="text" />
+          <img src="/images/spinner.gif" alt="Working..." id="game_indicator" style="display: none" />
+          <div class="autocomplete" id="game_name_auto_complete"></div>
+        </p>
+      </span>
+      <span class="left" style="margin-left:50px;">
+        <p class="block required">
+          <label for="playable_count">How many of this game?</label>
+          <span class="block info">Usually this will be 1.</span>
+          <input type="text" id="playable_count" name="count" value="1 " class="text" size="2" maxlength="3" style="width:30px;" />
+        </p>
+      </span>
+      <span class="right" style="margin-top:10px;">
+        <%= submit_tag "Add this game!", :class => "big-button", :disable_with => 'Adding...', :name => 'submit', :id => 'add_game' %>
+      </span>
+    </div>
+  <% end %>  
+  
+  <hr class="clear shift-2" />
+  
+  <% form_for(:arcade, :playables, :url => arcade_playable_path(@arcade), :html => { :method => :put, :id => 'arcade_form' }) do |f| -%>
+    <ul id="playables" class="data">
+      <%= render :partial => 'playables/playable', :collection => @arcade.playables %>
+    </ul>
+    <p class="clear shift-2">
+      <%= submit_tag "Update game counts", :disabled => true, :class => "big-button right", :disable_with => 'Updating...', :name => 'submit', :id => 'update_game' %>
+      <span class="block info right clear">Can't update game counts yet. Just delete the game and re-add it for now.</span>
+    </p>
+  <% end %>
 <% end %>

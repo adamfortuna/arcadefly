@@ -3,7 +3,7 @@ body { margin:0px; padding:0px; background-color:#131211; font-family:Arial, Hel
 
 /* Text-Styles */
 h2 { margin:0px 0px 10px 0px; font-size:36px; font-family:Helvetica, Arial, Sans-serif; color:#000000; line-height:39px; letter-spacing:-1px; }
-h3 { margin:10px 0px 5px 0px; font-size:14px; line-height:21px; font-family:Helvetica, Arial, Sans-serif; color:#000000; }
+h3 { margin:0px 0px 5px 0px; font-size:14px; line-height:21px; font-family:Helvetica, Arial, Sans-serif; color:#000000; }
 h4 { color:#007de2; margin:0px 0px 0px 0px; }
 small { color:#595856; font-weight:bold; font-size:11px; display:block; margin-bottom:15px; }
 a { color:#26689f; text-decoration:none; }
@@ -17,16 +17,16 @@ a.button:hover { background:#007de2 url(/images/button_bg_o.jpg) repeat-x; borde
 img, #logo { behavior: url(/scripts/iepngfix.htc); }
 
 /* layout */
-.container { width:960px; margin:0 auto; position:relative; }
+.container { width:960px; margin:0 auto; }
 #main { background:#c4c0be url(/images/background_light_slice.jpg) repeat-x; padding-bottom:30px; }
 #main .container { background-image:url(/images/background_light.jpg); background-repeat:no-repeat; }
 
-#content { overflow:auto; }
+#content { }
 #content h2 { font-size:32px; line-height:31px; }
 #content hr { border:1px solid #e3e3e3; margin-top:40px; margin-bottom:40px; }
 
 /* Footer-Styles */
-#footer { background-image:url(/images/background_footer.jpg); background-repeat:repeat-x; padding:40px; position:relative; top:-20px; min-height:130px; }
+#footer { background-image:url(/images/background_footer.jpg); background-repeat:repeat-x; padding:40px; min-height:130px; }
 #footer { font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; }
 .footer_column { float:left; width:120px; margin-right:30px; }
 #footer .long { width:610px; }
@@ -37,7 +37,7 @@ img, #logo { behavior: url(/scripts/iepngfix.htc); }
 #header { padding-top:20px; padding-bottom:20px; }
 #logo h1, #logo small { margin:0px; display:block; text-indent:-9999px; }
 #logo { background-image:url(/images/logo.png); background-repeat:no-repeat; width:194px; height:83px; }
-ul#menu { margin:0px; padding:0px; position:absolute; right:0px; }
+ul#menu { margin:0px; padding:0px; float:right; }
 ul#menu li { display:inline; margin-left:12px; }
 ul#menu li a { text-decoration:none; color:#716d6a; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; font-weight:bold; text-transform:uppercase; }
 ul#menu li a.active, ul#menu li a:hover { color:#211e1e; }
@@ -51,11 +51,11 @@ ul#menu li a.active, ul#menu li a:hover { color:#211e1e; }
 
 /* For black/white bordered boxes without a top border */
 .block_outside_topless { border-left:1px solid #a3a09e; border-right:1px solid #a3a09e; border-bottom:1px solid #a3a09e; background-color:#ffffff; margin-bottom:20px; position:relative; clear:both; }
-.block_inside_topless { display:block; background: #ffffff url(/images/background_block_slice.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
+.block_inside_topless { display:block; background: #ffffff url(/images/background_block_slice.jpg) repeat-x; padding:30px; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
 
 /* For black/white bordered boxes with a top gradient */
 .block_outside { border:1px solid #a3a09e; background-color:#ffffff; margin-bottom:20px; position:relative; clear:both;	}
-.block_inside { display:block; border:1px solid #ffffff; background: #ffffff url(/images/background_block_slice.jpg) repeat-x; padding:30px; overflow:auto; }
+.block_inside { display:block; border:1px solid #ffffff; background: #ffffff url(/images/background_block_slice.jpg) repeat-x; padding:30px; }
 																																							
 /* Content area takes up the main part of the page */
 #content_area { width:665px; float:left; }
@@ -107,3 +107,9 @@ ul#menu li a.active, ul#menu li a:hover { color:#211e1e; }
 #features li { padding: 1em; }
 #address_form label { position:absolute; margin:1em 0 0 .2em; color:#aaa; font-size:2em }
 #address_form input#address { width: 80%; font-size:2em; }
+
+#edit_games { list-style:none;}
+#edit_games li { border-bottom:1px solid #ccc;}
+#edit_games input { max-width:40px;}
+
+#arcade_search label { position:absolute; margin:1em 0 0 .6em; color:#aaa; }

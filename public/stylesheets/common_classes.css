@@ -2,7 +2,7 @@
 .left { float:left; }
 .right { float:right; }
 
-.clear { display: inline-block; }   
+.clear { display: inline-block; clear:both; }   
 .clear:after, .container:after {
   content: "."; 
   display: block; 
@@ -112,9 +112,9 @@ ul.admin li { display: inline; float:left; }
 
 /* Elements that require secial attention for inline scrolling */
 .scrollable { overflow-x: hidden; overflow-y: scroll; }
-ul.scrollable li { clear: both; }
-ul.scrollable li:hover { background-color: #ddd; }
-ul.scrollable li label { display: block; font-weight:normal; }
+ul.scrollable li, ul.items li { clear: both; }
+ul.scrollable li:hover, ul.items li:hover { background-color: #ddd; }
+ul.scrollable li label, ul.items li label { display: block; font-weight:normal; }
 
 /* Default colors for rows */
 .even { background-color: #efefef; }
@@ -192,7 +192,7 @@ div.left_column .left_column_content { clear: both; padding-top: 2em; }
 div.right_column { width:300px; float:right; }
 
 
-div.autocomplete { margin:0px; padding:0px; width:250px; background:#fff; border:1px solid #888; position:absolute; max-height:300px; overflow-y:auto; }
-div.autocomplete ul { margin:0px; padding:0px; list-style-type:none; }
+div.autocomplete { margin:0px; padding:0px; width:250px; background:#fff; border:1px solid #888; position:absolute; overflow-y:auto; max-height:300px; z-index:300; }
+div.autocomplete ul { margin:0px; padding:0px; list-style-type:none; background-color:#fff; }
 div.autocomplete ul li.selected {  background-color:#ffb; }
 div.autocomplete ul li { margin:0; padding:2px; height:32px; display:block; list-style-type:none; cursor:pointer; }

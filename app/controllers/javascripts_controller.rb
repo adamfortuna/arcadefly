@@ -1,12 +1,8 @@
 class JavascriptsController < ApplicationController
-  caches_page :dynamic_regions, :dynamic_games
-
-  def dynamic_regions
-    @regions = Region.find(:all, :order => 'name')
-  end
+  caches_page :dynamic_regions
 
   def dynamic_games
-    @games = Game.find(:all, :order => 'name')
+    @games = Game.find(:all, :order => 'name', :limit => 100)
   end
 
 end

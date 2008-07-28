@@ -1,0 +1,3 @@
+page.insert_html :top, 'playables', :partial => 'playables/playable', :object => @playable
+page.visual_effect :highlight, "playable_#{@playable.id}", :duration => 3
+page.call 'Form.reset', 'arcade_form'

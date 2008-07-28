@@ -65,9 +65,9 @@ ActionController::Routing::Routes.draw do |map|
   map.games_update '/games/update', :controller => 'gateway', :action => 'update_games'
   
   # Resources
-  map.resources :arcades, :has_many    => [ :games, :profiles ],
+  map.resources :arcades, :has_many    => [ :games, :profiles, :playables ],
                           :has_one     => :address,
-                          :collection  => [ :popular ],
+                          :collection  => [ :popular, :auto_complete_for_game_name ],
                           :member      => [ :map, :claim, :favorite, :unfavorite ]
 
   map.resources :games,   :has_many    => [ :arcades, :profiles ],
@@ -79,7 +79,7 @@ ActionController::Routing::Routes.draw do |map|
                            :collection =>{:search=>:get}
 
   map.resources :users,   :alias => :friends
-  map.resources :addresses, :sessions, :password, :comments, :messages
+  map.resources :addresses, :sessions, :password, :comments, :messages, :playables
   map.resources :sessions, :object => [ :address ]
 
 
@@ -88,6 +88,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Install the default routes as the lowest priority.
   map.connect 'help/:action', :controller => 'help'
+  map.connect 'javascripts/:action.js', :controller => 'javascripts', :format => 'js'
 
   # map.connect ':controller/:action/:id'
   # map.connect ':controller/:action.:format'

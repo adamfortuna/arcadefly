@@ -15,6 +15,7 @@
       </span>
       <div class="short_description">
         <h2><%= h @arcade.name %></h2>
+        <%= render :partial => 'arcades/favorite', :locals => { :show_text => true, :arcade => @arcade } %><br/>
         <p class="adr">
           <b>Address:</b><br/>
           <span class="street-address"><%= @arcade.address.street %></span><br/>
@@ -37,15 +38,13 @@
 
         <% if addressed_in? -%>
           <p>
-            <strong>Distance Away: </strong>
-            <%= @arcade.address.distance_to(current_address).round_to(2) %> miles
+            <strong>Distance: </strong>
+            <%= @arcade.address.distance_to(current_address).round_to(2) %> miles away
           </p>
         <% end -%>
-
-        <%= render :partial => 'arcades/favorite', :locals => { :show_text => true, :arcade => @arcade } %>
     	</div>
     </div>
-  
+  </div>
     <% if @arcade.has_address? -%>
       <div class="map_box right_column">
         <%= @map.div(:class => 'right prepend-1 span-13 last map_small map') %>
@@ -70,4 +69,16 @@
       </div>
     <% end %>
   </div>
+  
+  
+  <% if logged_in? && current_profile.administrator? %>
+    <ul class="nav clear right">
+      <li><%= link_to "New", new_arcade_path %></li>
+      <li><%= link_to "Edit", edit_arcade_path(@arcade) %></li>
+      <li><%= link_to "Edit Games", edit_arcade_games_path(@arcade) %></li>
+      <li><%= link_to "Delete", arcade_path(@arcade), :method => :delete, :confirm => "Are you sure? This will completely remove this arcade." %></li>
+    </ul>
+    <div class="clear"/>
+  <% end %>
 <% end %>
+

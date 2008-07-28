@@ -1,6 +1,5 @@
 class Arcade < ActiveRecord::Base
   include Addressable
-	attr_accessor :game_ids
 
 	PUBLIC_FIELDS = [:created_at, :updated_at, :permalink, :name, :phone, :website, :notes, :playables_count, :frequentships_count]
 	PUBLIC_FIELDS_WITH_ADDRESS = [PUBLIC_FIELDS, :street, :city, :postal_code, :lat, :lng].flatten
@@ -37,6 +36,10 @@ class Arcade < ActiveRecord::Base
     playables.size > 0
   end
 
+  def has_game?(game)
+    playables.find_by_game_id(game.id)
+  end
+
   def frequentships_rank
     Arcade.count(:conditions => ['frequentships_count > ?', frequentships_count]) + 1
   end
@@ -45,9 +48,9 @@ class Arcade < ActiveRecord::Base
     Arcade.count(:conditions => ['playables_count > ?', playables_count]) + 1
   end
 
-	def add_game(game_id, games_count)
-	  self.playables.create(:game => Game.find(game_id), :games_count => games_count)
-  end
+  # def add_game(game_id, games_count)
+  #   self.playables.create(:game => Game.find(game_id), :games_count => games_count)
+  #   end
   
   def has_hours?
     true

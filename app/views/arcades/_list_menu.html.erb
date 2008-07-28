@@ -1,37 +1,11 @@
-<% content_for(:header) do %>
-  <style>
-    <!--
-    #arcade_search label { position:absolute; margin:1em 0 0 .6em; color:#aaa; }
-    //-->
-  </style>
-  <script>
-  <!--
-    function toggleLabel(show) {
-      show && $F('search') == '' ? $('search_label').show() : $('search_label').hide();
-    }
-  //-->
-  </script>
-<% end %>
-<!--
-<div id="arcade_search" class="right pull-4">
-<% form_for(:arcade, arcades_path, :html => { :method => 'get' }) do |f| %>
-    <label id="search_label" for="search">Search for an Arcade by name...</label>
-    <%= text_field_tag :search, '', { :class => 'text', :onfocus => 'toggleLabel(false);', :onblur => 'toggleLabel(true);' } %>  
-    <%= submit_tag "Search!", { :disable_with => 'Searching...' } %>
-<% end %>
-</div>-->
-
 <% if !addressed_in? %>
   <% box do %>
-    <strong>Want to see which arcades are closest to you?</strong> <%= link_to "Register", signup_path %>, <%= link_to "sign in", signin_path %> or <%= link_to "set your address", root_path %>
+    <strong>Want to see which arcades you're closest to?</strong> <%= link_to "Register", signup_path %>, <%= link_to "sign in", signin_path %> or <%= link_to "set your address", root_path %>
     to enable browsing by distance and to see how many miles away each arcade is.
   <% end %>
 <% end %>
 
-
 <ul class="tabs">
-  <% if addressed_in? -%>
   <%= menu_link "Map Arcades", arcades_path, { :a_class => 'arcades' } %>
-  <% end %>
-  <%= menu_link "Browse Arcades", browse_arcades_path, { :a_class => 'arcades' } %>
+  <!--<%= menu_link "Browse Arcades", browse_arcades_path, { :a_class => 'arcades' } %>-->
 </ul>

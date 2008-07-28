@@ -1,8 +1,8 @@
 class ProfilesController < ResourceController::Base
   belongs_to :game, :arcade
-    
-  before_filter :check_permissions, :only => [:edit, :update]
-  skip_filter :login_required, :only => [:show, :index, :feed, :search]
+
+  before_filter :check_permissions, :only => [:destroy, :edit, :update]
+  skip_filter :login_required, :only => [:show, :index]
 
   index.wants.html { 
     # GET /arcades/:arcade_id/users
@@ -87,8 +87,7 @@ class ProfilesController < ResourceController::Base
 
   private
   def check_permissions
-    debugger
-    permission_denied unless (administrator? || current_profile == object || (@current_profile && current_profile == object))
+    permission_denied unless current_profile == object
   end
   
   def create_map(profile)
