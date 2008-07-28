@@ -172,7 +172,7 @@ class ArcadesController < ResourceController::Base
   # GET /games/:game_id/arcades
   def collection
     arcades = parent? ? parent_object.arcades.paginate(options) : Arcade.paginate(options)    
-    arcades = sort_by_distance(arcades) if params[:order] == 'distance'
+    arcades = sort_by_distance(arcades) #if params[:order] == 'distance'
     @map = map_for_array(arcades)
     arcades
   rescue
