@@ -68,9 +68,9 @@ class ProfilesController < ResourceController::Base
 
 
   def destroy
-    @user = object
+    @profile = object
     respond_to do |wants|
-     @user.destroy
+     @profile.destroy
       cookies[:auth_token] = {:expires => Time.now-1.day, :value => ""}
       session[:user] = nil
       wants.js do

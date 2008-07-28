@@ -8,28 +8,28 @@ class Profile < ActiveRecord::Base
   attr_accessor :icon
 
   # User
-  belongs_to :user  
+  belongs_to :user, :dependent => :destroy
 
   # Arcades
-  has_many :frequentships
+  has_many :frequentships, :dependent => :destroy
   has_many :arcades, :through => :frequentships
 
   # Games
-  has_many :favoriteships
+  has_many :favoriteships, :dependent => :destroy
   has_many :games, :through => :favoriteships
   
   # Messages
   has_many :sent_messages,     :class_name => 'Message', :order => 'created_at desc', :foreign_key => 'sender_id'
   has_many :received_messages, :class_name => 'Message', :order => 'created_at desc', :foreign_key => 'receiver_id'
-  has_many :unread_messages,   :class_name => 'Message', :conditions => ["read=?",false] 
+  has_many :unread_messages,   :class_name => 'Message', :conditions => ["read=?",false]
   
   # Comments 
   has_many :comments, :as => :commentable, :order => 'created_at desc'
 
   # Friends
-  has_many :friendships, :class_name  => "Friend", :foreign_key => 'inviter_id', :conditions => "status = #{Friend::ACCEPTED}"
-  has_many :follower_friends, :class_name => "Friend", :foreign_key => "invited_id", :conditions => "status = #{Friend::PENDING}"
-  has_many :following_friends, :class_name => "Friend", :foreign_key => "inviter_id", :conditions => "status = #{Friend::PENDING}"
+  has_many :friendships, :class_name  => "Friend", :foreign_key => 'inviter_id', :conditions => "status = #{Friend::ACCEPTED}", :dependent => :destroy
+  has_many :follower_friends, :class_name => "Friend", :foreign_key => "invited_id", :conditions => "status = #{Friend::PENDING}", :dependent => :destroy
+  has_many :following_friends, :class_name => "Friend", :foreign_key => "inviter_id", :conditions => "status = #{Friend::PENDING}", :dependent => :destroy
   
   has_many :friends,   :through => :friendships, :source => :invited
   has_many :followers, :through => :follower_friends, :source => :inviter
