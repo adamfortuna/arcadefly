@@ -13,7 +13,9 @@
   <h2 id="text_title">ArcadeFly is social networking site for arcade lovers</h2>
   <p>Every wonder where you could go to play a specific game? Or what arcades people in your area consider to be the best? Or just where some arcades are?</p>
   <p>
-    <%= button_to "Register Now!", signup_path, {:class => "big-button right"} %>
+    <% unless logged_in? %>
+      <%= button_to "Register Now!", signup_path, {:class => "big-button right"} %>
+    <% end %>
     You're in the right place!
   </p>
   <p class="shift-1">

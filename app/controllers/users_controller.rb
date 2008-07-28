@@ -69,7 +69,7 @@ class UsersController < ResourceController::Base
   def create
     @add_address = params[:add_address]
     cookies.delete :auth_token
-    @user = User.new(params)
+    @user = User.new
     @user.profile = Profile.new
     
     @user.email = params[:user][:email]
@@ -84,10 +84,9 @@ class UsersController < ResourceController::Base
     end
 
     raise if !@user.valid? || !@user.profile.valid?
-    raise if !@user.profile.address.vaid? if params[:add_address]
+    raise if params[:add_address] && !@user.profile.address.valid? 
 
     @user.save!
-
     #Uncomment to have the user logged in after creating an account - Not Recommended
     #self.current_user = @user
     flash[:notice] = "Thanks for signing up, <strong>#{@user.profile.display_name}</strong>! Please check your email and <strong>click on the link we sent you</strong> to activate your account and log in."
