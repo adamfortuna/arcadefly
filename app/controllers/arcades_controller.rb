@@ -69,8 +69,6 @@ class ArcadesController < ResourceController::Base
   
   # POST /arcades
   def create
-    debugger
-    
     if @arcade = Arcade.create(params[:arcade])
       redirect_to arcade_url(@arcade)
     else

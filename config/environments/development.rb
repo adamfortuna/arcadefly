@@ -21,5 +21,9 @@ config.action_controller.asset_host                  = "http://localhost:3000"
 # ActiveRecord
 config.active_record.timestamped_migrations = true
 
+# Mail settings
+ActionMailer::Base.delivery_method = :smtp
+
+
 
 HOST = 'http://localhost:3000'

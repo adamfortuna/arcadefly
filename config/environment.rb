@@ -66,7 +66,7 @@ GeoKit::default_formula = :sphere
 # This is the timeout value in seconds to be used for calls to the geocoder web
 # services.  For no timeout at all, comment out the setting.  The timeout unit
 # is in seconds. 
-GeoKit::Geocoders::timeout = 1
+GeoKit::Geocoders::timeout = 3
 
 # These settings are used if web service calls must be routed through a proxy.
 # These setting can be nil if not needed, otherwise, addr and port must be 
@@ -80,7 +80,7 @@ GeoKit::Geocoders::proxy_pass = nil
 # This is your yahoo application key for the Yahoo Geocoder.
 # See http://developer.yahoo.com/faq/index.html#appid
 # and http://developer.yahoo.com/maps/rest/V1/geocode.html
-GeoKit::Geocoders::yahoo = 'REPLACE_WITH_YOUR_YAHOO_KEY'
+GeoKit::Geocoders::yahoo = 'VCRJN0DV34F.bLut0O1hFBmGHEMBVIcrh5Uz4XA.pZvOeiIbDMUa3N_mq3OFqWyZ'
     
 # This is your Google Maps geocoder key. 
 # See http://www.google.com/apis/maps/signup.html
@@ -108,10 +108,7 @@ GeoKit::Geocoders::geocoder_ca = false
 # Be aware that there are Terms of Use restrictions on how you can use the 
 # various geocoders.  Make sure you read up on relevant Terms of Use for each
 # geocoder you are going to use.
-GeoKit::Geocoders::provider_order = [:google]
-
-# Third, add your SMTP settings
-ActionMailer::Base.delivery_method = :smtp
+GeoKit::Geocoders::provider_order = [:google,:yahoo]
 
 class Array
  def paginate(all = nil, options = {})

@@ -12,8 +12,11 @@
 <% box do %>
   <h2 id="text_title">ArcadeFly is social networking site for arcade lovers</h2>
   <p>Every wonder where you could go to play a specific game? Or what arcades people in your area consider to be the best? Or just where some arcades are?</p>
-  <p>You're in the right place!</p>
   <p>
+    <%= button_to "Register Now!", signup_path, {:class => "big-button right"} %>
+    You're in the right place!
+  </p>
+  <p class="shift-1">
     We know of <strong><%= @arcades_count %> arcades</strongs> right now, and a total of <%= @arcade_games_count %> game locations</strong> added by out <strong><%= @profiles_count %> players</strong>. 
     With <strong><%= @games_count %> games available</strong> we expect many more to come!
   </p>

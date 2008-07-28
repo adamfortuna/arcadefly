@@ -28,7 +28,6 @@ class AddressesController < ResourceController::Base
     else      
       region = Region.find_by_abbreviation(loc.state)
       country = Country.find_by_alpha_2_code(loc.country_code)
-      debugger
       address = Address.new(:title => 'Quick Lookup',
                                             :addressable_type => 'Session', 
                                             :addressable_id => Session.find_by_session_id(session.session_id).id,
@@ -37,7 +36,6 @@ class AddressesController < ResourceController::Base
                                             :street => loc.street_address,
                                             :postal_code => loc.zip,
                                             :city => loc.city)
-      debugger
       address.save
       self.current_address = address
     end

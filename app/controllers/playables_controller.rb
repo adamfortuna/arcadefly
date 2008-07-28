@@ -16,7 +16,7 @@ class PlayablesController < ResourceController::Base
   
   # Updating all the games at an arcade
   def update
-    debugger
+    redirect_to root_url
   end
 
   # DELETE /arcades/:arcade_id/playables/:id
