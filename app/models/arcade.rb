@@ -13,9 +13,7 @@ class Arcade < ActiveRecord::Base
 	has_many :profiles, :through => :frequentships
 
 	has_many :hours, :as => :timeable, :order => 'day, start, end'
-	
-	#after_save :update_games
-	
+		
 	# Validations
 	validates_presence_of :name, :message => "is required."
 	validates_uniqueness_of :permalink
