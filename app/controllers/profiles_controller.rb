@@ -68,6 +68,7 @@ class ProfilesController < ResourceController::Base
 
 
   def destroy
+    @user = object
     respond_to do |wants|
      @user.destroy
       cookies[:auth_token] = {:expires => Time.now-1.day, :value => ""}
