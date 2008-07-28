@@ -73,7 +73,7 @@ class UsersController < ResourceController::Base
     @user.profile = Profile.new
     
     @user.email = params[:user][:email]
-    @user.email_confirmation = params[:profile][:email_confirmation]
+    @user.email_confirmation = params[:user][:email_confirmation]
     @user.password = params[:user][:password]
     @user.password_confirmation = params[:user][:password_confirmation]
     @user.profile.display_name = params[:profile][:display_name]

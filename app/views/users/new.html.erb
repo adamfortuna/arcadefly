@@ -72,13 +72,13 @@
     <p class="block required">
       <label for="profile_email">Email Address</label>
       <span class="block info">You'll use this to login and to activate your account.</span>
-      <%= error_message_on @user.profile, "email", "Email " %>
+      <%= error_message_on @user, "email", "Email " %>
       <%= f.text_field :email, { :class => 'text'} %>
     </p>
     
     <p class="block required">
       <label for="profile_email_confirmation">Confirm Email Address</label>
-      <%= error_message_on @user.profile, "email_confirmation", "Email " %>
+      <%= error_message_on @user, "email_confirmation", "Email " %>
       <%= f.text_field :email_confirmation, { :class => 'text'} %>
     </p>
     

@@ -272,7 +272,7 @@ class User < ActiveRecord::Base
     end
     
     def email_required?
-      email.blank? || !email_confirmation.nil?
+      email_changed? || email.blank? || !email_confirmation.nil?
     end
 
 end
