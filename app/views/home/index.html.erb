@@ -13,26 +13,25 @@
   <h2 id="text_title">ArcadeFly is social networking site for arcade lovers</h2>
   <p>Every wonder where you could go to play a specific game? Or what arcades people in your area consider to be the best? Or just where some arcades are?</p>
   <p>You're in the right place!</p>
-  <p>Choose from <strong><%= @arcades_count %> arcades, and <%= @arcade_games_count %> games</strong> at those arcades to get started.</p>
+  <p>
+    We know of <strong><%= @arcades_count %> arcades</strongs> right now, and a total of <%= @arcade_games_count %> game locations</strong> added by out <strong><%= @profiles_count %> players</strong>. 
+    With <strong><%= @games_count %> games available</strong> we expect many more to come!
+  </p>
 <% end %>
 
 
-<% box do %>
-  <% if !logged_in? %>
+<% if !logged_in? %>
+  <% box do %>
     <% form_tag(addresses_path, :id => "address_form") do %>
         <label id="address_label" for="address">Enter your address to get started...</label>
         <%= text_field_tag :address, addressed_in? ? current_address.single_line : '', { :class => 'text', :onfocus => 'toggleLabel("address", false);', :onblur => 'toggleLabel("address", true);' } %>
         <%= submit_tag "Find Arcades!", :class => 'inline big-button', :disable_with => 'Finding...', :id => 'find' %>
     <% end %>
-  <% else %>
-    <p>
-      Looking to change your address? Or view arcades close to a different address? Just <%= link_to "change the address associated with your account", edit_profile_path(current_profile) %>.
-    </p>
   <% end %>
 <% end %>
 
 <div id="block_portfolio">
-	<div id="featured_column" class="features">
+	<div class="features">
 	  <% list_box do %>
       <img src="images/square_map.jpg" class="thumbnail" alt="AudioJungle" />
       <h3>Arcades that are closeby</h3>
