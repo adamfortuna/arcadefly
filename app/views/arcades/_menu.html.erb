@@ -5,8 +5,8 @@
   <%= menu_link "Area Map", map_arcade_path(arcade), { :a_class => 'arcades' } %>
   
   <% if logged_in? && administrator? -%>
-  <%= nav_link 'Modify Games', edit_arcade_games_path(arcade), { :a_class => 'arcades', :li_class => 'right' } %>
-  <%= nav_link 'Modify Arcade', edit_arcade_path(arcade), { :a_class => 'arcades  ', :li_class => 'right' } %>
+  <%= nav_link 'Edit Games', edit_arcade_games_path(arcade), { :a_class => 'arcades', :li_class => 'right' } %>
+  <%= nav_link 'Edit Arcade', edit_arcade_path(arcade), { :a_class => 'arcades  ', :li_class => 'right' } %>
   <% end %>
   
 </ul>

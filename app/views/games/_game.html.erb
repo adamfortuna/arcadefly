@@ -4,16 +4,19 @@
   if game.is_a?(Playable)
     playable = game
     game = playable.game
+  elsif game.is_a?(Favoriteship)
+    favoriteship = game
+    game = favoriteship.game
   end
 -%>
 <li id="game_<%= game.id %>" class="<%= cycle("even","odd")%><%= " favorited" if logged_in? && current_profile.has_favorite_game?(game) %>">
 	<%= link_to(game.name, game_path(game), :class => 'main') %>
   
 	<span class="count">
-	  <% if playable %>
+	  <% if game.is_a?(Playable) %>
 	    <%= pluralize(playable.games_count, "game") %>
     <% else %>
-      in <%= pluralize(game.playables_count, "arcade") %>
+      in <%= pluralize(game.playables.size, "arcade") %> with <%= pluralize(game.favoriteships.size, "favorite") %>
     <% end %>
     <%= render :partial => 'games/favorite', :locals => { :show_text => false, :game => game } %>
   </span>

@@ -98,17 +98,18 @@
 
     <p class="left shift-1">
       <input type="checkbox" name="add_address" id="add_address"<%= ' checked="true"' if @add_address %> />
-      <label for="add_address">Add an address now?</label>
-      <span class="small block">Adding an address will let us show distinace calculations</span>
+      <label for="add_address">Add your address now?</label>
+      <span class="small block">Adding your address will let us show distinace calculations</span>
     </p>
   </div>
   
   <div class="right" id="address">
+    <h3>Your Address</h3>
     <%= render :partial => 'shared/address', :locals => { :address => @user.profile.address } %>
   </div>
 
   <p class="right">
-    <%= submit_tag 'Register', { :disable_with => 'Registering...' } %>
+    <%= submit_tag "Register", :class => "big-button", :disable_with => 'Registering...' %>
   </p
 
   <% end -%>

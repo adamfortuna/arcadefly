@@ -105,7 +105,7 @@ class GamesController < ResourceController::Base
     if parent_type == :arcade
       objects = parent_object.playables.paginate(options)
     elsif parent_type == :profile
-      objects = parent_object.games.paginate(options)
+      objects = parent_object.favoriteships.paginate(options)
     else
       objects = Game.paginate(options)
     end
@@ -120,7 +120,7 @@ class GamesController < ResourceController::Base
     search = "%" + search if search and params[:search].length >= 2
 
     collection_options = {}
-    collection_options[:include] = :game if parent_type == :arcade
+    collection_options[:include] = :game if parent_type == :arcade || parent_type == :profile
     collection_options[:page] = params[:page] || 1
     #collection_options[:per_page] = params[:per_page] if params[:per_page]
     collection_options[:order] = params[:order] || 'games.name'
