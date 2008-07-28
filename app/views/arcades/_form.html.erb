@@ -95,7 +95,13 @@
     <%= error_message_on "arcade", "name", "Arcade Name " %>
     <%= f.text_field :name, { :class => 'text' } %>
   </p>
-      
+
+  <p class="block">
+    <label for="arcade_phone">Phone Number</label>
+    <%= error_message_on "arcade", "phone", "Phone Number " %>
+    <%= f.text_field :phone, { :class => 'text' } %>
+  </p>
+
   <% fields_for 'arcade[address]', @arcade.address do |a| %>
   <p class="block required">	
     <label for="address_street">Street</label>

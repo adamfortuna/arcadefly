@@ -4,7 +4,7 @@
   <%= nav_link "Favorite Games", profile_games_path(profile), { :a_class => 'games' } %>
   <%= nav_link "Friends", profile_friends_path(profile), { :a_class => 'users' } %>
 
-  <% if me || (logged_in? && current_profile.administrator?) -%>
+  <% if me -%>
   <%= nav_link 'Messages', profile_messages_path(profile), { :a_class => 'users', :li_class => 'right' } if profile.messages? %>
   <%= nav_link 'Edit Profile', edit_profile_path(profile), { :a_class => 'users', :li_class => 'right' } %>
   <% end %>

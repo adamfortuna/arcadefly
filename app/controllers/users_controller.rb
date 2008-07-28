@@ -128,7 +128,7 @@ class UsersController < ResourceController::Base
     # Uncomment and change paths to have user logged in after activation - not recommended
     self.current_user = User.find_and_activate!(params[:id])
     flash[:notice] = "Your account has been activated and you've been logged in! Try filling out your public profile so people know a little more about you!"
-    redirect_to edit_profile_path @current_profile
+    redirect_to edit_profile_path(@current_profile)
   rescue User::ArgumentError
     flash[:error] = 'Activation code invalid or not found. Please try creating a new account.'
     redirect_to '/signup'
