@@ -35,7 +35,7 @@ class ArcadesController < ResourceController::Base
   # GET /arcades/rockys-replay/edit
   def edit
     @arcade = object
-    @arcade.hours = Hour.create_week(@arcade) if @arcade.hours.size != 7
+    #@arcade.hours = Hour.create_week(@arcade) if @arcade.hours.size != 7
   end
   
 
