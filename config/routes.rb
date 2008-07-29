@@ -65,10 +65,10 @@ ActionController::Routing::Routes.draw do |map|
   map.games_update '/games/update', :controller => 'gateway', :action => 'update_games'
   
   # Resources
-  map.resources :arcades, :has_many    => [ :games, :profiles, :playables ],
-                          :has_one     => :address,
+  map.resources :arcades, :has_many    => [ :games, :profiles, :playables, :claims ],
+                          :has_one     => [ :address],
                           :collection  => [ :popular, :auto_complete_for_game_name ],
-                          :member      => [ :map, :claim, :favorite, :unfavorite ]
+                          :member      => [ :map, :favorite, :unfavorite ]
 
   map.resources :games,   :has_many    => [ :arcades, :profiles ],
                           :collection  => [ :popular ],

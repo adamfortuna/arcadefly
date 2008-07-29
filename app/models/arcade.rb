@@ -15,6 +15,7 @@ class Arcade < ActiveRecord::Base
 	has_many :hours, :as => :timeable, :order => 'day, start, end'
 		
 	# Validations
+	validates_associated :address
 	validates_presence_of :name, :message => "is required."
 	validates_uniqueness_of :permalink
 	
@@ -46,31 +47,12 @@ class Arcade < ActiveRecord::Base
     Arcade.count(:conditions => ['playables_count > ?', playables_count]) + 1
   end
 
-  # def add_game(game_id, games_count)
-  #   self.playables.create(:game => Game.find(game_id), :games_count => games_count)
-  #   end
-  
   def has_hours?
-    true
+    false
   end
 
   def map_bubble
     "<strong>#{self.name}</strong> <p>#{self.address.street}<br />#{self.address.city}, #{self.address.region.name} #{self.address.postal_code}</p><p><strong>Games:</strong> #{self.playables_count}</p>"
   end
-
-	private
-	# after_save callback to handle group_ids
-	def update_games
-		unless game_ids.nil?
-			self.playables.each do |p|
-				p.destroy unless game_ids.include?(p.game_id.to_s)
-				game_ids.delete(p.game_id.to_s)
-			end 
-			game_ids.each do |g|
-				self.playables.create(:game_id => g, :count => 1) unless g.blank?
-			end
-			#reload
-		end
-	end
 		
 end

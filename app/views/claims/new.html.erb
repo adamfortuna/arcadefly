@@ -1,0 +1,77 @@
+<% title 'Arcades' + separator + @arcade.name + separator + "Claim" %>
+<%= render :partial => 'arcades/menu', :locals => { :arcade => @arcade } %>
+
+<% content_for(:header) do %>
+  <script>
+  Event.observe(window, 'load', function() {
+    try { Form.focusFirstElement('arcade_claim_form'); } catch(e) {} 
+    $('claim_level').observe('change', claimChange);    
+    claimChange();
+  });
+  function claimChange() {
+    if($F('claim_level') == 1) {
+      $('owner_claim').show();
+    } else {
+      $('owner_claim').hide();
+    }
+  }
+  
+  </script>
+<% end %>
+  
+<% tabbed_box do %>
+  <h2><%= @title %></h2>
+  <p class="info">
+    Thanks for wanting to lend a hand! We're powered completely by user submissions, so every little bit helps.
+    <strong>New to modifing arcades here? You might want to read the help docs on <%= link_to "editing arcades", "/help/arcades"%>.</strong>
+  </p>
+  
+  <% if current_profile.has_address? %>
+    <% form_for(:claim, :url => arcade_claims_path(@arcade), :html => { :id => 'arcade_claim_form' }) do |f| %>
+      <div class="left half">
+        <p class="block required">
+          <label for="claim_level">Claim Type</label>
+          <span class="block info">This will determine how you claim this arcade</span>
+          <%= error_message_on "claim", "level", "Claim Type " %>
+          <%= f.select :level, Claim::LEVELS, { :include_blank => true }, { :class => "text", :id => "claim_level" }  %>
+        </p>
+
+        <div id="owner_claim" style="display:none;">
+          <p class="shift-2">
+            <p>In order to claim this arcade, we'll have to call it up and verify that you are actually the owner/manager.</p>
+            <p>If you are not able to be at this location, please make arrangements to have someone else verify this information for you, and let us know in your reason. Usually this will mean us asking for a specific on-duty manager to verify your information. In that case let us know that managers name in your reason.</p>
+            <p>If you are in another special situation, just include it in your reason and we'll work it out.</p>
+            
+            <% if @arcade.phone.nil? or @arcade.phone.length == 0 %>
+             We have no phone number on file for this location. <strong>Please include a phone number in your Reason</strong>
+            <% else %>
+              We'll call the number we have on file, <%= @arcade.phone %>.
+            <% end %>
+          </p>
+          <br/><br/>
+          <p class="block required">
+            <label for="claim_level">What is your name?</label>
+            <span class="block info">This is the name we will inquire about, or ask for when we call up.</span>
+            <%= error_message_on "claim", "name", "Name " %>
+            <%= f.text_field :name, { :class => 'text' } %>
+          </p>
+        </div>
+      </div>
+      <div class="right half">
+        <p class="block required">
+          <label for="claim_reason">Reason why you should be able to edit this arcade</label>
+          <%= error_message_on "claim", "reason", "Reason " %>
+          <%= f.text_area :reason, { :class => 'text' } %>
+        </p>
+        <p class="center">
+          <%= submit_tag "Claim this Arcade! »", :class => "big-button", :disable_with => 'Claiming...' %>
+        </p>
+      </div>
+    <% end %>
+  <% else %>
+    <p>
+      In order to claim an arcade, you must have an address associated with your account. <%= link_to "Add one now?", edit_profile_path(current_profile) %>
+    </p>
+  <% end %>
+<% end %>
+

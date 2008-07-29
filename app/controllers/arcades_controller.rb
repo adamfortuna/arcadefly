@@ -3,8 +3,10 @@ class ArcadesController < ResourceController::Base
   
   auto_complete_for :game, :name, :limit => 10, :order => 'playables_count DESC'
   
-  before_filter :check_administrator, :only => [:destroy, :new, :create, :edit, :update]
-    
+  before_filter :login_required, :only => [:new, :create, :favorite, :unfavorite]
+  before_filter :check_administrator, :only => [:destroy]
+  before_filter :check_claim, :only => [:edit, :update, :edit_games]
+
   index.wants.html { 
     if parent_type == :game
       render :template => "games/arcades" 
@@ -97,9 +99,7 @@ class ArcadesController < ResourceController::Base
   # PUT /arcades/rockyy-replay
   def update
     @arcade = object
-    if !logged_in? || !current_profile.can_edit?(@arcade)
-      redirect_to arcade_url(@arcade)
-    elsif @arcade.update_attributes(params[:arcade])
+    if @arcade.update_attributes(params[:arcade])
       flash[:notice] = "<span class=\"icon arcade_add\">Arcade updated! Please review the changes below and make sure everything looks as you'd expect.</span>"
       redirect_to arcade_url(@arcade)
     else
@@ -207,64 +207,9 @@ class ArcadesController < ResourceController::Base
     @map.overlay_init(GMarker.new([arcade.address.lat, arcade.address.lng], :title => arcade.name))
     arcade
   end
+  
+  def check_claim
+    permission_denied if !logged_in?
+    permission_denied unless current_profile.claimed?(object) || current_profile.administrator?
+  end
 end
-
-
-
-
-
-# Step 1 of 3 for creating an arcade
-# Step 1 will setup the basics about an arcade - name, address
-# def new1
-#     @arcade = Arcade.new(params[:arcade])
-#     @arcade.address = Address.new(params[:address])
-#     
-#     if request.post?
-#       if params[:add_hours] == "true"
-#         params[:hours].each do |hour|
-#           new_hour = Hour.new(hour)
-#           @arcade.hours << new_hour
-#         end
-#       end
-#       
-#       redirect_to new_arcade_2_path
-#     elsif request.get?
-#       @arcade.hours << Hour.new(:dayofweek => 'mon')
-#       @arcade.hours << Hour.new(:dayofweek => 'tue')
-#       @arcade.hours << Hour.new(:dayofweek => 'wed')
-#       @arcade.hours << Hour.new(:dayofweek => 'thu')
-#       @arcade.hours << Hour.new(:dayofweek => 'fri')
-#       @arcade.hours << Hour.new(:dayofweek => 'sat')
-#       @arcade.hours << Hour.new(:dayofweek => 'sun')
-#     end
-#   end
-#   
-#   # Review information
-#   def new2
-#     @arcade = Arcade.new(params[:arcade])
-#     
-#     if request.post?
-#       
-#       debugger
-#       if params[:commit_back]
-#         redirect_to new_arcade_1_path
-#       else
-#         redirect_to new_arcade_3_path
-#       end
-#     end
-#   end
-#   
-#   # Add games to a new arcade
-#   def new3
-#     @games = Game.find(:all, :order => 'name')
-#     
-#     if request.post?
-#       @arcade = Arcade.new(params[:arcade])
-#       
-#       if params[:commit_back]
-#         redirect_to new_arcade_2_path
-#       else
-#         redirect_to arcades_path
-#       end
-#     end
-#   end

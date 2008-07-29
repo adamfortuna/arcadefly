@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 18) do
+ActiveRecord::Schema.define(:version => 19) do
 
   create_table "addresses", :force => true do |t|
     t.datetime "created_at"
@@ -45,6 +45,20 @@ ActiveRecord::Schema.define(:version => 18) do
 
   add_index "arcades", ["permalink"], :name => "index_arcades_on_permalink", :unique => true
   add_index "arcades", ["name"], :name => "index_arcades_on_name"
+
+  create_table "claims", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "profile_id"
+    t.integer  "arcade_id"
+    t.integer  "level",      :default => 1
+    t.integer  "approved",   :default => 0
+    t.string   "name"
+    t.text     "reason"
+  end
+
+  add_index "claims", ["profile_id", "arcade_id"], :name => "index_claims_on_profile_id_and_arcade_id", :unique => true
+  add_index "claims", ["profile_id", "arcade_id", "approved"], :name => "index_claims_on_profile_id_and_arcade_id_and_approved"
 
   create_table "comments", :force => true do |t|
     t.datetime "created_at"

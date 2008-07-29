@@ -74,15 +74,6 @@
     <% end %>
   </div>
   
-  
-  <% if logged_in? && current_profile.administrator? %>
-    <ul class="nav clear right">
-      <li><%= link_to "New", new_arcade_path %></li>
-      <li><%= link_to "Edit", edit_arcade_path(@arcade) %></li>
-      <li><%= link_to "Edit Games", edit_arcade_games_path(@arcade) %></li>
-      <li><%= link_to "Delete", arcade_path(@arcade), :method => :delete, :confirm => "Are you sure? This will completely remove this arcade." %></li>
-    </ul>
-    <div class="clear"/>
-  <% end %>
+  <%= render :partial => 'footer' %>
 <% end %>
 

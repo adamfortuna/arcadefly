@@ -10,6 +10,10 @@ class Profile < ActiveRecord::Base
   # User
   belongs_to :user, :dependent => :destroy
 
+  # Claims
+  has_many :claims, :dependent => :destroy
+  has_many :claimed_arcades, :through => :claims, :source => :arcade
+
   # Arcades
   has_many :frequentships, :dependent => :destroy
   has_many :arcades, :through => :frequentships
@@ -98,8 +102,20 @@ class Profile < ActiveRecord::Base
     @cached_favorite_game_ids ||= favoriteships.find(:all, :select => :game_id).collect(&:game_id)
   end
   
-  def can_edit?(editable)
-    true
+  def pending_claim?(arcade)
+    pending_claimed_arcade_ids.include?(arcade.id)
+  end
+
+  def pending_claimed_arcade_ids
+    @cached_pending_claimed_arcade_ids ||= claims.find(:all, :select => :arcade_id, :conditions => {:approved => 0}).collect(&:arcade_id)
+  end
+  
+  def claimed?(arcade)
+    claimed_arcade_ids.include?(arcade.id)
+  end
+  
+  def claimed_arcade_ids
+    @cached_claimed_arcade_ids ||= claims.find(:all, :select => :arcade_id, :conditions => {:approved => 1}).collect(&:arcade_id)
   end
   
     

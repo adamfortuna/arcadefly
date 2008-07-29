@@ -1,7 +1,6 @@
 class PlayablesController < ResourceController::Base
   belongs_to :arcade
-  
-  before_filter :check_administrator, :only => [:destroy, :new, :create, :edit, :update]
+  before_filter :check_claim, :only => [:new, :create, :edit, :update, :destroy]
 
   # Adding a game to an arcade
   def create
@@ -38,4 +37,10 @@ class PlayablesController < ResourceController::Base
   def parent_object
     Arcade.find_by_permalink(params[:arcade_id])
   end
+  
+  def check_claim
+    permission_denied if !logged_in?
+    permission_denied unless current_profile.claimed?(parent_object) || current_profile.administrator?
+  end
+  
 end

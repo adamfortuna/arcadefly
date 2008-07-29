@@ -86,8 +86,9 @@ div.tabbed-map { padding: 0em 0 1em 0; clear:both; }
 body.games ul.tabs li.current a { background-color: #fdd; border-bottom: 1px solid #fdd; }
 body.games .block_inside_topless, body.games .block_inside { display:block; background: #ffffff url(/images/background_block_slice_games.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
 
-body.arcades ul.tabs li.current a { background-color: #dde; border-bottom: 1px solid #dde; }
-body.arcades .block_inside_topless, body.arcades .block_inside { display:block; background: #ffffff url(/images/background_block_slice_arcades.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
+body.arcades ul.tabs li.current a, body.claims ul.tabs li.current a { background-color: #dde; border-bottom: 1px solid #dde; }
+body.arcades .block_inside_topless, body.arcades .block_inside, 
+body.claims .block_inside_topless, body.claims .block_inside { display:block; background: #ffffff url(/images/background_block_slice_arcades.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
 
 body.profiles ul.tabs li.current a, body.friends ul.tabs li.current a, body.users ul.tabs li.current a, body.sessions ul.tabs li.current a, body.messages ul.tabs li.current a { background-color: #ded; border-bottom: 1px solid #ded; }
 body.profiles .block_inside_topless, body.friends .block_inside_topless, body.users .block_inside_topless, body.sessions .block_inside_topless, body.messages .block_inside_topless,

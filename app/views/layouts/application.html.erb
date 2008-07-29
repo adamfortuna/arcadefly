@@ -2,15 +2,13 @@
   "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-	<title>ArcadeFly<%= separator -%><%= yield(:title) || "Tracking the arcade buzz!" %></title>
+	<title>ArcadeFly<%= separator -%><%= yield(:title) || "Arcade and Game Locations" %></title>
   <%= stylesheet_link_tag 'application', 'common_classes', 'forms' %>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
-  <%= javascript_include_tag 'application' %>
-
-  <%= yield(:header_files) %>
-  <%= yield(:header) %>
-
-  <% if Rails.env.production? %>
+  <%= javascript_include_tag 'application' -%>
+  <%= yield(:header_files) -%>
+  <%= yield(:header) -%>
+  <%- if Rails.env.production? -%>
     <script type="text/javascript">
     var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
     document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -20,7 +18,8 @@
     pageTracker._initData();
     pageTracker._trackPageview();
     </script>
-  <% end %>
+  <%- end -%>
+
 </head>
 <body<%= " class=\"#{params[:controller]}\"" unless params[:controller].nil? %>>
 	<div id="main">

@@ -3,10 +3,4 @@
   <%= menu_link "Games at this Arcade", arcade_games_path(arcade), { :a_class => 'games' } %>
   <%= menu_link "Players Who Favorited this Arcade", arcade_profiles_path(arcade), { :a_class => 'users' } %>
   <%= menu_link "Area Map", map_arcade_path(arcade), { :a_class => 'arcades' } %>
-  
-  <% if logged_in? && administrator? -%>
-  <%= nav_link 'Edit Games', edit_arcade_games_path(arcade), { :a_class => 'arcades', :li_class => 'right' } %>
-  <%= nav_link 'Edit Arcade', edit_arcade_path(arcade), { :a_class => 'arcades  ', :li_class => 'right' } %>
-  <% end %>
-  
 </ul>

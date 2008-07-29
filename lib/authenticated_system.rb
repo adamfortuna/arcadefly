@@ -61,8 +61,7 @@ module AuthenticatedSystem
 
     # Before filters for controllers
     def administrator?
-      #current_profile.administrator?
-      true
+      current_profile.administrator?
     end
     
     def login_required
@@ -74,8 +73,7 @@ module AuthenticatedSystem
     end
     
     def check_administrator
-      #permission_denied if !logged_in? || !current_profile.administrator?
-      true
+      permission_denied if !logged_in? || !current_profile.administrator?
     end
     
     
@@ -168,7 +166,6 @@ module AuthenticatedSystem
         user.remember_me
         cookies[:auth_token] = { :value => user.remember_token, :expires => user.remember_token_expires_at }
         self.current_user = user
-        self.current_profile = user.profile
       end
     end
 

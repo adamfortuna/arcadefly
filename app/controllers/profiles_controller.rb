@@ -41,11 +41,11 @@ class ProfilesController < ResourceController::Base
 
     case params[:switch]
       when 'name'
-        if @profile.update_attributes params[:profile]
+        if @profile.update_attributes(params[:profile])
           flash[:notice] = "Your profile has been updated! These changes will take effect immediately."
         end
       when 'image'
-        if @profile.update_attributes params[:profile]
+        if @profile.update_attributes(params[:profile])
           flash[:notice] = "Your avatar has been updated."
         end      
       when 'password'
@@ -53,7 +53,8 @@ class ProfilesController < ResourceController::Base
           flash[:notice] = "Password has been changed."
         end
       when 'address'
-        if @profile.address.update_attributes params[:address]
+        @profile.build_address unless @profile.address
+        if @profile.address.update_attributes(params[:address])
           flash[:notice] = "Your address has been updated. All maps will show relative to your new address."
         end
     end

@@ -41,9 +41,12 @@
     <ul>
   </div>
 -->  
-  <%- if logged_in? && current_profile.administrator? %>
-  <p class="rights">
-    <%= link_to 'Create a new arcade', new_arcade_path%>
+  
+  <p>
+    <% if logged_in? %>
+      Know of an arcade not listed here? <%= link_to "Add it!", new_arcade_path %>
+    <% else %>
+      Know of an arcade not listed here? Just <%= link_to "Sign In", signin_path %> or <%= link_to "Register", signup_path %> and you'll be able to add it.
+    <% end -%>
   </p>
-  <% end -%>
 </div>
