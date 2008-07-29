@@ -13,7 +13,7 @@
     <li>Want to edit this arcade, or modify its games? <%= link_to "Claim this Arcade", new_arcade_claim_path(@arcade) %>.</li>
   <% end %>
 
-  <% if administrator? %>
+  <% if current_profile.administrator? %>
   <li><%= link_to "Delete", arcade_path(@arcade), :method => :delete, :confirm => "Are you sure? This will completely remove this arcade." %></li>
   <% end %>
   
