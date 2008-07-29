@@ -209,7 +209,6 @@ class ArcadesController < ResourceController::Base
   end
   
   def check_claim
-    permission_denied if !logged_in?
-    permission_denied unless current_profile.claimed?(object) || current_profile.administrator?
+    permission_denied unless logged_in? && (current_profile.claimed?(object) || current_profile.administrator?)
   end
 end

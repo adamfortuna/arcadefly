@@ -2,7 +2,7 @@
 <% if logged_in? %>
   <li><%= link_to "Add a new Arcade", new_arcade_path %></li>  
 
-  <% if current_profile.claimed?(@arcade) %>
+  <% if current_profile.administrator? || current_profile.claimed?(@arcade) %>
     <li><%= link_to "Edit this Arcade", edit_arcade_path(@arcade) %></li>
     <li><%= link_to "Edit Games List", edit_arcade_games_path(@arcade) %></li>
     
