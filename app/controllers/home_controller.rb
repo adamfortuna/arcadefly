@@ -25,7 +25,6 @@ class HomeController < ApplicationController
   end
 
   def modile_landing
-    debugger
     redirect_to mobile_landings_path if is_mobile_device? && session[:mobile_view].nil?
   end
 end
