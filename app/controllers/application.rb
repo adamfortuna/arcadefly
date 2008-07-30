@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+  has_mobile_fu
+  
+  include ExceptionNotifiable
   include AuthenticatedSystem
 
   # Pick a unique cookie name to distinguish our session data from others'

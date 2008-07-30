@@ -1,0 +1,7 @@
+<li>
+  <input type="checkbox" name="claims[<%= claim.id %>]" value="1" />
+  <%= link_to "#{claim.profile.display_name} (#{claim.profile.full_name})", profile_path(claim.profile) %> - 
+  <%= claim.type %> - 
+  <%= claim.name %>
+  <p><%= claim.reason %></p>
+</li>

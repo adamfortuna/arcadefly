@@ -23,3 +23,5 @@ config.action_controller.perform_caching             = true
 config.action_controller.asset_host = "http://www.arcadefly.com"
 
 HOST = 'http://www.arcadefly.com'
+
+ExceptionNotifier.exception_recipients = %w(exceptions@arcadefly.com)

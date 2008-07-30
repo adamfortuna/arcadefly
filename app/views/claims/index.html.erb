@@ -1,0 +1,22 @@
+<% title 'Claims' %>
+
+<% content_for(:header) do %>
+  
+<% end %>
+  
+<% tabbed_box do %>
+  <h2><%= @title %></h2>
+  <% form_for(:claims, :url => approve_selected_claims_path, :html => { :id => 'claim_form' }) do |f| %>
+  
+    <a href="#" onclick="javascript:check_all('.claims input')">check all</a> <a href="#" onclick="javascript:uncheck_all('.claims input')">uncheck all</a>
+    <ul id="claims">
+      <%= render :partial => 'claim', :collection => @claims, :locals => { :f => f }%>
+    </ul>
+    
+    <p class="right">
+      <%= submit_tag "Remove Selected", :class => "big-button", :onclick => "$('claim_form').action = '#{delete_selected_claims_path}';", :disable_with => 'Removing...' %>
+      <%= submit_tag "Approve Selected", :class => "big-button", :disable_with => 'Approve Selected...' %>
+    </p>
+  <% end %>
+<% end %>
+

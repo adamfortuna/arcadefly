@@ -2,6 +2,8 @@ class Claim < ActiveRecord::Base
   belongs_to :arcade
   belongs_to :profile
   
+  named_scope :unapproved, :conditions => { :approved => 0 }
+  
   validates_presence_of :arcade, :profile, :level, :reason
   validates_length_of :reason, :minimum => 30
   
@@ -15,7 +17,11 @@ class Claim < ActiveRecord::Base
            ["I live in the area and this is one of my main hangouts", 3],
            ["Just a place I go to every now and again", 4],
            ["Ive been there at least once, just trying to help", 5]
-           
+
+  def type
+    Claim::LEVELS.rassoc(self.level)[0]
+  end
+
   def owner?
     level == 1
   end
@@ -27,6 +33,16 @@ class Claim < ActiveRecord::Base
   def player?
     level >= 3
   end
+  
+  def approve!
+    self.update_attribute(:approved, true)
+    send_approval_email
+  end
+  
+  def send_approval_email
+    
+  end
+  
   
   private
   def name_required?

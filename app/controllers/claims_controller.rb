@@ -3,6 +3,45 @@ class ClaimsController < ApplicationController
   before_filter :login_required
   before_filter :parent_object
   
+  before_filter :check_administrator, :only => [:index, :destroy, :destroy_selected, :approve_selected]
+  
+  # Used to manage claims for administrators
+  # GET /claims
+  def index
+    @claims = Claim.unapproved
+  end
+
+  # POST /claims/approve_selected
+  def approve_selected
+    claims = Claim.find_all_by_id(params[:claims].keys)
+
+    claims.each do |claim|
+      claim.approve!
+    end
+
+    flash[:notice] = "Claims approved!"
+    redirect_to claims_path
+  rescue
+    flash[:error] = "An error occured approving (at least some) of these claims."
+    redirect_to claims_path    
+  end
+
+  # DELETE /claims/delete
+  def delete_selected
+    claims = Claim.find_all_by_id(params[:claims].keys)
+    
+    claims.each do |claim|
+      claim.destroy
+    end
+    
+    flash[:notice] = "Claims removed!"
+    redirect_to claims_path
+  rescue
+    flash[:error] = "An error occured removing these claims."
+    redirect_to claims_path
+  end
+  
+  
   # GET /arcades/:arcade_id/claims/new
   def new
   end 
@@ -34,7 +73,7 @@ class ClaimsController < ApplicationController
   
   private
   def parent_object
-    @arcade = Arcade.find_by_permalink(params[:arcade_id])
+    @arcade = Arcade.find_by_permalink(params[:arcade_id]) if params[:arcade_id]
   end
   
 end

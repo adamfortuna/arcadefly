@@ -27,3 +27,5 @@ config.active_record.timestamped_migrations = true
 
 
 HOST = 'http://localhost:3000'
+
+ExceptionNotifier.exception_recipients = %w(exceptions@arcadefly.com)
