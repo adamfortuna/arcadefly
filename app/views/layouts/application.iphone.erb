@@ -1,0 +1,15 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+  "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<title>ArcadeFly<%= separator -%><%= yield(:title) || "Arcade and Game Locations" %></title>
+	<%= include_iui_files %>
+</head>
+<body>
+  <%= iui_toolbar("ArcadeFly", "http://www.arcadefly.com/search") %>
+	<% flash.each do |key, msg| %>
+	  <%= content_tag :div, msg, :class => key %>
+	<% end %>
+  <%= yield %>
+</body>
+</html>

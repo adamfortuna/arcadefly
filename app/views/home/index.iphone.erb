@@ -1,0 +1,30 @@
+Welcome to the iphone version of arcadefly! This will soon be available.
+<br/><br/>
+Until then, continue onto arcades for some fun!
+<br/><br/>
+<%= link_to "Arcades", arcades_url %>
+
+<br/><br/>
+
+<%= iui_list(Arcade.find(:all)) %>
+
+
+<br/><br/>
+<% fieldset do %>
+  Sample fieldset
+  <%= row "row test" %>
+<% end %>
+
+<br/><br/>
+<% panel do %>
+  Sample Panel
+<% end %>
+<br/><br/>
+<% dialog do %>
+  dialog
+<% end %>
+
+<br/><br/>
+<%= link_to_external("http://www.gamefaqs.com", {}, {}) %>
+<br/><br/>
+<%= button_link_to("button link", {}, {}) %>

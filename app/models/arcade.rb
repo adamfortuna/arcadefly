@@ -54,5 +54,15 @@ class Arcade < ActiveRecord::Base
   def map_bubble
     "<strong>#{self.name}</strong> <p>#{self.address.street}<br />#{self.address.city}, #{self.address.region.name} #{self.address.postal_code}</p><p><strong>Games:</strong> #{self.playables_count}</p>"
   end
-		
+	
+	
+	# For iUi
+	def caption
+	  name
+	end	
+	
+	def url
+	  "http://www.arcadefly.com/arcades/#{permalink}"
+	end
+	
 end
