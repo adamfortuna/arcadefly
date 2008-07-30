@@ -71,10 +71,11 @@ class ArcadesController < ResourceController::Base
   
   # POST /arcades
   def create
-    if @arcade = Arcade.create(params[:arcade])
+    @arcade = Arcade.create(params[:arcade])
+    if @arcade.valid?
       redirect_to arcade_url(@arcade)
     else
-      notice[:error] = "There was a problem creating the arcade. Please fix any errors below and give it another try."
+      flash[:error] = "There was a problem creating the arcade. Please fix any errors below and give it another try."
       render :action => 'new'
     end
   end

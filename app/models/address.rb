@@ -5,7 +5,8 @@ class Address < ActiveRecord::Base
 
   acts_as_mappable
 
-  validates_presence_of :city,
+  validates_presence_of :street,
+                        :city,
                         :country_id
   validates_presence_of :region_id,
                         :if => :known_region_required?
@@ -85,6 +86,11 @@ class Address < ActiveRecord::Base
     exact_loc = Address.geocode(single_line)
     self.lat = exact_loc.lat
     self.lng  = exact_loc.lng
+
+    # Use returned data for this address rather than the user entered data
+    self.postal_code = exact_loc.zip
+    self.city = exact_loc.city
+    self.street = exact_loc.street_address
 
     # General Location
     public_loc = Address.geocode(short_line)
