@@ -58,7 +58,7 @@ ul.content li a { display: inline; }
 ul.left-shift { position:absolute; left:-150px; } /* Used to shirt some menus beyond the main data */
 
 /* Very cool tabs from  http://www.simplebits.com/bits/css_tabs.html */
-ul.tabs { height: 2.6em; padding: 0 20px; background: url(../images/tab_bottom.gif) repeat-x bottom; clear: both; margin:0px; }
+ul.tabs { height: 2.6em; padding: 0 20px; background: url(../images/helpers/tab_bottom.gif) repeat-x bottom; clear: both; margin:0px; }
 ul.tabs li { margin: 0; padding: 0; display: inline; list-style-type: none; }
 ul.tabs a:link, ul.tabs a:visited { float: left; font-weight: bold; padding: .5em 1.2em; margin-right: 8px; border: 1px solid #a3a09e; text-decoration: none; color: #666; }
 ul.tabs a { background-color: #f3f3f3; }
@@ -84,15 +84,15 @@ div.right-space { padding: 1em 0 1em 0; margin-right:20px; }
 div.tabbed-map { padding: 0em 0 1em 0; clear:both; }
 
 body.games ul.tabs li.current a { background-color: #fdd; border-bottom: 1px solid #fdd; }
-body.games .block_inside_topless, body.games .block_inside { display:block; background: #ffffff url(/images/background_block_slice_games.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
+body.games .block_inside_topless, body.games .block_inside { display:block; background: #ffffff url(/images/layout/background_block_slice_games.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
 
 body.arcades ul.tabs li.current a, body.claims ul.tabs li.current a { background-color: #dde; border-bottom: 1px solid #dde; }
 body.arcades .block_inside_topless, body.arcades .block_inside, 
-body.claims .block_inside_topless, body.claims .block_inside { display:block; background: #ffffff url(/images/background_block_slice_arcades.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
+body.claims .block_inside_topless, body.claims .block_inside { display:block; background: #ffffff url(/images/layout/background_block_slice_arcades.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
 
 body.profiles ul.tabs li.current a, body.friends ul.tabs li.current a, body.users ul.tabs li.current a, body.sessions ul.tabs li.current a, body.messages ul.tabs li.current a { background-color: #ded; border-bottom: 1px solid #ded; }
 body.profiles .block_inside_topless, body.friends .block_inside_topless, body.users .block_inside_topless, body.sessions .block_inside_topless, body.messages .block_inside_topless,
-body.profiles .block_inside, body.friends .block_inside, body.users .block_inside, body.sessions .block_inside, body.messages .block_inside { display:block; background: #ffffff url(/images/background_block_slice_users.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
+body.profiles .block_inside, body.friends .block_inside, body.users .block_inside, body.sessions .block_inside, body.messages .block_inside { display:block; background: #ffffff url(/images/layout/background_block_slice_users.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
 
 
 
@@ -134,9 +134,9 @@ span.counts { border: 1px solid #ccc; margin-left:1em; }
 span.counts a { display:block; padding:1em 2em 1em 3em; font-weight: bold; }
 span.counts a:first-child { border-bottom: 1px solid #ccc;}
 
-span.counts a.arcades { background: url(/images/joystick.png) #dde no-repeat left; background-position: 1em; }
-span.counts a.games { background: url(/images/controller.png) #fdd no-repeat left; background-position: 1em; }
-span.counts a.users { background: url(/images/user.png) #ded no-repeat left; background-position: 1em; }
+span.counts a.arcades { background: url(/images/icons/joystick.png) #dde no-repeat left; background-position: 1em; }
+span.counts a.games { background: url(/images/icons/controller.png) #fdd no-repeat left; background-position: 1em; }
+span.counts a.users { background: url(/images/icons/user.png) #ded no-repeat left; background-position: 1em; }
 
 a.arcades { background-color: #dde; }
 a.arcades:hover { background-color: #ccf; }
@@ -149,15 +149,15 @@ a.users:hover { background-color: #cec; }
 /* Graphics for adding/removing something from favorites */
 li.favorited { background-color: #B8E4F5; }
 .favorite_left { padding:0 1em .3em 0px; }
-.favorite_add { background: url(/images/heart_add.png) no-repeat left;  }
-.favorite_delete { background: url(/images/heart_delete.png) no-repeat left; }
-.arcade_add { background: url(/images/joystick_add.png) no-repeat left; }
-.arcade_delete { background: url(/images/joystick_delete.png) no-repeat left; }
-.arcade_error { background: url(/images/joystick_error.png) no-repeat left; }
-.user_add { background: url(/images/user_add.png) no-repeat left; }
-.user_delete { background: url(/images/user_delete.png) no-repeat left; }
-.game_add { background: url(/images/controller_add.png) no-repeat left; }
-.game_delete { background: url(/images/controller_delete.png) no-repeat left; }
+.favorite_add { background: url(/images/icons/heart_add.png) no-repeat left;  }
+.favorite_delete { background: url(/images/icons/heart_delete.png) no-repeat left; }
+.arcade_add { background: url(/images/icons/joystick_add.png) no-repeat left; }
+.arcade_delete { background: url(/images/icons/joystick_delete.png) no-repeat left; }
+.arcade_error { background: url(/images/icons/joystick_error.png) no-repeat left; }
+.user_add { background: url(/images/icons/user_add.png) no-repeat left; }
+.user_delete { background: url(/images/icons/user_delete.png) no-repeat left; }
+.game_add { background: url(/images/icons/controller_add.png) no-repeat left; }
+.game_delete { background: url(/images/icons/controller_delete.png) no-repeat left; }
 
 /* Global Map settings */
 .map_box { padding:0; margin:0; }

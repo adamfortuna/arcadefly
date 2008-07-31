@@ -9,7 +9,7 @@ module ArcadesHelper
   def favorite_arcade_link(arcade, options = {})
     options.reverse_merge!({:show_text => false, :text => "Add to your favorites"})
     text = options[:show_text] ? " " + options[:text] : ''
-    link_to_remote(image_tag("/images/joystick_add.png", :size => "16x16", :border => 0) + text, 
+    link_to_remote(image_tag("/images/icons/joystick_add.png", :size => "16x16", :border => 0) + text, 
                        :url => favorite_arcade_path(arcade), 
                        :with => "'show_text=#{options[:show_text]}'")
   end
@@ -17,7 +17,7 @@ module ArcadesHelper
   def unfavorite_arcade_link(arcade, options = {})
     options.reverse_merge!({:show_text => false, :text => "Remove from your favorites"})
     text = options[:show_text] ? " " + options[:text] : ''
-    link_to_remote(image_tag("/images/joystick_delete.png", :size => "16x16", :border => 0) + text, 
+    link_to_remote(image_tag("/images/icons/joystick_delete.png", :size => "16x16", :border => 0) + text, 
                        :url => unfavorite_arcade_path(arcade),
                        :with => "'show_text=#{options[:show_text]}'")
   end
