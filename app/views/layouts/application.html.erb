@@ -43,23 +43,22 @@
             <li><%= link_to "Register", signup_path %></li>
             <li><%= link_to "Sign In", signin_path %></li>
   		    <%- end -%>
-        </ul><!-- end ul#menu -->
+        </ul>
             
       	<div id="logo">
           <h1><a href="/">ArcadeFly.com</a></h1>
           <small>Mapping the arcade buzz!</small>
         </div>
-      </div><!-- end div#header -->
+      </div>
   
       <div id="content">
     		<% flash.each do |key, msg| %>
     		  <%= content_tag :div, msg, :class => key %>
     		<% end %>
 		    <%= yield %>
-      </div><!-- end div#{content} -->
-    
-    </div><!-- div#main .container -->
-  </div><!-- div#main -->
+      </div>
+    </div>
+  </div>
   
     
   <div id="footer">
@@ -79,7 +78,6 @@
   	      <li><%= link_to "Contact Us", contact_path %></li>
   	      <li><%= link_to "Terms of Use", terms_path %></li>
   	      <li><%= link_to "Privacy Policy", privacy_path %></li>
-  	      <!--<li><%= link_to "Site Map", site_map_path %></li>-->
   	      <li><a href="http://blog.arcadefly.com">Blog</a></li>
         </ul>
       </div>
@@ -92,8 +90,8 @@
           <li><%= link_to "Players", profiles_path %></li>
         </ul>
       </div>
-    </div><!-- end container -->
-  </div><!-- end footer -->
+    </div>
+  </div>
   
   <%- if Rails.env.production? -%>
     <script type="text/javascript">

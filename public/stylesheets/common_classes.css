@@ -3,13 +3,7 @@
 .right { float:right; }
 
 .clear { display: inline-block; clear:both; }   
-.clear:after, .container:after {
-  content: "."; 
-  display: block; 
-  height: 0; 
-  clear: both; 
-  visibility: hidden;
-}
+.clear:after, .container:after { content: ".";  display: block; height: 0; clear: both; visibility: hidden; }
 * html .clear { height: 1%; }
 .clear { display: block; }
 
@@ -94,22 +88,12 @@ body.profiles ul.tabs li.current a, body.friends ul.tabs li.current a, body.user
 body.profiles .block_inside_topless, body.friends .block_inside_topless, body.users .block_inside_topless, body.sessions .block_inside_topless, body.messages .block_inside_topless,
 body.profiles .block_inside, body.friends .block_inside, body.users .block_inside, body.sessions .block_inside, body.messages .block_inside { display:block; background: #ffffff url(/images/layout/background_block_slice_users.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
 
-
-
-/* Styled boxes, usually on the right with additional text */
-.box { border: 1px solid #ccc; background-color:#f6f6f6; }
-
 /* Pagination */
 .pagination { padding: 3px; margin: 3px; }
 .pagination a { padding: 2px 5px 2px 5px; margin: 2px; border: 1px solid #6d84b4; text-decoration: none; color: #000099; }
 .pagination a:hover, .pagination a:active {border: 1px solid #3b5998; color: #fff; background-color: #6d84b4; }
 .pagination span.current { padding: 2px 5px 2px 5px; margin: 2px; border: 1px solid #000099; font-weight: bold; background-color: #3b5998; color: #FFF; }
 .pagination span.disabled { padding: 2px 5px 2px 5px; margin: 2px; border: 1px solid #ccc; color: #bbb; }
-
-/* Cool links and buttons */
-.admin, .admin:link { color: red; }
-ul.admin { display: inline; }
-ul.admin li { display: inline; float:left; }
 
 /* Elements that require secial attention for inline scrolling */
 .scrollable { overflow-x: hidden; overflow-y: scroll; }
@@ -172,19 +156,13 @@ div.map_medium { width:510px; } /* List Map */
 div.map_small { width: 300px; height:250px; padding: 1em; } /* Profile Map */
 div.map_small_width { width: 300px; }
 
-  
-ul.wizard { margin:0; padding:0; border:1px solid red; border: 1px solid #ccc; width:985px; }
-ul.wizard li { margin: 0; padding: .5em; float:left; width: 300px; }
-ul.wizard li.active { background-color: #efefef; }
-ul.wizard li.complete { background-color: #ededed; }
-
 .focus { width:580px; }
 .gutter { width: 340px; }
 .half { width:440px; }
 
-ul.features { list-style:none; margin:0; display:inline; }
-ul.features li { border: 1px solid #ccc; background-color:#f6f6f6; padding:1em; margin-bottom:1em;}
-ul.features li img { border:1px solid #b5b5b5; margin:20px; }
+div.features { list-style:none; margin:0; display:inline; }
+div.features li { border: 1px solid #ccc; background-color:#f6f6f6; padding:1em; margin-bottom:1em;}
+div.features li img { border:1px solid #b5b5b5; margin:20px; }
 
 div.large_left_column { width:640px; float:left;}
 div.left_column { width:540px; float:left;}

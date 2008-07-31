@@ -38,16 +38,13 @@ img, #logo { behavior: url(/scripts/iepngfix.htc); }
 /* Header-Styles */
 #header { padding-top:20px; padding-bottom:20px; }
 #logo h1, #logo small { margin:0px; display:block; text-indent:-9999px; }
-#logo { background-image:url(/images/logo.png); background-repeat:no-repeat; width:194px; height:83px; }
+#logo h1 a { display:block; background-image:url(/images/logo.png); background-repeat:no-repeat; width:210px; height:83px; padding:3m; }
 ul#menu { margin:0px; padding:0px; float:right; }
 ul#menu li { display:inline; margin-left:12px; }
 ul#menu li a { text-decoration:none; color:#716d6a; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; font-weight:bold; text-transform:uppercase; }
 ul#menu li a.active, ul#menu li a:hover { color:#211e1e; }
 
 .column { width:420px;}
-
-
-
 
 /* Block-Styles */
 
