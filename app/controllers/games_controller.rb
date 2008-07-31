@@ -27,7 +27,7 @@ class GamesController < ResourceController::Base
   }
   
   def popular
-    @games = Game.paginate(:all, :order => 'favoriteships_count desc, playables_count desc', :page => params[:page])
+    @games = Game.paginate(:all, :order => 'favoriteships_count desc, playables_count desc', :page => params[:page], :conditions => ['favoriteships_count > 0'])
   end
   
     

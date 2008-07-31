@@ -32,14 +32,14 @@ ActionController::Routing::Routes.draw do |map|
   map.reset_password  '/reset_password/:id', :controller => 'password', :action => 'edit'
 
   # Shortened routes
-  map.about '/about',           :controller => 'home',    :action => 'about'
-  map.contact  '/contact',      :controller => 'home',    :action => 'contact'
-  map.terms '/terms',           :controller => 'home',    :action => 'terms'
-  map.privacy '/privacy',       :controller => 'home',    :action => 'privacy'
-  map.welcome '/welcome',       :controller => 'users',   :action => 'welcome'
-  map.help '/help',             :controller => 'help',    :action => 'index'
-  map.features '/features',     :controller => 'help',    :action => 'features'
-  map.site_map '/site_map',     :controller => 'home',    :action => 'site_map'
+  map.about '/about',             :controller => 'home',    :action => 'about'
+  map.contact  '/contact',        :controller => 'home',    :action => 'contact'
+  map.terms '/terms',             :controller => 'home',    :action => 'terms'
+  map.privacy '/privacy',         :controller => 'home',    :action => 'privacy'
+  map.welcome '/welcome',         :controller => 'users',   :action => 'welcome'
+  map.help '/help',               :controller => 'help',    :action => 'index'
+  map.features '/help/features',  :controller => 'help',    :action => 'features'
+  map.site_map '/site_map',       :controller => 'home',    :action => 'site_map'
 
   # Popular 
   map.popular '/popular',                   :controller => 'popular',    :action => 'index'

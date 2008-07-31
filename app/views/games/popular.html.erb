@@ -3,5 +3,6 @@
 <%= render :partial => 'popular/menu' %>
 <% tabbed_box do %>
   <h2><%= @title %></h2>
+  <p>Here are all games that have been favorited at least once, ordered by favorites.</p>
   <%= render :partial => 'games/games', :object => @games %>
 <% end %>
