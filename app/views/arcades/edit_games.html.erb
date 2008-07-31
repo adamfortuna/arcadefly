@@ -1,34 +1,22 @@
 <% title 'Arcades' + separator + @arcade.name + separator + "Modify Games" %>
-<% javascript 'effects', 'controls' -%>
+<% javascript_file 'effects', 'controls' -%>
 
-<% content_for(:header) do %>
-  <script>
+<% javascript do %>
   Event.observe(window, 'load', function() {
     Form.focusFirstElement('arcade_form');
     new Ajax.Autocompleter('game_name', 'game_name_auto_complete', '/arcades/auto_complete_for_game_name', {
         minChars: 3, 
         indicator: 'game_indicator'
-        });
-    //Event.observe('game_name', 'change', verifyAddComplete);
+    });
   });
-/*  
-  function verifyAddComplete() {
-    if($F('game_name').length > 0 && $F('playable_count').length > 0) {
-      $('add_game').disabled = false;
-    } else {
-      $('add_game').disabled = true;      
-    }
-  }
-*/
-  </script>
+<% end %>
+<% content_for(:header) do %>
   <style>
     #new_playable { }
     #new_playable span input { }
     #playables li { padding:10px 0;}
   </style>
 <% end %>
-
-
 
 <%= render :partial => 'menu', :locals => { :arcade => @arcade } %>
 
