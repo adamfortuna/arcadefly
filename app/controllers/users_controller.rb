@@ -1,61 +1,7 @@
-class UsersController < ResourceController::Base
-  belongs_to :game, :arcade
-  
+class UsersController < ApplicationController
   before_filter :not_logged_in_required, :only => [:new, :create, :activate] 
   before_filter :login_required, :only => [:edit, :update, :welcome]
   before_filter :check_administrator, :only => [:destroy, :enable]
-  
-
-
-
-  def collection
-    parent? ? parent_object.users.paginate(options) : User.paginate(options)    
-  end
-
-  # Setup up the possible options for getting a collection, with defaults
-  def options
-    search = params[:search] 
-    search = "%" + search if search and params[:search].length >= 2
-
-    collection_options = {}
-    collection_options[:page] = params[:page] || 1
-    collection_options[:per_page] = params[:per_page] || User::PER_PAGE
-    collection_options[:order] = params[:order] || 'users.name'
-    collection_options[:conditions] = ['profiles.display_name like ? OR profiles.full_name like ?', "#{search}%", "#{search}%" ] unless search.blank?
-    collection_options
-  end
-
-  index.wants.html { 
-    # GET /arcades/:arcade_id/users
-    if parent_type == :arcade
-      render :template => "arcades/users" 
-    # GET /games/:game_id/users
-    elsif parent_type == :game
-      render :template => "games/users"
-    # GET /users
-    else
-      render :template => "users/index"
-    end
-  }
-  
-
-
-
-
-  def object
-    User.find(param, :include => { :address => [:region, :country] })
-  end
-
-  def show
-    @user =  User.find(params[:id], :include => [ { :address => [:region] }])
-
-    if @user.has_address?
-      @map = GMap.new("user_map")
-	    @map.control_init(:map_type => false, :small_zoom => true)
-	    @map.center_zoom_init([@user.address.public_lat, @user.address.public_lng], 11)
-	    @map.overlay_init(GMarker.new([@user.address.public_lat,@user.address.public_lng], :title => @user.login))
-    end
-  end
     
   # render new.rhtml
   def new
@@ -96,13 +42,6 @@ class UsersController < ResourceController::Base
     render :action => 'new'
   end
   
-  def edit
-    raise if current_user.id != params[:id].to_i && !administrator?
-    @user = User.find(params[:id], :include => :address)
-  rescue
-    permission_denied
-  end
-  
   def destroy
     @user = User.find(params[:id])
     if @user.update_attribute(:enabled, false)
@@ -112,17 +51,7 @@ class UsersController < ResourceController::Base
     end
     redirect_to :action => 'index'
   end
- 
-  def enable
-    @user = User.find(params[:id])
-    if @user.update_attribute(:enabled, true)
-      flash[:notice] = "User enabled"
-    else
-      flash[:error] = "There was a problem enabling this user."
-    end
-      redirect_to :action => 'index'
-  end
- 
+  
   def activate
     # Uncomment and change paths to have user logged in after activation - not recommended
     self.current_user = User.find_and_activate!(params[:id])
@@ -139,9 +68,4 @@ class UsersController < ResourceController::Base
     redirect_to '/login'
   end
  
-  protected
-  def object
-    @object ||= end_of_association_chain.find_by_permalink(param)
-  end
-
 end

@@ -5,7 +5,7 @@
 <% tabbed_box do %>
   <h2><%= @title %></h2>
 
-  <%= render :partial => 'profiles/profiles', :object => @profiles, :locals => { :parent => :game } %>
+  <%= render :partial => 'profiles/profiles', :object => @profiles %>
 
   <% if !@game.has_users? %>
   <p>No one has favorited <strong><%= @game.name %></strong> just yet.</p>

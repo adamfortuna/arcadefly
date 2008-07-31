@@ -1,27 +1,7 @@
-<%- parent ||= :user -%>
-
 <li class="<%= cycle("even","odd")%>">
 	<%= link_to(profile.display_name, profile_path(profile), :class => 'main' ) %>
 	
 	<div class="count">
-	  <% if parent == :profile %>
-	    <% if profile.has_address? %>Lives in <%= profile.address.short_line %><% end %>
-	  <% elsif parent == :arcade %>
-	    <%= pluralize(profile.frequentships.size, "favorite arcade") %>
-	  <% elsif parent == :game %>
-	    <%= pluralize(profile.favoriteships.size, "favorite games") %>
-	  <% end %>
-	
-	
-	  <% if logged_in? && me %>
-  	  <span class="favorite">
-  	    <% if current_profile.friend_of?(profile) || current_profile.following?(profile) %>
-  	      <%= link_to "&nbsp;", profile_friends_path(profile)+'/'+profile.to_param, { :method => "delete", :class => "favorite user_delete" } %>
-  	    <% else %>
-          <%= link_to "&nbsp;", profile_friends_path(profile), { :method => "post", :class => "favorite user_add" } %>
-  	    <% end %>
-  	  </span>
-	  <% end %>
-
+	  <%= pluralize(profile.frequentships.size, "favorite arcade") %> and <%= pluralize(profile.favoriteships.size, "favorite games") %>
   </div>
 </li>

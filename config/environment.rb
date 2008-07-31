@@ -127,3 +127,9 @@ AMAZON_ASSOCIATES_ID = "adamfortuna-20"
 
 gem 'mislav-will_paginate', '~> 2.2'
 require 'will_paginate'
+
+class Logger
+  def format_message(severity, timestamp, progname, msg)
+    "#{msg} (pid:#{$$})\n"
+  end
+end
