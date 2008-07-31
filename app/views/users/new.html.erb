@@ -1,6 +1,4 @@
-<% content_for(:header) do %>
-  <script type="text/javascript">
-  // <![CDATA[
+<% javascript do %>
 	function set_address_status(status) {
 	  $$('#address input').each( function(e) {
 	  	$(e).disabled = status;
@@ -50,8 +48,6 @@
     $('address').addClassName('disabled');
 	<% end %>
 	});
-	// ]]>
-  </script>
 <% end %>
 
 <% title "Signup for an Account" %>

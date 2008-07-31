@@ -38,4 +38,12 @@ module TemplateHelper
     b = '</div></div>'
     create_template(a, b, &block)
   end
+  
+  def javascript(&block)
+    a = '<script type="text/javascript">' + \
+        '// <![CDATA['
+    b = '// ]]>' + \
+        '</script>'
+    content_for(:javascript) { create_template(a, b, &block) }
+  end
 end

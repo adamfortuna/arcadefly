@@ -1,11 +1,9 @@
 <%- title "Create a new Password" -%>
 
-<% content_for(:header) do %>
-  <script>
-    Event.observe(window, 'load', function() {
-      Form.focusFirstElement('change_password_form');
-    });
-  </script>
+<% javascript do %>
+  Event.observe(window, 'load', function() {
+    Form.focusFirstElement('change_password_form');
+  });
 <% end %>
 
 <div class="large_left_column">

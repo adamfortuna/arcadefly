@@ -1,10 +1,6 @@
 <%- title "Login" -%>
-<%- content_for(:header) do -%>
-  <script type="text/javascript">
-  // <![CDATA[
-    Event.observe(window, 'load', function() { Form.focusFirstElement('login_form'); });
-  // ]]>
-  </script>
+<% javascript do %>
+  Event.observe(window, 'load', function() { Form.focusFirstElement('login_form'); });
 <%- end -%>
 
 <div class="left half">

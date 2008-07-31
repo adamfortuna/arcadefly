@@ -5,7 +5,7 @@ class Claim < ActiveRecord::Base
   named_scope :unapproved, :conditions => { :approved => 0 }
   
   validates_presence_of :arcade, :profile, :level, :reason
-  validates_length_of :reason, :minimum => 30
+  validates_length_of :reason, :minimum => 10
   
   validates_presence_of     :name,                     :if => :name_required?
   validates_length_of       :name, :within => 4..200,  :if => :name_required?

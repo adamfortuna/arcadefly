@@ -1,4 +1,4 @@
-// javascripts/dynamic_regions.js.erb
+// javascripts/dynamic_games.js.erb
 var games = new Array();
 <% for game in @games -%>
   games.push(new Array(<%= game.id %>, '<%=h game.playables_count %>'));

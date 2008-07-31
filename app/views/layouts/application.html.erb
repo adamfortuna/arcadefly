@@ -20,20 +20,8 @@
   <meta name="doc-type" content="Web Page" />
 	
   <%= stylesheet_link_tag 'application', 'common_classes', 'forms', :cache => true %>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
-  <%= javascript_include_tag 'application' -%>
   <%= yield(:header_files) -%>
   <%= yield(:header) -%>
-  <%- if Rails.env.production? -%>
-    <script type="text/javascript">
-    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-    var pageTracker = _gat._getTracker("UA-90326-5");
-    pageTracker._initData();
-    pageTracker._trackPageview();
-    </script>
-  <%- end -%>
-
 </head>
 <body<%= " class=\"#{params[:controller]}\"" unless params[:controller].nil? %>>
 	<div id="main">
@@ -79,6 +67,9 @@
       <div class="footer_column long">
         <h3>Copyright &copy; 2007 ArcadeFly. Development by <a href="http://www.adamfortuna.com">Adam Fortuna</a>.</h3>
         <p>You can read more about ArcadeFly on our <a href="http://blog.arcadefly.com">Blog</a></p>
+        <p>
+          <a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10-blue" alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a>
+        </p>
   		</div>
       <div class="footer_column">
         <h3>More Links</h3>
@@ -103,5 +94,20 @@
       </div>
     </div><!-- end container -->
   </div><!-- end footer -->
+  
+  <%- if Rails.env.production? -%>
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    var pageTracker = _gat._getTracker("UA-90326-5");
+    pageTracker._initData();
+    pageTracker._trackPageview();
+    </script>
+  <%- end -%>  
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
+  <%= javascript_include_tag 'application' -%>
+  <%= yield(:javascript_files) -%>
+  <%= yield(:javascript) -%>
+
 </body>
 </html>

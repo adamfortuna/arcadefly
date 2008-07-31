@@ -13,6 +13,7 @@ a:hover { text-decoration:underline; }
 p { margin: 0px 0px 15px 0px; }
 a.button { background:#32312f url(/images/buttons/button_bg.jpg) repeat-x; padding:5px 10px 5px 10px; color: #ffffff; text-decoration: none; border:1px solid #32312f; text-transform:uppercase; font-size:9px; line-height:25px; }
 a.button:hover { background:#007de2 url(/images/buttons/button_bg_o.jpg) repeat-x; border-color:#007de2; }
+a img { border:none; }
 
 /* Fix up IE6 PNG Support */
 img, #logo { behavior: url(/scripts/iepngfix.htc); }

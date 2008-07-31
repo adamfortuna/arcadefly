@@ -1,13 +1,9 @@
 <% if !logged_in? %>
-  <% content_for(:header) do %>
-    <script type="text/javascript">
-    // <![CDATA[
+  <% javascript do %>
       Event.observe(window, 'load', function() {
         if($F('address') != '')
           toggleLabel("address", false);
       });
-    // ]]>
-    </script>
   <% end %>
 <% end %>
 
