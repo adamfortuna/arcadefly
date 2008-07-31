@@ -52,7 +52,7 @@ class Arcade < ActiveRecord::Base
   end
 
   def map_bubble
-    "<strong>#{self.name}</strong> <p>#{self.address.street}<br />#{self.address.city}, #{self.address.region.name} #{self.address.postal_code}</p><p><strong>Games:</strong> #{self.playables_count}</p>"
+    "<div><strong>#{self.name}</strong> <p>#{self.address.street}<br />#{self.address.city}, #{self.address.region.name} #{self.address.postal_code}</p><p><strong>Games:</strong> #{self.playables_count}</p></div>"
   end
 	
 	

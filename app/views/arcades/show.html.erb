@@ -49,31 +49,28 @@
     	</div>
     </div>
   </div>
-    <% if @arcade.has_address? -%>
-      <div class="map_box right_column">
-        <%= @map.div(:class => 'right prepend-1 span-13 last map_small map') %>
-        <p class="center">
-          <strong><%= @arcade.name %></strong> is in <em><%= @arcade.address.city %>, <%= @arcade.address.region.name %></em>.
-        </p>
-        
-        <% if @arcade.has_hours? %>
-        <ul style="margin:0 0 0 50px; border:0; width:250px;">
-          <% @arcade.hours.each do |hour| %>
-            <li>
-              <strong><%= hour.dayofweek.capitalize %></strong>: 
-              <% if hour.closed? %>
-                Closed
-              <% else %>
-                <%= hour.start.strftime("%I:%M %p") %> to <%= hour.end.strftime("%I:%M %p") %>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
+  <% if @arcade.has_address? -%>
+    <div class="map_box right_column">
+      <%= @map.div(:class => 'right prepend-1 span-13 last map_small map') %>
+      <p class="center">
+        <strong><%= @arcade.name %></strong> is in <em><%= @arcade.address.city %>, <%= @arcade.address.region.name %></em>.
+      </p>
+      
+      <% if @arcade.has_hours? %>
+      <ul style="margin:0 0 0 50px; border:0; width:250px;">
+        <% @arcade.hours.each do |hour| %>
+          <li>
+            <strong><%= hour.dayofweek.capitalize %></strong>: 
+            <% if hour.closed? %>
+              Closed
+            <% else %>
+              <%= hour.start.strftime("%I:%M %p") %> to <%= hour.end.strftime("%I:%M %p") %>
+            <% end %>
+          </li>
         <% end %>
-      </div>
-    <% end %>
-  </div>
-  
-  <%= render :partial => 'footer' %>
+      </ul>
+      <% end %>
+    </div>
+  <% end %>
 <% end %>
-
+<%= render :partial => 'footer' %>

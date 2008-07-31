@@ -1,5 +1,6 @@
 <% content_for(:header) do %>
-  <script>
+  <script type="text/javascript">
+  // <![CDATA[
 	function set_address_status(status) {
 	  $$('#address input').each( function(e) {
 	  	$(e).disabled = status;
@@ -49,8 +50,7 @@
     $('address').addClassName('disabled');
 	<% end %>
 	});
-	
-	
+	// ]]>
   </script>
 <% end %>
 
@@ -70,14 +70,14 @@
     <% end %>
 
     <p class="block required">
-      <label for="profile_email">Email Address</label>
+      <label for="user_email">Email Address</label>
       <span class="block info">You'll use this to login and to activate your account.</span>
       <%= error_message_on @user, "email", "Email " %>
       <%= f.text_field :email, { :class => 'text'} %>
     </p>
     
     <p class="block required">
-      <label for="profile_email_confirmation">Confirm Email Address</label>
+      <label for="user_email_confirmation">Confirm Email Address</label>
       <%= error_message_on @user, "email_confirmation", "Email " %>
       <%= f.text_field :email_confirmation, { :class => 'text'} %>
     </p>
@@ -97,7 +97,7 @@
     </p>
 
     <p class="left shift-1">
-      <input type="checkbox" name="add_address" id="add_address"<%= ' checked="true"' if @add_address %> />
+      <input type="checkbox" name="add_address" id="add_address"<%= ' checked="checked"' if @add_address %> />
       <label for="add_address">Add your address now?</label>
       <span class="small block">Adding your address will let us show distinace calculations</span>
     </p>
@@ -110,7 +110,6 @@
 
   <p class="right">
     <%= submit_tag "Register", :class => "big-button", :disable_with => 'Registering...' %>
-  </p
-
+  </p>
   <% end -%>
 <% end %>

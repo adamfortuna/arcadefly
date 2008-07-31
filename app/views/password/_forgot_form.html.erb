@@ -3,7 +3,7 @@
 <% form_tag url_for(:controller => 'password', :action => 'create') do -%>
   <p>
     <label for="email">Enter Your Email Address</label>
-    <%= text_field_tag :email, params[:email], :size => 50, :class => 'text' %>
+    <%= text_field_tag :forgot_email, params[:email], :size => 50, :class => 'text' %>
   </p>
 
   <p><%= submit_tag 'Retrieve Forgotten Password', { :class => 'button', :disable_with => 'Retrieving password...' } %></p>

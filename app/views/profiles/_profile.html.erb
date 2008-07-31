@@ -3,7 +3,7 @@
 <li class="<%= cycle("even","odd")%>">
 	<%= link_to(profile.display_name, profile_path(profile), :class => 'main' ) %>
 	
-	<span class="count">
+	<div class="count">
 	  <% if parent == :profile %>
 	    <% if profile.has_address? %>Lives in <%= profile.address.short_line %><% end %>
 	  <% elsif parent == :arcade %>
@@ -23,5 +23,5 @@
   	  </span>
 	  <% end %>
 
-  </span>
+  </div>
 </li>

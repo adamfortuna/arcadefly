@@ -1,9 +1,8 @@
-/* General look and feel of main buttons */
+/* forms.css */
 input[type="button"] { padding:.3em; }
 input[type="submit"] { padding:.4em; }
 
 input.inline { position:absolute; margin-top: .3em; }
-
 
 /* Forms */
 input[type="text"],input[type="password"]  { width: 300px; }
@@ -28,12 +27,7 @@ p.block label { display:block; padding:0; margin:0; }
 form.button-to input.favorite { padding-left:1.5em; }
 
 .big-button { font-size:1.6em; margin-top:.5em; }
-
-
-
-
 label { font-weight: bold; }
-
 
 /* Fieldsets */
 fieldset    { padding:1.4em; margin: 0 0 1.5em 0; border: 1px solid #ccc; }
@@ -58,4 +52,3 @@ select:focus        { border:1px solid #999; background:#fff; }
 input.arcades { background: url(/images/joystick.png) #dde no-repeat left; background-position: 1em; padding-left: 40px; }
 input.games { background: url(/images/controller.png) #fdd no-repeat left; background-position: 1em; padding-left: 40px; }
 input.users { background: url(/images/user.png) #ded no-repeat left; background-position: 1em; padding-left: 40px; }
-

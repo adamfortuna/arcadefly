@@ -17,14 +17,5 @@
 
   <%= render :partial => 'shared/letters', :locals => { :controller => 'games' } %>
 
-  <div<%= ' class="right-space"' if logged_in? %>>
-    <ul class="data">
-      <%= render :partial => 'game', :collection => @games %>
-    </ul>
-
-    <p>
-      <%= will_paginate @games %>
-    </p>
-  </div>
-
+  <%= render :partial => 'games/games', :object => @games %>
 <% end %>

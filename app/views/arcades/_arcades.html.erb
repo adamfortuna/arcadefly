@@ -14,34 +14,9 @@
   <%= map.div(:class => 'map map_medium content-height') %>
 </div>
 
-<p>
-  <%= will_paginate arcades %>
-</p>
+<%= will_paginate arcades %>
 
 <div>
-<!--
-  <div class="right">
-    <p class="center">
-      Arcades are sorted by <em>
-      <%- if addressed_in? -%>
-        distance from your location.
-      <%- else -%>
-        arcade name.
-      <%- end -%>
-      </em>
-   </p>
-
-    <ul class="nav">
-      <%= nav_link "Sort by Name", arcades_path %>
-      <%- if addressed_in? %>
-      <%= nav_link "Sort by Distance", arcades_path %>
-      <%- end -%>
-      <%= nav_link "Sort by Number of Favorites", arcades_path %>
-      <%= nav_link "Sort by Number of Games", arcades_path %>
-    <ul>
-  </div>
--->  
-  
   <p>
     <% if logged_in? %>
       Know of an arcade not listed here? <%= link_to "Add it!", new_arcade_path %>

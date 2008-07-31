@@ -1,10 +1,12 @@
 <% if !logged_in? %>
   <% content_for(:header) do %>
-    <script>
+    <script type="text/javascript">
+    // <![CDATA[
       Event.observe(window, 'load', function() {
         if($F('address') != '')
           toggleLabel("address", false);
       });
+    // ]]>
     </script>
   <% end %>
 <% end %>
@@ -12,14 +14,14 @@
 <% box do %>
   <h2 id="text_title">ArcadeFly is social networking site for arcade lovers</h2>
   <p>Every wonder where you could go to play a specific game? Or what arcades people in your area consider to be the best? Or just where some arcades are?</p>
-  <p>
-    <% unless logged_in? %>
-      <%= button_to "Register Now!", signup_path, {:class => "big-button right"} %>
-    <% end %>
+  <% unless logged_in? %>
+    <%= button_to "Register Now!", signup_path, {:class => "big-button right"} %>
+  <% end %>
+  <p class="shift-1">
     You're in the right place!
   </p>
   <p class="shift-1">
-    We know of <strong><%= @arcades_count %> arcades</strongs> right now, and a total of <%= @arcade_games_count %> game locations</strong> added by our <strong><%= @profiles_count %> players</strong>. 
+    We know of <strong><%= @arcades_count %> arcades</strong> right now, and a total of <strong><%= @arcade_games_count %> game locations</strong> added by our <strong><%= @profiles_count %> players</strong>. 
     With <strong><%= @games_count %> games available</strong> we expect many more to come!
   </p>
 <% end %>

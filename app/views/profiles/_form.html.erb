@@ -61,7 +61,7 @@
     </p>
      
     <p class="block">
-      <%= p.submit "Update My Information", :class => "button", :disable_with => 'Updating Information...' %>
+      <%= p.submit "Update My Information", :class => "button", :disable_with => 'Updating Information...', :id => "profile_submit_general" %>
       <input type="hidden" name="switch" value="name" />
     </p>
     
@@ -74,12 +74,12 @@
     <legend>Set Your Icon</legend>
     <p>
       Avatars for ArcadeFly are currently set using <a href="http://en.gravatar.com/">Gravatar</a>. Here's what you need to do to setup a Gravatar:
-      <ol>
-        <li>Create an account on <a href="http://en.gravatar.com/">Gravatar</a>.
-        <li>Add the email address you used to signup here at ArcadeFly -- <strong><%= @profile.email %></strong>.
-        <li>Upload an icon! It should show up in your profile here on ArcadeFly right away!</li>
-      </ol>
     </p>
+    <ol>
+      <li>Create an account on <a href="http://en.gravatar.com/">Gravatar</a>.</li>
+      <li>Add the email address you used to signup here at ArcadeFly -- <strong><%= @profile.email %></strong>.</li>
+      <li>Upload an icon! It should show up in your profile here on ArcadeFly right away!</li>
+    </ol>
   </fieldset>
   
   <fieldset id="change_address">
@@ -89,7 +89,7 @@
     
       <p class="block">
         <input type="hidden" name="switch" value="address" />
-        <%= p.submit 'Change My Address', :class => 'button', :disable_with => 'Changing Address...' %>
+        <%= p.submit 'Change My Address', :class => 'button', :disable_with => 'Changing Address...', :id => "profile_submit_address" %>
       </p>
     <% end %>
   </fieldset>
@@ -121,7 +121,7 @@
       </p>
     
       <p class="block">
-        <%= p.submit 'Change My Password', :class => 'button', :disable_with => 'Changing Password...'  %>
+        <%= p.submit 'Change My Password', :class => 'button', :disable_with => 'Changing Password...', :id => "profile_submit_password"  %>
         <input type="hidden" name="switch" value="password" />
       </p>
     <% end %>
@@ -152,7 +152,7 @@
       </p>
         
       <p class="block">
-        <%= p.submit "Change My Email", :class => "button", :disable_with => 'Changing Email...'  %>
+        <%= p.submit "Change My Email", :class => "button", :disable_with => 'Changing Email...', :id => "profile_submit_email"  %>
         <input type="hidden" name="switch" value="email" />
       </p>
       
@@ -163,8 +163,6 @@
   <fieldset id="delete_account">
     <legend>Delete Account</legend>
     <p>This will completely remove your account and all information about it. This cannot be undone!</p>
-    <form>
-      <%= link_to_remote 'Delete my user account and all my data.', :url => profile_path(current_profile), :method => :delete, :confirm => DELETE_CONFIRM  %>
-    </form>
-  </div>
+    <p><%= link_to_remote 'Delete my user account and all my data.', :url => profile_path(current_profile), :method => :delete, :confirm => DELETE_CONFIRM  %></p>
+  </fieldset>
 </div>

@@ -1,9 +1,25 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-  "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 	<title>ArcadeFly<%= separator -%><%= yield(:title) || "Arcade and Game Locations" %></title>
-  <%= stylesheet_link_tag 'application', 'common_classes', 'forms' %>
+
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta name="keywords" content="arcade games, arcades, gaming, video games, game locations, arcade locations, play games, play arcade games, where to play games" />
+  <meta name="description" content="ArcadeFly.com is a social network for gamers and arcade game enthusiasts. Want to know where an arcade is, or have a game in mind and want to know where to play it? We're your place!" />
+  <meta name="resource-type" content="document" />
+  <meta http-equiv="pragma" content="no-cache" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="classification" content="Advertising and Marketing" />
+  <meta name="distribution" content="Global" />
+  <meta name="rating" content="Safe For Kids" />
+  <meta name="copyright" content="&copy; 2008 Adam Fortuna" />
+  <meta name="author" content="ArcadeFly.com" />
+  <meta http-equiv="reply-to" content="support@arcadefly.com" />
+  <meta name="language" content="English" />
+  <meta name="doc-type" content="Web Page" />
+	
+  <%= stylesheet_link_tag 'application', 'common_classes', 'forms', :cache => true %>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
   <%= javascript_include_tag 'application' -%>
   <%= yield(:header_files) -%>
@@ -26,6 +42,7 @@
     <div class="container">
     	<div id="header">        
         <ul id="menu">
+          <li><%= link_to "Home", root_path %></li>
   		    <li><%= link_to "Arcades", arcades_path %></li>
   		    <li><%= link_to "Games",   games_path %></li>
   		    <li><%= link_to "Players", profiles_path %></li>
@@ -43,10 +60,8 @@
         </ul><!-- end ul#menu -->
             
       	<div id="logo">
-          <a href="/">
-            <h1>ArcadeFly.com</h1>
-            <small>Mapping the arcade buzz!</small>
-          </a>
+          <h1><a href="/">ArcadeFly.com</a></h1>
+          <small>Mapping the arcade buzz!</small>
         </div>
       </div><!-- end div#header -->
   

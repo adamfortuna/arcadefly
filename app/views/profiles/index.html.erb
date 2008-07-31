@@ -13,14 +13,5 @@
 
   <%= render :partial => 'shared/letters', :locals => { :controller => 'profiles' } %>
 
-  <div<%= ' class="right-space"' if logged_in? %>>
-    <ul class="data">
-      <%= render :partial => 'profile', :collection => @profiles %>
-    </ul>
-
-    <p>
-      <%= will_paginate @profiles %>
-    </p>
-  </div>
-
+  <%= render :partial => 'profiles/profiles', :object => @profiles %>
 <% end %>

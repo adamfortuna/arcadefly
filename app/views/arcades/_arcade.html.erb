@@ -9,19 +9,17 @@
   </span>
   
   <div class="clear soft">
-  	<span class="left">
+  	<div class="left">
       <%= render :partial => 'arcades/favorite', :locals => { :show_text => false, :arcade => arcade } %>
       <p><%= arcade.address.shortest_line -%></p>
-  	</span>
+  	</div>
   	
-  	<span class="right">
+  	<div class="right">
       <% if addressed_in? -%>
         <%= arcade.address.distance_to(current_address).round_to(2) %> miles away<br />
       <% end %>
-
-        <%= link_to pluralize(arcade.playables.size, "game"), arcade_games_path(arcade), :class => 'games' %> 
-        <%= link_to pluralize(arcade.frequentships.size, "favorites"), arcade_profiles_path(arcade), :class => 'users' %> 
-
-    </span>
+      <%= link_to pluralize(arcade.playables.size, "game"), arcade_games_path(arcade), :class => 'games' %> 
+      <%= link_to pluralize(arcade.frequentships.size, "favorites"), arcade_profiles_path(arcade), :class => 'users' %> 
+    </div>
   </div>
 </li>
