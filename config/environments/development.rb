@@ -17,6 +17,8 @@ config.action_controller.perform_caching             = false
 config.action_mailer.raise_delivery_errors = true
 config.action_controller.asset_host                  = "http://localhost:3000"
 
+config.log_level = :debug
+
 
 # ActiveRecord
 config.active_record.timestamped_migrations = true
@@ -24,8 +26,4 @@ config.active_record.timestamped_migrations = true
 # Mail settings
 #ActionMailer::Base.delivery_method = :smtp
 
-
-
 HOST = 'http://localhost:3000'
-
-ExceptionNotifier.exception_recipients = %w(exceptions@arcadefly.com)

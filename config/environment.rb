@@ -128,8 +128,7 @@ AMAZON_ASSOCIATES_ID = "adamfortuna-20"
 gem 'mislav-will_paginate', '~> 2.2'
 require 'will_paginate'
 
-class Logger
-  def format_message(severity, timestamp, progname, msg)
-    "#{msg} (pid:#{$$})\n"
-  end
+def log_to(stream)
+  ActiveRecord::Base.logger = Logger.new(stream)
+  ActiveRecord::Base.clear_active_connections!
 end
