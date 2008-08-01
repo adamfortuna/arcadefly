@@ -3,7 +3,7 @@
 <html>
 <head>
 	<title>ArcadeFly<%= separator -%><%= yield(:title) || "Arcade and Game Locations" %></title>
-	<link href="http://localhost:3000/stylesheets/iui.css?1217395434" media="screen" rel="stylesheet" type="text/css" />
+	<%= stylesheet_link_tag 'iui', :cache => true %>  
 	<%= yield(:header_files) -%>
   <%= yield(:header) -%>
 
