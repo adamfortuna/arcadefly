@@ -1,0 +1,9 @@
+<li id="playable_<%= playable.id %>">
+  <strong><%= playable.game.name %></strong>
+  
+  <span class="count">
+    <label for="playable_<%= playable.id %>_count">Count: </label>
+    <input type="text" id="playable_<%= playable.id %>_count" name="playable[<%= playable.id %>]" value="<%= playable.games_count -%>" class="text" size="2" maxlength="3" style="width:30px;" />  
+    <%= link_to_remote "Remove this game", :url => arcade_playable_path(@arcade,playable), :method => :delete, :confirm => "Are you sure you want to remove \"#{h(playable.game.name)}\" from \"#{@arcade.name}\"?" %>
+  </span>
+</li>

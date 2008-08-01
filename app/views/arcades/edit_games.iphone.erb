@@ -1,0 +1,46 @@
+<% javascript_file 'effects', 'controls' -%>
+
+<% content_for(:header) do %>
+  <style>
+  div.autocomplete { margin:0px; padding:0px; width:250px; background:#fff; border:1px solid #888; position:absolute; overflow-y:auto; max-height:300px; z-index:300; }
+  div.autocomplete ul { margin:0px; padding:0px; list-style-type:none; background-color:#fff; }
+  div.autocomplete ul li.selected {  background-color:#ffb; }
+  div.autocomplete ul li { margin:0; padding:2px; height:32px; display:block; list-style-type:none; cursor:pointer; }
+  </style>
+<% end %>
+
+
+<% javascript do %>
+  Event.observe(window, 'load', function() {
+    Form.focusFirstElement('arcade_form');
+    new Ajax.Autocompleter('game_name', 'game_name_auto_complete', '/arcades/auto_complete_for_game_name', {
+        minChars: 3, 
+        indicator: 'game_indicator'
+    });
+  });
+<% end %>
+
+<fieldset title="<%= @arcade.name %> Games" selected="true">
+  
+  <% remote_form_for(:arcade, :playables, :url => arcade_playables_path(@arcade), :html => { :id => 'arcade_form' }) do |f| -%>
+    <p>
+      <label for="game_name">Game Name:</label>
+      <input id="game_name" name="game[name]" size="10" type="text" class="text" /><img src="/images/spinner.gif" alt="Working..." id="game_indicator" style="display: none" />
+      <div class="autocomplete" id="game_name_auto_complete"></div>
+    </p>
+    <p>
+      <label for="playable_count">How many of this game?</label>
+      <input type="text" id="playable_count" name="count" value="1 " class="text" size="2" maxlength="3" style="width:30px;" />
+      <%= submit_tag "Add this game!", :width => 20, :disable_with => 'Adding...', :name => 'submit', :id => 'add_game' %>
+    </p>
+  <% end %>  
+  
+  <hr class="clear shift-2" />
+  
+  <% form_for(:arcade, :playables, :url => arcade_playable_path(@arcade), :html => { :method => :put, :id => 'arcade_form' }) do |f| -%>
+    <ul id="playables" selected="true">
+      <%= render :partial => 'playables/playable', :collection => @arcade.playables %>
+    </ul>
+  <% end %>
+  
+</fieldset>

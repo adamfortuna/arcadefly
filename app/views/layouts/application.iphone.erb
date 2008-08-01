@@ -3,13 +3,32 @@
 <html>
 <head>
 	<title>ArcadeFly<%= separator -%><%= yield(:title) || "Arcade and Game Locations" %></title>
-	<%= include_iui_files %>
+	<link href="http://localhost:3000/stylesheets/iui.css?1217395434" media="screen" rel="stylesheet" type="text/css" />
+	<%= yield(:header_files) -%>
+  <%= yield(:header) -%>
 </head>
 <body>
-  <%= iui_toolbar("ArcadeFly", "http://www.arcadefly.com/search") %>
-	<% flash.each do |key, msg| %>
-	  <%= content_tag :div, msg, :class => key %>
-	<% end %>
+  <div class="toolbar">
+    <h1 id="pageTitle">ArcadeFly.com</h1>
+    <a id="backButton" class="button" href="#"></a>
+    <a href="http://www.arcadefly.com/search" class="button" id="searchButton" target="_self">Search</a>
+  </div>
   <%= yield %>
+  
+  <%- if Rails.env.production? -%>
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+    var pageTracker = _gat._getTracker("UA-90326-5");
+    pageTracker._initData();
+    pageTracker._trackPageview();
+    </script>
+  <%- end -%>  
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
+  <%= yield(:javascript_files) -%>
+  <%= yield(:javascript) -%>
+
 </body>
 </html>
