@@ -6,6 +6,11 @@
 	<link href="http://localhost:3000/stylesheets/iui.css?1217395434" media="screen" rel="stylesheet" type="text/css" />
 	<%= yield(:header_files) -%>
   <%= yield(:header) -%>
+
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
+  <%= yield(:javascript_files) -%>
+  <%= yield(:javascript) -%>
+
 </head>
 <body>
   <div class="toolbar">
@@ -15,20 +20,6 @@
   </div>
   <%= yield %>
   
-  <%- if Rails.env.production? -%>
-    <script type="text/javascript">
-    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
-    <script type="text/javascript">
-    var pageTracker = _gat._getTracker("UA-90326-5");
-    pageTracker._initData();
-    pageTracker._trackPageview();
-    </script>
-  <%- end -%>  
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
-  <%= yield(:javascript_files) -%>
-  <%= yield(:javascript) -%>
 
 </body>
 </html>
