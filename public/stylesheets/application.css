@@ -1,67 +1,34 @@
-@charset "UTF-8";
-/* Application.css */
-body { margin:0px; padding:0px; background-color:#131211; font-family:Arial, Helvetica, sans-serif; color:#7f7d78; font-size:13px; line-height:19px; }
-
-/* Text-Styles */
-h2 { margin:0px 0px 10px 0px; font-size:36px; font-family:Helvetica, Arial, Sans-serif; color:#000000; line-height:39px; letter-spacing:-1px; }
-h3 { margin:0px 0px 5px 0px; font-size:14px; line-height:21px; font-family:Helvetica, Arial, Sans-serif; color:#000000; }
-h4 { color:#007de2; margin:0px 0px 0px 0px; }
-small { color:#595856; font-weight:bold; font-size:11px; display:block; margin-bottom:15px; }
-a { color:#26689f; text-decoration:none; }
-small a { color:#007de2; }
-a:hover { text-decoration:underline; }
-p { margin: 0px 0px 15px 0px; }
-a.button { background:#32312f url(/images/buttons/button_bg.jpg) repeat-x; padding:5px 10px 5px 10px; color: #ffffff; text-decoration: none; border:1px solid #32312f; text-transform:uppercase; font-size:9px; line-height:25px; }
-a.button:hover { background:#007de2 url(/images/buttons/button_bg_o.jpg) repeat-x; border-color:#007de2; }
-a img { border:none; }
-
-/* Fix up IE6 PNG Support */
-img, #logo { behavior: url(/scripts/iepngfix.htc); }
-
-/* layout */
-.container { width:960px; margin:0 auto; }
-#main { background:#c4c0be url(/images/layout/background_light_slice.jpg) repeat-x; padding-bottom:30px; }
-#main .container { background-image:url(/images/layout/background_light.jpg); background-repeat:no-repeat; }
-
-#content { }
-#content h2 { font-size:32px; line-height:31px; }
-#content hr { border:1px solid #e3e3e3; margin-top:40px; margin-bottom:40px; }
-
-/* Footer-Styles */
-#footer { background-image:url(/images/layout/background_footer.jpg); background-repeat:repeat-x; padding:40px; min-height:130px; }
-#footer { font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; }
-.footer_column { float:left; width:120px; margin-right:30px; }
-#footer .long { width:610px; }
-#footer h3 { color:#e2dddc; text-transform:uppercase; font-size:10px; }
-.footer_column ul li, .footer_column ul { list-style:none; margin:0px; padding:0px; }
-
-/* Header-Styles */
-#header { padding-top:20px; padding-bottom:20px; }
-#logo h1, #logo small { margin:0px; display:block; text-indent:-9999px; }
-#logo h1 a { display:block; background-image:url(/images/logo.png); background-repeat:no-repeat; width:210px; height:83px; padding:3m; }
-ul#menu { margin:0px; padding:0px; float:right; }
-ul#menu li { display:inline; margin-left:12px; }
-ul#menu li a { text-decoration:none; color:#716d6a; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; font-weight:bold; text-transform:uppercase; }
-ul#menu li a.active, ul#menu li a:hover { color:#211e1e; }
-
-.column { width:420px;}
-
-/* Block-Styles */
-
 /* For black/white bordered boxes without a top border */
 .block_outside_topless { border-left:1px solid #a3a09e; border-right:1px solid #a3a09e; border-bottom:1px solid #a3a09e; background-color:#ffffff; margin-bottom:20px; position:relative; clear:both; }
 .block_inside_topless { display:block; background: #ffffff url(/images/layout/background_block_slice.jpg) repeat-x; padding:30px; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
+
 /* For black/white bordered boxes with a top gradient */
 .block_outside { border:1px solid #a3a09e; background-color:#ffffff; margin-bottom:20px; position:relative; clear:both;	}
 .block_inside { display:block; border:1px solid #ffffff; background: #ffffff url(/images/layout/background_block_slice.jpg) repeat-x; padding:30px; }
-
 #block_portfolio .block_outside, #block_portfolio .block_outside_topless { min-height:165px;}
-																																							
+
+/* Games, Arcades and profiles pages within tabs */
+body.games ul.tabs li.current a { background-color: #fdd; border-bottom: 1px solid #fdd; }
+body.games .block_inside_topless, body.games .block_inside { display:block; background: #ffffff url(/images/layout/background_block_slice_games.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
+
+body.arcades ul.tabs li.current a, body.claims ul.tabs li.current a { background-color: #dde; border-bottom: 1px solid #dde; }
+body.arcades .block_inside_topless, body.arcades .block_inside, 
+body.claims .block_inside_topless, body.claims .block_inside { display:block; background: #ffffff url(/images/layout/background_block_slice_arcades.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
+
+body.profiles ul.tabs li.current a, body.friends ul.tabs li.current a, body.users ul.tabs li.current a, body.sessions ul.tabs li.current a, body.messages ul.tabs li.current a { background-color: #ded; border-bottom: 1px solid #ded; }
+body.profiles .block_inside_topless, body.friends .block_inside_topless, body.users .block_inside_topless, body.sessions .block_inside_topless, body.messages .block_inside_topless,
+body.profiles .block_inside, body.friends .block_inside, body.users .block_inside, body.sessions .block_inside, body.messages .block_inside { display:block; background: #ffffff url(/images/layout/background_block_slice_users.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
+
+
+
+
 /* Content area takes up the main part of the page */
+/* used for main part of about page */
 #content_area { width:665px; float:left; }
 #content_area .block_inside { min-height:400px; }
 
 /* Sidebar - slightly lower shifted box. black/white border and grey background */
+/* used for the text on the right side of the content_area */
 #sidebar { float:left; width:281px; position:relative;  left:-1px; margin-top:15px; background-color:#e2dddc; border:1px solid #a3a09e; }
 #sidebar .block_inside { background:none; background-color:#e2dddc; }
 #sidebar h3 { font-size:20px; line-height:23px; }
@@ -70,23 +37,138 @@ ul#menu li a.active, ul#menu li a:hover { color:#211e1e; }
 #sidebar ul li a { color:#7f7d78; }
 #sidebar ul li a:hover { color:#0172dd; text-decoration:none; }
 
-#featured_column { width:615px; margin:0 25px 0 0; float:left; min-height:100px; padding:3px 0 0 0; }
-#text_column { float:right; width:310px; }
-
-.features img.thumbnail { border:1px solid #b5b5b5; background-color:#d2d2d2; float:left; margin-right:10px; }
-#featured_column div { padding-bottom:2em;}
-#controller_search label { position:absolute; margin:1em 0 0 .6em; color:#aaa; }
 
 
-.ribbon { position:absolute; top:-3px; right:-3px; }
 
-#features { font-size: 1.5em;  }
-#features li { padding: 1em; }
-#address_form label { position:absolute; margin:1em 0 0 .2em; color:#aaa; font-size:2em }
-#address_form input#address { width: 80%; font-size:2em; }
+div.autocomplete { margin:0px; padding:0px; width:250px; background:#fff; border:1px solid #888; position:absolute; overflow-y:auto; max-height:300px; z-index:300; }
+div.autocomplete ul { margin:0px; padding:0px; list-style-type:none; background-color:#fff; }
+div.autocomplete ul li.selected {  background-color:#ffb; }
+div.autocomplete ul li { margin:0; padding:2px; height:32px; display:block; list-style-type:none; cursor:pointer; }
 
-#edit_games { list-style:none;}
-#edit_games li { border-bottom:1px solid #ccc;}
-#edit_games input { max-width:40px;}
 
-#arcade_search label { position:absolute; margin:1em 0 0 .6em; color:#aaa; }
+
+
+ul#hours { list-style:none; margin:0; padding:0; }
+ul#hours li span.dayofweek { width:40px; display:block; float:left; text-align:right; padding-right:.4em; margin-top:.8em; }
+ul#hours li span.from_to { display:block; width:250px; float:left; }
+ul#hours li span.options { margin-top:.8em; diplay:block; float:left; }
+ul#hours li input.text, ul#hours li select.text { width:100px; }
+
+
+
+
+/* Data lists */
+ul.logged_in { width:880px;}
+ul.data { margin:1em 0 0 0; padding:0; }
+ul.data a { color: #2D7BB2; text-decoration: none; font-weight: bold; }
+ul.data a:hover { color: #333; }
+ul.data li { position: relative; display: block; border-bottom: 1px solid #EEE; _zoom: 1; }
+ul.data li a.main {display: block;  padding: 0.4em 4.5em 0.4em 0.5em; position: relative; z-index: 2; }
+ul.data li .count { display: block; position: absolute; top: 0; right: 0; margin: 0 0.3em; text-align: right; color: #999; font-weight: bold; font-size: 0.875em; line-height: 3em; z-index:2; }
+ul.data li .favorite { display: inline; position:absolute; top:0; padding-left:1em; }
+ul.data li .soft { color: #999; font-weight: bold; font-size: 0.875em; line-height: 2em; z-index:2; }
+ul.data li a.favorite { display: inline;  padding: 1em; position: relative; z-index: 2; }
+ul.data li:hover { background-color: #ddd; }
+ul.data li span.index { display: block; position: absolute; top: 0; left: 0; height: 100%; background: #B8E4F5; text-indent: -9999px; overflow: hidden; line-height: 2em; z-index:1; }
+ul.data li span.index:hover { background: #9fbceb; }
+ul.content li .count { clear:left; position: relative; top:1em; }
+ul.content li a { display: inline; }
+ul.left-shift { position:absolute; left:-150px; } /* Used to shirt some menus beyond the main data */
+
+
+
+
+/* Very cool tabs from  http://www.simplebits.com/bits/css_tabs.html */
+ul.tabs { height: 2.6em; padding: 0 20px; background: url(../images/helpers/tab_bottom.gif) repeat-x bottom; clear: both; margin:0px; }
+ul.tabs li { margin: 0; padding: 0; display: inline; list-style-type: none; }
+ul.tabs a:link, ul.tabs a:visited { float: left; font-weight: bold; padding: .5em 1.2em; margin-right: 8px; border: 1px solid #a3a09e; text-decoration: none; color: #666; }
+ul.tabs a { background-color: #f3f3f3; }
+ul.tabs li.current a:link, ul.tabs li.current a:visited { border-bottom: 1px solid #ececec; background: #ececec; color: #000; }
+ul.tabs a:hover { background-color: #fff;	}
+ul.tabs a.arcades { background-color: #dde; }
+ul.tabs a.arcades:hover { background-color: #ccf; }
+ul.tabs a.games { background-color: #fdd; }
+ul.tabs a.games:hover { background-color: #fcc; }
+ul.tabs a.users { background-color: #ded; }
+ul.tabs a.users:hover { background-color: #cec; }
+
+/* Right aligned tabs */
+ul.right-tabs { position:relative; top:-4em; }
+ul.right-tabs li { float: right; }
+.tabbed ul.right-tabs { top: -3.5em; }
+.right-tabbed { position:relative; top:-4em; }
+.tabbed .right-tabbed { top:0em; }
+
+/* Pad the div below a ul.tab so that it has a left padding to match the first tab. */
+div.tabbed { padding: 1em 0 1em 20px; margin-right:20px; }
+div.right-space { padding: 1em 0 1em 0; margin-right:20px; }
+div.tabbed-map { padding: 0em 0 1em 0; clear:both; }
+
+
+
+
+/*  For general horizontal lists */
+ul.nav li { display: inline; border-right: 1px solid #ccc; padding: 0 .5em; }
+ul.nav li:last-child { border: none; }
+ul.nav li a, ul.nav li a:visited { color: #369; text-decoration: none; }
+ul.nav li a:hover, ul.nav li a:active { text-decoration: underline; }
+
+
+
+
+/* Pagination */
+.pagination { padding: 3px; margin: 3px; }
+.pagination a { padding: 2px 5px 2px 5px; margin: 2px; border: 1px solid #6d84b4; text-decoration: none; color: #000099; }
+.pagination a:hover, .pagination a:active {border: 1px solid #3b5998; color: #fff; background-color: #6d84b4; }
+.pagination span.current { padding: 2px 5px 2px 5px; margin: 2px; border: 1px solid #000099; font-weight: bold; background-color: #3b5998; color: #FFF; }
+.pagination span.disabled { padding: 2px 5px 2px 5px; margin: 2px; border: 1px solid #ccc; color: #bbb; }
+
+
+
+
+/* Elements that require secial attention for inline scrolling */
+.scrollable { overflow-x: hidden; overflow-y: scroll; }
+ul.scrollable li, ul.items li { clear: both; }
+ul.scrollable li:hover, ul.items li:hover { background-color: #ddd; }
+ul.scrollable li label, ul.items li label { display: block; font-weight:normal; }
+
+
+
+
+/* Counts displayed on an arcade/game/user page */
+span.counts { border: 1px solid #ccc; margin-left:1em; }
+span.counts a { display:block; padding:1em 2em 1em 3em; font-weight: bold; }
+span.counts a:first-child { border-bottom: 1px solid #ccc;}
+span.counts a.arcades { background: url(/images/icons/joystick.png) #dde no-repeat left; background-position: 1em; }
+span.counts a.games { background: url(/images/icons/controller.png) #fdd no-repeat left; background-position: 1em; }
+span.counts a.users { background: url(/images/icons/user.png) #ded no-repeat left; background-position: 1em; }
+
+
+
+
+/* Global Map settings */
+.map_box { padding:0; margin:0; }
+.map_box ul { width:370px; list-style:none; margin:0; padding:0; float:left; }
+.map_box ul li { clear: both; padding:.2em .2em .2em .5em; }
+
+.map_box ul, div.map { border: 1px solid #ccc; margin-bottom: 1em; }
+.map_box div.map { float:right; }
+
+div.map_big { width: 894px; height: 350px; padding-bottom: 1em; } /* Entire Page Map */
+div.map_medium { width:510px; } /* List Map */
+div.map_small { width: 300px; height:250px; padding: 1em; } /* Profile/Arcade/Games Map */
+
+
+
+
+.half { width:440px; }
+.half.padding { width:420px;}
+
+
+
+
+div.large_left_column { width:640px; float:left;}
+div.left_column { width:540px; float:left;}
+div.left_column .short_description { width:370px; float: right; }
+div.left_column .left_column_content { clear: both; padding-top: 2em; }
+div.right_column { width:300px; float:right; }

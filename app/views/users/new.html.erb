@@ -10,9 +10,9 @@
 		// Remove the error messages on the address field if it's disabled
 		$$('#address .formError').each( function(e) {
 			if (status) {
-				$(e).addClassName('hidden');
+				$(e).hide();
 			}	else {
-				$(e).removeClassName('hidden');
+				$(e).show();
 			}
 		});
 		

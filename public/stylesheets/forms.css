@@ -1,5 +1,4 @@
 /* forms.css */
-input[type="button"] { padding:.3em; }
 input[type="submit"] { padding:.4em; }
 
 input.inline { position:absolute; margin-top: .3em; }
@@ -23,11 +22,9 @@ p.required label:before { content: "* "; }
 
 p.block { margin: 0 0 .3em 0; }
 p.block label { display:block; padding:0; margin:0; }
-
-form.button-to input.favorite { padding-left:1.5em; }
+label { font-weight: bold; }
 
 .big-button { font-size:1.6em; margin-top:.5em; }
-label { font-weight: bold; }
 
 /* Fieldsets */
 fieldset    { padding:1.4em; margin: 0 0 1.5em 0; border: 1px solid #ccc; }
@@ -41,14 +38,9 @@ input.title:focus         { border:1px solid #999; background:#fff; }
 input.title               { font-size:1.5em; }
 
 /* Textareas */
-textarea            { width: 400px; height: 250px; margin:0.5em 0.5em 0.5em 0; }
-textarea            { border:1px solid #bbb; background:#eee; padding:5px; }
+textarea            { width: 400px; height: 250px; margin:0.5em 0.5em 0.5em 0; border:1px solid #bbb; background:#eee; padding:5px; }
 textarea:focus      { border:1px solid #999; background:#fff; }
 
 /* Select fields */
 select              { border:1px solid #ccc; background:#eee; width:200px; }
 select:focus        { border:1px solid #999; background:#fff; }
-
-input.arcades { background: url(/images/icons/joystick.png) #dde no-repeat left; background-position: 1em; padding-left: 40px; }
-input.games { background: url(/images/icons/controller.png) #fdd no-repeat left; background-position: 1em; padding-left: 40px; }
-input.users { background: url(/images/icons/user.png) #ded no-repeat left; background-position: 1em; padding-left: 40px; }
