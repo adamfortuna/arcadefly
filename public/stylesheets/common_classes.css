@@ -1,4 +1,3 @@
-@charset "UTF-8";
 body { margin:0px; padding:0px; background-color:#131211; font-family:Arial, Helvetica, sans-serif; color:#7f7d78; font-size:13px; line-height:19px; }
 
 /* Text-Styles */
@@ -52,15 +51,15 @@ div.notice span.icon, div.warning span.icon, div.error span.icon { padding-left:
 /* Graphics for adding/removing something from favorites */
 li.favorited { background-color: #B8E4F5; }
 .favorite_left { padding:0 1em .3em 0px; }
-.favorite_add { background: url(/images/icons/heart_add.png) no-repeat left;  }
-.favorite_delete { background: url(/images/icons/heart_delete.png) no-repeat left; }
-.arcade_add { background: url(/images/icons/joystick_add.png) no-repeat left; }
-.arcade_delete { background: url(/images/icons/joystick_delete.png) no-repeat left; }
-.arcade_error { background: url(/images/icons/joystick_error.png) no-repeat left; }
-.user_add { background: url(/images/icons/user_add.png) no-repeat left; }
-.user_delete { background: url(/images/icons/user_delete.png) no-repeat left; }
-.game_add { background: url(/images/icons/controller_add.png) no-repeat left; }
-.game_delete { background: url(/images/icons/controller_delete.png) no-repeat left; }
+.favorite_add { background: url(http://s3.amazonaws.com/arcadefly/images/icons/heart_add.png) no-repeat left;  }
+.favorite_delete { background: url(http://s3.amazonaws.com/arcadefly/images/icons/heart_delete.png) no-repeat left; }
+.arcade_add { background: url(http://s3.amazonaws.com/arcadefly/images/icons/joystick_add.png) no-repeat left; }
+.arcade_delete { background: url(http://s3.amazonaws.com/arcadefly/images/icons/joystick_delete.png) no-repeat left; }
+.arcade_error { background: url(http://s3.amazonaws.com/arcadefly/images/icons/joystick_error.png) no-repeat left; }
+.user_add { background: url(http://s3.amazonaws.com/arcadefly/images/icons/user_add.png) no-repeat left; }
+.user_delete { background: url(http://s3.amazonaws.com/arcadefly/images/icons/user_delete.png) no-repeat left; }
+.game_add { background: url(http://s3.amazonaws.com/arcadefly/images/icons/controller_add.png) no-repeat left; }
+.game_delete { background: url(http://s3.amazonaws.com/arcadefly/images/icons/controller_delete.png) no-repeat left; }
 
 /* main image that shows up in a featured div */
 .features img.thumbnail { border:1px solid #b5b5b5; background-color:#d2d2d2; float:left; margin-right:10px; }

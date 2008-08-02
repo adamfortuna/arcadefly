@@ -1,19 +1,19 @@
 /* For black/white bordered boxes without a top border */
 .block_outside_topless { border-left:1px solid #a3a09e; border-right:1px solid #a3a09e; border-bottom:1px solid #a3a09e; background-color:#ffffff; margin-bottom:20px; position:relative; clear:both; }
-.block_inside_topless { display:block; background: #ffffff url(/images/layout/background_block_slice.jpg) repeat-x; padding:30px; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
+.block_inside_topless { display:block; background: #ffffff url(http://s3.amazonaws.com/arcadefly/images/layout/background_block_slice.jpg) repeat-x; padding:30px; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
 
 /* For black/white bordered boxes with a top gradient */
 .block_outside { border:1px solid #a3a09e; background-color:#ffffff; margin-bottom:20px; position:relative; clear:both;	}
-.block_inside { display:block; border:1px solid #ffffff; background: #ffffff url(/images/layout/background_block_slice.jpg) repeat-x; padding:30px; }
+.block_inside { display:block; border:1px solid #ffffff; background: #ffffff url(http://s3.amazonaws.com/arcadefly/images/layout/background_block_slice.jpg) repeat-x; padding:30px; }
 #block_portfolio .block_outside, #block_portfolio .block_outside_topless { min-height:165px;}
 
 /* Games, Arcades and profiles pages within tabs */
 body.games ul.tabs li.current a { background-color: #fdd; border-bottom: 1px solid #fdd; }
-body.games .block_inside_topless, body.games .block_inside { display:block; background: #ffffff url(/images/layout/background_block_slice_games.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
+body.games .block_inside_topless, body.games .block_inside { display:block; background: #ffffff url(http://s3.amazonaws.com/arcadefly/images/layout/background_block_slice_games.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
 
 body.arcades ul.tabs li.current a, body.claims ul.tabs li.current a { background-color: #dde; border-bottom: 1px solid #dde; }
 body.arcades .block_inside_topless, body.arcades .block_inside, 
-body.claims .block_inside_topless, body.claims .block_inside { display:block; background: #ffffff url(/images/layout/background_block_slice_arcades.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
+body.claims .block_inside_topless, body.claims .block_inside { display:block; background: #ffffff url(http://s3.amazonaws.com/arcadefly/images/layout/background_block_slice_arcades.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
 
 body.profiles ul.tabs li.current a, body.friends ul.tabs li.current a, body.users ul.tabs li.current a, body.sessions ul.tabs li.current a, body.messages ul.tabs li.current a { background-color: #ded; border-bottom: 1px solid #ded; }
 body.profiles .block_inside_topless, body.friends .block_inside_topless, body.users .block_inside_topless, body.sessions .block_inside_topless, body.messages .block_inside_topless,
@@ -51,7 +51,7 @@ div.autocomplete ul li { margin:0; padding:2px; height:32px; display:block; list
 ul#hours { list-style:none; margin:0; padding:0; }
 ul#hours li span.dayofweek { width:40px; display:block; float:left; text-align:right; padding-right:.4em; margin-top:.8em; }
 ul#hours li span.from_to { display:block; width:250px; float:left; }
-ul#hours li span.options { margin-top:.8em; diplay:block; float:left; }
+ul#hours li span.options { margin-top:.8em; display:block; float:left; }
 ul#hours li input.text, ul#hours li select.text { width:100px; }
 
 
@@ -62,7 +62,7 @@ ul.logged_in { width:880px;}
 ul.data { margin:1em 0 0 0; padding:0; }
 ul.data a { color: #2D7BB2; text-decoration: none; font-weight: bold; }
 ul.data a:hover { color: #333; }
-ul.data li { position: relative; display: block; border-bottom: 1px solid #EEE; _zoom: 1; }
+ul.data li { position: relative; display: block; border-bottom: 1px solid #EEE; }
 ul.data li a.main {display: block;  padding: 0.4em 4.5em 0.4em 0.5em; position: relative; z-index: 2; }
 ul.data li .count { display: block; position: absolute; top: 0; right: 0; margin: 0 0.3em; text-align: right; color: #999; font-weight: bold; font-size: 0.875em; line-height: 3em; z-index:2; }
 ul.data li .favorite { display: inline; position:absolute; top:0; padding-left:1em; }
@@ -79,7 +79,7 @@ ul.left-shift { position:absolute; left:-150px; } /* Used to shirt some menus be
 
 
 /* Very cool tabs from  http://www.simplebits.com/bits/css_tabs.html */
-ul.tabs { height: 2.6em; padding: 0 20px; background: url(../images/helpers/tab_bottom.gif) repeat-x bottom; clear: both; margin:0px; }
+ul.tabs { height: 2.6em; padding: 0 20px; background: url(http://s3.amazonaws.com/arcadefly/images/helpers/tab_bottom.gif) repeat-x bottom; clear: both; margin:0px; }
 ul.tabs li { margin: 0; padding: 0; display: inline; list-style-type: none; }
 ul.tabs a:link, ul.tabs a:visited { float: left; font-weight: bold; padding: .5em 1.2em; margin-right: 8px; border: 1px solid #a3a09e; text-decoration: none; color: #666; }
 ul.tabs a { background-color: #f3f3f3; }
@@ -139,9 +139,9 @@ ul.scrollable li label, ul.items li label { display: block; font-weight:normal; 
 span.counts { border: 1px solid #ccc; margin-left:1em; }
 span.counts a { display:block; padding:1em 2em 1em 3em; font-weight: bold; }
 span.counts a:first-child { border-bottom: 1px solid #ccc;}
-span.counts a.arcades { background: url(/images/icons/joystick.png) #dde no-repeat left; background-position: 1em; }
-span.counts a.games { background: url(/images/icons/controller.png) #fdd no-repeat left; background-position: 1em; }
-span.counts a.users { background: url(/images/icons/user.png) #ded no-repeat left; background-position: 1em; }
+span.counts a.arcades { background: url(http://s3.amazonaws.com/arcadefly/images/icons/joystick.png) #dde no-repeat left; background-position: 1em; }
+span.counts a.games { background: url(http://s3.amazonaws.com/arcadefly/images/icons/controller.png) #fdd no-repeat left; background-position: 1em; }
+span.counts a.users { background: url(http://s3.amazonaws.com/arcadefly/images/icons/user.png) #ded no-repeat left; background-position: 1em; }
 
 
 
