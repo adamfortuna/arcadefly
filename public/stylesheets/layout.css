@@ -28,9 +28,19 @@ ul#menu li a.active, ul#menu li a:hover { color:#211e1e; }
 #footer h3 { color:#e2dddc; text-transform:uppercase; font-size:10px; }
 .footer_column ul li, .footer_column ul { list-style:none; margin:0px; padding:0px; }
 
+
+
+
+
+
 /* label that shows up on the search box */
 #controller_search label { position:absolute; margin:1em 0 0 .6em; color:#aaa; } 
 
 
 
-body.home h3 { font-size:2em; text-align:center; }
+body.home .third div div h3 { font-size:2em; text-align:center; }
+#features div h3 { font-size:2em; }
+#features div { width:440px; float:right; }
+#features div ul { margin:0; padding:0; list-style:none; font-size:1.4em; line-height:2.2em;}
+#features div ul li a { text-decoration:underline; }
+#features div ul li a:hover { text-decoration:none; }

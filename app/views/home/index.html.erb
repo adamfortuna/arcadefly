@@ -1,17 +1,66 @@
 <% if !logged_in? %>
   <% javascript do %>
       Event.observe(window, 'load', function() {
-        if($F('address') != '')
-          toggleLabel("address", false);
+        if($F('address') != '') toggleLabel("address", false);
+        $('games_features').hide();
+        $('profiles_features').hide();
       });
+      
+      function show(section) {
+        console.log(section);
+        $('arcades_features').hide();
+        $('games_features').hide();
+        $('profiles_features').hide();
+        $(section+'_features').show();
+        
+        $('landing').removeClassName('arcades');
+        $('landing').removeClassName('games');
+        $('landing').removeClassName('profiles');
+        $('landing').addClassName(section);
+      }
   <% end %> 
 <% end %>
 
-<% box do %>
-  <h2 id="text_title">ArcadeFly is the place for Arcade and Game locations</h2>
-  
+<% box :classname => 'arcades', :id => 'landing' do %>
+
+    <!--><img src="/images/logo.png" width="400" height="160" class="left" />-->
+    
+    <div id="features">
+    
+      <div id="arcades_features">
+        <h3>Arcades</h3>
+        <ul>
+          <li>Find out which <%= link_to "arcades are closeby", arcades_path %></li>
+          <li>See what games are at each arcade</li>
+          <li>Check out which arcades are <%= link_to "popular", popular_arcades_path %></li>
+        </ul>
+      </div>
+      <div id="games_features" style="display:none;">
+        <h3>Games</h3>
+        <ul>
+          <li>Find the closest place to play a <%= link_to "specific game", games_path %></li>
+          <li>See what games are at each arcade</li>
+          <li>Check out which games are <%= link_to "popular", popular_games_path %></li>
+        </ul>
+      </div>
+      <div id="profiles_features" style="display:none;">
+        <h3>Players</h3>
+        <ul>
+          <li>Find out which <%= link_to "players are in your area", profiles_path %></li>
+          <li>See what other players are interested in</li>
+          <li>Find other players who go to an arcade</li>
+        </ul>
+      </div>
+      
+      
+      
+      
+    </div>
+
+<div class="clear"></div>
+
   <% if !logged_in? %>
-    <% form_tag(addresses_path, :id => "controller_search", :class => "big_search") do %>
+    <% form_tag(addresses_path, :id => "controller_search", :class => "big_search shift-1") do %>
       <label id="address_label" for="address">Enter your address to show some arcades closeby...</label>
       <%= text_field_tag :address, addressed_in? ? current_address.single_line : '', { :class => 'title', :onfocus => 'toggleLabel("address", false);', :onblur => 'toggleLabel("address", true);' } %>
       <%= submit_tag "Find Arcades!", :class => 'big-button', :disable_with => 'Finding...', :id => 'find' %>
@@ -20,22 +69,25 @@
 <% end %>
 
 <div class="left third">
-<% box 'arcades' do %>
+<% box :classname => 'arcades' do %>
   <h3>Arcades</h3>
-  <p>Find arcades close by, or wherever you want.</p>
+  <p>Find arcades closeby, or see which locations the most people enjoy.</p>
+  <a href="javascript:show('arcades');">Find Out More...</a>
 <% end %>
 </div>
 
 <div class="left third">
-<% box 'games third' do %>
+<% box :classname => 'games' do %>
   <h3>Games</h3>
-  <p>Looking for a game? We can help you find it.</p>
+  <p>Looking for a game? We can help you find an arcade that has it.</p>
+  <a href="javascript:show('games');">Find Out More...</a>
 <% end %>
 </div>
 
 <div class="left third last">
-<% box 'profiles third' do %>
+<% box :classname => 'profiles' do %>
   <h3>Players</h3>
-  <p>Find gamers with similar interests asdf asdf a .</p>
+  <p>Find gamers with similar game interests, or that hangout at your favorite arcades.</p>
+  <a href="javascript:show('profiles');">Find Out More...</a>
 <% end %>
 </div>

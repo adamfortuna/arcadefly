@@ -15,8 +15,9 @@ module TemplateHelper
     create_template(a, b, &block)
   end
 
-  def box(classname = '', &block)
-    a = "<div class=\"block_outside#{ " #{classname}" unless classname==''}\"><div class=\"block_inside\">"
+  def box(options={}, &block)
+    options.reverse_merge!({:classname => '', :id => ''})
+    a = "<div class=\"block_outside#{ " #{options[:classname]}" unless options[:classname]==''}\"#{ " id=\"#{options[:id]}\"" unless options[:id]==''}><div class=\"block_inside\">"
     b = '</div></div>'
     create_template(a, b, &block)
   end
