@@ -4,53 +4,38 @@
         if($F('address') != '')
           toggleLabel("address", false);
       });
-  <% end %>
+  <% end %> 
 <% end %>
 
 <% box do %>
-  <h2 id="text_title">ArcadeFly is social networking site for arcade lovers</h2>
-  <p>Every wonder where you could go to play a specific game? Or what arcades people in your area consider to be the best? Or just where some arcades are?</p>
-  <% unless logged_in? %>
-    <%= button_to "Register Now!", signup_path, {:class => "big-button right"} %>
-  <% end %>
-  <p class="shift-1">
-    You're in the right place!
-  </p>
-  <p class="shift-1">
-    We know of <strong><%= @arcades_count %> arcades</strong> right now, and a total of <strong><%= @arcade_games_count %> game locations</strong> added by our <strong><%= @profiles_count %> players</strong>. 
-    With <strong><%= @games_count %> games available</strong> we expect many more to come!
-  </p>
-<% end %>
-
-
-<% if !logged_in? %>
-  <% box do %>
-    <% form_tag(addresses_path, :id => "address_form") do %>
-        <label id="address_label" for="address">Enter your address to get started...</label>
-        <%= text_field_tag :address, addressed_in? ? current_address.single_line : '', { :class => 'text', :onfocus => 'toggleLabel("address", false);', :onblur => 'toggleLabel("address", true);' } %>
-        <%= submit_tag "Find Arcades!", :class => 'inline big-button', :disable_with => 'Finding...', :id => 'find' %>
+  <h2 id="text_title">ArcadeFly is the place for Arcade and Game locations</h2>
+  
+  <% if !logged_in? %>
+    <% form_tag(addresses_path, :id => "controller_search", :class => "big_search") do %>
+      <label id="address_label" for="address">Enter your address to show some arcades closeby...</label>
+      <%= text_field_tag :address, addressed_in? ? current_address.single_line : '', { :class => 'title', :onfocus => 'toggleLabel("address", false);', :onblur => 'toggleLabel("address", true);' } %>
+      <%= submit_tag "Find Arcades!", :class => 'big-button', :disable_with => 'Finding...', :id => 'find' %>
     <% end %>
   <% end %>
 <% end %>
 
-<div id="block_portfolio">
-	<div class="features">
-	  <% list_box do %>
-      <img src="http://s3.amazonaws.com/arcadefly/images/square_map.jpg" class="thumbnail" alt="Arcades" />
-      <h3>Arcades that are closeby</h3>
-      <p>Want to find some arcades closeby? We'll help you find what's hiding all around you. <%= link_to "View all Arcades »", arcades_path %></p>
-    <% end %>
-    
-	  <% list_box do %>
-      <img src="http://s3.amazonaws.com/arcadefly/images/square_map.jpg" class="thumbnail"  alt="Games" />
-      <h3>Games in your area</h3>
-      <p>Ever know of a game but didn't know where to play it? We'll show you places closeby to go! <%= link_to "View all Games »", games_path %></p>
-    <% end %>
-    
-	  <% list_box do %>
-      <img src="http://s3.amazonaws.com/arcadefly/images/square_map.jpg" class="thumbnail" alt="Players"  />
-      <h3>Players to hang out with</h3>
-      <p>See who plays at the same arcades as you, or who plays the same games -- then meetup. <%= link_to "View all Players »", profiles_path %></p>
-    <% end %>
-  </div>
+<div class="left third">
+<% box 'arcades' do %>
+  <h3>Arcades</h3>
+  <p>Find arcades close by, or wherever you want.</p>
+<% end %>
+</div>
+
+<div class="left third">
+<% box 'games third' do %>
+  <h3>Games</h3>
+  <p>Looking for a game? We can help you find it.</p>
+<% end %>
+</div>
+
+<div class="left third last">
+<% box 'profiles third' do %>
+  <h3>Players</h3>
+  <p>Find gamers with similar interests asdf asdf a .</p>
+<% end %>
 </div>

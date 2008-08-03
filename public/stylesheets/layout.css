@@ -7,12 +7,12 @@
 img, #logo { behavior: url(/scripts/iepngfix.htc); }
 
 /* Main div for dynamic content area */
-#content { }
+#content {  }
 #content h2 { font-size:32px; line-height:31px; }
 #content hr { border:1px solid #e3e3e3; margin-top:40px; margin-bottom:40px; }
 
 /* Header-Styles */
-#header { padding-top:20px; padding-bottom:20px; }
+#header { padding-top:20px; padding-bottom:0px; margin-bottom:0px; }
 #logo h1, #logo small { margin:0px; display:block; text-indent:-9999px; }
 #logo h1 a { display:block; background-image:url(http://s3.amazonaws.com/arcadefly/images/logo.png); background-repeat:no-repeat; width:210px; height:83px; }
 ul#menu { margin:0px; padding:0px; float:right; }
@@ -30,3 +30,7 @@ ul#menu li a.active, ul#menu li a:hover { color:#211e1e; }
 
 /* label that shows up on the search box */
 #controller_search label { position:absolute; margin:1em 0 0 .6em; color:#aaa; } 
+
+
+
+body.home h3 { font-size:2em; text-align:center; }

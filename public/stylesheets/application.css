@@ -4,20 +4,23 @@
 
 /* For black/white bordered boxes with a top gradient */
 .block_outside { border:1px solid #a3a09e; background-color:#ffffff; margin-bottom:20px; position:relative; clear:both;	}
-.block_inside { display:block; border:1px solid #ffffff; background: #ffffff url(http://s3.amazonaws.com/arcadefly/images/layout/background_block_slice.jpg) repeat-x; padding:30px; }
+.block_inside { display:block; border:1px solid #ffffff; background: #ffffff url(http://s3.amazonaws.com/arcadefly/images/layout/background_block_slice.jpg) repeat-x; padding:20px; }
 #block_portfolio .block_outside, #block_portfolio .block_outside_topless { min-height:165px;}
 
 /* Games, Arcades and profiles pages within tabs */
 body.games ul.tabs li.current a { background-color: #fdd; border-bottom: 1px solid #fdd; }
-body.games .block_inside_topless, body.games .block_inside { display:block; background: #ffffff url(http://s3.amazonaws.com/arcadefly/images/layout/background_block_slice_games.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
+body.games .block_inside_topless, body.games .block_inside,
+div.block_outside.games div { display:block; background: #ffffff url(http://s3.amazonaws.com/arcadefly/images/layout/background_block_slice_games.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
 
 body.arcades ul.tabs li.current a, body.claims ul.tabs li.current a { background-color: #dde; border-bottom: 1px solid #dde; }
 body.arcades .block_inside_topless, body.arcades .block_inside, 
-body.claims .block_inside_topless, body.claims .block_inside { display:block; background: #ffffff url(http://s3.amazonaws.com/arcadefly/images/layout/background_block_slice_arcades.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
+body.claims .block_inside_topless, body.claims .block_inside,
+div.block_outside.arcades div { display:block; background: #ffffff url(http://s3.amazonaws.com/arcadefly/images/layout/background_block_slice_arcades.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
 
 body.profiles ul.tabs li.current a, body.friends ul.tabs li.current a, body.users ul.tabs li.current a, body.sessions ul.tabs li.current a, body.messages ul.tabs li.current a { background-color: #ded; border-bottom: 1px solid #ded; }
 body.profiles .block_inside_topless, body.friends .block_inside_topless, body.users .block_inside_topless, body.sessions .block_inside_topless, body.messages .block_inside_topless,
-body.profiles .block_inside, body.friends .block_inside, body.users .block_inside, body.sessions .block_inside, body.messages .block_inside { display:block; background: #ffffff url(/images/layout/background_block_slice_users.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
+body.profiles .block_inside, body.friends .block_inside, body.users .block_inside, body.sessions .block_inside, body.messages .block_inside,
+div.block_outside.profiles div { display:block; background: #ffffff url(http://s3.amazonaws.com/arcadefly/images/layout/background_block_slice_users.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff; }
 
 
 
@@ -164,9 +167,10 @@ div.map_small { width: 300px; height:250px; padding: 1em; } /* Profile/Arcade/Ga
 .half { width:440px; }
 .half.padding { width:420px;}
 
+.third { width: 312px; margin-right:11px; }
 
-
-
+.first { margin-left:0;}
+.last { margin-right:0;}
 div.large_left_column { width:640px; float:left;}
 div.left_column { width:540px; float:left;}
 div.left_column .short_description { width:370px; float: right; }

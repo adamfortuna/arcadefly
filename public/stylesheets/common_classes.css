@@ -32,6 +32,7 @@ a.users:hover { background-color: #cec; }
 .clear { display: block; }
 
 
+.inline { display:inline; }
 .block { display: block; }
 .center { text-align: center; }
 span.info, div.info { font-size: .8em; line-height: 1.875em; }

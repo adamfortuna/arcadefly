@@ -15,8 +15,8 @@ module TemplateHelper
     create_template(a, b, &block)
   end
 
-  def box(&block)
-    a = '<div class="block_outside"><div class="block_inside">'
+  def box(classname = '', &block)
+    a = "<div class=\"block_outside#{ " #{classname}" unless classname==''}\"><div class=\"block_inside\">"
     b = '</div></div>'
     create_template(a, b, &block)
   end
