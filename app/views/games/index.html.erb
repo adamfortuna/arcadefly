@@ -11,7 +11,7 @@
     <% form_for(:game, games_path, :html => { :method => 'get' }) do |f| %>
       <label id="search_label" for="search">Search for a Game...</label>
       <%= text_field_tag :search, '', { :class => 'text', :onfocus => 'toggleLabel("search", false);', :onblur => 'toggleLabel("search", true);' } %>  
-      <%= submit_tag "Search!", { :disable_with => 'Searching...', :class => 'inline' } %>
+      <%= submit_tag "Search!", { :disable_with => 'Searching...' } %>
     <% end %>
   </div>
 

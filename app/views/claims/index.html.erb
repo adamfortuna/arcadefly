@@ -1,6 +1,6 @@
 <% title 'Claims' %>
 
-<% tabbed_box do %>
+<% box do %>
   <h2><%= @title %></h2>
   <% form_for(:claims, :url => approve_selected_claims_path, :html => { :id => 'claim_form' }) do |f| %>
   
