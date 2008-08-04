@@ -68,3 +68,5 @@ li.favorited { background-color: #B8E4F5; }
 /* Deprecated */
 .shift-1 { margin-top: 1em; }
 .shift-2 { margin-top: 2em; }
+
+img.framed { border:1px solid #ccc; }
