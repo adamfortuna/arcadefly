@@ -13,7 +13,7 @@
       <div class="right short_description">
         <h2><%= @game.name %></h2>
       	<p><a href="http://www.gamefaqs.com/coinop/arcade/data/<%= @game.gamefaqs_id %>.html" target="_blank">Find out more about this game on GameFaqs</a></p>
-      	<%= render :partial => 'favorite', :locals => { :show_text => true, :game => @game } %>
+    	  <%= render :partial => 'favorite', :locals => { :show_text => true, :game => @game } if logged_in? %>
     	</div>
     	
     	<div class="left_column_content">

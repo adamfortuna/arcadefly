@@ -11,7 +11,7 @@
   <p>No one has favorited <strong><%= @game.name %></strong> just yet.</p>
   <% end %>
 
-  <%= render :partial => 'games/favorite', :locals => { :show_text => true, :game => @game } %>
+  <%= render :partial => 'games/favorite', :locals => { :show_text => true, :game => @game } if logged_in? %>
   
   <p>
     <%= will_paginate @profiles %>

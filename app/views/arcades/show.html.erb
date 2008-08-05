@@ -15,7 +15,7 @@
       </span>
       <div class="short_description">
         <h2><%= h @arcade.name %></h2>
-        <%= render :partial => 'arcades/favorite', :locals => { :show_text => true, :arcade => @arcade } %><br/>
+        <%= render :partial => 'arcades/favorite', :locals => { :show_text => true, :arcade => @arcade } if logged_in? %>
         <% unless @arcade.phone.nil? %>
         <p><strong>Phone Number:</strong> <%= @arcade.phone %></p>
         <% end %>

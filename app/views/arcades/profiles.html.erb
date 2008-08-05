@@ -15,5 +15,5 @@
     <%= will_paginate @profiles %>
   </p>
   
-  <%= render :partial => 'arcades/favorite', :locals => { :show_text => true, :arcade => @arcade } %>
+  <%= render :partial => 'arcades/favorite', :locals => { :show_text => true, :arcade => @arcade } if logged_in? %>
 <% end %>
