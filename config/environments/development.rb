@@ -22,8 +22,25 @@ config.log_level = :debug
 
 # ActiveRecord
 config.active_record.timestamped_migrations = true
+config.active_record.logger = Logger.new(STDOUT)
 
 # Mail settings
-#ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.delivery_method = :smtp
 
 HOST = 'http://localhost:3000'
+
+require "smtp_tls"
+
+mailer_config = File.open("#{RAILS_ROOT}/config/mailer.yml")
+mailer_options = YAML.load(mailer_config)
+ActionMailer::Base.smtp_settings = mailer_options
+
+
+ActiveRecord::Base.logger = Logger.new(STDOUT)
+
+
+
+#def log_to(stream)
+#  ActiveRecord::Base.logger = Logger.new(stream)
+#  ActiveRecord::Base.clear_active_connections!
+#end

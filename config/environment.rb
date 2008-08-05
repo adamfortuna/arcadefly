@@ -128,11 +128,6 @@ AMAZON_ASSOCIATES_ID = "adamfortuna-20"
 gem 'mislav-will_paginate', '~> 2.2'
 require 'will_paginate'
 
-def log_to(stream)
-  ActiveRecord::Base.logger = Logger.new(stream)
-  ActiveRecord::Base.clear_active_connections!
-end
-
 
 # Your Access Key ID:096RRJ93PTDQPZZ44802
 # Your Secret Access Key: GXZ0vgPaG57k/vBEJFXyngpImh3yvziyWUfdXueJ
