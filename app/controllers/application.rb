@@ -18,24 +18,22 @@ class ApplicationController < ActionController::Base
     options.reverse_merge!({:small_map => true, :map_type => false, :id => "#{addressables.first.class.to_s.downcase}_map"})
     map = GMap.new(options[:id])
     map.control_init(options)
-    map.center_zoom_init([26,-80], 13)
+    map.center_zoom_init([26,-80], 6)
 
-    markers = []
-    for addressable in addressables
-      markers << GMarker.new([addressable.address.lat, addressable.address.lng],
+    markers = {}
+    addressables.each do |addressable|
+      markers.merge!("'#{addressable.permalink}'" => GMarker.new([addressable.address.lat, addressable.address.lng],
                              :title => addressable.name,
-                             :info_window => addressable.map_bubble)
+                             :info_window => addressable.map_bubble))
     end
     
-    managed_markers = ManagedMarker.new(markers,0,13)
-
-    mm = GMarkerManager.new(map,:managed_markers => [managed_markers])
-    map.declare_init(mm,"arcades")
+    gmarker_group = GMarkerGroup.new(true, markers)
+    map.overlay_global_init(gmarker_group,"#{addressables.first.class.to_s.downcase}_group")
 
     sorted_latitudes = addressables.collect(&:address).collect(&:lat).compact.sort
     sorted_longitudes = addressables.collect(&:address).collect(&:lng).compact.sort
     map.center_zoom_on_bounds_init([ [sorted_latitudes.first, sorted_longitudes.first], 
-                                      [sorted_latitudes.last, sorted_longitudes.last]])
+                                     [sorted_latitudes.last, sorted_longitudes.last]])
     map
   end
 end
