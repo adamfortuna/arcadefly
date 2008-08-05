@@ -10,7 +10,9 @@
   
   <div class="clear soft">
   	<div class="left">
-      <%= render :partial => 'arcades/favorite', :locals => { :show_text => false, :arcade => arcade } %>
+  	  <% if logged_in? %>
+        <%= render :partial => 'arcades/favorite', :locals => { :show_text => false, :arcade => arcade } %>
+      <% end %>
       <p><%= arcade.address.shortest_line -%></p>
   	</div>
   	

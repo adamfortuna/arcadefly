@@ -1,10 +1,8 @@
 <%- show_text ||= true -%>
-<% if logged_in? %>
-  <span class="favorite" id="favorite_arcade_<%= arcade.id %>">
-    <% if current_profile.has_favorite_arcade?(arcade) %>
-	    <%= unfavorite_arcade_link(arcade, { :show_text => show_text}) %>
-	  <% else %>
-      <%= favorite_arcade_link(arcade, { :show_text => show_text}) %>
-	  <% end %>
-  </span>
-<% end %>
+<span class="favorite" id="favorite_arcade_<%= arcade.id %>">
+  <% if current_profile.has_favorite_arcade?(arcade) %>
+    <%= unfavorite_arcade_link(arcade, { :show_text => show_text}) %>
+  <% else %>
+    <%= favorite_arcade_link(arcade, { :show_text => show_text}) %>
+  <% end %>
+</span>
