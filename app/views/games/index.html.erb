@@ -15,9 +15,9 @@
       <%= submit_tag "Search!", { :disable_with => 'Searching...' } %>
     <% end %>
   </div>
+  <% end %>
 
   <%= render :partial => 'shared/letters', :locals => { :controller => 'games' } %>
-  <% end %>
 
   <%= render :partial => 'games/games', :object => @games %>
 <% end %>
