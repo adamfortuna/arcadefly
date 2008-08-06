@@ -206,7 +206,7 @@ class ArcadesController < ResourceController::Base
   # GET /arcades/1-arcade-name
   # This will set an arcade object
   def object
-    arcade = Arcade.find_by_permalink(params[:id], :include => [ { :address => [:country, :region] }] )
+    raise ActiveRecord::RecordNotFound unless arcade = Arcade.find_by_permalink(params[:id], :include => [ { :address => [:country, :region] }] )
     @map = GMap.new("arcade_map")
     @map.control_init(:map_type => false, :small_zoom => true)
     @map.center_zoom_init([arcade.address.lat, arcade.address.lng], 10)
