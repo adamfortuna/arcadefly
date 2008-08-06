@@ -1,9 +1,6 @@
 class ApplicationController < ActionController::Base
-  #has_mobile_fu
-  #acts_as_iphone_controller
-
-  include ExceptionNotifiable
   include AuthenticatedSystem
+  include HoptoadNotifier::Catcher
 
   # Pick a unique cookie name to distinguish our session data from others'
   session :session_key => 'arcadefly_session_id'
