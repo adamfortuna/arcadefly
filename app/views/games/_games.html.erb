@@ -1,4 +1,4 @@
-<% cache ({:page => params[:page] || 1, :user_id => session[:user] || 0, :search => params[:page] || ''}) do %>
+<% cache ({:controller => params[:controller] || '', :action => params[:action] || '', :page => params[:page] || 1, :user_id => session[:user] || 0, :search => params[:search] || ''}) do %>
 <ul class="data<%= " logged_in" if logged_in? %>">
   <%= render :partial => 'games/game', :collection => games %>
 </ul>
