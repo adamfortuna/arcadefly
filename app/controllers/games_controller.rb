@@ -93,7 +93,7 @@ class GamesController < ResourceController::Base
   private
   
   def object
-    raise ActiveRecord::RecordNotFound unless Game.find_by_permalink(params[:id])
+    Game.find_by_permalink(params[:id])
   end
   
   def parent_object

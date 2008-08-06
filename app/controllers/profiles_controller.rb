@@ -107,7 +107,7 @@ class ProfilesController < ResourceController::Base
   end
 
   def object
-    raise ActiveRecord::RecordNotFound unless Profile.find_by_permalink(params[:id])
+    Profile.find_by_permalink(params[:id])
   end
 
   def parent_object
