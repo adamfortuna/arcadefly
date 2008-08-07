@@ -13,12 +13,49 @@
 
 <%= will_paginate arcades %>
 
+<hr class="clear" />
+
 <div>
-  <p>
+
+  <p class="left map_box_width">
+    <!--<p>
+      Show Arcades within...
+      <select>
+        <option>Everywhere</option>
+        <option>5 miles</option>
+        <option>10 miles</option>
+        <option>25 miles</option>
+        <option>50 miles</option>
+        <option>100 miles</option>
+        <option>250 miles</option>
+        <option>500 miles</option>
+      </select>
+    </p>-->
+
     <% if logged_in? %>
       Know of an arcade not listed here? <%= link_to "Add it!", new_arcade_path %>
     <% else %>
       Know of an arcade not listed here? Just <%= link_to "Sign In", signin_path %> or <%= link_to "Register", signup_path %> and you'll be able to add it.
     <% end -%>
+  </p>
+
+
+  <div class="left">
+    <h3>Sort Arcades By...</h3>
+    <ul>
+      <%= nav_link "Sort by Name", "?order=name" %>
+      <%- if addressed_in? %>
+      <%= nav_link "Sort by Distance", "?order=distance" %>
+      <%- end -%>
+      <%= nav_link "Sort by Number of Favorites", "?order=favorites" %>
+      <%= nav_link "Sort by Number of Games", "?order=games" %>
+    <ul>
+  </div>
+</div>
+
+
+<div>
+  <p>
+    
   </p>
 </div>

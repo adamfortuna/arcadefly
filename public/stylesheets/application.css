@@ -161,7 +161,7 @@ div.map_big { width: 894px; height: 350px; padding-bottom: 1em; } /* Entire Page
 div.map_medium { width:510px; } /* List Map */
 div.map_small { width: 300px; height:250px; padding: 1em; } /* Profile/Arcade/Games Map */
 
-
+.map_box_width { width:370px; padding-right:15px; }
 
 
 .half { width:440px; }

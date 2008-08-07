@@ -24,7 +24,7 @@ class Arcade < ActiveRecord::Base
   end
 
   def self.per_page
-    15
+    2
   end
 
   def has_profiles?

@@ -185,17 +185,26 @@ class ArcadesController < ResourceController::Base
 
   # Setup up the possible options for getting a collection, with defaults
   def options
+    order = params[:order]
+    if order == 'name'
+      order = 'arcades.name, frequentships_count desc' 
+    elsif order == 'favorites'
+      order = 'frequentships_count desc'
+    elsif order == 'games'
+      order = 'playables_count desc'
+    elsif addressed_in?
+      order = 'distance'
+    else
+      order = 'arcades.name, frequentships_count desc'
+    end
+  
     search = params[:search] 
     search = "%" + search if search and params[:search].length >= 2
 
     collection_options = {}
     collection_options[:page] = params[:page] || 1
     collection_options[:per_page] = params[:per_page] if params[:per_page]
-    if addressed_in?
-      collection_options[:order] = 'distance'
-    else
-      collection_options[:order] = params[:order] || 'arcades.name, frequentships_count desc'
-    end
+    collection_options[:order] = order
     collection_options[:include] = {:address => [:region, :country]}      
     collection_options[:conditions] = ['arcades.name like ?', "#{search}%"] unless search.blank?
     collection_options[:origin] = current_address if addressed_in?
