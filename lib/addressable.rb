@@ -2,7 +2,7 @@ module Addressable
 
   def self.included(receiver)
     receiver.class_eval do
-      acts_as_mappable
+      acts_as_mappable :lat_column_name => 'addresses.lat', :lng_column_name => 'addresses.lng'
       
       has_one :address, :as => :addressable, :accessible => true, :dependent => :destroy
     	delegate [:lat, :lng, :country_id, :region_id], :to => :address

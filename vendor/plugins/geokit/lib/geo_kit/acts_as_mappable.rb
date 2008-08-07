@@ -60,8 +60,8 @@ module GeoKit
         self.default_formula = options[:default_formula] || GeoKit::default_formula
         self.lat_column_name = options[:lat_column_name] || 'lat'
         self.lng_column_name = options[:lng_column_name] || 'lng'
-        self.qualified_lat_column_name = "#{table_name}.#{lat_column_name}"
-        self.qualified_lng_column_name = "#{table_name}.#{lng_column_name}"
+        self.qualified_lat_column_name = "#{lat_column_name}"
+        self.qualified_lng_column_name = "#{lng_column_name}"
         if options.include?(:auto_geocode) && options[:auto_geocode]
           # if the form auto_geocode=>true is used, let the defaults take over by suppling an empty hash
           options[:auto_geocode] = {} if options[:auto_geocode] == true 

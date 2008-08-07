@@ -175,8 +175,8 @@ class ArcadesController < ResourceController::Base
   # GET /profiles/:profile_id/arcades
   # GET /games/:game_id/arcades
   def collection
-    arcades = parent? ? parent_object.arcades.paginate(options) : Arcade.paginate(options)    
-    arcades = sort_by_distance(arcades) #if params[:order] == 'distance'
+    arcades = parent? ? parent_object.arcades.paginate(options) : Arcade.paginate(options)
+    #arcades = sort_by_distance(arcades) #if params[:order] == 'distance'
     @map = map_for_array(arcades)
     arcades
   rescue
@@ -191,9 +191,14 @@ class ArcadesController < ResourceController::Base
     collection_options = {}
     collection_options[:page] = params[:page] || 1
     collection_options[:per_page] = params[:per_page] if params[:per_page]
-    collection_options[:order] = params[:order] || 'arcades.name, frequentships_count desc'
+    if addressed_in?
+      collection_options[:order] = 'distance'
+    else
+      collection_options[:order] = params[:order] || 'arcades.name, frequentships_count desc'
+    end
     collection_options[:include] = {:address => [:region, :country]}      
     collection_options[:conditions] = ['arcades.name like ?', "#{search}%"] unless search.blank?
+    collection_options[:origin] = current_address if addressed_in?
     collection_options
   end
   
