@@ -58,13 +58,13 @@ class ArcadesController < ResourceController::Base
   # GET /arcades/:rockys-replay/map
   def map
     @arcade = Arcade.find_by_permalink(params[:id], :include => { :address => [:region, :country]} )
-
-    @map = GMap.new("arcade_map")
-    @map.control_init(:large_map => true, :map_type => true)
-    @map.center_zoom_init([@arcade.address.lat, @arcade.address.lng], 13)
-    @map.overlay_init(GMarker.new([@arcade.address.lat,@arcade.address.lng],
-                      :title => @arcade.name,
-                      :info_window => @arcade.map_bubble))
+    @map = map_for_array([@arcade], {:large_map => true, :map_type => true, :autozoom => false})
+    # @map = GMap.new("arcade_map")
+    # @map.control_init(:large_map => true, :map_type => true)
+    # @map.center_zoom_init([@arcade.address.lat, @arcade.address.lng], 13)
+    # @map.overlay_init(GMarker.new([@arcade.address.lat,@arcade.address.lng],
+    #                   :title => @arcade.name,
+    #                   :info_window => @arcade.map_bubble))
   end
 
 

@@ -2,7 +2,14 @@
 
 <% content_for(:header) do %>
   <%= GMap.header %>
+  <%= javascript_include_tag("markerGroup") %>
 	<%= @map.to_html %>
+<% end %>
+
+<% javascript do %>
+  Event.observe(window, 'load', function() {
+    arcade_group.showMarker('<%= @arcade.permalink %>');
+  });
 <% end %>
 
 <%= render :partial => 'menu', :locals => { :arcade => @arcade } %>

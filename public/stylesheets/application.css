@@ -157,7 +157,7 @@ span.counts a.users { background: url(http://s3.amazonaws.com/arcadefly/images/i
 .map_box ul, div.map { border: 1px solid #ccc; margin-bottom: 1em; }
 .map_box div.map { float:right; }
 
-div.map_big { width: 894px; height: 350px; padding-bottom: 1em; } /* Entire Page Map */
+div.map_big { width: 894px; height: 550px; padding-bottom: 1em; } /* Entire Page Map */
 div.map_medium { width:510px; } /* List Map */
 div.map_small { width: 300px; height:250px; padding: 1em; } /* Profile/Arcade/Games Map */
 
