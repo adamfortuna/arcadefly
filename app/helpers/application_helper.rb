@@ -67,4 +67,8 @@ module ApplicationHelper
   def me
     logged_in? && !@profile.nil? && (@profile == current_profile)
   end
+  
+  def map_bubble_for(addressable)
+    render :partial => "#{addressable.class.to_s.downcase}s/map_bubble", :object => addressable
+  end
 end

@@ -1,7 +1,6 @@
 class Profile < ActiveRecord::Base
   include Addressable
 
-  PER_PAGE = 50
   PUBLIC_FIELDS = [:created_at, :display_name, :favoriteships_count, :frequentships_count, :friendships_count, :full_name, :initials, :permalink, :website]
 
   has_permalink :display_name
@@ -44,7 +43,15 @@ class Profile < ActiveRecord::Base
   
   def to_param
     permalink
-  end    
+  end
+  
+  def self.per_page
+    50
+  end
+  
+  def title
+    display_name
+  end
   
   
   def website= val

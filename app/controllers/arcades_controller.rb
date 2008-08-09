@@ -58,7 +58,7 @@ class ArcadesController < ResourceController::Base
   # GET /arcades/:rockys-replay/map
   def map
     @arcade = Arcade.find_by_permalink(params[:id], :include => { :address => [:region, :country]} )
-    @map = map_for_array([@arcade], {:large_map => true, :map_type => true, :autozoom => false})
+    #@map = map_for_array([@arcade], {:large_map => true, :map_type => true, :autozoom => false})
     # @map = GMap.new("arcade_map")
     # @map.control_init(:large_map => true, :map_type => true)
     # @map.center_zoom_init([@arcade.address.lat, @arcade.address.lng], 13)
@@ -175,12 +175,7 @@ class ArcadesController < ResourceController::Base
   # GET /profiles/:profile_id/arcades
   # GET /games/:game_id/arcades
   def collection
-    arcades = parent? ? parent_object.arcades.paginate(options) : Arcade.paginate(options)
-    #arcades = sort_by_distance(arcades) #if params[:order] == 'distance'
-    @map = map_for_array(arcades)
-    arcades
-  rescue
-    []
+    parent? ? parent_object.arcades.paginate(options) : Arcade.paginate(options)
   end
 
   # Setup up the possible options for getting a collection, with defaults
@@ -222,14 +217,7 @@ class ArcadesController < ResourceController::Base
   # GET /arcades/1-arcade-name
   # This will set an arcade object
   def object
-    return @object if @object
-
-    arcade = Arcade.find_by_permalink(params[:id], :include => [ { :address => [:country, :region] }] )
-    @map = GMap.new("arcade_map")
-    @map.control_init(:map_type => false, :small_zoom => true)
-    @map.center_zoom_init([arcade.address.lat, arcade.address.lng], 10)
-    @map.overlay_init(GMarker.new([arcade.address.lat, arcade.address.lng], :title => arcade.name))
-    @object ||= arcade
+    @object ||= Arcade.find_by_permalink(params[:id], :include => [ { :address => [:country, :region] }] )
   end
   
   def check_claim

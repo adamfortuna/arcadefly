@@ -22,7 +22,6 @@ class ProfilesController < ResourceController::Base
 
   def show
     @profile = object
-    create_map(@profile) if @profile.has_address?
     
     respond_to do |format|
       format.xml { render :text => @profile.to_xml(:dasherize => false, :only => Profile::PUBLIC_FIELDS) }
@@ -124,7 +123,7 @@ class ProfilesController < ResourceController::Base
 
     collection_options = {}
     collection_options[:page] = params[:page] || 1
-    collection_options[:per_page] = params[:per_page] || Profile::PER_PAGE
+    collection_options[:per_page] = params[:per_page] if params[:per_page]
     collection_options[:order] = params[:order] || 'profiles.display_name'
     collection_options[:conditions] = ['profiles.active = 1']
     collection_options[:conditions] << ['profiles.display_name like ? OR profiles.full_name like ?', "#{search}%", "#{search}%" ] unless search.blank?

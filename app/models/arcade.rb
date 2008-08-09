@@ -27,6 +27,10 @@ class Arcade < ActiveRecord::Base
     15
   end
 
+  def title
+    name
+  end
+
   def has_profiles?
     frequentships.size > 0
   end
@@ -49,20 +53,11 @@ class Arcade < ActiveRecord::Base
 
   def has_hours?
     false
-  end
-
-  def map_bubble
-    "<div><strong>#{self.name}</strong> <p>#{self.address.street}<br />#{self.address.city}, #{self.address.region.name} #{self.address.postal_code}</p><p><strong>Games:</strong> #{self.playables_count}</p></div>"
-  end
-	
+  end	
 	
 	# For iUi
 	def caption
 	  name
 	end	
-	
-	def url
-	  "http://www.arcadefly.com/arcades/#{permalink}"
-	end
 	
 end

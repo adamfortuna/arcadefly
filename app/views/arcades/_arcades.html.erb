@@ -1,14 +1,8 @@
-<% content_for(:header) do %>
-  <%= GMap.header %>
-  <%= javascript_include_tag("markerGroup") %>
-	<%= map.to_html %>
-<% end %>
-
 <div class="map_box">
   <ul class="scrollable content content-height">
     <%= render :partial => 'arcades/arcade', :collection => arcades %>
   </ul>
-  <%= map.div(:class => 'map map_medium content-height') %>
+  <%= render :partial => 'shared/addressables', :object => arcades %>
 </div>
 
 <%= will_paginate arcades %>

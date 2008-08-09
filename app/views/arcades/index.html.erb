@@ -3,5 +3,5 @@
 
 <% tabbed_box do %>
   <h2><%= @title %></h2>
-  <%= render :partial => 'arcades/arcades', :locals => { :arcades => @arcades, :map => @map } %>
+  <%= render :partial => 'arcades/arcades', :object => @arcades %>
 <% end %>

@@ -1,0 +1,27 @@
+<%- 
+  # Example:
+  #  render :partial => 'shared/addressables', :object => arcades, :locals => {:small_map => true, :map_type => false, :id => "#{addressables.first.class.to_s.downcase}_map"}
+
+  options ||= {}
+  options.reverse_merge!({:small_map => true, :map_type => false, :id => "#{addressable.class.to_s.downcase}_map", :class => "right prepend-1 span-13 last map_small map"})
+
+  map = GMap.new(options[:id])
+  map.control_init(options)
+  if addressable.is_a?(Profile)
+    map.center_zoom_init([addressable.address.public_lat, addressable.address.public_lng], 10)
+    map.overlay_init(GMarker.new([addressable.address.public_lat, addressable.address.public_lng], :title => addressable.title, :info_window => map_bubble_for(addressable)))
+  else
+    map.center_zoom_init([addressable.address.lat, addressable.address.lng], 10)
+    map.overlay_init(GMarker.new([addressable.address.lat, addressable.address.lng], :title => addressable.title, :info_window => map_bubble_for(addressable)))
+  end
+-%>
+
+<% content_for(:header) do %>
+  <%= GMap.header(:with_vml => false) %>
+<% end %>
+
+<% javascript do %>
+	<%= map.to_html(:no_script_tag => true) %>
+<% end %>
+
+<%= map.div(:class => options[:class]) %>

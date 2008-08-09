@@ -10,6 +10,8 @@ legend { padding: 0 .5em; }
 p { margin: 0px 0px 15px 0px; }
 img { margin:0; padding:0; }
 
+v:* { behavior:url(#default#VML);}
+
 a, a:visited { color:#26689f; text-decoration:none; }
 a:hover, a:active { text-decoration: underline; }
 a img { border:none; }

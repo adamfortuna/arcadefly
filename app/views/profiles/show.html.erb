@@ -2,13 +2,6 @@
 
 <%= render :partial => 'menu', :locals => { :profile => @profile} %>
 
-<% if @profile.has_address? %>
-  <% content_for(:header) do %>
-    <%= GMap.header %>
-  	<%= @map.to_html %>
-  <% end %>
-<% end %>
-
 <% tabbed_box do %>  
   <div id="profile_overview">
     <div class="left_column">
@@ -33,7 +26,7 @@
   
     <% if @profile.has_address? %>
     <div class="map_box right_column">
-      <%= @map.div(:class => 'map map_small') %>
+      <%= render :partial => 'shared/addressable', :object => @profile if @profile.has_address?%>
       <p class="center">
         <%= h @profile.display_name %> lives in <%= @profile.address.shortest_line %>
       </p>

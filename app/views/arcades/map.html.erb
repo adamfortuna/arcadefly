@@ -1,20 +1,18 @@
 <% title 'Arcades' + separator + @arcade.name + separator + 'Area Map' %>
 
-<% content_for(:header) do %>
-  <%= GMap.header %>
-  <%= javascript_include_tag("markerGroup") %>
-	<%= @map.to_html %>
+<%= render :partial => 'menu', :locals => { :arcade => @arcade } %>
+
+<% tabbed_box do %>  
+  <h2><%= @title %></h2>
+  %>
+  <%= render :partial => 'shared/addressables', :object => [@arcade], :locals => { :options => { :large_map => true,
+                                                                                                 :map_type => true,
+                                                                                                 :class => 'map_big map',
+                                                                                                 :autozoom => false } } %>
 <% end %>
 
 <% javascript do %>
   Event.observe(window, 'load', function() {
     arcade_group.showMarker('<%= @arcade.permalink %>');
   });
-<% end %>
-
-<%= render :partial => 'menu', :locals => { :arcade => @arcade } %>
-
-<% tabbed_box do %>  
-  <h2><%= @title %></h2>
-  <%= @map.div(:class => 'map_big map') %>
 <% end %>

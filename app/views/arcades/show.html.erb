@@ -1,11 +1,6 @@
 <% title 'Arcades' + separator + @arcade.name %>
 <%= render :partial => 'menu', :locals => { :arcade => @arcade } %>
 
-<% content_for(:header) do %>
-  <%= GMap.header %>
-	<%= @map.to_html %>
-<% end %>
-
 <% tabbed_box do %>
   <div id="profile_overview">
     <div class="overview left_column">
@@ -51,7 +46,7 @@
   </div>
   <% if @arcade.has_address? -%>
     <div class="map_box right_column">
-      <%= @map.div(:class => 'right prepend-1 span-13 last map_small map') %>
+      <%= render :partial => 'shared/addressable', :object => @arcade %>
       <p class="center">
         <strong><%= @arcade.name %></strong> is in <em><%= @arcade.address.city %>, <%= @arcade.address.region.name %></em>.
       </p>
