@@ -213,19 +213,23 @@ class ArcadesController < ResourceController::Base
   
 
   def parent_object
-    return Game.find_by_permalink(params[:game_id]) if parent_type == :game
-    return Profile.find_by_permalink(params[:profile_id]) if parent_type == :profile
+    return @parent_object if @parent_object
+    @parent_object = Game.find_by_permalink(params[:game_id]) if parent_type == :game
+    @parent_object = Profile.find_by_permalink(params[:profile_id]) if parent_type == :profile
+    return @parent_object
   end
 
   # GET /arcades/1-arcade-name
   # This will set an arcade object
   def object
+    return @object if @object
+
     arcade = Arcade.find_by_permalink(params[:id], :include => [ { :address => [:country, :region] }] )
     @map = GMap.new("arcade_map")
     @map.control_init(:map_type => false, :small_zoom => true)
     @map.center_zoom_init([arcade.address.lat, arcade.address.lng], 10)
     @map.overlay_init(GMarker.new([arcade.address.lat, arcade.address.lng], :title => arcade.name))
-    arcade
+    @object ||= arcade
   end
   
   def check_claim

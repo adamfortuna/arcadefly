@@ -93,12 +93,14 @@ class GamesController < ResourceController::Base
   private
   
   def object
-    Game.find_by_permalink(params[:id])
+    @object ||= Game.find_by_permalink(params[:id])
   end
   
   def parent_object
-    return Profile.find_by_permalink(params[:profile_id]) if parent_type == :profile
-    return Arcade.find_by_permalink(params[:arcade_id]) if parent_type == :arcade
+    return @parent_object if @parent_object
+    @parent_object = Profile.find_by_permalink(params[:profile_id]) if parent_type == :profile
+    @parent_object = Arcade.find_by_permalink(params[:arcade_id]) if parent_type == :arcade
+    return @parent_object
   end
   
   def collection
