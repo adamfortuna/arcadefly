@@ -5,5 +5,5 @@
 <% tabbed_box do %>
   <h2><%= @title %></h2>
   <p>Here are all arcades that have been favorited at least once, ordered by favorites.</p>
-  <%= render :partial => 'arcades/arcades', :locals => { :arcades => @arcades, :map => @map } %>
+  <%= render :partial => 'arcades/arcades', :object => @arcades %>
 <% end %>

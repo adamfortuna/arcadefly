@@ -5,7 +5,7 @@
 <% tabbed_box do %>
   <h2><%= @title %></h2>
   <% if @arcades.size > 0 %>
-    <%= render :partial => 'arcades/arcades', :locals => { :arcades => @arcades, :map => @map } %>
+    <%= render :partial => 'arcades/arcades', :object => @arcades %>
   <% else %>
     <p>Sorry, we don't know anywhere you can go to play this game. <strong>If you know of any arcades that have it, please add them!</strong></p>
   <% end %>

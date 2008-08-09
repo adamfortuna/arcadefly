@@ -88,10 +88,11 @@ class ArcadesController < ResourceController::Base
   # Show arcades ordered by frequenthips (user favorites)
   # GET /popular/arcades
   def popular
-    @arcades = Arcade.paginate(:all, :order => 'frequentships_count desc, playables_count desc', :include => [ { :address => :region } ], :page => params[:page], :conditions => 'frequentships_count > 0')
-    @arcades = sort_by_distance(arcades) if params[:order] == 'distance'
-    @max_count = Arcade.maximum(:frequentships_count)
-    @map = map_for_array(@arcades)
+    @arcades = Arcade.paginate(:all,
+                               :order => 'frequentships_count desc, playables_count desc',
+                               :include => [ { :address => :region } ], 
+                               :page => params[:page],
+                               :conditions => 'frequentships_count > 0')
   end
 
 

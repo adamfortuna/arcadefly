@@ -5,7 +5,7 @@
 <% tabbed_box do %>
   <h2><%= @title %></h2>
   <%- if @arcades.length > 0 -%>
-    <%= render :partial => 'arcades/arcades', :locals => { :arcades => @arcades, :map => @map } %>
+    <%= render :partial => 'arcades/arcades', :object => @arcades %>
   <%- else -%>
     <p><%= @profile.display_name %> doesn't have any favorite arcades.</p>
   <%- end -%>
