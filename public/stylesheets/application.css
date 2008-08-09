@@ -152,7 +152,7 @@ span.counts a.users { background: url(http://s3.amazonaws.com/arcadefly/images/i
 /* Global Map settings */
 .map_box { padding:0; margin:0; }
 .map_box ul { width:370px; list-style:none; margin:0; padding:0; float:left; }
-.map_box ul li { clear: both; padding:.2em .2em .2em .5em; }
+.map_box ul li, ul.padded ul li { clear: both; padding:.2em .2em .2em .5em; }
 
 .map_box ul, div.map { border: 1px solid #ccc; margin-bottom: 1em; }
 .map_box div.map { float:right; }
@@ -176,3 +176,6 @@ div.left_column { width:540px; float:left;}
 div.left_column .short_description { width:370px; float: right; }
 div.left_column .left_column_content { clear: both; padding-top: 2em; }
 div.right_column { width:300px; float:right; }
+
+ul.arcades_list { margin:0; list-style:none; }
+ul.arcades_list li { padding: .2em .8em; }

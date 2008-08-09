@@ -1,0 +1,7 @@
+<ul class="arcades_list data">
+  <%= render :partial => 'arcades/arcade_list', :collection => arcades %>
+</ul>
+
+<%= will_paginate arcades %>
+
+<%= render :partial => 'arcades/list_footer' %>

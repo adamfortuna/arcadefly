@@ -171,6 +171,10 @@ class ArcadesController < ResourceController::Base
   end
   
   
+  def list
+    @arcades = collection
+  end
+
   private
   # GET /arcades
   # GET /profiles/:profile_id/arcades

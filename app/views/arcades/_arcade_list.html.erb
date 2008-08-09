@@ -1,0 +1,17 @@
+<%- arcade = arcade_list %>
+<li class="<%= cycle("even","odd")%> clear">
+
+  <div class="left clear">
+    <%= link_to(arcade.name, arcade_path(arcade)) %><br/>
+    <%= render :partial => 'arcades/favorite', :locals => { :show_text => false, :arcade => arcade, :span_class => '' } if logged_in? %>
+    <p class="soft"><%= arcade.address.short_line -%></p>
+  </div>
+
+  <div class="right inline">
+    <% if addressed_in? -%>
+      <%= arcade.address.distance_to(current_address).round_to(2) %> miles away<br />
+    <% end %>
+    <%= link_to pluralize(arcade.playables.size, "game"), arcade_games_path(arcade), :class => 'games' %> 
+    <%= link_to pluralize(arcade.frequentships.size, "favorites"), arcade_profiles_path(arcade), :class => 'users' %> 
+  </div>
+</li>

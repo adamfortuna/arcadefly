@@ -68,7 +68,7 @@ ActionController::Routing::Routes.draw do |map|
   # Resources
   map.resources :arcades, :has_many    => [ :games, :profiles, :playables, :claims ],
                           :has_one     => [ :address],
-                          :collection  => [ :popular, :auto_complete_for_game_name ],
+                          :collection  => [ :popular, :auto_complete_for_game_name, :list ],
                           :member      => [ :map, :favorite, :unfavorite ]
 
   map.resources :games,   :has_many    => [ :arcades, :profiles ],

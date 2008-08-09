@@ -1,5 +1,8 @@
-<%- show_text ||= true -%>
-<span class="favorite" id="favorite_arcade_<%= arcade.id %>">
+<%- 
+  show_text ||= true
+  span_class ||= "favorite"
+-%>
+<span class="<%= span_class %>" id="favorite_arcade_<%= arcade.id %>">
   <% if current_profile.has_favorite_arcade?(arcade) %>
     <%= unfavorite_arcade_link(arcade, { :show_text => show_text}) %>
   <% else %>
