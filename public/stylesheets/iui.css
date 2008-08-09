@@ -7,6 +7,7 @@ body {
     overflow-x: hidden;
     -webkit-user-select: none;
     -webkit-text-size-adjust: none;
+    width: 430px;
 }
 
 body > *:not(.toolbar) {
@@ -16,7 +17,7 @@ body > *:not(.toolbar) {
     padding: 0;
     left: 0;
     top: 45px;
-    width: 100%;
+    width: 430px;
     min-height: 372px;
 }
 
