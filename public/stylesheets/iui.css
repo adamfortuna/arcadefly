@@ -7,7 +7,7 @@ body {
     overflow-x: hidden;
     -webkit-user-select: none;
     -webkit-text-size-adjust: none;
-    width: 430px;
+    width: 400px;
 }
 
 body > *:not(.toolbar) {
@@ -17,7 +17,7 @@ body > *:not(.toolbar) {
     padding: 0;
     left: 0;
     top: 45px;
-    width: 430px;
+    width: 400px;
     min-height: 372px;
 }
 
@@ -55,10 +55,6 @@ body > .toolbar {
 }
 
 .toolbar > h1 {
-    position: absolute;
-    overflow: hidden;
-    left: 50%;
-    margin: 1px 0 0 -75px;
     height: 45px;
     font-size: 20px;
     width: 150px;
@@ -68,6 +64,7 @@ body > .toolbar {
     text-overflow: ellipsis;
     white-space: nowrap;
     color: #FFFFFF;
+    width: 400px;
 }
 
 body[orient="landscape"] > .toolbar > h1 {
