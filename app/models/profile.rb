@@ -3,7 +3,9 @@ class Profile < ActiveRecord::Base
 
   PUBLIC_FIELDS = [:created_at, :display_name, :favoriteships_count, :frequentships_count, :friendships_count, :full_name, :initials, :permalink, :website]
 
+  #before_validation :reset_permalink
   has_permalink :display_name
+
   attr_accessor :icon
 
   # User
@@ -40,6 +42,7 @@ class Profile < ActiveRecord::Base
   
   # Validation
   validates_length_of :display_name, :within => 3..100
+  
   
   def to_param
     permalink
@@ -189,5 +192,9 @@ class Profile < ActiveRecord::Base
   def fix_http str
     return '' if str.blank?
     str.starts_with?('http') ? str : "http://#{str}"
+  end
+  
+  def reset_permalink
+    permalink = nil if display_name_changed?
   end
 end

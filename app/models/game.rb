@@ -1,6 +1,6 @@
 class Game < ActiveRecord::Base
-  PUBLIC_FIELDS = [:name, :gamefaqs_id, :favoriteships_count, :playables_count, :permalink]
-  has_permalink :gamefaqs_id
+  PUBLIC_FIELDS = [:name, :gamefaqs_id, :klov_id, :favoriteships_count, :playables_count, :permalink]
+  has_permalink :name
   
   has_many :playables
   has_many :arcades, :through => :playables

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 19) do
+ActiveRecord::Schema.define(:version => 22) do
 
   create_table "addresses", :force => true do |t|
     t.datetime "created_at"
@@ -45,6 +45,10 @@ ActiveRecord::Schema.define(:version => 19) do
 
   add_index "arcades", ["permalink"], :name => "index_arcades_on_permalink", :unique => true
   add_index "arcades", ["name"], :name => "index_arcades_on_name"
+  add_index "arcades", ["playables_count"], :name => "index_arcades_on_playables_count"
+  add_index "arcades", ["frequentships_count"], :name => "index_arcades_on_frequentships_count"
+  add_index "arcades", ["name", "frequentships_count"], :name => "index_arcades_on_name_and_frequentships_count"
+  add_index "arcades", ["name", "playables_count"], :name => "index_arcades_on_name_and_playables_count"
 
   create_table "claims", :force => true do |t|
     t.datetime "created_at"
@@ -59,6 +63,7 @@ ActiveRecord::Schema.define(:version => 19) do
 
   add_index "claims", ["profile_id", "arcade_id"], :name => "index_claims_on_profile_id_and_arcade_id", :unique => true
   add_index "claims", ["profile_id", "arcade_id", "approved"], :name => "index_claims_on_profile_id_and_arcade_id_and_approved"
+  add_index "claims", ["approved"], :name => "index_claims_on_approved"
 
   create_table "comments", :force => true do |t|
     t.datetime "created_at"
@@ -122,15 +127,21 @@ ActiveRecord::Schema.define(:version => 19) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name",                               :null => false
-    t.integer  "gamefaqs_id",                        :null => false
+    t.string   "gamefaqs_id"
     t.string   "permalink",                          :null => false
     t.integer  "playables_count",     :default => 0
     t.integer  "favoriteships_count", :default => 0
+    t.string   "klov_id"
   end
 
   add_index "games", ["name"], :name => "index_games_on_name", :unique => true
-  add_index "games", ["gamefaqs_id"], :name => "index_games_on_gamefaqs_id", :unique => true
   add_index "games", ["permalink"], :name => "index_games_on_permalink", :unique => true
+  add_index "games", ["gamefaqs_id"], :name => "index_games_on_gamefaqs_id", :unique => true
+  add_index "games", ["klov_id"], :name => "index_games_on_klov_id", :unique => true
+  add_index "games", ["playables_count"], :name => "index_games_on_playables_count"
+  add_index "games", ["favoriteships_count"], :name => "index_games_on_favoriteships_count"
+  add_index "games", ["name", "playables_count"], :name => "index_games_on_name_and_playables_count"
+  add_index "games", ["name", "favoriteships_count"], :name => "index_games_on_name_and_favoriteships_count"
 
   create_table "hours", :force => true do |t|
     t.datetime "created_at"
