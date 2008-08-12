@@ -11,6 +11,13 @@ class Game < ActiveRecord::Base
   # Validation
   validates_presence_of :name
 
+  define_index do
+    indexes :name, :sortable => true
+    
+    has created_at, updated_at, favoriteships_count, playables_count
+  end
+
+
   def self.per_page
     100
   end

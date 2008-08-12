@@ -23,7 +23,11 @@ namespace :update do
             
           # Add this games data if it doesn't exist
           if !@gamefaq_ids.include?(gamefaqs_id)
-            Game.create({:name => name, :gamefaqs_id => gamefaqs_id})
+            if game = Game.find_by_name(name)
+              game.update_attribute(:gamefaqs_id, gamefaqs_id)
+            else
+              Game.create({:name => name, :gamefaqs_id => gamefaqs_id})
+            end
             @gamefaq_ids << gamefaqs_id
           end
         end
@@ -52,7 +56,29 @@ namespace :update do
             if game = Game.find_by_name(name)
               game.update_attribute(:klov_id, klov_id)
             else
-              Game.create({:name => name, :klov_id => klov_id})
+              
+              games = Game.search(name)
+              
+              if games.length == 1
+                games[0].update_attribute(:klov_id, klov_id)
+              elsif games.length > 1
+                puts "\"#{name}\" not found. Closest Results:"
+                games.each_with_index do |game, index|
+                  puts "#{index}. #{game.name}"
+                end
+                puts "Any of these match? (hit enter for none): "
+                match = STDIN.gets.chomp
+                
+                if match.length == 0
+                  puts "Creating new game for #{name}..."
+                  Game.create({:name => name, :klov_id => klov_id})
+                else games[match.to_i]
+                  puts "Updating to choice #{match}..."
+                  games[match.to_i].update_attribute(:klov_id, klov_id)
+                end
+              else
+                Game.create({:name => name, :klov_id => klov_id})
+              end
             end
             @klov_ids << klov_id
           end
