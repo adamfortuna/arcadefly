@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 22) do
+ActiveRecord::Schema.define(:version => 23) do
 
   create_table "addresses", :force => true do |t|
     t.datetime "created_at"
@@ -132,6 +132,7 @@ ActiveRecord::Schema.define(:version => 22) do
     t.integer  "playables_count",     :default => 0
     t.integer  "favoriteships_count", :default => 0
     t.string   "klov_id"
+    t.string   "alias"
   end
 
   add_index "games", ["name"], :name => "index_games_on_name", :unique => true

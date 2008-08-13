@@ -87,5 +87,36 @@ namespace :update do
       puts "Updated games.klov_id"
     end
     
+    desc "Update games.aliases"
+    task :alias => :environment do
+      letters = ('a'..'z').to_a << '0'
+    
+      Game.update_all "alias = NULL"
+        
+      letters.each do |letter|
+    
+        html = open('http://www.gamefaqs.com/coinop/arcade/list_'+letter+'.html')
+        page = Hpricot(html)   
+    
+        page.search("//div#container/div#content/div#sky_col_wrap/div#main_col_wrap/div#main_col/div[@class='pod']/div[@class='body']/table/tr").each do |g|
+          a = g.search( "//td:first/a").first
+          name = a.inner_html
+          link = a['href']
+          gamefaqs_id = link.match(/[0-9]+/)[0]
+            
+          # Add this games data if it doesn't exist
+          if game = Game.find_by_gamefaqs_id(gamefaqs_id)
+            if game.alias.nil?
+              game.alias = name
+            else
+              game.alias = game.alias + ", " + name
+            end
+            game.save(false)
+          end
+        end
+      end
+      puts "Updated games.aliases"
+    end
+    
   end
 end

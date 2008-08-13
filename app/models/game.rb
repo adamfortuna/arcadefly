@@ -1,5 +1,6 @@
 class Game < ActiveRecord::Base
   PUBLIC_FIELDS = [:name, :gamefaqs_id, :klov_id, :favoriteships_count, :playables_count, :permalink]
+  PER_PAGE = 100
   has_permalink :name
   
   has_many :playables
@@ -13,13 +14,14 @@ class Game < ActiveRecord::Base
 
   define_index do
     indexes :name, :sortable => true
+    indexes :alias
     
     has created_at, updated_at, favoriteships_count, playables_count
   end
 
 
   def self.per_page
-    100
+    PER_PAGE
   end
 
   def to_param

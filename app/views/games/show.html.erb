@@ -12,7 +12,13 @@
       </span>
       <div class="right short_description">
         <h2><%= @game.name %></h2>
-      	<p><a href="http://www.gamefaqs.com/coinop/arcade/data/<%= @game.gamefaqs_id %>.html" target="_blank">Find out more about this game on GameFaqs</a></p>
+        <% if @game.gamefaqs_id || @game.klov_id %>
+      	<p>
+      	  Find out more about this game on:  
+      	  <%= link_to "GameFaqs", "http://www.gamefaqs.com/coinop/arcade/data/#{@game.gamefaqs_id}.html", :target => "_blank" if @game.gamefaqs_id %><% if @game.gamefaqs_id && @game.klov_id %>, <% end %>
+      	  <%= link_to "KLOV", "http://www.klov.com/game_detail.php?game_id=#{@game.klov_id}", :target => "_blank" if @game.klov_id %>
+      	</p>
+      	<% end %>
     	  <%= render :partial => 'favorite', :locals => { :show_text => true, :game => @game } if logged_in? %>
     	</div>
     	
@@ -27,8 +33,9 @@
         <p>
           <%= @game.name %> has been favorited by <em><%= pluralize(@game.favoriteships.size, "player") %></em>, making it the <em>#<%= @game.favoriteships_rank %> most favorited</em> game.
         </p>
-        <% end %>
+        <% end %>        
       </div>
+      
     </div>
     
     <div class="right_column">
@@ -36,5 +43,12 @@
         Want to see locations near you with this game? <%= link_to "Check out arcades with this game!", game_arcades_path(@game) %>
       </p>
     </div>
+    
+    <% if @game.alias != @game.name %>
+      <p class="clear">
+        <strong>Aliases for this game:</strong> <%= @game.alias %>
+      </p>
+    <% end %>
+    
   </div>
 <% end %>
