@@ -94,17 +94,6 @@ class GamesController < ResourceController::Base
   
   def object
     @object ||= Game.find_by_permalink(params[:id])
-
-    
-    if @object.nil? 
-      if game = Game.find_by_gamefaqs_id(params[:id])
-        redirect_to game_url(game), :status => 301
-      else
-        redirect_to "http://www.arcadefly.com/404.html", :status => 404
-      end
-    else
-      return @object
-    end
   end
   
   def parent_object
