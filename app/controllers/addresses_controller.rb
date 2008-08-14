@@ -30,7 +30,7 @@ class AddressesController < ResourceController::Base
       country = Country.find_by_alpha_2_code(loc.country_code)
       address = Address.new(:title => 'Quick Lookup',
                                             :addressable_type => 'Session', 
-                                            :addressable_id => Session.find_by_session_id(session.session_id).id,
+                                            :addressable_id => nil,
                                             :region => region,
                                             :country => country,
                                             :street => loc.street_address,

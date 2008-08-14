@@ -26,11 +26,12 @@
             <% if administrator? %><li><%= link_to "Claims (#{Claim.unapproved.count})", claims_path %></li><% end %>
             <li><%= link_to "My Profile", profile_path(current_profile) %></li>
             <li><%= link_to "Logout", logout_path %></li>
-          <%- elsif addressed_in? %>
-            <li><%= link_to "Clear Address", logout_path %></li>
           <%- else -%>
             <li><%= link_to "Register", signup_path %></li>
             <li><%= link_to "Sign In", signin_path %></li>
+            <%- if addressed_in? %>
+              <li><%= link_to "Clear Address", logout_path %></li>
+            <% end -%>
   		    <%- end -%>
         </ul>
             

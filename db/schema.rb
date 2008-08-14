@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 23) do
+ActiveRecord::Schema.define(:version => 24) do
 
   create_table "addresses", :force => true do |t|
     t.datetime "created_at"
@@ -18,10 +18,10 @@ ActiveRecord::Schema.define(:version => 23) do
     t.string   "addressable_type"
     t.string   "title"
     t.string   "street"
-    t.string   "city",                                         :null => false
+    t.string   "city",                            :null => false
     t.integer  "region_id"
-    t.integer  "postal_code",      :limit => 8
-    t.integer  "country_id",                    :default => 1, :null => false
+    t.integer  "postal_code"
+    t.integer  "country_id",       :default => 1, :null => false
     t.float    "lat"
     t.float    "lng"
     t.float    "public_lat"
@@ -221,16 +221,6 @@ ActiveRecord::Schema.define(:version => 23) do
 
   add_index "regions", ["name", "country_id"], :name => "index_regions_on_name_and_country_id", :unique => true
   add_index "regions", ["abbreviation", "country_id"], :name => "index_regions_on_abbreviation_and_country_id", :unique => true
-
-  create_table "sessions", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "session_id"
-    t.text     "data"
-  end
-
-  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
-  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "users", :force => true do |t|
     t.datetime "created_at"
