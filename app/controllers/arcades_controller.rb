@@ -44,9 +44,7 @@ class ArcadesController < ResourceController::Base
   # Edit the games at an arcade
   # GET /arcades/rockys-replay/games/edit
   def edit_games
-    @arcade = Arcade.find_by_permalink(params[:id], :include => :playables)
-    @games = Game.find(:all, :order => 'name', :limit => 100)
-    
+    @arcade = Arcade.find_by_permalink(params[:id])
     respond_to do |format|
       format.iphone { render }
       format.html { render }

@@ -94,6 +94,17 @@ class GamesController < ResourceController::Base
   
   def object
     @object ||= Game.find_by_permalink(params[:id])
+
+    
+    if @object.nil? 
+      if game = Game.find_by_gamefaqs_id(params[:id])
+        redirect_to game_url(game), :status => 301
+      else
+        redirect_to "http://www.arcadefly.com/404.html", :status => 404
+      end
+    else
+      return @object
+    end
   end
   
   def parent_object
@@ -128,7 +139,7 @@ class GamesController < ResourceController::Base
     collection_options = {}
     collection_options[:include] = :game if parent_type == :arcade || parent_type == :profile
     collection_options[:page] = params[:page] || 1
-    #collection_options[:per_page] = params[:per_page] if params[:per_page]
+    collection_options[:per_page] = Game::PER_PAGE
     collection_options[:order] = params[:order] || 'games.name'
     if search == '#'
       collection_options[:conditions] = ['games.name regexp "^[0-9]+"']

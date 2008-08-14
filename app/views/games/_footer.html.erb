@@ -1,0 +1,5 @@
+<ul class="nav clear right">
+  <li><%= link_to "Add a new Game", new_game_path %></li>  
+  <li><%= link_to "Edit this Game", edit_game_path(@game) %></li>
+  <li><%= link_to "Delete", game_path(@game), :method => :delete, :confirm => "Are you sure? This will completely remove this game." %></li>
+</ul>

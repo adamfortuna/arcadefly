@@ -3,10 +3,10 @@ class Game < ActiveRecord::Base
   PER_PAGE = 100
   has_permalink :name
   
-  has_many :playables
+  has_many :playables, :dependent => :destroy
   has_many :arcades, :through => :playables
 
-  has_many :favoriteships
+  has_many :favoriteships, :dependent => :destroy
   has_many :profiles, :through => :favoriteships
   
   # Validation
