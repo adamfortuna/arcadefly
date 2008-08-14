@@ -61,7 +61,7 @@ module AuthenticatedSystem
 
     # Before filters for controllers
     def administrator?
-      current_profile.administrator?
+      logged_in? && current_profile.administrator?
     end
     
     def login_required
