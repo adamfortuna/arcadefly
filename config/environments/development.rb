@@ -15,15 +15,14 @@ config.action_controller.perform_caching             = false
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
-#config.action_controller.asset_host                  = "http://localhost:3000"
-config.action_controller.asset_host                  = "http://static.arcadefly.com"
 
+ASSET_HOST = "http://localhost:3000"
 HOST = 'http://localhost:3000'
 config.action_controller.asset_host = Proc.new { |source|
   if source.starts_with?('/javascripts') or source.starts_with?('/stylesheets')
     HOST  # bundle_fu friendly
   else
-    "http://static.arcadefly.com" % (source.hash % 4)
+    ASSET_HOST % (source.hash % 4)
   end
 }
 

@@ -19,14 +19,14 @@ ActionController::Base.perform_caching               = true
 #RAILS_ROOT = "/home/arcadefly/alpha.arcadefly.com/current"
 
 
-config.action_controller.asset_host                  = "http://static.arcadefly.com"
 
-HOST = 'http://www.arcadefly.com'
+ASSET_HOST = "http://static.arcadefly.com"
+HOST = "http://www.arcadefly.com"
 config.action_controller.asset_host = Proc.new { |source|
   if source.starts_with?('/javascripts') or source.starts_with?('/stylesheets')
     HOST  # bundle_fu friendly
   else
-    "http://static.arcadefly.com" % (source.hash % 4)
+    ASSET_HOST % (source.hash % 4)
   end
 }
 

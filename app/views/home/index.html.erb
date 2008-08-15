@@ -17,7 +17,7 @@
     $('landing').removeClassName('profiles');
     $('landing').addClassName(section);
     
-    $('featured_image').src = 'http://static.arcadefly.com/images/features_'+section+'.jpg';
+    $('featured_image').src = '<%=ASSET_HOST%>/images/features_'+section+'.jpg';
   }
 <% end %> 
 

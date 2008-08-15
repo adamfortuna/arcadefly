@@ -7,8 +7,10 @@
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<meta name="keywords" content="arcade games, arcades, gaming, video games, game locations, arcade locations, play games, play arcade games, where to play games" />
   <meta name="description" content="ArcadeFly.com is a social network for gamers and arcade game enthusiasts. Want to know where an arcade is, or have a game in mind and want to know where to play it? We're your place!" />
-  	
-  <%= stylesheet_link_tag 'application', 'layout', 'common_classes', 'forms', :cache => true %>
+  
+  <% bundle :name => 'application' do %>
+    <%= stylesheet_link_tag 'application', 'layout', 'common_classes', 'forms' %>
+  <% end %>
   <%= yield(:header_files) -%>
   <%= yield(:header) -%>
 </head>
@@ -94,8 +96,10 @@
     pageTracker._trackPageview();
     </script>
   <%- end -%>  
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
-  <%= javascript_include_tag 'application', :cache => "cache/all" -%>
+  <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>-->
+  <% bundle :name => 'main' do %>
+    <%= javascript_include_tag 'prototype', 'application' -%>
+  <% end %>
   <%= yield(:javascript_files) -%>
   <%= yield(:javascript) -%>
 
