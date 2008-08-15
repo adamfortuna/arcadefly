@@ -20,9 +20,6 @@ config.action_controller.asset_host                  = "http://static.arcadefly.
 
 #RAILS_ROOT = "/home/arcadefly/alpha.arcadefly.com/current"
 
-
-config.action_controller.asset_host = "http://www.arcadefly.com"
-
 HOST = 'http://www.arcadefly.com'
 
 require 'hodel_3000_compliant_logger'
