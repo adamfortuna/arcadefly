@@ -1,5 +1,7 @@
 <% title 'Arcades' + separator + @arcade.name + separator + "Modify Games" %>
-<% javascript_file 'effects', 'controls' -%>
+<% javascript_files do  %>
+  <%= javascript_include_merged :effects -%>
+<% end %>
 
 <% javascript do %>
   Event.observe(window, 'load', function() {

@@ -20,8 +20,17 @@ depend :remote, :gem, "mislav-will_paginate", "~> 2.2"
 
 
 after "deploy:update_code", "deploy:rails_symlink"
+after "deploy:update_code", "deploy:build_assets"
 namespace :deploy do
   task :rails_symlink do
     run "ln -nfs #{deploy_to}/#{shared_dir}/rails #{release_path}/vendor/rails"
   end
+  
+  desc "Create asset packages for production" 
+  task :build_assets do
+    run <<-EOF
+      cd #{release_path} && rake RAILS_ENV=production asset:packager:build_all
+    EOF
+  end
+  
 end

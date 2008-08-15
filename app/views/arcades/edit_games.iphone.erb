@@ -1,4 +1,6 @@
-<% javascript_file 'effects', 'controls' -%>
+<% javascript_files do  %>
+  <%= javascript_include_merged :effects -%>
+<% end %>
 
 <% content_for(:header) do %>
   <style>

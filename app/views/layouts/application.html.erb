@@ -8,8 +8,7 @@
 	<meta name="keywords" content="arcade games, arcades, gaming, video games, game locations, arcade locations, play games, play arcade games, where to play games" />
   <meta name="description" content="ArcadeFly.com is a social network for gamers and arcade game enthusiasts. Want to know where an arcade is, or have a game in mind and want to know where to play it? We're your place!" />
   
-
-  <%= stylesheet_link_tag 'application', 'layout', 'common_classes', 'forms', :cache => true %>
+  <%= stylesheet_link_merged :base %>
 
   <%= yield(:header) -%>
 </head>
@@ -83,8 +82,8 @@
       </div>
     </div>
   </div>
-  
-  <%= javascript_include_tag 'prototype', 'application', :cache => true -%>
+
+  <%= javascript_include_merged :base %>
   <%= yield(:javascript) -%>
   <%- if Rails.env.production? -%>
     <script type="text/javascript">

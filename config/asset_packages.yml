@@ -1,0 +1,21 @@
+--- 
+javascripts: 
+- base: 
+  - prototype
+  - application
+- effects:
+  - effects
+  - controls
+- addressables:
+  - ym4r-gm
+  - markerGroup
+- iphone:
+  - iui  
+stylesheets: 
+- base: 
+  - application
+  - common_classes
+  - forms
+  - layout
+- iphone:
+  - iui
