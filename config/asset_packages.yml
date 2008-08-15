@@ -1,6 +1,6 @@
 --- 
 javascripts: 
-- base: 
+- application: 
   - prototype
   - application
 - effects:
@@ -13,9 +13,9 @@ javascripts:
   - iui  
 stylesheets: 
 - base: 
+  - layout
   - application
   - common_classes
   - forms
-  - layout
 - iphone:
   - iui
