@@ -27,9 +27,7 @@
 
 <% javascript_files do  %>
   <%= javascript_include_tag GMap.google_js_path %>
-  <% bundle :name => 'addressables' do %>
-    <%= javascript_include_tag "ym4r-gm", "markerGroup" %>
-  <% end %>
+  <%= javascript_include_tag "ym4r-gm", "markerGroup", :cache => "addressables" %>
 <% end %>
  
 <% javascript do %>
