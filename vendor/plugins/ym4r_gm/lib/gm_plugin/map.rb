@@ -35,6 +35,12 @@ module Ym4r
         a << "<style type=\"text/css\">\n v\:* { behavior:url(#default#VML);}\n</style>" if options[:with_vml]
         a
       end
+      
+      def self.google_js_path(options = {})
+        options[:hl] ||= ''
+        api_key = ApiKey.get(options)
+        "http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=#{api_key}&amp;hl=#{options[:hl]}"
+      end
      
       #Outputs the <div id=...></div> which has been configured to contain the map. You can pass <tt>:width</tt> and <tt>:height</tt> as options to output this in the style attribute of the DIV element (you could also achieve the same effect by putting the dimension info into a CSS or using the instance method GMap#header_width_height). You can aslo pass <tt>:class</tt> to set the classname of the div.
       def div(options = {})

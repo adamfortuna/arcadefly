@@ -50,12 +50,12 @@ module ApplicationHelper
   
   # Adds a javascript file to the header
   def javascript_file(*files)
-    content_for(:javascript_files) { javascript_include_tag(*files) }
+    content_for(:javascript) { javascript_include_tag(*files) }
   end
   
   # Adds a stylesheet file to the header
   def stylesheet(*files)
-    content_for(:header_files) { stylesheet_link_tag(*files) }
+    content_for(:header) { stylesheet_link_tag(*files) }
   end
 
   def icon profile, size = :small, img_opts = {}

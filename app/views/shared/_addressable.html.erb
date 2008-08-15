@@ -3,7 +3,7 @@
   #  render :partial => 'shared/addressables', :object => arcades, :locals => {:small_map => true, :map_type => false, :id => "#{addressables.first.class.to_s.downcase}_map"}
 
   options ||= {}
-  options.reverse_merge!({:small_map => true, :map_type => false, :id => "#{addressable.class.to_s.downcase}_map", :class => "right prepend-1 span-13 last map_small map"})
+  options.reverse_merge!({:small_map => true, :map_type => false, :id => "#{addressable.class.to_s.downcase}_map", :class => "map_small right prepend-1 span-13 last map"})
 
   map = GMap.new(options[:id])
   map.control_init(options)
@@ -16,12 +16,17 @@
   end
 -%>
 
-<% content_for(:header) do %>
-  <%= GMap.header(:with_vml => false) %>
+<% javascript_files do  %>
+  <%= javascript_include_tag GMap.google_js_path %>
+  <% bundle :name => 'addressables' do %>
+    <%= javascript_include_tag "ym4r-gm", "markerGroup" %>
+  <% end %>
 <% end %>
 
 <% javascript do %>
 	<%= map.to_html(:no_script_tag => true) %>
+	$('<%=options[:class].split(' ').first%>_loading').hide();
 <% end %>
 
+<%= image_tag "spinner.gif", :id => "#{options[:class].split(' ').first}_loading" %>
 <%= map.div(:class => options[:class]) %>

@@ -10,13 +10,6 @@
     });
   });
 <% end %>
-<% content_for(:header) do %>
-  <style>
-    #new_playable { }
-    #new_playable span input { }
-    #playables li { padding:10px 0;}
-  </style>
-<% end %>
 
 <%= render :partial => 'menu', :locals => { :arcade => @arcade } %>
 

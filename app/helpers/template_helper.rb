@@ -47,4 +47,8 @@ module TemplateHelper
         '</script>'
     content_for(:javascript) { create_template(a, b, &block) }
   end
+  
+  def javascript_files(&block)
+    content_for(:javascript) { capture(&block) }
+  end
 end

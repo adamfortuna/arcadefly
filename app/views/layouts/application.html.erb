@@ -11,7 +11,6 @@
   <% bundle :name => 'application' do %>
     <%= stylesheet_link_tag 'application', 'layout', 'common_classes', 'forms' %>
   <% end %>
-  <%= yield(:header_files) -%>
   <%= yield(:header) -%>
 </head>
 <body<%= " class=\"#{params[:controller]}\"" unless params[:controller].nil? %>>
@@ -95,13 +94,10 @@
     pageTracker._initData();
     pageTracker._trackPageview();
     </script>
-  <%- end -%>  
-  <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>-->
+  <%- end -%>
   <% bundle :name => 'main' do %>
     <%= javascript_include_tag 'prototype', 'application' -%>
   <% end %>
-  <%= yield(:javascript_files) -%>
   <%= yield(:javascript) -%>
-
 </body>
 </html>
