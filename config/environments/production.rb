@@ -13,14 +13,23 @@ config.action_controller.perform_caching             = true
 ActionController::Base.perform_caching               = true
 
 # Enable serving of images, stylesheets, and javascripts from an asset server
-config.action_controller.asset_host                  = "http://static.arcadefly.com"
-
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
 
 #RAILS_ROOT = "/home/arcadefly/alpha.arcadefly.com/current"
 
+
+config.action_controller.asset_host                  = "http://static.arcadefly.com"
+
 HOST = 'http://www.arcadefly.com'
+config.action_controller.asset_host = Proc.new { |source|
+  if source.starts_with?('/javascripts') or source.starts_with?('/stylesheets')
+    HOST  # bundle_fu friendly
+  else
+    "http://static.arcadefly.com" % (source.hash % 4)
+  end
+}
+
 
 require 'hodel_3000_compliant_logger'
 config.logger = Hodel3000CompliantLogger.new(config.log_path)

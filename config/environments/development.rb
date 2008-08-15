@@ -15,8 +15,18 @@ config.action_controller.perform_caching             = false
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
-config.action_controller.asset_host                  = "http://localhost:3000"
-#config.action_controller.asset_host                  = "http://static.arcadefly.com"
+#config.action_controller.asset_host                  = "http://localhost:3000"
+config.action_controller.asset_host                  = "http://static.arcadefly.com"
+
+HOST = 'http://localhost:3000'
+config.action_controller.asset_host = Proc.new { |source|
+  if source.starts_with?('/javascripts') or source.starts_with?('/stylesheets')
+    HOST  # bundle_fu friendly
+  else
+    "http://static.arcadefly.com" % (source.hash % 4)
+  end
+}
+
 
 config.log_level = :debug
 
@@ -28,7 +38,6 @@ config.active_record.logger = Logger.new(STDOUT)
 # Mail settings
 ActionMailer::Base.delivery_method = :smtp
 
-HOST = 'http://localhost:3000'
 
 require "smtp_tls"
 
