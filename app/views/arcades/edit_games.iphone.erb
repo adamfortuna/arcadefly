@@ -27,7 +27,7 @@
   <% remote_form_for(:arcade, :playables, :url => arcade_playables_path(@arcade), :html => { :id => 'arcade_form' }) do |f| -%>
     <p>
       <label for="game_name">Game Name:</label>
-      <input id="game_name" name="game[name]" size="10" type="text" class="text" /><%= image_tag "spinner.gif", :alt => "Working...", :id => "game_indicator", :style => "display: none" %>
+      <input id="game_name" name="game[name]" size="10" type="text" class="text" /><%= image_tag "#{ASSET_HOST}/images/spinner.gif", :alt => "Working...", :id => "game_indicator", :style => "display: none" %>
       <div class="autocomplete" id="game_name_auto_complete"></div>
     </p>
     <p>

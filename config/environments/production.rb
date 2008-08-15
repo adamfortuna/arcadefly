@@ -22,13 +22,7 @@ ActionController::Base.perform_caching               = true
 
 ASSET_HOST = "http://static.arcadefly.com"
 HOST = "http://www.arcadefly.com"
-config.action_controller.asset_host = Proc.new { |source|
-  if source.starts_with?('/javascripts') or source.starts_with?('/stylesheets')
-    HOST  # bundle_fu friendly
-  else
-    ASSET_HOST % (source.hash % 4)
-  end
-}
+config.action_controller.asset_host = "http://static.arcadefly.com"
 
 
 require 'hodel_3000_compliant_logger'

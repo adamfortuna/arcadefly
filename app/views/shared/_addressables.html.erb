@@ -35,5 +35,5 @@
 	$('<%=options[:class].split(' ').first%>_loading').hide();
 <% end %>
 
-<%= image_tag "spinner.gif", :id => "#{options[:class].split(' ').first}_loading" %>
+<%= image_tag "#{ASSET_HOST}/images/spinner.gif", :id => "#{options[:class].split(' ').first}_loading" %>
 <%= map.div(:class => options[:class]) %>

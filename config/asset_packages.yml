@@ -12,7 +12,7 @@ javascripts:
 - iphone:
   - iui  
 stylesheets: 
-- base: 
+- arcadefly: 
   - layout
   - application
   - common_classes

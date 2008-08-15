@@ -8,7 +8,7 @@
 	<meta name="keywords" content="arcade games, arcades, gaming, video games, game locations, arcade locations, play games, play arcade games, where to play games" />
   <meta name="description" content="ArcadeFly.com is a social network for gamers and arcade game enthusiasts. Want to know where an arcade is, or have a game in mind and want to know where to play it? We're your place!" />
   
-  <%= stylesheet_link_merged :base %>
+  <%= stylesheet_link_merged :arcadefly %>
 
   <%= yield(:header) -%>
 </head>
@@ -57,7 +57,7 @@
         <h3>Copyright &copy; 2007 ArcadeFly. Development by <a href="http://www.adamfortuna.com">Adam Fortuna</a>.</h3>
         <p>You can read more about ArcadeFly on our <a href="http://blog.arcadefly.com">Blog</a></p>
         <p>
-          <a href="http://validator.w3.org/check?uri=referer"><%= image_tag "w3c_blue.png" %></a>
+          <a href="http://validator.w3.org/check?uri=referer"><%= image_tag "#{ASSET_HOST}/images/w3c_blue.png" %></a>
         </p>
   		</div>
       <div class="footer_column">
