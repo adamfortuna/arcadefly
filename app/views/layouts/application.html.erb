@@ -84,6 +84,8 @@
     </div>
   </div>
   
+  <%= javascript_include_tag 'prototype', 'application', :cache => true -%>
+  <%= yield(:javascript) -%>
   <%- if Rails.env.production? -%>
     <script type="text/javascript">
     var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -95,7 +97,5 @@
     pageTracker._trackPageview();
     </script>
   <%- end -%>
-  <%= javascript_include_tag 'prototype', 'application', :cache => true -%>
-  <%= yield(:javascript) -%>
 </body>
 </html>
