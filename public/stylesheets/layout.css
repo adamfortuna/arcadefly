@@ -1,7 +1,7 @@
 /* layout */
 .container { width:960px; margin:0 auto; }
-#main { background:#c4c0be url(http://s3.amazonaws.com/arcadefly/images/layout/background_light_slice.jpg) repeat-x; padding-bottom:30px; }
-#main .container { background-image:url(http://s3.amazonaws.com/arcadefly/images/layout/background_light.jpg); background-repeat:no-repeat; }
+#main { background:#c4c0be url(http://static.arcadefly.com/images/layout/background_light_slice.jpg) repeat-x; padding-bottom:30px; }
+#main .container { background-image:url(http://static.arcadefly.com/images/layout/background_light.jpg); background-repeat:no-repeat; }
 
 /* Fix up IE6 PNG Support */
 img, #logo { behavior: url(/scripts/iepngfix.htc); }
@@ -14,14 +14,14 @@ img, #logo { behavior: url(/scripts/iepngfix.htc); }
 /* Header-Styles */
 #header { padding-top:20px; padding-bottom:0px; margin-bottom:0px; }
 #logo h1, #logo small { margin:0px; display:block; text-indent:-9999px; }
-#logo h1 a { display:block; background-image:url(http://s3.amazonaws.com/arcadefly/images/logo.png); background-repeat:no-repeat; width:210px; height:83px; }
+#logo h1 a { display:block; background-image:url(http://static.arcadefly.com/images/logo.png); background-repeat:no-repeat; width:210px; height:83px; }
 ul#menu { margin:0px; padding:0px; float:right; }
 ul#menu li { display:inline; margin-left:12px; }
 ul#menu li a { text-decoration:none; color:#716d6a; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; font-weight:bold; text-transform:uppercase; }
 ul#menu li a.active, ul#menu li a:hover { color:#211e1e; }
 
 /* Footer-Styles */
-#footer { background-image:url(http://s3.amazonaws.com/arcadefly/images/layout/background_footer.jpg); background-repeat:repeat-x; padding:40px; min-height:130px; }
+#footer { background-image:url(http://static.arcadefly.com/images/layout/background_footer.jpg); background-repeat:repeat-x; padding:40px; min-height:130px; }
 #footer { font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; }
 .footer_column { float:left; width:120px; margin-right:30px; }
 #footer .long { width:610px; }

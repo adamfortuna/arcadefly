@@ -17,13 +17,13 @@
     $('landing').removeClassName('profiles');
     $('landing').addClassName(section);
     
-    $('featured_image').src = 'http://s3.amazonaws.com/arcadefly/images/features_'+section+'.jpg';
+    $('featured_image').src = 'http://static.arcadefly.com/images/features_'+section+'.jpg';
   }
 <% end %> 
 
 <% box :classname => 'arcades', :id => 'landing' do %>
 
-    <img src="http://s3.amazonaws.com/arcadefly/images/features_arcades.jpg" class="left framed" id="featured_image" alt="featured image" />
+    <%= image_tag "features_arcades.jpg", :class => "left framed", :id => "featured_image", :alt => "featured image" %>
     
     <div id="features">
     
