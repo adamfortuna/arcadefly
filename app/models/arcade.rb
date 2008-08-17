@@ -1,5 +1,6 @@
 class Arcade < ActiveRecord::Base
   include Addressable
+  acts_as_taggable
 
 	PUBLIC_FIELDS = [:created_at, :updated_at, :permalink, :name, :phone, :website, :notes, :playables_count, :frequentships_count]
 	PUBLIC_FIELDS_WITH_ADDRESS = [PUBLIC_FIELDS, :street, :city, :postal_code, :lat, :lng].flatten
@@ -18,7 +19,9 @@ class Arcade < ActiveRecord::Base
 	validates_associated :address
 	validates_presence_of :name, :message => "is required."
 	validates_uniqueness_of :permalink
-	
+
+  attr_accessible :name, :phone, :all_tags, :address
+
 	def to_param
     permalink
   end
@@ -60,4 +63,11 @@ class Arcade < ActiveRecord::Base
 	  name
 	end	
 	
+  def all_tags=(current_tags)
+    if(current_tags.is_a?(Array))
+      self.tag_list = current_tags.join(',')
+    else
+      self.tag_list = current_tags
+    end
+  end
 end

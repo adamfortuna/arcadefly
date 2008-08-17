@@ -1,3 +1,2 @@
-class Session < ActiveRecord::Base
-  has_one :address
+class Session
 end

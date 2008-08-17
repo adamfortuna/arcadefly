@@ -7,6 +7,7 @@ module ApplicationHelper
   include TemplateHelper
   include GamesHelper
   include ArcadesHelper
+  include TagsHelper
   
   def separator
     " &#8250; "

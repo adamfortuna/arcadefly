@@ -205,7 +205,10 @@ class ArcadesController < ResourceController::Base
     collection_options[:order] = order
     collection_options[:include] = {:address => [:region, :country]}      
     collection_options[:conditions] = ['arcades.name like ?', "#{search}%"] unless search.blank?
-    collection_options[:origin] = current_address if addressed_in?
+    if addressed_in?
+      collection_options[:origin] = current_address
+      collection_options[:within] = current_range unless current_range == 0
+    end
     collection_options
   end
   

@@ -1,30 +1,40 @@
+<% javascript do %>
+  Event.observe(window, 'load', function() {
+    
+  });
+<% end %>
+
 <hr class="clear" />
 
 <div>
-  <p class="left map_box_width">
-    <!--<p>
-      Show Arcades within...
-      <select>
-        <option>Everywhere</option>
-        <option>5 miles</option>
-        <option>10 miles</option>
-        <option>25 miles</option>
-        <option>50 miles</option>
-        <option>100 miles</option>
-        <option>250 miles</option>
-        <option>500 miles</option>
-      </select>
-    </p>-->
-
+  <div class="left map_box_width">
+  
+    <% if addressed_in? %>
+      <span class="block">
+      <label for="">Within:</label>
+      <% form_tag address_path(current_address), :id => 'range_form', :method => 'put' do %>
+        <%= select("address", 
+                   "range", 
+                   [['Everywhere', ''], ['5 miles', 5], ['10 miles', 10], ['25 miles', 25], ['50 miles', 50], ['100 miles', 100], ['250 miles', 250], ['500 miles', 500] ],
+                   {:selected => current_range },
+                    :class => 'text',
+                    :onchange => "javascript:$('range_form').submit();"
+                   ) %>
+      <% end %>
+      </span>
+    <% end %>
+    
+    <p>
     <% if logged_in? %>
       Know of an arcade not listed here? <%= link_to "Add it!", new_arcade_path %>
     <% else %>
       Know of an arcade not listed here? Just <%= link_to "Sign In", signin_path %> or <%= link_to "Register", signup_path %> and you'll be able to add it.
     <% end -%>
-  </p>
+    </p>
+  </div>
 
 
-  <div class="left">
+  <div class="right">
     <h3>Sort Arcades By...</h3>
     <ul>
       <%= nav_link "Sort by Name", "?order=name" %>

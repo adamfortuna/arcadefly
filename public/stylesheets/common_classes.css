@@ -43,6 +43,7 @@ span.info, div.info { font-size: .8em; line-height: 1.875em; }
 .even { background-color: #efefef; }
 .odd { }
 
+ul.clean {list-style:none;}
 
 /* Notices */
 .error, .notice, .warning    { padding: .8em; margin-bottom: 1em; }

@@ -3,7 +3,7 @@ module AuthenticatedSystem
     # Inclusion hook to make #current_user and #logged_in?
     # available as ActionView helper methods.
     def self.included(base)
-      base.send :helper_method, :current_user, :logged_in?, :current_profile, :administrator?, :addressed_in?, :current_address
+      base.send :helper_method, :current_user, :logged_in?, :current_profile, :administrator?, :addressed_in?, :current_address, :current_range
     end
 
 
@@ -51,6 +51,13 @@ module AuthenticatedSystem
       @current_address = new_address
     end
     
+    def current_range=(new_range)
+      session[:range] = new_range
+    end
+
+    def current_range
+      session[:range] ? session[:range] : 100
+    end
     
     
     

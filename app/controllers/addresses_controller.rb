@@ -57,21 +57,29 @@ class AddressesController < ResourceController::Base
 
   # PUT users/1-adam/addresses/1
   def update
-    @address = Address.find(params[:id])
+    if params[:address][:range]
+      self.current_range = params[:address][:range].to_i
+      respond_to do |format|
+        format.js { head :ok}
+        format.html { redirect_to request.env["HTTP_REFERER"] }
+      end
+    else 
+      @address = Address.find(params[:id])
 
-    respond_to do |format|
-      if @address.update_attributes(params[:address])
-        flash[:notice] = 'Address was successfully updated.'
-        unless params[:user_id]
-          format.html { redirect_to address_url(@address) }
-        else
-          format.html { redirect_to :controller => 'account'  }
-        end
+      respond_to do |format|
+        if @address.update_attributes(params[:address])
+          flash[:notice] = 'Address was successfully updated.'
+          unless params[:user_id]
+            format.html { redirect_to address_url(@address) }
+          else
+            format.html { redirect_to :controller => 'account'  }
+          end
         
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @address.errors.to_xml }
+          format.xml  { head :ok }
+        else
+          format.html { render :action => "edit" }
+          format.xml  { render :xml => @address.errors.to_xml }
+        end
       end
     end
   end

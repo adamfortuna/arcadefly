@@ -53,6 +53,20 @@
 <% end %>
 </div>
 
+<div class="right half">
+  <p class="block required">
+    <label>Classification</label>
+    <span class="info">Select any of the following which this location could be classified as.</span> 
+    <ul class="clean">
+    <% Tag.find(:all, :order => :name).each do  |tag| %>
+      <li>
+        <%= check_box_tag 'arcade[all_tags][]', tag.name, @arcade.tag_list.include?(tag.name), :id => "tag_#{tag.id}" %> <label for="<%="tag_#{tag.id}"%>"><%= tag.name %></label>
+      </p>
+    <% end %>
+    </ul>
+  </p>
+</div>
+
 <p class="clear right">
   <%= submit_tag "Review »", :class => "big-button right", :disable_with => 'Submitting...' %>
 </p>

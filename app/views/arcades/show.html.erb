@@ -50,6 +50,10 @@
       <p class="center">
         <strong><%= @arcade.name %></strong> is in <em><%= @arcade.address.city %>, <%= @arcade.address.region.name %></em>.
       </p>
+      <p class="center">
+        <strong>It's considered a:</strong>
+        <%= @arcade.tag_list.join(', ') %>
+      </p>
       
       <% if @arcade.has_hours? %>
       <ul style="margin:0 0 0 50px; border:0; width:250px;">
