@@ -9,4 +9,12 @@ class ApplicationController < ActionController::Base
   def sort_by_distance(addressables)
     (addressables && addressables.length > 1 && addressed_in?) ? addressables.sort_by_distance_from(current_address) : addressables
   end
+  
+  def link_without_page(link)
+    params = link.split('?')
+    url = params.shift
+    params.reject! { |n| n.match /page=/ }
+    url = url + '?' + params.join('&') if params.length > 0
+    url
+  end
 end

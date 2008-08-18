@@ -82,6 +82,8 @@ class Address < ActiveRecord::Base
   
   protected
   def auto_geocode
+    
+    debugger
     # Exact location
     exact_loc = Address.geocode(single_line)
     self.lat = exact_loc.lat

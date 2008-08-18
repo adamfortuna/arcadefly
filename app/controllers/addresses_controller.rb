@@ -61,7 +61,7 @@ class AddressesController < ResourceController::Base
       self.current_range = params[:address][:range].to_i
       respond_to do |format|
         format.js { head :ok}
-        format.html { redirect_to request.env["HTTP_REFERER"] }
+        format.html { redirect_to link_without_page(request.env["HTTP_REFERER"]) }
       end
     else 
       @address = Address.find(params[:id])

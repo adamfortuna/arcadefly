@@ -21,6 +21,8 @@
   </p>
 
   <% fields_for 'arcade[address]', @arcade.address do |a| %>
+  <%= a.hidden_field :id %>
+  
   <p class="block required">	
     <label for="address_street">Street</label>
     <%= error_message_on "address", "street", "Street " %>

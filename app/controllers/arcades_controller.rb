@@ -101,7 +101,7 @@ class ArcadesController < ResourceController::Base
   
   
   # Updating an arcade
-  # PUT /arcades/rockyy-replay
+  # PUT /arcades/rockys-replay
   def update
     @arcade = object
     if @arcade.update_attributes(params[:arcade])
