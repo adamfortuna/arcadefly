@@ -11,7 +11,7 @@
         <%= link_to pluralize(@game.favoriteships.size, "favorite"), game_profiles_path(@game), :class => "users" %>
       </span>
       <div class="right short_description">
-        <h2><%= @game.name %></h2>
+        <h1><%= @game.name %></h1>
         <% if @game.gamefaqs_id || @game.klov_id %>
       	<p>
       	  Find out more about this game on:  

@@ -1,7 +1,7 @@
 <% title "Games" -%>
 
 <% box do %>
-  <h2>Games <%= separator + params[:search] unless params[:search].blank? %></h2>
+  <h1>Games <%= separator + params[:search] unless params[:search].blank? %></h1>
 
   <%- if params[:search].nil? -%>
     <div><strong>Want to see only popular games?</strong> Check out which games have been <%= link_to "favorited by the most players", popular_games_path %>!</div>

@@ -3,7 +3,7 @@
 <%= render :partial => 'menu', :locals => { :arcade => @arcade } %>
 
 <% tabbed_box do %>  
-  <h2><%= @title %></h2>
+  <h1><%= @title %></h1>
   <%= render :partial => 'shared/addressables', :object => [@arcade], :locals => { :options => { :large_map => true,
                                                                                                  :map_type => true,
                                                                                                  :class => 'map_big map',

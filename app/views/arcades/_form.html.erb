@@ -25,34 +25,41 @@
   
   <p class="block required">	
     <label for="address_street">Street</label>
-    <%= error_message_on "address", "street", "Street " %>
+    <%= error_message_on @arcade.address, "street", "Street " %>
     <%= a.text_field :street, { :class => "text" } %>
   </p>
   <p class="block required">
     <label for="address_city">City</label>
-    <%= error_message_on "address", "city", "City " %>
+    <%= error_message_on @arcade.address, "city", "City " %>
     <%= a.text_field :city, { :class => "text" } %>
   </p>
   <p class="block required">
     <label for="address_country_id">Country</label>
-    <%= error_message_on "address", "country_id", "Country " %>
+    <%= error_message_on @arcade.address, "country_id", "Country " %>
     <%= a.select :country_id, Country.find(:all).collect {|r| [ r.name, r.id ] }, 
                               { :include_blank => true },
                               { :class => "text", :id => "address_country_id" } %>
   </p>
   <p class="block required" id="address_region_id_field">
     <label for="address_region_id">State/Region</label>
-    <%= error_message_on "address", "region_id", "State/Region " %>
+    <%= error_message_on @arcade.address, "region_id", "State/Region " %>
     <%= a.select :region_id, Region.find(:all).collect {|r| [ r.name, r.id ] }, 
                              { :include_blank => true },
                              { :class => "text", :id => "address_region_id" } %>
   </p>
   <p class="block">
     <label for="address_postal_code">Zip/Postal Code <a href="http://zip4.usps.com/zip4/welcome.jsp" target="_blank">[?]</a></label>
-    <%= error_message_on "address", "postal_code", "Zip/Postal Code " %>
+    <%= error_message_on @arcade.address, "postal_code", "Zip/Postal Code " %>
     <%= a.text_field :postal_code, { :class => "text" } %>
   </p>
-<% end %>
+  <% end %>
+  
+  <p class="block">
+    <label for="arcade_website">Website</label>
+    <%= error_message_on "arcade", "website", "Website " %>
+    <%= f.text_field :website, { :class => 'text' } %>
+  </p>
+  
 </div>
 
 <div class="right half">

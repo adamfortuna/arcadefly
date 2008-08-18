@@ -1,7 +1,7 @@
 <% title "Players #{separator + params[:search] unless params[:search].blank?}" %>
 
 <% box do %>
-  <h2><%= @title %></h2>
+  <h1><%= @title %></h1>
 
   <div id="controller_search">
     <% form_for(:profile, profiles_path, :html => { :method => 'get' }) do |f| %>

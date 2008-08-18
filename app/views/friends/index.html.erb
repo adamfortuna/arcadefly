@@ -2,7 +2,7 @@
 
 <%= render :partial => 'profiles/menu', :locals => { :profile => @profile } %>
 <% tabbed_box do %>
-  <h2><%= @title %></h2>
+  <h1><%= @title %></h1>
 
   <%= render :partial => 'friends/list', :locals => {:type => 'friends', :with_friending => true, :size => nil} %>
   <%= render :partial => 'friends/list', :locals => {:type => 'followers', :with_friending => true, :size => nil} %>

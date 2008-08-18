@@ -9,7 +9,7 @@
         <%= link_to pluralize(@arcade.frequentships.size, "favorite"), arcade_profiles_path(@arcade), :class=>"users" %>
       </span>
       <div class="short_description">
-        <h2><%= h @arcade.name %></h2>
+        <h1><%= h @arcade.name %></h1>
         <%= render :partial => 'arcades/favorite', :locals => { :show_text => true, :arcade => @arcade } if logged_in? %>
         <% unless @arcade.phone.nil? %>
         <p><strong>Phone Number:</strong> <%= @arcade.phone %></p>

@@ -7,7 +7,7 @@
     <div class="left_column">
       <div class="left"><%= icon @profile, :big %></div>
       <div class="short_description">
-        <h2><%= h @profile.display_name %></h2>
+        <h1><%= h @profile.display_name %></h1>
         <% unless @profile.full_name.blank? %><div><strong>Real Name:</strong> <%=@profile.full_name%></div><% end %>
     	  <% if @profile.has_address? %><h3><%= location_link @profile %></h3><% end %>
     		<% unless @profile.website.blank? %><div><strong>Website:</strong> <%= link_to h(@profile.website), h(@profile.website) %></div><% end %>

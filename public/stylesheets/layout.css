@@ -13,8 +13,8 @@ img, #logo { behavior: url(/scripts/iepngfix.htc); }
 
 /* Header-Styles */
 #header { padding-top:20px; padding-bottom:0px; margin-bottom:0px; }
-#logo h1, #logo small { margin:0px; display:block; text-indent:-9999px; }
-#logo h1 a { display:block; background-image:url(http://static.arcadefly.com/images/logo.png); background-repeat:no-repeat; width:210px; height:83px; }
+#logo strong, #logo small { margin:0px; display:block; text-indent:-9999px; }
+#logo strong a { display:block; background-image:url(http://static.arcadefly.com/images/logo.png); background-repeat:no-repeat; width:210px; height:83px; }
 ul#menu { margin:0px; padding:0px; float:right; }
 ul#menu li { display:inline; margin-left:12px; }
 ul#menu li a { text-decoration:none; color:#716d6a; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; font-weight:bold; text-transform:uppercase; }
