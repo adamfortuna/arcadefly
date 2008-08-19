@@ -58,14 +58,6 @@ class Arcade < ActiveRecord::Base
     false
   end	
 	
-	def public_lat
-	 lat
-	end
-	
-	def public_lng
-	 lng
-	end
-
 	# For iUi
 	def caption
 	  name

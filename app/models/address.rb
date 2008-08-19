@@ -23,6 +23,15 @@ class Address < ActiveRecord::Base
 #  end
 #  alias_method_chain :country, :region_check
 
+
+  def public_lat
+    addressable.is_a?(Arcade) ? lat : public_lat
+  end
+  
+  def public_llng
+    addressable.is_a?(Arcade) ? lng : public_lng    
+  end
+
   def shortest_line
     line = ''
     line << city if city?
