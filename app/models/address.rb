@@ -25,11 +25,11 @@ class Address < ActiveRecord::Base
 
 
   def public_lat
-    addressable.is_a?(Arcade) ? lat : public_lat
+    addressable.is_a?(Arcade) ? lat : self[:public_lat]
   end
   
-  def public_llng
-    addressable.is_a?(Arcade) ? lng : public_lng    
+  def public_lng
+    addressable.is_a?(Arcade) ? lng : self[:public_lng]
   end
 
   def shortest_line
