@@ -158,10 +158,16 @@ class ProfilesController < ResourceController::Base
       collection_options[:conditions] << ['profiles.display_name like ?', "#{search}%"]
     end
 
-    if addressed_in? && order == 'distance'
+    if params[:action] == 'index'
+      collection_options[:conditions] << ['addresses.id IS NOT NULL']
       collection_options[:include] = {:address => [:region, :country]}
-      collection_options[:origin] = current_address
-      collection_options[:within] = current_range == 0 ? 50000 : current_range
+      if addressed_in?
+        collection_options[:origin] = current_address
+        collection_options[:within] = current_range unless current_range == 0
+      else
+        collection_options[:origin] = Address.first
+        collection_options[:within] = 50000
+      end
     end
 
     collection_options
