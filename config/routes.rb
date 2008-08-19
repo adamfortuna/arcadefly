@@ -62,12 +62,9 @@ ActionController::Routing::Routes.draw do |map|
   #map.regions_arcades '/arcades/regions',             :controller => 'arcades', :action => 'regions'
   #map.region_arcades '/arcades/regions/:id',          :controller => 'arcades', :action => 'region'
   
-  # Remote procedures
-  map.games_update '/games/update', :controller => 'gateway', :action => 'update_games'
-  
   # Resources
   map.resources :arcades, :has_many    => [ :games, :profiles, :playables, :claims ],
-                          :has_one     => [ :address],
+                          :has_one     => [ :address ],
                           :collection  => [ :popular, :auto_complete_for_game_name, :list ],
                           :member      => [ :map, :favorite, :unfavorite ]
 
@@ -77,7 +74,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :profiles, :has_many   => [:friends, :comments, :messages, :arcades, :games],
                            :has_one    => :address,
-                           :collection =>{:search=>:get}
+                           :collection => [ :list ]
 
   map.resources :users,   :alias => :friends
   map.resources :addresses, :sessions, :password, :comments, :messages, :playables

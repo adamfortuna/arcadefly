@@ -7,13 +7,9 @@
 
   map = GMap.new(options[:id])
   map.control_init(options)
-  if addressable.is_a?(Profile)
-    map.center_zoom_init([addressable.address.public_lat, addressable.address.public_lng], 10)
-    map.overlay_init(GMarker.new([addressable.address.public_lat, addressable.address.public_lng], :title => addressable.title, :info_window => map_bubble_for(addressable)))
-  else
-    map.center_zoom_init([addressable.address.lat, addressable.address.lng], 10)
-    map.overlay_init(GMarker.new([addressable.address.lat, addressable.address.lng], :title => addressable.title, :info_window => map_bubble_for(addressable)))
-  end
+
+  map.center_zoom_init([addressable.address.public_lat, addressable.address.public_lng], 10)
+  map.overlay_init(GMarker.new([addressable.address.public_lat, addressable.address.public_lng], :title => addressable.title, :info_window => map_bubble_for(addressable)))
 -%>
 
 <% javascript_files do  %>

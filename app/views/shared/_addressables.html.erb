@@ -2,6 +2,8 @@
   # Example:
   #  render :partial => 'shared/addressables', :object => arcades, :locals => {:small_map => true, :map_type => false, :id => "#{addressables.first.class.to_s.downcase}_map"}
 
+  addressables.reject!{ |a| !a.has_address? }
+
   options ||= {}
   options.reverse_merge!({:small_map => true, :map_type => false, :id => "#{addressables.first.class.to_s.downcase}_map", :class => "map_medium map content-height"})
 
@@ -11,16 +13,16 @@
   
   markers = {}
   addressables.each do |addressable|
-    markers.merge!("'#{addressable.permalink}'" => GMarker.new([addressable.address.lat, addressable.address.lng],
-                           :title => addressable.title,
-                           :info_window => map_bubble_for(addressable)))
+      markers.merge!("'#{addressable.permalink}'" => GMarker.new([addressable.address.public_lat, addressable.address.public_lng],
+                             :title => addressable.title,
+                             :info_window => map_bubble_for(addressable)))
   end
   
   gmarker_group = GMarkerGroup.new(true, markers)
   map.overlay_global_init(gmarker_group,"#{addressables.first.class.to_s.downcase}_group")
   
-  sorted_latitudes = addressables.collect(&:address).collect(&:lat).compact.sort
-  sorted_longitudes = addressables.collect(&:address).collect(&:lng).compact.sort
+  sorted_latitudes = addressables.collect(&:address).collect(&:public_lat).compact.sort
+  sorted_longitudes = addressables.collect(&:address).collect(&:public_lng).compact.sort
   map.center_zoom_on_bounds_init([ [sorted_latitudes.first, sorted_longitudes.first], 
                                    [sorted_latitudes.last, sorted_longitudes.last]])
 -%>

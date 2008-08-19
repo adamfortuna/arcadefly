@@ -2,4 +2,6 @@
   <%= render :partial => 'profiles/profile', :collection => profiles %>
 </ul> 
 
-<%= will_paginate @profiles %>
+<%= will_paginate profiles %>
+
+<%= render :partial => 'profiles/list_footer' %>

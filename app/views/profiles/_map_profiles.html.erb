@@ -1,0 +1,10 @@
+<div class="map_box">
+  <ul class="scrollable content content-height">
+    <%= render :partial => 'profiles/profile_map', :collection => map_profiles %>
+  </ul>
+  <%= render :partial => 'shared/addressables', :object => map_profiles %>
+</div>
+
+<%= will_paginate map_profiles %>
+
+<%= render :partial => 'profiles/list_footer' %>

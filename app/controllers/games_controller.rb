@@ -122,7 +122,7 @@ class GamesController < ResourceController::Base
     
   # Setup up the possible options for getting a collection, with defaults
   def options
-    search = params[:search] 
+    search = params[:search]
     search = "%" + search if search and params[:search].length >= 2
 
     collection_options = {}

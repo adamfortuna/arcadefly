@@ -42,7 +42,6 @@ class AddressesController < ResourceController::Base
     flash[:notice] = "<form action=\"/signup\" method=\"post\" class=\"right\"><input type=\"submit\" class=\"big-button\" value=\"Register Now!\" /></form>"
     flash[:notice] += "Thanks for entering your location in <strong>#{current_address.short_line}</strong>. We'll use this address for the remainder of your visit here, but you can feel free to change it at any time from the <a href=\"/\">home page</a>. <strong>If you decide to <a href=\"/signup\">register</a> we'll save your address and you'll get access to even more features all for free!</strong>"
     if addressed_in?
-      session[:address] = current_address.id
       redirect_to arcades_path
       return
     else

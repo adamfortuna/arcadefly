@@ -1,4 +1,4 @@
-<% title "Map Players #{separator + params[:search] unless params[:search].blank?}" %>
+<% title "List Players #{separator + params[:search] unless params[:search].blank?}" %>
 <%= render :partial => 'profiles/list_menu' %>
 
 <% tabbed_box do %>
@@ -13,5 +13,6 @@
   </div>
 
   <%= render :partial => 'shared/letters', :locals => { :controller => 'profiles' } %>
-  <%= render :partial => 'profiles/map_profiles', :object => @profiles %>
+
+  <%= render :partial => 'profiles/profiles', :object => @profiles %>
 <% end %>

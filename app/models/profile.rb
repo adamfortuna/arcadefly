@@ -2,11 +2,18 @@ class Profile < ActiveRecord::Base
   include Addressable
 
   PUBLIC_FIELDS = [:created_at, :display_name, :favoriteships_count, :frequentships_count, :friendships_count, :full_name, :initials, :permalink, :website]
+  PER_PAGE = 30
 
   #before_validation :reset_permalink
   has_permalink :display_name
 
   attr_accessor :icon
+
+  define_index do
+    indexes :display_name, :sortable => true
+    indexes :initials, :full_name, :about_me, :aim_name, :gtalk_name, :msn_name
+    has created_at, updated_at, favoriteships_count, frequentships_count
+  end
 
   # User
   belongs_to :user, :dependent => :destroy
@@ -43,13 +50,13 @@ class Profile < ActiveRecord::Base
   # Validation
   validates_length_of :display_name, :within => 3..100
   
-  
+
   def to_param
     permalink
   end
   
   def self.per_page
-    50
+    PER_PAGE
   end
   
   def title

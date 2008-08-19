@@ -20,6 +20,11 @@ class ProfilesController < ResourceController::Base
     render :text => @profiles.to_xml(:dasherize => false, :only => Profile::PUBLIC_FIELDS)
   }
 
+
+  def list
+    @profiles = collection
+  end
+
   def show
     @profile = object
     
@@ -102,7 +107,15 @@ class ProfilesController < ResourceController::Base
   # GET /arcades/:arcade_id/profiles
   # GET /games/:game_id/profiles
   def collection
-    profiles = parent? ? parent_object.profiles.paginate(options) : Profile.paginate(options)
+    if parent?
+      parent_object.profiles.paginate(options)
+    else
+      if params[:search].nil? or params[:search].length == 1
+        objects = Profile.paginate options
+      else
+        objects = Profile.search params[:search], :page => params[:page], :per_page => Profile::PER_PAGE, :order => :display_name
+      end
+    end
   end
 
   def object
@@ -118,16 +131,39 @@ class ProfilesController < ResourceController::Base
   
   # Setup up the possible options for getting a collection, with defaults
   def options
-    search = params[:search] 
-    search = "%" + search if search and params[:search].length >= 2
+    search = params[:search]
+
+    order = params[:order]
+    if order == 'name'
+      order = 'profiles.display_name' 
+    elsif order == 'arcades'
+      order = 'frequentships_count desc'
+    elsif order == 'games'
+      order = 'favoriteships_count desc'
+    elsif addressed_in? && params[:action] == 'index'
+      order = 'distance'
+    else
+      order = 'profiles.display_name'
+    end
+
 
     collection_options = {}
     collection_options[:page] = params[:page] || 1
     collection_options[:per_page] = params[:per_page] if params[:per_page]
-    collection_options[:order] = params[:order] || 'profiles.display_name'
+    collection_options[:order] = order
     collection_options[:conditions] = ['profiles.active = 1']
-    collection_options[:conditions] << ['profiles.display_name like ? OR profiles.full_name like ?', "#{search}%", "#{search}%" ] unless search.blank?
-    collection_options[:conditions] << ['profiles.display_name regexp "^[0-9]+"'] if search == '#'
+    if search == '#'
+      collection_options[:conditions] << ['profiles.display_name regexp "^[0-9]+"']
+    elsif !search.blank?
+      collection_options[:conditions] << ['profiles.display_name like ?', "#{search}%"]
+    end
+
+    if addressed_in? && order == 'distance'
+      collection_options[:include] = {:address => [:region, :country]}
+      collection_options[:origin] = current_address
+      collection_options[:within] = current_range == 0 ? 50000 : current_range
+    end
+
     collection_options
   end
   

@@ -2,10 +2,10 @@
 
 <div>
   <div class="left map_box_width">
-  
+
     <% if addressed_in? %>
       <span class="block">
-      <label for="">Within:</label>
+      <label for="">Only show players within:</label>
       <% form_tag address_path(current_address), :id => 'range_form', :method => 'put' do %>
         <%= select("address", 
                    "range", 
@@ -17,26 +17,20 @@
       <% end %>
       </span>
     <% end %>
-    
     <p>
-    <% if logged_in? %>
-      Know of an arcade not listed here? <%= link_to "Add it!", new_arcade_path %>
-    <% else %>
-      Know of an arcade not listed here? Just <%= link_to "Sign In", signin_path %> or <%= link_to "Register", signup_path %> and you'll be able to add it.
-    <% end -%>
-    </p>
+      <em>Filtering by distance will exclude all players who haven't added an address.</em>
   </div>
 
 
   <div class="right">
-    <h3>Sort Arcades By...</h3>
+    <h3>Sort Profiles By...</h3>
     <ul>
       <%= nav_link "Sort by Name", "?order=name" %>
       <%- if addressed_in? %>
       <%= nav_link "Sort by Distance", "?order=distance" %>
       <%- end -%>
-      <%= nav_link "Sort by Number of Favorites", "?order=favorites" %>
-      <%= nav_link "Sort by Number of Games", "?order=games" %>
+      <%= nav_link "Sort by Number of Favorite Games", "?order=games" %>
+      <%= nav_link "Sort by Number of Favorite Arcades", "?order=arcades" %>
     <ul>
   </div>
 </div>

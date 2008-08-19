@@ -1,5 +1,5 @@
 <div>
-  <strong><%= map_bubble.name %></strong>
+  <strong><%= link_to map_bubble.name, arcade_path(map_bubble) %></strong>
   <p><%= map_bubble.address.street %><br /><%= map_bubble.address.city %>, <%= map_bubble.address.region.name %> <%= map_bubble.address.postal_code %></p>
   <%= link_to pluralize(map_bubble.playables.size, "game"), arcade_games_path(map_bubble), :class => 'games' %> 
   <%= link_to pluralize(map_bubble.frequentships.size, "favorites"), arcade_profiles_path(map_bubble), :class => 'users' %>
