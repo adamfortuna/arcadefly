@@ -94,6 +94,8 @@ class GamesController < ResourceController::Base
   
   def object
     @object ||= Game.find_by_permalink(params[:id])
+    raise ActiveRecord::RecordNotFound if @object.nil?
+    @object
   end
   
   def parent_object
