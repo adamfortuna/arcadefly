@@ -20,7 +20,7 @@ class ProfilesController < ResourceController::Base
     render :text => @profiles.to_xml(:dasherize => false, :only => Profile::PUBLIC_FIELDS)
   }
 
-
+  
   def list
     @profiles = collection
   end

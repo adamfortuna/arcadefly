@@ -25,12 +25,15 @@ class GamesController < ResourceController::Base
   show.wants.xml {
     render :text => @game.to_xml(:dasherize => false, :only => Game::PUBLIC_FIELDS)
   }
-  
+    
   def popular
     @games = Game.paginate(:all, :order => 'favoriteships_count desc, playables_count desc', :page => params[:page], :conditions => ['favoriteships_count > 0'])
   end
   
-    
+  def show
+    @game = object
+  end
+
   def new
     @game = Game.new
   end

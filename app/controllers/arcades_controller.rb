@@ -32,7 +32,10 @@ class ArcadesController < ResourceController::Base
     @arcade = object
   end
   
-  
+  def show
+    @arcade = object
+  end
+
   # Edit an arcade
   # GET /arcades/rockys-replay/edit
   def edit
