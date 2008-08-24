@@ -81,7 +81,11 @@ class ArcadesController < ResourceController::Base
     if @arcade.valid?
       redirect_to arcade_url(@arcade)
     else
-      flash[:error] = "There was a problem creating the arcade. Please fix any errors below and give it another try."
+      if @arcade.address.errors.on(:lat)
+        flash[:error] = "We can't find the address you entered. Please make sure it looks right and try again. If in doubt just leave out the city and we'll find it for you."
+      else
+        flash[:error] = "There was a problem creating the arcade. Please fix any errors below and give it another try."
+      end
       render :action => 'new'
     end
   end

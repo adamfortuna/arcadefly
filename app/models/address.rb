@@ -3,11 +3,13 @@ class Address < ActiveRecord::Base
   belongs_to            :region
   belongs_to            :country
 
-  acts_as_mappable
+  acts_as_mappable :auto_geocode => false
 
   validates_presence_of :street,
                         :city,
-                        :country_id
+                        :country_id,
+                        :lat,
+                        :lng
   validates_presence_of :region_id,
                         :if => :known_region_required?
   validates_format_of   :postal_code,
@@ -15,8 +17,11 @@ class Address < ActiveRecord::Base
                         :allow_nil => true,
                         :message => "must be a valid 5 digit code"
 
-  before_save           :auto_geocode
+  before_validation_on_create :auto_geocode
+  before_validation_on_update :check_for_auto_geocode
 
+  attr_accessor :geocoded
+  
   # Returns the region's country if the region is specified
 #  def country_with_region_check
 #    (region && region.country != nil) ? region.country : country_without_region_check
@@ -90,9 +95,17 @@ class Address < ActiveRecord::Base
   end
   
   protected
+  def check_for_auto_geocode
+    auto_geocode
+  end
   def auto_geocode
+    return if self.geocoded
+    
+    self.geocoded = true
     # Exact location
     exact_loc = Address.geocode(single_line)
+    return false if exact_loc.lat.nil? || exact_loc.lng.nil?
+
     self.lat = exact_loc.lat
     self.lng  = exact_loc.lng
 
