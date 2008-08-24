@@ -45,7 +45,7 @@ ActionController::Routing::Routes.draw do |map|
   map.popular '/popular',                   :controller => 'popular',    :action => 'index'
 
   # Better named arcade routes
-  map.browse_arcades '/arcades/browse',               :controller => 'arcades', :action => 'browse'
+  #map.browse_arcades '/arcades/browse',               :controller => 'arcades', :action => 'browse'
   #map.new_arcade_1 '/arcades/new/details',            :controller => 'arcades', :action => 'new1'
   #map.new_arcade_2 '/arcades/new/review',             :controller => 'arcades', :action => 'new2'
   #map.new_arcade_3 '/arcades/new/games',              :controller => 'arcades', :action => 'new3'

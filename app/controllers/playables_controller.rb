@@ -6,10 +6,20 @@ class PlayablesController < ResourceController::Base
   def create
     @arcade = parent_object
     @game = Game.find_by_name(params[:game][:name])
-    @arcade.playables << Playable.new({:game_id => @game.id, :games_count => params[:count]})
-    @playable = @arcade.playables.find_by_game_id(@game.id)
+
     respond_to do |format|
-      format.js { render }
+      format.js {
+        begin
+          @arcade.playables << Playable.new({:game_id => @game.id, :games_count => params[:count]})
+          @playable = @arcade.playables.find_by_game_id(@game.id)
+          render
+        rescue
+          render :update do |page|
+            page.alert "This arcade already has that game. If you want to update the count, please remove it and readd it."
+            page.call 'Form.reset', 'arcade_form'
+          end        
+        end
+      }
     end
   end
   

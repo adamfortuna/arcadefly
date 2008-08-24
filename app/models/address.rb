@@ -96,7 +96,7 @@ class Address < ActiveRecord::Base
   
   protected
   def check_for_auto_geocode
-    auto_geocode
+    auto_geocode if changed?
   end
   def auto_geocode
     return if self.geocoded
