@@ -5,6 +5,8 @@ class Arcade < ActiveRecord::Base
 	PUBLIC_FIELDS = [:created_at, :updated_at, :permalink, :name, :phone, :website, :notes, :playables_count, :frequentships_count]
 	PUBLIC_FIELDS_WITH_ADDRESS = [PUBLIC_FIELDS, :street, :city, :postal_code, :lat, :lng].flatten
 
+#  named_scope :popular, :conditions => ['approved = ?', true], :limit => 1000
+
 	has_permalink :name
   
 	has_many :playables

@@ -1,0 +1,25 @@
+<li>
+  <% link_to profile_path(icon) do %>
+    <%= avatar(icon, :big) %>
+  <% end %>
+  <%= link_to icon.display_name, profile_path(icon)%>
+
+  <% if logged_in? %>
+    <p class="favorite" id="favorite_profile_<%= icon.id %>">
+    
+      <% if @profile.followed_by?(icon) %>
+        <%= unfriend_profile_link(icon, { :show_text => true, :text => "Remove"}) %>
+        <%= friend_profile_link(icon, { :show_text => true, :text => "Add"}) %>
+        
+      <% elsif @profile.following?(icon) %>
+        <%= unfriend_profile_link(icon, { :show_text => false}) %>
+        
+      <% elsif @profile.friends_with?(icon) %>
+        <%= unfriend_profile_link(icon, { :show_text => false}) %>
+        
+      <% else %>
+        <%= friend_profile_link(icon, { :show_text => false}) %>
+      <% end %>
+    </p>
+  <% end %> 
+</li>

@@ -5,9 +5,10 @@
 <% tabbed_box do %>  
   <div id="profile_overview">
     <div class="left_column">
-      <div class="left"><%= icon @profile, :big %></div>
+      <div class="left"><%= avatar(@profile, :big) %></div>
       <div class="short_description">
         <h1><%= h @profile.display_name %></h1>
+        <%= render :partial => 'friend', :locals => { :show_text => true, :profile => @profile } if logged_in? && !current_profile.pending_friend_with?(@profile) && !me %>
         <% unless @profile.full_name.blank? %><div><strong>Real Name:</strong> <%=@profile.full_name%></div><% end %>
     	  <% if @profile.has_address? %><h3><%= location_link @profile %></h3><% end %>
     		<% unless @profile.website.blank? %><div><strong>Website:</strong> <%= link_to h(@profile.website), h(@profile.website) %></div><% end %>

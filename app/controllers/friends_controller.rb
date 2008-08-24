@@ -1,44 +1,54 @@
 class FriendsController < ApplicationController
   before_filter :get_profile
-  skip_before_filter :login_required, :only=>:index
-  skip_before_filter :store_location, :only => [:create, :destroy]
+  skip_before_filter :login_required, :only => :index
   
+  def show
+    @friends = @profile.friends.paginate :per_page => Profile::PER_PAGE, :page => params[:page]
+    @followers = @profile.followers.paginate :per_page => Profile::PER_PAGE, :page => params[:page]
+    render :template => "profiles/friends"
+  end
   
+  # POST /profiles/:profile_id/favorite
   def create
-    respond_to do |wants|
-      if Friend.make_friends(@p, @profile)
-        friend = @p.reload.friend_of? @profile
-        wants.js {render( :update ){|page| page.replace @p.dom_id(@profile.dom_id + '_friendship_'), get_friend_link( @p, @profile)}}
-      else
-        message = "Oops... That didn't work. Try again!"
-        wants.js {render( :update ){|page| page.alert message}}
-      end
+    current_profile.friend!(@profile)
+    
+    respond_to do |format|
+      format.html { request.env["HTTP_REFERER"] }
+      format.js { 
+        if current_profile.networked_with?(@profile)
+          render
+        else
+          render :update do |page|
+            page.alert("Something went wrong while adding \"#{@profile.display_name}\" as a friend. Try refreshing this page and trying again.")
+          end
+        end
+      }
     end
+    
   end
   
-  
+  # DELETE /profiles/:profile_id/favorite  
   def destroy
-    Friend.reset @p, @profile
-    respond_to do |wants|
-      following = @p.reload.following? @profile
-      wants.js {render( :update ){|page| page.replace @p.dom_id(@profile.dom_id + '_friendship_'), get_friend_link( @p, @profile)}}
+    current_profile.unfriend!(@profile)
+    
+    respond_to do |format|
+      format.html { request.env["HTTP_REFERER"] }
+      format.js { 
+        if !current_profile.networked_with?(@profile)
+          render
+        else
+          render :update do |page|
+            page.alert("Something went wrong while removing \"#{@profile.display_name}\" as a friend. Try refreshing this page and trying again.")
+          end
+        end
+      }
     end
-  end
-  
-  
-  def index
-    render
   end
   
   
   protected
   
-  def allow_to
-    super :user, :all => true
-    super :non_user, :only => :index
-  end
-  
-  
+  # Profile to add as a friend
   def get_profile
     @profile = Profile.find_by_permalink(params[:profile_id])
   end

@@ -1,16 +1,17 @@
 class MessagesController < ResourceController::Base
   belongs_to :profile
-  before_filter :can_send, :only => :create
+#  before_filter :can_send, :only => :create
 
 
   index.wants.html { 
-    # GET /profiles/:profile_id/messages
-#    if parent_type == :profile
-      render :template => "profiles/messages" 
-#    end
+    render :template => "profiles/messages" 
   }  
 
-
+  def new
+    current_receiver = params[:to] ? Profile.find_by_display_name(params[:to]) : Profile.new
+    @message = Message.new({:sender => current_profile, :receiver => current_receiver})
+    @profile = parent_object
+  end
   
   # def index
   #   @message = Message.new
@@ -85,14 +86,9 @@ class MessagesController < ResourceController::Base
   
   
   def parent_object
-    profile = Profile.find_by_permalink(params[:profile_id])
-    redirect_to root_url if !current_profile.administrator? || !(profile.id == current_profile.id)
-    profile
-  end
-  
-  def can_send
-    render :update do |page|
-      page.alert "Sorry, you can't send messages."
-    end unless parent_object.can_send_messages
+    if !current_profile.administrator? || !(params[:profile_id] == current_profile.permalink)
+      redirect_to root_url and return
+    end
+    Profile.find_by_permalink(params[:profile_id])
   end
 end

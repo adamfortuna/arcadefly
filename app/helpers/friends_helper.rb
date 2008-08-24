@@ -1,4 +1,7 @@
 module FriendsHelper
+  include ProfilesHelper
+  
+  
   def get_friend_link profile, target
     return wrap_get_friend_link(link_to('Sign-up to Follow', signup_path)) if profile.blank?
     return '' unless profile && target

@@ -1,5 +1,4 @@
 class ClaimsController < ApplicationController
-
   before_filter :login_required
   before_filter :parent_object
   
@@ -8,7 +7,7 @@ class ClaimsController < ApplicationController
   # Used to manage claims for administrators
   # GET /claims
   def index
-    @claims = Claim.unapproved
+    @claims = Claim.pending
   end
 
   # POST /claims/approve_selected

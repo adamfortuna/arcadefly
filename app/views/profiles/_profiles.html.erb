@@ -1,7 +1,9 @@
+<%- show_footer ||= true -%>
 <ul class="data">
   <%= render :partial => 'profiles/profile', :collection => profiles %>
 </ul> 
 
-<%= will_paginate profiles %>
-
-<%= render :partial => 'profiles/list_footer' %>
+<% if show_footer %>
+  <%= will_paginate profiles %>
+  <%= render :partial => 'profiles/list_footer' %>
+<% end %>

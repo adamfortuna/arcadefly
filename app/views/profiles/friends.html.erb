@@ -1,10 +1,18 @@
 <% title @profile.display_name + separator + " Friends" -%>
-
 <%= render :partial => 'profiles/menu', :locals => { :profile => @profile } %>
+
 <% tabbed_box do %>
   <h1><%= @title %></h1>
 
-  <%= render :partial => 'friends/list', :locals => {:type => 'friends', :with_friending => true, :size => nil} %>
-  <%= render :partial => 'friends/list', :locals => {:type => 'followers', :with_friending => true, :size => nil} %>
-  <%= render :partial => 'friends/list', :locals => {:type => 'followings', :with_friending => true, :size => nil} %>
+  <% if me && @followers.length > 0 %>
+    <p class="info">Friend requests from these users...</p>
+    <%= render :partial => 'profiles/icons', :object => @followers %>
+    <hr class="clear" />
+  <% end %>
+
+  <% if @friends.length > 0 %>
+    <%= render :partial => 'profiles/icons', :object => @friends %>
+  <% else %>
+    <p><%= @profile.display_name %> doesn't have any friends. I'm sure they're a good person though.</p>
+  <% end %>
 <% end %>

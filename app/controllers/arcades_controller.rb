@@ -69,7 +69,7 @@ class ArcadesController < ResourceController::Base
   # One page form for creating a new arcade (currently doesnt work with games or address)
   # GET /arcades/new
   def new
-    @arcade = Arcade.new(params[:arcade])
+    @arcade = Arcade.new
   end
   
   # POST /arcades

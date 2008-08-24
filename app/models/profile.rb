@@ -4,6 +4,8 @@ class Profile < ActiveRecord::Base
   PUBLIC_FIELDS = [:created_at, :display_name, :favoriteships_count, :frequentships_count, :friendships_count, :full_name, :initials, :permalink, :website]
   PER_PAGE = 30
 
+  named_scope :active, :conditions => ['active = ?', true]
+
   #before_validation :reset_permalink
   has_permalink :display_name
 
@@ -39,17 +41,16 @@ class Profile < ActiveRecord::Base
   has_many :comments, :as => :commentable, :order => 'created_at desc'
 
   # Friends
-  has_many :friendships, :class_name  => "Friend", :foreign_key => 'inviter_id', :conditions => "status = #{Friend::ACCEPTED}", :dependent => :destroy
-  has_many :follower_friends, :class_name => "Friend", :foreign_key => "invited_id", :conditions => "status = #{Friend::PENDING}", :dependent => :destroy
-  has_many :following_friends, :class_name => "Friend", :foreign_key => "inviter_id", :conditions => "status = #{Friend::PENDING}", :dependent => :destroy
+  has_many :friendships, :class_name  => "Friend", :foreign_key => "inviter_id", :conditions => 'accepted = true', :dependent => :destroy
+  has_many :follower_friends, :class_name => "Friend", :foreign_key => "invited_id", :conditions => 'accepted = false', :dependent => :destroy
+  has_many :following_friends, :class_name => "Friend", :foreign_key => "inviter_id", :conditions => 'accepted = false', :dependent => :destroy
   
   has_many :friends,   :through => :friendships, :source => :invited
   has_many :followers, :through => :follower_friends, :source => :inviter
   has_many :followings, :through => :following_friends, :source => :invited
   
   # Validation
-  validates_length_of :display_name, :within => 3..100
-  
+  validates_length_of :display_name, :within => 3..100  
 
   def to_param
     permalink
@@ -77,16 +78,34 @@ class Profile < ActiveRecord::Base
     !Friend.find(:first, :conditions => ["inviter_id = ? or invited_id = ?", id, id]).blank?
   end
 
-  def friend_of? profile
-    user.in? friends
+  # Denotes that both profiles are friends with each other
+
+  def friend!(profile)
+    friendships.create({:invited => profile})
   end
   
-  def followed_by? profile
-    user.in? followers
+  def unfriend!(profile)
+    Friend.remove_friendship(self, profile)
+  end
+
+  def friends_with?(profile)
+    friends.include?(profile)
   end
   
-  def following? profile
-    user.in? followings
+  def followed_by?(profile)
+    followers.include?(profile)
+  end
+  
+  def following?(profile)
+    followings.include?(profile)
+  end
+  
+  def pending_friend_with?(profile)
+    following?(profile) || followed_by?(profile)
+  end
+  
+  def networked_with?(profile)
+    pending_friend_with?(profile) || friends_with?(profile)
   end
   
   
@@ -124,7 +143,7 @@ class Profile < ActiveRecord::Base
   end
 
   def pending_claimed_arcade_ids
-    @cached_pending_claimed_arcade_ids ||= claims.find(:all, :select => :arcade_id, :conditions => {:approved => 0}).collect(&:arcade_id)
+    @cached_pending_claimed_arcade_ids ||= claims.pending(:all, :select => :arcade_id).collect(&:arcade_id)
   end
   
   def claimed?(arcade)
@@ -132,7 +151,7 @@ class Profile < ActiveRecord::Base
   end
   
   def claimed_arcade_ids
-    @cached_claimed_arcade_ids ||= claims.find(:all, :select => :arcade_id, :conditions => {:approved => 1}).collect(&:arcade_id)
+    @cached_claimed_arcade_ids ||= claims.approved(:all, :select => :arcade_id).collect(&:arcade_id)
   end
   
     

@@ -60,10 +60,10 @@ module ApplicationHelper
     content_for(:header) { stylesheet_link_tag(*files) }
   end
 
-  def icon profile, size = :small, img_opts = {}
+  def avatar(profile, size = :small, img_opts = {})
     return "" if profile.nil?
     img_opts = {:title => profile.display_name, :alt => profile.display_name, :class => "#{size} framed left"}.merge(img_opts)
-    link_to(avatar_tag(profile, {:size => size, :file_column_version => size }, img_opts), profile_path(profile))
+    avatar_tag(profile, {:size => size, :file_column_version => size }, img_opts)
   end
   
   def me

@@ -5,7 +5,7 @@ class SizedGravatarSource < Avatar::Source::GravatarSource
   alias_method :parse_options_without_size, :parse_options
   
   def self.sizes
-    { :small => 50, :medium => 100, :large => 150, :big => 150 }
+    { :small => 50, :medium => 100, :large => 150, :big => 200 }
   end
   
   def parse_options(profile, options)

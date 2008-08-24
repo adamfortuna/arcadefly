@@ -9,7 +9,7 @@
 
   <%= error_messages_for :arcade %>
   
-  <% form_for(:arcade, :url => arcade_path(@arcade), :html => { :method => :post, :id => 'arcade_form' }) do |f| %>
+  <% form_for(:arcade, :url => arcades_path, :html => { :method => :post, :id => 'arcade_form' }) do |f| %>
     <%= render :partial => 'form', :locals => { :f => f } %>
   <% end %>
 <% end %>

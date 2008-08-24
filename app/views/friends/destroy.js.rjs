@@ -1,0 +1,2 @@
+page.replace_html "favorite_profile_#{@profile.id}", friend_profile_link(@profile, { :show_text => params[:show_text] == "true" })
+page.alert "You are no longer friends with #{@profile.display_name}."

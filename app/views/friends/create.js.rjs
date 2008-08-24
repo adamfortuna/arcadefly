@@ -1,0 +1,6 @@
+page.replace_html "favorite_profile_#{@profile.id}", unfriend_profile_link(@profile, { :show_text => params[:show_text] == "true" })
+if current_profile.friends_with?(@profile)
+  page.alert "You are now friends with #{@profile.display_name}."
+else  
+  page.alert "A friend request has been sent to #{@profile.display_name}. They will show up as your friend as soon as they approve it!"
+end

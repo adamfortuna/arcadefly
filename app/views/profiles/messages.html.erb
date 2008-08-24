@@ -3,6 +3,9 @@
 <%= render :partial => 'profiles/menu', :locals => { :profile => @profile } %>
 <% tabbed_box do %>
   <h1><%= @title %></h1>
+  <%= link_to "Compose a new message", new_profile_message_path(@profile) %>
+
+  <hr />
 
   <p>No messages so far. We'll implement this feature soon!</p>
 <% end %>

@@ -1,0 +1,9 @@
+<%- show_text ||= false -%>
+
+<p class="favorite" id="favorite_profile_<%= profile.id %>">
+  <% if current_profile.friends_with?(profile) %>
+    <%= unfriend_profile_link(profile, { :show_text => show_text}) %>
+  <% else %>
+    <%= friend_profile_link(profile, { :show_text => show_text}) %>
+  <% end %>
+</p>

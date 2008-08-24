@@ -23,7 +23,7 @@
   		    <li><%= link_to "Players", profiles_path %></li>
   		    <li><%= link_to "Popular", popular_path %></li>
           <%- if logged_in? -%>
-            <% if administrator? %><li><%= link_to "Claims (#{Claim.unapproved.count})", claims_path %></li><% end %>
+            <% if administrator? %><li><%= link_to "Claims (#{Claim.pending.count})", claims_path %></li><% end %>
             <li><%= link_to "My Profile", profile_path(current_profile) %></li>
             <li><%= link_to "Logout", logout_path %></li>
           <%- else -%>

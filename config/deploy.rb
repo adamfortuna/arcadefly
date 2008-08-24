@@ -11,7 +11,7 @@ set :repository,  "http://svn.arcadefly.com/trunk"
 # set :scm, :subversion
 
 role :app, "67.207.148.138"
-role :web, "67.207.148.138"
+role :web, "67.207.148.138", :asset_host_syncher => true
 role :db,  "67.207.148.138", :primary => true
 
 set :runner, "adam"
@@ -34,3 +34,6 @@ namespace :deploy do
   end
   
 end
+
+
+before "deploy:symlink", "s3_asset_host:synch_public"

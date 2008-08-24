@@ -2,7 +2,9 @@ class Claim < ActiveRecord::Base
   belongs_to :arcade
   belongs_to :profile
   
-  named_scope :unapproved, :conditions => { :approved => 0 }
+  named_scope :approved, :conditions => ['approved = ?', true]
+  named_scope :pending, :conditions => ['approved = ?', false]
+  
   
   validates_presence_of :arcade, :profile, :level, :reason
   validates_length_of :reason, :minimum => 10

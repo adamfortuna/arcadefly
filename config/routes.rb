@@ -72,14 +72,15 @@ ActionController::Routing::Routes.draw do |map|
                           :collection  => [ :popular ],
                           :member      => [ :favorite, :unfavorite ]
 
-  map.resources :profiles, :has_many   => [:friends, :comments, :messages, :arcades, :games],
-                           :has_one    => :address,
+  map.resources :profiles, :has_many   => [:comments, :messages, :arcades, :games],
+                           :has_one    => [:address, :friends],
                            :collection => [ :list ]
 
-  map.resources :users,   :alias => :friends
+  map.resources :profiles,  :alias => :friends
   map.resources :addresses, :sessions, :password, :comments, :messages, :playables
   map.resources :sessions, :object => [ :address ]
   map.resources :claims, :collection => [ :delete_selected, :approve_selected ]
+  map.resources :users
 
   map.resources :landings, :collection => [ :mobile ]
 
