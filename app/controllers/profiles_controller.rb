@@ -128,6 +128,7 @@ class ProfilesController < ResourceController::Base
     return @parent_object if @parent_object
     @parent_object = Game.find_by_permalink(params[:game_id]) if parent_type == :game
     @parent_object = Arcade.find_by_permalink(params[:arcade_id]) if parent_type == :arcade
+    raise ActiveRecord::RecordNotFound if @parent_object.nil?
     return @parent_object
   end
   
