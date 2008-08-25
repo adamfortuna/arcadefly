@@ -165,7 +165,7 @@ class ProfilesController < ResourceController::Base
       collection_options[:include] = {:address => [:region, :country]}
       if addressed_in?
         collection_options[:origin] = current_address
-        collection_options[:within] = current_range unless current_range == 0
+        collection_options[:within] = current_range == 0 ? 50000 : current_range
       else
         collection_options[:origin] = Address.first
         collection_options[:within] = 50000
