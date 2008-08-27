@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   
   private
   def current_session
-    @user_session ||= UserSession.new(session)
+    @user_session ||= UserSession.new(session, cookies)
   end
   helper_method :current_session
 end

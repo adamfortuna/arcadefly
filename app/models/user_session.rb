@@ -1,10 +1,21 @@
 class UserSession
   
-  def initialize(session)
+  def initialize(session, cookies)
     @session = session
-    @current_address = build_address(session)
+    @cookies = cookies
+    @current_profile = build_profile
+    @current_address = build_address
+    @current_address = profile.address if !addressed_in? && logged_in? && profile.has_address?
     @current_arcade_range = build_range(session[:arcade_range])
     @current_profile_range = build_range(session[:profile_range])
+  end
+  
+  def logged_in?
+    !@current_profile.nil?
+  end
+  
+  def profile
+    @current_profile
   end
   
   def addressed_in?
@@ -62,18 +73,33 @@ class UserSession
 
 
   private
-  def build_address(session)
+  def build_address
     return Address.new({
-      :street => session[:address_street],
-      :city =>  session[:address_city],
-      :region_name => session[:address_state],
-      :country_name =>  session[:address_country],
-      :postal_code => session[:address_zip],
-      :lat => session[:address_lat],
-      :lng =>  session[:address_lng]      
+      :street => @session[:address_street],
+      :city =>  @session[:address_city],
+      :region_name => @session[:address_state],
+      :country_name =>  @session[:address_country],
+      :postal_code => @session[:address_zip],
+      :lat => @session[:address_lat],
+      :lng =>  @session[:address_lng]      
     })
   end
   
+  def build_profile
+    (profile_from_session  || profile_from_cookie || nil)
+  end
+  def profile_from_session
+    Profile.find_by_user_id(@session[:user]) if @session[:user]
+  end
+  def profile_from_cookie      
+    user = @cookies[:auth_token] && User.find_by_remember_token(@cookies[:auth_token])
+    if user && user.remember_token?
+      user.remember_me
+      @cookies[:auth_token] = { :value => user.remember_token, :expires => user.remember_token_expires_at }
+      @current_user = user
+    end
+  end
+
   def build_range(range)
     return 100000 if range.nil? || range.to_i == 0
     return range.to_i
