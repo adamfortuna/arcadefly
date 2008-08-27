@@ -198,7 +198,7 @@ class ArcadesController < ResourceController::Base
       order = 'frequentships_count desc'
     elsif order == 'games'
       order = 'playables_count desc'
-    elsif addressed_in?
+    elsif current_session.addressed_in?
       order = 'distance'
     else
       order = 'arcades.name, frequentships_count desc'
@@ -215,7 +215,7 @@ class ArcadesController < ResourceController::Base
     collection_options[:conditions] = ['arcades.name like ?', "#{search}%"] unless search.blank?
     if current_session.addressed_in?
       collection_options[:origin] = current_session.address
-      collection_options[:within] = current_session.arcade_range
+      #collection_options[:within] = current_session.arcade_range
     end
     collection_options
   end
@@ -244,6 +244,7 @@ class ArcadesController < ResourceController::Base
   def check_near
     if params[:near]
       current_session.address = Address.geocode(params[:near])
+      current_session.arcade_range = 0      
     end
   end
 end

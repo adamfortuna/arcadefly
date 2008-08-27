@@ -29,11 +29,16 @@
           <%- else -%>
             <li><%= link_to "Register", signup_path %></li>
             <li><%= link_to "Sign In", signin_path %></li>
-            <%- if addressed_in? %>
+            <%- if current_session.addressed_in? %>
               <li><%= link_to "Clear Address", logout_path %></li>
             <% end -%>
   		    <%- end -%>
         </ul>
+        <% if current_session.addressed_in? %>
+        <p class="right clear shift-1">
+          <strong>Browsing from: <%= current_session.address.single_line %></strong>
+        </p>
+        <% end %>
             
       	<div id="logo">
           <strong><a href="/">ArcadeFly.com</a></strong>

@@ -3,7 +3,7 @@
 <div>
   <div class="left map_box_width">
   
-    <% if addressed_in? %>
+    <% if current_session.addressed_in? %>
       <span class="block">
       <label for="range_form">Within:</label>
       <% form_tag ranges_path, :id => 'range_form' do %>

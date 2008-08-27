@@ -75,8 +75,8 @@ class UserSession
   end
   
   def build_range(range)
-    return 100000 if range.nil?
-    range.to_i == 0 ? 100000 : range.to_i
+    return 100000 if range.nil? || range.to_i == 0
+    return range.to_i
   end
 end
 
