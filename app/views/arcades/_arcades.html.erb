@@ -1,3 +1,15 @@
+<% javascript do %>
+  Event.observe(window, 'load', function() {
+    if($F('address') == '') toggleLabel("address", true);
+  });
+<% end %>
+
+<% form_tag(addresses_path, :id => "controller_search", :class => "big_search shift-1") do %>
+  <label id="address_label" for="address" style="display:none;">Enter an address or city to show some arcades closeby...</label>
+  <%= text_field_tag :address, addressed_in? ? current_session.address.single_line : '', { :class => 'title', :onfocus => 'toggleLabel("address", false);', :onblur => 'toggleLabel("address", true);' } %>
+  <%= submit_tag "Find Arcades!", :class => 'big-button', :disable_with => 'Finding...', :id => 'find' %>
+<% end %>
+
 <div class="map_box">
   <ul class="scrollable content content-height">
     <%= render :partial => 'arcades/arcade', :collection => arcades %>

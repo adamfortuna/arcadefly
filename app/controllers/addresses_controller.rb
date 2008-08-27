@@ -22,68 +22,16 @@ class AddressesController < ResourceController::Base
   # POST /addresses.xml
   def create
     raise if !params[:address]
-    loc = Address.geocode(params[:address])
-    raise if loc.lat.nil? || loc.lng.nil?
-    
-    # If this is the same address they're logged in with, don't do anything
-    if addressed_in? && (current_address.lat == loc.lat) && (current_address.lng == loc.lng)
-      # Maybe give an additional notice here eventually letting them know nothing happend?
-      flash[:warning] = "It looks like this is the same location you have on file, so we decided not to change anything."
-    else      
-      region = Region.find_by_abbreviation(loc.state)
-      country = Country.find_by_alpha_2_code(loc.country_code)
-      address = Address.new(:title => 'Quick Lookup',
-                                            :addressable_type => 'Session', 
-                                            :addressable_id => nil,
-                                            :region => region,
-                                            :country => country,
-                                            :street => loc.street_address,
-                                            :postal_code => loc.zip,
-                                            :city => loc.city)
-      address.save
-      self.current_address = address
-    end
-    flash[:notice] = "<form action=\"/signup\" method=\"post\" class=\"right\"><input type=\"submit\" class=\"big-button\" value=\"Register Now!\" /></form>"
-    flash[:notice] += "Thanks for entering your location in <strong>#{current_address.short_line}</strong>. We'll use this address for the remainder of your visit here, but you can feel free to change it at any time from the <a href=\"/\">home page</a>. <strong>If you decide to <a href=\"/signup\">register</a> we'll save your address and you'll get access to even more features all for free!</strong>"
-    if addressed_in?
-      redirect_to arcades_path
-      return
-    else
+    current_session.address = Address.geocode(params[:address])
+    current_session.arcade_range = 0
+    next_page = ["http://localhost:3000/", "http://www.arcadefly.com/"].include?(request.referrer) ? arcades_path : request.referrer
+    if current_session.address.lat.nil? || current_session.address.lng.nil?
       flash[:error] = "We had trouble finding out just where your address is. Are you sure you typed it correctly?"
-      redirect_to request.env["HTTP_REFERER"]
-      return
-    end
-  rescue
-    flash[:error] = "We had trouble finding out just where your address is. Are you sure you typed it correctly?"
-    redirect_to request.env["HTTP_REFERER"]
-  end
-
-  # PUT users/1-adam/addresses/1
-  def update
-    if params[:address][:range]
-      self.current_range = params[:address][:range].to_i
-      respond_to do |format|
-        format.js { head :ok}
-        format.html { redirect_to link_without_page(request.env["HTTP_REFERER"]) }
-      end
-    else 
-      @address = Address.find(params[:id])
-
-      respond_to do |format|
-        if @address.update_attributes(params[:address])
-          flash[:notice] = 'Address was successfully updated.'
-          unless params[:user_id]
-            format.html { redirect_to address_url(@address) }
-          else
-            format.html { redirect_to :controller => 'account'  }
-          end
-        
-          format.xml  { head :ok }
-        else
-          format.html { render :action => "edit" }
-          format.xml  { render :xml => @address.errors.to_xml }
-        end
-      end
+      redirect_to next_page
+    else
+      flash[:notice] = "<form action=\"/signup\" method=\"post\" class=\"right\"><input type=\"submit\" class=\"big-button\" value=\"Register Now!\" /></form>"
+      flash[:notice] += "Thanks for entering your location in <strong>#{current_session.address.short_line}</strong>. We'll use this address for the remainder of your visit here, or until you change it. <strong>If you decide to <a href=\"/signup\">register</a> we'll save your address and you'll get access to even more features all for free!</strong>"
+      redirect_to next_page
     end
   end
 end

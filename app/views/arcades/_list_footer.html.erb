@@ -5,12 +5,12 @@
   
     <% if addressed_in? %>
       <span class="block">
-      <label for="">Within:</label>
-      <% form_tag address_path(current_address), :id => 'range_form', :method => 'put' do %>
-        <%= select("address", 
-                   "range", 
+      <label for="range_form">Within:</label>
+      <% form_tag ranges_path, :id => 'range_form' do %>
+        <%= select("session",
+                   "arcade_range", 
                    [['Everywhere', ''], ['5 miles', 5], ['10 miles', 10], ['25 miles', 25], ['50 miles', 50], ['100 miles', 100], ['250 miles', 250], ['500 miles', 500] ],
-                   {:selected => current_range },
+                   {:selected => current_session.arcade_range },
                     :class => 'text',
                     :onchange => "javascript:$('range_form').submit();"
                    ) %>

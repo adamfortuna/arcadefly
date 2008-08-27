@@ -13,9 +13,9 @@
   
   markers = {}
   addressables.each do |addressable|
-      markers.merge!("'#{addressable.permalink}'" => GMarker.new([addressable.address.public_lat, addressable.address.public_lng],
-                             :title => addressable.title,
-                             :info_window => map_bubble_for(addressable)))
+    markers.merge!("'#{addressable.permalink}'" => GMarker.new([addressable.address.public_lat, addressable.address.public_lng],
+                   :title => addressable.title,
+                   :info_window => map_bubble_for(addressable)))
   end
   
   gmarker_group = GMarkerGroup.new(true, markers)

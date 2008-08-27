@@ -17,4 +17,10 @@ class ApplicationController < ActionController::Base
     url = url + '?' + params.join('&') if params.length > 0
     url
   end
+  
+  private
+  def current_session
+    @user_session ||= UserSession.new(session)
+  end
+  helper_method :current_session
 end

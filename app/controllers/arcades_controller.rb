@@ -3,6 +3,7 @@ class ArcadesController < ResourceController::Base
   
   auto_complete_for :game, :name, :limit => 10, :order => 'playables_count DESC'
   
+  before_filter :check_near, :only => [:index]
   before_filter :login_required, :only => [:new, :create, :favorite, :unfavorite]
   before_filter :check_administrator, :only => [:destroy]
   before_filter :check_claim, :only => [:edit, :update, :edit_games]
@@ -202,7 +203,7 @@ class ArcadesController < ResourceController::Base
     else
       order = 'arcades.name, frequentships_count desc'
     end
-  
+
     search = params[:search] 
     search = "%" + search if search and params[:search].length >= 2
 
@@ -212,9 +213,9 @@ class ArcadesController < ResourceController::Base
     collection_options[:order] = order
     collection_options[:include] = {:address => [:region, :country]}      
     collection_options[:conditions] = ['arcades.name like ?', "#{search}%"] unless search.blank?
-    if addressed_in?
-      collection_options[:origin] = current_address
-      collection_options[:within] = current_range unless current_range == 0
+    if current_session.addressed_in?
+      collection_options[:origin] = current_session.address
+      collection_options[:within] = current_session.arcade_range
     end
     collection_options
   end
@@ -238,5 +239,11 @@ class ArcadesController < ResourceController::Base
   
   def check_claim
     permission_denied unless logged_in? && (current_profile.claimed?(object) || current_profile.administrator?)
+  end
+  
+  def check_near
+    if params[:near]
+      current_session.address = Address.geocode(params[:near])
+    end
   end
 end

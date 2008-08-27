@@ -16,8 +16,8 @@
   	</div>
   	
   	<div class="right">
-      <% if addressed_in? -%>
-        <%= profile_map.address.distance_to(current_address).round_to(2) %> miles away<br />
+      <% if current_session.addressed_in? -%>
+        <%= profile_map.address.distance_to(current_session.address).round_to(2) %> miles away<br />
       <% end %>
       <%= link_to pluralize(profile_map.favoriteships.size, "game"), profile_games_path(profile_map), :class => 'games' %> 
       <%= link_to pluralize(profile_map.frequentships.size, "favorites"), profile_arcades_path(profile_map), :class => 'users' %>

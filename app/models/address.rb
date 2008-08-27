@@ -20,7 +20,7 @@ class Address < ActiveRecord::Base
   before_validation_on_create :auto_geocode
   before_validation_on_update :check_for_auto_geocode
 
-  attr_accessor :geocoded
+  attr_accessor :geocoded, :country_name, :region_name
   
   # Returns the region's country if the region is specified
 #  def country_with_region_check
@@ -29,12 +29,28 @@ class Address < ActiveRecord::Base
 #  alias_method_chain :country, :region_check
 
 
+  def country_name
+    self.country_id? ? country.alpha_2_code : self[:country_name]
+  end
+  
+  def region?
+    self.region_id? ? true : !self[:region_name].blank?
+  end
+
+  def country?
+    self.country_id? ? true : !self[:country_name].blank?
+  end
+
+  def region_name
+    self.region_id? ? region.abbreviation : self[:region_name]
+  end
+
   def public_lat
-    addressable.is_a?(Arcade) ? lat : self[:public_lat]
+    addressable_type == "Arcade" ? lat : self[:public_lat]
   end
   
   def public_lng
-    addressable.is_a?(Arcade) ? lng : self[:public_lng]
+    addressable_type == "Arcade" ? lng : self[:public_lng]
   end
 
   def shortest_line
@@ -45,7 +61,7 @@ class Address < ActiveRecord::Base
       line << region.abbreviation
     end
     line << ', ' if !line.blank?
-    line << country.alpha_3_code if country
+    line << country_name if country
     line
   end
   
@@ -56,10 +72,10 @@ class Address < ActiveRecord::Base
     line << city if city?
     if region
       line << ', ' if !line.blank?
-      line << region.name
+      line << region_name if region?
     end
     line << ', ' if !line.blank?
-    line << country.name if country
+    line << country_name if country?
     line = 'No Address' if line.blank?
     line
   end
@@ -78,7 +94,7 @@ class Address < ActiveRecord::Base
     line << city if city?
     if region
       line << ', ' if !line.blank?
-      line << region.abbreviation
+      line << region_name if region?
     end
     if postal_code?
       line << '  ' if !line.blank?
@@ -86,7 +102,7 @@ class Address < ActiveRecord::Base
     end
     lines << line if !line.blank?
 
-    lines << country.alpha_2_code if country
+    lines << country_name if country?
     lines
   end
   

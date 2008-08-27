@@ -164,12 +164,12 @@ class ProfilesController < ResourceController::Base
     if params[:action] == 'index'
       collection_options[:conditions] << ['addresses.id IS NOT NULL']
       collection_options[:include] = {:address => [:region, :country]}
-      if addressed_in?
-        collection_options[:origin] = current_address
-        collection_options[:within] = current_range == 0 ? 50000 : current_range
-      else
-        collection_options[:origin] = Address.first
-        collection_options[:within] = 50000
+      if current_session.addressed_in?
+        collection_options[:origin] = current_session.address
+        collection_options[:within] = current_session.profile_range
+      # else
+      #   collection_options[:origin] = Address.first
+      #   collection_options[:within] = 50000
       end
     end
 

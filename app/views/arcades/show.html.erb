@@ -38,7 +38,7 @@
         <% if addressed_in? -%>
           <p>
             <strong>Distance: </strong>
-            <%= @arcade.address.distance_to(current_address).round_to(2) %> miles away
+            <%= @arcade.address.distance_to(current_session.address).round_to(2) %> miles away
           </p>
         <% end -%>
     	</div>

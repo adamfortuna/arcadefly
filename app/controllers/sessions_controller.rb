@@ -1,8 +1,12 @@
 # This controller handles the login/logout function of the site.  
 class SessionsController < ApplicationController
-  before_filter :login_required, :only => :destroy
+#  before_filter :login_required, :only => :destroy
   before_filter :not_logged_in_required, :only => [:new, :create]
   
+  def index
+    redirect_to root_url
+  end
+
   def new
   end
  
@@ -11,7 +15,8 @@ class SessionsController < ApplicationController
     if logged_in?
       successful_login
     else
-      failed_login("Either your email and password was entered incorrectly, or you may not have activated your account. If you're having problems signing in, try retrieving your password.")
+      flash[:error] = "Either your email and password was entered incorrectly, or you may not have activated your account. If you're having problems signing in, try retrieving your password."
+      redirect_to signin_path
     end
   end
  
@@ -25,11 +30,6 @@ class SessionsController < ApplicationController
   end
   
   private
-  def failed_login(message)
-    flash[:error] = message
-    redirect_to signin_path
-  end
-  
   def successful_login
     if params[:remember_me] == "1"
       self.current_user.remember_me

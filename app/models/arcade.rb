@@ -29,7 +29,7 @@ class Arcade < ActiveRecord::Base
   end
 
   def self.per_page
-    15
+    25
   end
 
   def title

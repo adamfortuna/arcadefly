@@ -3,7 +3,7 @@ module AuthenticatedSystem
     # Inclusion hook to make #current_user and #logged_in?
     # available as ActionView helper methods.
     def self.included(base)
-      base.send :helper_method, :current_user, :logged_in?, :current_profile, :administrator?, :addressed_in?, :current_address, :current_range
+      base.send :helper_method, :current_user, :logged_in?, :current_profile, :administrator?, :addressed_in?
     end
 
 
@@ -18,7 +18,7 @@ module AuthenticatedSystem
     
     # Returns true or false if the user has an address
     def addressed_in?
-      current_address != :false
+      current_session.addressed_in?
     end
     
     # Accesses the current user from the session.  Set it to :false if login fails
@@ -32,37 +32,13 @@ module AuthenticatedSystem
     def current_user
       @current_user ||= (login_from_session  || login_from_cookie || :false)
     end
-    
-    # Accessed the current profile from the profile or session
-    def current_address 
-      @current_address ||= (address_from_profile || address_from_session || :false)
-    end
-    
+
     # Store the given user in the session.
     def current_user=(new_user)
       session[:user] = (new_user.nil? || new_user.is_a?(Symbol)) ? nil : new_user.id
       @current_profile = new_user.profile if !new_user.nil?
       @current_user = new_user
     end
-    
-    # Store the given address in the session
-    def current_address=(new_address)
-      session[:address] = (new_address.nil? || new_address.is_a?(Symbol)) ? nil : new_address.id
-      @current_address = new_address
-    end
-    
-    def current_range=(new_range)
-      session[:range] = new_range
-    end
-
-    def current_range
-      session[:range] ? session[:range] : 100
-    end
-    
-    
-    
-    
-    
     
     
 
@@ -175,21 +151,6 @@ module AuthenticatedSystem
         self.current_user = user
       end
     end
-
-    # Called from #current_address. Will get the address form the profile if the user is logged in and has an address
-    def address_from_profile
-      current_profile.address if (logged_in? && current_profile.has_address?)
-    end
-
-    # Called from #current_address. Will get an address from the users session if they have one.
-    def address_from_session
-      Address.find(session[:address], :conditions => 'addressable_type="Session"') if session[:address]
-    end
-
-
-
-
-
 
 
     # Called from #current_user.  First attempt to login by the user id stored in the session.
