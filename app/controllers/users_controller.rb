@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new(params[:profile])
     @user.profile = Profile.new()
-    @user.profile.address = current_address if addressed_in?
+    @user.profile.address = current_session.address if current_session.addressed_in?
     
     @add_address = params[:add_address] || true
   end
