@@ -58,7 +58,7 @@
   <% if !logged_in? %>
     <% form_tag(addresses_path, :id => "controller_search", :class => "big_search shift-1") do %>
       <label id="address_label" for="address">Enter your address to show some arcades closeby...</label>
-      <%= text_field_tag :address, addressed_in? ? current_session.address.single_line : '', { :class => 'title', :onfocus => 'toggleLabel("address", false);', :onblur => 'toggleLabel("address", true);' } %>
+      <%= text_field_tag :address, current_session.addressed_in? ? current_session.address.single_line : '', { :class => 'title', :onfocus => 'toggleLabel("address", false);', :onblur => 'toggleLabel("address", true);' } %>
       <%= submit_tag "Find Arcades!", :class => 'big-button', :disable_with => 'Finding...', :id => 'find' %>
     <% end %>
   <% end %>

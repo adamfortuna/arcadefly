@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   # Sort this addressable by the distance from the current address
   def sort_by_distance(addressables)
-    (addressables && addressables.length > 1 && addressed_in?) ? addressables.sort_by_distance_from(current_address) : addressables
+    (addressables && addressables.length > 1 && current_session.addressed_in?) ? addressables.sort_by_distance_from(current_session.address) : addressables
   end
   
   def link_without_page(link)

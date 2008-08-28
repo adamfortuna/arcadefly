@@ -27,7 +27,7 @@
     <h3>Sort Profiles By...</h3>
     <ul>
       <%= nav_link "Sort by Name", "?order=name" %>
-      <%- if addressed_in? %>
+      <%- if current_session.addressed_in? %>
       <%= nav_link "Sort by Distance", "?order=distance" %>
       <%- end -%>
       <%= nav_link "Sort by Number of Favorite Games", "?order=games" %>

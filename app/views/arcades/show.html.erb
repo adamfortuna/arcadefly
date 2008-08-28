@@ -35,7 +35,7 @@
           <p>With <em><%= pluralize(@arcade.playables.size, "game") %></em>, <%= @arcade.name %> comes in with the <em>#<%= @arcade.playables_rank %> most games</em>.</p>
         <% end -%>
 
-        <% if addressed_in? -%>
+        <% if current_session.addressed_in? -%>
           <p>
             <strong>Distance: </strong>
             <%= @arcade.address.distance_to(current_session.address).round_to(2) %> miles away

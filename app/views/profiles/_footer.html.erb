@@ -9,14 +9,14 @@
 <div>
   <div class="left map_box_width">
   
-    <% if addressed_in? %>
+    <% if current_session.addressed_in? %>
       <span class="block">
       <label for="">Within:</label>
-      <% form_tag address_path(current_address), :id => 'range_form', :method => 'put' do %>
+      <% form_tag addresswa_path, :id => 'range_form', :method => 'put' do %>
         <%= select("address", 
                    "range", 
                    [['Everywhere', ''], ['5 miles', 5], ['10 miles', 10], ['25 miles', 25], ['50 miles', 50], ['100 miles', 100], ['250 miles', 250], ['500 miles', 500] ],
-                   {:selected => current_range },
+                   {:selected => current_session.profile_range },
                     :class => 'text',
                     :onchange => "javascript:$('range_form').submit();"
                    ) %>
@@ -38,7 +38,7 @@
     <h3>Sort Arcades By...</h3>
     <ul>
       <%= nav_link "Sort by Name", "?order=name" %>
-      <%- if addressed_in? %>
+      <%- if current_session.addressed_in? %>
       <%= nav_link "Sort by Distance", "?order=distance" %>
       <%- end -%>
       <%= nav_link "Sort by Number of Favorites", "?order=favorites" %>

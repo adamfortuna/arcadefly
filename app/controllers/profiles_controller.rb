@@ -143,7 +143,7 @@ class ProfilesController < ResourceController::Base
       order = 'frequentships_count desc'
     elsif order == 'games'
       order = 'favoriteships_count desc'
-    elsif addressed_in? && params[:action] == 'index'
+    elsif current_session.addressed_in? && params[:action] == 'index'
       order = 'distance'
     else
       order = 'profiles.display_name'
