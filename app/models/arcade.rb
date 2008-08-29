@@ -5,10 +5,9 @@ class Arcade < ActiveRecord::Base
 	PUBLIC_FIELDS = [:created_at, :updated_at, :permalink, :name, :phone, :website, :notes, :playables_count, :frequentships_count]
 	PUBLIC_FIELDS_WITH_ADDRESS = [PUBLIC_FIELDS, :street, :city, :postal_code, :lat, :lng].flatten
 
-#  named_scope :popular, :conditions => ['approved = ?', true], :limit => 1000
-
 	has_permalink :name
   
+  belongs_to :profile
 	has_many :playables
 	has_many :games, :through => :playables
 
@@ -16,13 +15,15 @@ class Arcade < ActiveRecord::Base
 	has_many :profiles, :through => :frequentships
 
 	has_many :hours, :as => :timeable, :order => 'day, start, end'
-		
+	
+	has_many :claims
+	
 	# Validations
 	validates_associated :address
 	validates_presence_of :name, :message => "is required."
 	validates_uniqueness_of :permalink
 
-  attr_accessible :name, :phone, :all_tags, :address
+  attr_accessible :name, :phone, :all_tags, :address, :profile, :website
 
 	def to_param
     permalink
@@ -58,7 +59,7 @@ class Arcade < ActiveRecord::Base
 
   def has_hours?
     false
-  end	
+  end
 	
 	# For iUi
 	def caption
@@ -72,4 +73,11 @@ class Arcade < ActiveRecord::Base
       self.tag_list = current_tags
     end
   end
+  
+  protected
+  after_create :create_claim
+	def create_claim
+	  claims << Claim.create(:profile => self.profile, :level => 0, :approved => true, :name => self.profile.display_name, :reason => "Added arcade to ArcadeFly")
+  end
+	
 end
