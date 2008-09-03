@@ -1,4 +1,9 @@
-<%- title "Arcades" -%>
+<% if params[:near] && current_session.addressed_in? %>
+  <%- title "Arcades near " + current_session.address.single_line %>
+<% else %>
+  <%- title "Arcades" -%>
+<% end %>
+
 <%= render :partial => 'arcades/list_menu' %>
 
 <% tabbed_box do %>
