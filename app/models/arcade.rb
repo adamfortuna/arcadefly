@@ -8,22 +8,21 @@ class Arcade < ActiveRecord::Base
 	has_permalink :name
   
   belongs_to :profile
-	has_many :playables
+	has_many :playables, :dependent => :destroy
 	has_many :games, :through => :playables
 
-	has_many :frequentships
+	has_many :frequentships, :dependent => :destroy
 	has_many :profiles, :through => :frequentships
 
-	has_many :hours, :as => :timeable, :order => 'day, start, end'
-	
-	has_many :claims
-	
+	has_many :hours, :as => :timeable, :order => 'day, start, end', :accessible => true, :dependent => :destroy
+	has_many :claims, :dependent => :destroy
+
 	# Validations
 	validates_associated :address
 	validates_presence_of :name, :message => "is required."
 	validates_uniqueness_of :permalink
 
-  attr_accessible :name, :phone, :all_tags, :address, :profile, :website
+  attr_accessible :name, :phone, :all_tags, :address, :profile, :website, :all_hours
 
 	def to_param
     permalink
@@ -56,16 +55,28 @@ class Arcade < ActiveRecord::Base
   def playables_rank
     Arcade.count(:conditions => ['playables_count > ?', playables_count]) + 1
   end
+  
+  def build_week
+    self.hours = Hour.new_week(self)
+  end
+  
+  def all_hours=(new_hours)
+    self.hours.destroy_all
+    self.hours ||= []
+    new_hours.each do |hour|
+      self.hours << hour.open ? Hour.new(hour.merge(:start => "12:00 AM", :end => "12:00 AM")) : Hour.new(hour)
+    end
+  end
 
   def has_hours?
-    false
+    self.hours.length > 0
   end
 	
 	# For iUi
 	def caption
 	  name
-	end	
-	
+	end
+
   def all_tags=(current_tags)
     if(current_tags.is_a?(Array))
       self.tag_list = current_tags.join(',')

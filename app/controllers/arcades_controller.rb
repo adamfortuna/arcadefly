@@ -67,6 +67,7 @@ class ArcadesController < ResourceController::Base
   # GET /arcades/new
   def new
     @arcade = Arcade.new
+    @arcade.build_week
   end
   
   # POST /arcades
@@ -80,6 +81,7 @@ class ArcadesController < ResourceController::Base
       else
         flash[:error] = "There was a problem creating the arcade. Please fix any errors below and give it another try."
       end
+      @arcade.build_week unless @arcade.has_hours?
       render :action => 'new'
     end
   end

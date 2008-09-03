@@ -3,7 +3,72 @@
 <% javascript do %>
 	Event.observe(window, 'load', function() {
     Form.focusFirstElement('arcade_form');
+    hoursChanged(false);
+    $('hide_hours').observe('click', function() {
+      hoursChanged(false);
+    });
+    $('show_hours').observe('click', function() {
+      hoursChanged(true);
+    });
   });
+  
+  
+  function fill_down(start, stop, closed, open) {
+	  $$('#hours select.start').each( function(e) {
+  	  $(e).selectedIndex = start;
+	  });
+	  $$('#hours select.end').each( function(e) {
+  	  $(e).selectedIndex = stop;
+	  });
+    $$('#hours span.options input.closed').each( function(e) {
+      $(e).checked = closed;
+	  });
+    $$('#hours span.options input.open').each( function(e) {
+      $(e).checked = open;
+	  });
+	}
+
+
+	function closedChanged(day, show) {
+	  if (show) $(day+'_hours').style.visibility = '';
+	  else $(day+'_hours').style.visibility = 'hidden';
+	  $('hours_' + day + '_open').checked = false;
+	}
+	function openChanged(day, show) {
+	  if (show)  $(day+'_hours').style.visibility = '';
+	  else $(day+'_hours').style.visibility = 'hidden';
+	  $('hours_' + day + '_closed').checked = false;
+	}
+	
+	
+
+	function hoursChanged(showAddHours) {
+	  $$('#hours input').each( function(e) {
+      if (showAddHours) {
+  			$(e).removeClassName('disabled');
+  			$(e).disabled = '';
+  		}	else {
+  			$(e).addClassName('disabled');
+  			$(e).disabled = 'disabled';
+  		}	
+	  });
+	  $$('#hours select').each( function(e) {
+      if (showAddHours) {
+  			$(e).removeClassName('disabled');
+  			$(e).disabled = '';
+  		}	else {
+  			$(e).addClassName('disabled');
+  			$(e).disabled = 'disabled';
+  		}	
+	  });
+	  $$('#hours label').each( function(e) {
+      if (showAddHours) {
+  			$(e).removeClassName('disabled');
+  		}	else {
+  			$(e).addClassName('disabled');
+  		}	
+	  });
+	} 
 <% end %>
 
 <div class="left half">
@@ -60,11 +125,10 @@
     <%= f.text_field :website, { :class => 'text' } %>
   </p>
   
-</div>
-
-<div class="right half">
+  <hr />
+  
   <p class="block required">
-    <label>Classification</label>
+    <label>This location could be classified as...</label>
     <span class="info">Select any of the following which this location could be classified as.</span> 
     <ul class="clean">
     <% Tag.find(:all, :order => :name).each do  |tag| %>
@@ -76,6 +140,71 @@
   </p>
 </div>
 
+<div class="right half padding">
+
+<h3>Hours</h2>
+
+  <p>
+    <input id="hide_hours" name="add_hours" type="radio" value="false" checked="true" />
+    <label for="hide_hours">Don't specify hours for this location right now.</label>
+  </p>
+  <p>
+    <input id="show_hours" name="add_hours" type="radio" value="true" />
+    <label for="show_hours">Specify hours for this arcade now.</label>
+  </p>
+  
+ 
+  <ul id="hours">
+    <% @arcade.hours.each do |hour| %>
+    <% fields_for "arcade[all_hours][]", hour do |h| %>
+    <li>
+      <%= h.hidden_field :dayofweek %>
+      <%= h.hidden_field :day %>
+      <span class="dayofweek"><%= hour.dayofweek.capitalize %>:</span>
+      <span id="<%= hour.dayofweek %>_hours" class="from_to">
+      <%= h.select :start, Hour::START_OPTIONS,
+        { :include_blank => false },
+        { :class => "start text", :id => "hour_start_#{hour.dayofweek}" } %>
+        
+      to&nbsp;&nbsp;
+
+      <%= h.select :end, Hour::END_OPTIONS,
+         { :include_blank => false },
+         { :class => "end text", :id => "hour_end_#{hour.dayofweek}" } %>
+    
+      </span>
+            
+      <span class="options">
+        <% if hour.day == 0 -%>
+          <a href="javascript:fill_down($('hour_start_mon').selectedIndex, $('hour_end_mon').selectedIndex, $('hours_mon_closed').checked, $('hours_mon_open').checked);" class="down">Copy to all</a>
+          <br/>
+        <% end %>
+        <span>
+          <%= check_box_tag "arcade[all_hours][][closed]", true, false, { :id => "hours_#{hour.dayofweek}_closed", :class => "closed", :onchange => "javascript:closedChanged(\"#{hour.dayofweek}\", !this.checked);" } %>
+          <label for="hours_<%= hour.dayofweek %>_closed">Closed</label>
+        </span>
+
+        <span>
+          <%= check_box_tag "arcade[all_hours][][open]", true, false, { :id => "hours_#{hour.dayofweek}_open", :class => "open", :onchange => "javascript:openChanged(\"#{hour.dayofweek}\", !this.checked);" } %>
+          <label for="hours_<%= hour.dayofweek %>_open">24 Hours</label>
+        </span>
+      </span>      
+    </li>
+    <% end %>
+    <% end %>
+  </ul>
+  
+  <hr />
+    
+  <p class="block">
+    <label for="arcade_notes">Notes:</label>
+    <span class="info">Is there anything specific about this arcade others would find useful?</span>
+    <%= error_message_on "arcade", "notes", "Notes " %>
+    <%= f.text_area :notes, { :class => 'text' } %>
+  </p>
+</div>
+
 <p class="clear right">
   <%= submit_tag "Review »", :class => "big-button right", :disable_with => 'Submitting...' %>
+  <p> 
 </p>

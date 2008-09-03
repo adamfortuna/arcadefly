@@ -2,7 +2,7 @@ class GamesController < ResourceController::Base
   belongs_to :arcade, :profile
   
   before_filter :check_administrator, :only => [:destroy, :new, :create, :edit, :update]
-
+  before_filter :clean_for_db, :only => [:create, :update]
   
   # This controls what views will be used depending on where the request is from.
   index.wants.html {
@@ -142,5 +142,11 @@ class GamesController < ResourceController::Base
       collection_options[:conditions] = ['games.name like ?', "#{search}%" ]
     end
     collection_options
+  end
+  
+  def clean_for_db
+    debugger
+    params[:game][:gamefaqs_id] = nil if params[:game][:gamefaqs_id].blank?
+    params[:game][:klov_id] = nil if params[:game][:klov_id].blank?
   end
 end

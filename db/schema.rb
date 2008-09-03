@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080817032624) do
+ActiveRecord::Schema.define(:version => 20080821011341) do
 
   create_table "addresses", :force => true do |t|
     t.datetime "created_at"
@@ -116,9 +116,9 @@ ActiveRecord::Schema.define(:version => 20080817032624) do
   create_table "friends", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "inviter_id",                :null => false
-    t.integer  "invited_id",                :null => false
-    t.integer  "status",     :default => 0
+    t.integer  "inviter_id",                    :null => false
+    t.integer  "invited_id",                    :null => false
+    t.boolean  "accepted",   :default => false
   end
 
   add_index "friends", ["inviter_id", "invited_id"], :name => "index_friends_on_inviter_id_and_invited_id", :unique => true
@@ -137,8 +137,8 @@ ActiveRecord::Schema.define(:version => 20080817032624) do
 
   add_index "games", ["name"], :name => "index_games_on_name", :unique => true
   add_index "games", ["permalink"], :name => "index_games_on_permalink", :unique => true
-  add_index "games", ["gamefaqs_id"], :name => "index_games_on_gamefaqs_id", :unique => true
   add_index "games", ["klov_id"], :name => "index_games_on_klov_id", :unique => true
+  add_index "games", ["gamefaqs_id"], :name => "index_games_on_gamefaqs_id", :unique => true
   add_index "games", ["playables_count"], :name => "index_games_on_playables_count"
   add_index "games", ["favoriteships_count"], :name => "index_games_on_favoriteships_count"
   add_index "games", ["name", "playables_count"], :name => "index_games_on_name_and_playables_count"

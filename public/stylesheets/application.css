@@ -52,10 +52,12 @@ div.autocomplete ul li { margin:0; padding:2px; height:32px; display:block; list
 
 
 ul#hours { list-style:none; margin:0; padding:0; }
-ul#hours li span.dayofweek { width:40px; display:block; float:left; text-align:right; padding-right:.4em; margin-top:.8em; }
-ul#hours li span.from_to { display:block; width:250px; float:left; }
-ul#hours li span.options { margin-top:.8em; display:block; float:left; }
+ul#hours li { margin: .6em 0;}
+ul#hours li span.dayofweek { width:40px; display:block; float:left; text-align:right; padding-right:.4em; margin-top:1.1em;}
+ul#hours li span.from_to { display:block; width:250px; float:left; margin-top:.3em;}
 ul#hours li input.text, ul#hours li select.text { width:100px; }
+ul#hours li span.options { margin-left:0em 0 2em 0; }
+ul#hours li span.options span { display: block; }
 
 
 
@@ -169,7 +171,7 @@ div.map_small { width: 300px; height:250px; padding: 1em; } /* Profile/Arcade/Ga
 .map_box_width { width:370px; padding-right:15px; }
 
 
-.half { width:440px; }
+.half { width:420px; padding-right:20px;}
 .half.padding { width:420px;}
 
 .third { width: 312px; margin-right:12px; }
