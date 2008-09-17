@@ -88,7 +88,7 @@ class Arcade < ActiveRecord::Base
   protected
   after_create :create_claim
 	def create_claim
-	  claims << Claim.create(:profile => self.profile, :level => 0, :approved => true, :name => self.profile.display_name, :reason => "Added arcade to ArcadeFly")
+	  claims << Claim.create(:profile => self.profile, :level => 0, :approved => true, :name => self.profile.display_name, :reason => "Added arcade to ArcadeFly") if self.profile
   end
 	
 end
