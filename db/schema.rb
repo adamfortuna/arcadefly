@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080821011341) do
+ActiveRecord::Schema.define(:version => 20080918194700) do
 
   create_table "addresses", :force => true do |t|
     t.datetime "created_at"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(:version => 20080821011341) do
     t.string   "street"
     t.string   "city",                            :null => false
     t.integer  "region_id"
-    t.integer  "postal_code"
+    t.string   "postal_code"
     t.integer  "country_id",       :default => 1, :null => false
     t.float    "lat"
     t.float    "lng"
@@ -137,8 +137,8 @@ ActiveRecord::Schema.define(:version => 20080821011341) do
 
   add_index "games", ["name"], :name => "index_games_on_name", :unique => true
   add_index "games", ["permalink"], :name => "index_games_on_permalink", :unique => true
-  add_index "games", ["klov_id"], :name => "index_games_on_klov_id", :unique => true
   add_index "games", ["gamefaqs_id"], :name => "index_games_on_gamefaqs_id", :unique => true
+  add_index "games", ["klov_id"], :name => "index_games_on_klov_id", :unique => true
   add_index "games", ["playables_count"], :name => "index_games_on_playables_count"
   add_index "games", ["favoriteships_count"], :name => "index_games_on_favoriteships_count"
   add_index "games", ["name", "playables_count"], :name => "index_games_on_name_and_playables_count"
