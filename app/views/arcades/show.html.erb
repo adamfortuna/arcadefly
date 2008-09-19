@@ -18,7 +18,7 @@
         <p class="adr">
           <b>Address:</b><br/>
           <span class="street-address"><%= @arcade.address.street %></span><br/>
-          <span class="locality"><%= @arcade.address.city %></span>, <span class="region"><%= @arcade.address.region.name %></span> <span class="postal-code"><%= @arcade.address.postal_code %></span><br/>
+          <span class="locality"><%= @arcade.address.city %></span> <% unless @arcade.address.region_id.nil? %>, <span class="region"><%= @arcade.address.region.name %></span><% end %> <span class="postal-code"><%= @arcade.address.postal_code %></span><br/>
           <span class="country-name"><%= @arcade.address.country.name %></span><br/>
           <%= link_to "View Larger Map", map_arcade_path(@arcade) %>
         </p>
@@ -48,7 +48,7 @@
     <div class="map_box right_column">
       <%= render :partial => 'shared/addressable', :object => @arcade %>
       <p class="center">
-        <strong><%= @arcade.name %></strong> is in <em><%= @arcade.address.city %>, <%= @arcade.address.region.name %></em>.
+        <strong><%= @arcade.name %></strong> is in <em><%= @arcade.address.city %><% unless @arcade.address.region_id.nil? %>, <%= @arcade.address.region.name %></em><% end %>.
       </p>
       <% if @arcade.tag_list.length > 0 %>
       <p class="center">
