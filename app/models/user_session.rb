@@ -78,7 +78,7 @@ class UserSession
     return Address.new({
       :street => @session[:address_street],
       :city =>  @session[:address_city],
-      :region => Region.new({:name => @session[:address_state], :abbreviation => @session[:address_state]}),
+      :region => Region.new({:name => @session[:address_region], :abbreviation => @session[:address_region]}),
       :country =>  Country.new({:name => @session[:address_country], :alpha_2_code => @session[:address_country], :alpha_3_code => @session[:address_country]}),
       :postal_code => @session[:address_zip],
       :lat => @session[:address_lat],
