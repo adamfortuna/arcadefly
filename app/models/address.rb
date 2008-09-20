@@ -107,6 +107,10 @@ class Address < ActiveRecord::Base
   def self.geocode(address)
     GeoKit::Geocoders::GoogleGeocoder.geocode(address)
   end
+
+  def self.iplookup(ip)
+    GeoKit::Geocoders::IpGeocoder.geocode(ip)
+  end  
   
   protected
   def check_for_auto_geocode

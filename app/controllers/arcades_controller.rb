@@ -238,8 +238,13 @@ class ArcadesController < ResourceController::Base
   
   def check_near
     if params[:near]
-      current_session.address = Address.geocode(params[:near])
-      current_session.arcade_range = 0      
+      if params[:near] == 'me'
+        address = Address.iplookup(request.env['REMOTE_ADDR'])
+        current_session.address = address if address.success
+      else
+        current_session.address = Address.geocode(params[:near])
+      end
+      current_session.arcade_range = 0 if current_session.address
     end
   end
 end
