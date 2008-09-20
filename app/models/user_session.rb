@@ -43,12 +43,13 @@ class UserSession
     @current_address = Address.new({
       :street => address.street_address,
       :city =>  address.city,
-      :region_name => address.state,
-      :country_name => address.country_code,
+      :region => Region.new({:name => address.state, :abbreviation => @session[:address_state]}),
+      :country => Country.new({:name => address.country_code}),
       :postal_code => address.zip,
       :lat => address.lat,
       :lng => address.lng
     })
+    @current_address
   end
   
   def address
@@ -77,8 +78,8 @@ class UserSession
     return Address.new({
       :street => @session[:address_street],
       :city =>  @session[:address_city],
-      :region_name => @session[:address_state],
-      :country_name =>  @session[:address_country],
+      :region => Region.new({:name => @session[:address_state], :abbreviation => @session[:address_state]}),
+      :country =>  Country.new({:name => @session[:address_country], :alpha_2_code => @session[:address_country], :alpha_3_code => @session[:address_country]}),
       :postal_code => @session[:address_zip],
       :lat => @session[:address_lat],
       :lng =>  @session[:address_lng]      
