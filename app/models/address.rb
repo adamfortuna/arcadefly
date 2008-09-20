@@ -12,10 +12,6 @@ class Address < ActiveRecord::Base
                         :lng
   validates_presence_of :region_id,
                         :if => :known_region_required?
-  # validates_format_of   :postal_code,
-  #                       :with => /^[0-9]{5}$/,
-  #                       :allow_nil => true,
-  #                       :message => "must be a valid 5 digit code"
 
   before_validation_on_create :auto_geocode
   before_validation_on_update :check_for_auto_geocode

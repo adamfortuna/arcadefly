@@ -108,14 +108,16 @@ class ProfilesController < ResourceController::Base
   # GET /games/:game_id/profiles
   def collection
     if parent?
-      parent_object.profiles.paginate(options)
+      objects = parent_object.profiles.paginate(options)
     else
       if params[:search].nil? or params[:search].length == 1
         objects = Profile.paginate options
       else
         objects = Profile.search params[:search], :page => params[:page], :per_page => Profile::PER_PAGE, :order => :display_name
       end
+      objects.reject! { |r| r.address.nil? } if params[:action] == 'index'  
     end
+    objects
   end
 
   def object
