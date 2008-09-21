@@ -22,7 +22,7 @@ class Arcade < ActiveRecord::Base
 	validates_presence_of :name, :message => "is required."
 	validates_uniqueness_of :permalink
 
-  attr_accessible :name, :phone, :all_tags, :address, :profile, :website, :all_hours
+  attr_accessible :name, :phone, :notes, :all_tags, :address, :profile, :website, :all_hours
 
 	def to_param
     permalink
@@ -64,7 +64,7 @@ class Arcade < ActiveRecord::Base
     self.hours.destroy_all
     self.hours ||= []
     new_hours.each do |hour|
-      self.hours << hour.open ? Hour.new(hour.merge(:start => "12:00 AM", :end => "12:00 AM")) : Hour.new(hour)
+      self.hours << hour.open? ? Hour.new(hour.merge(:start => "12:00 AM", :end => "12:00 AM")) : Hour.new(hour)
     end
   end
 

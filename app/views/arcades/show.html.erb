@@ -35,12 +35,13 @@
           <p>With <em><%= pluralize(@arcade.playables.size, "game") %></em>, <%= @arcade.name %> comes in with the <em>#<%= @arcade.playables_rank %> most games</em>.</p>
         <% end -%>
 
-        <% if current_session.addressed_in? -%>
-          <p>
-            <strong>Distance: </strong>
-            <%= @arcade.address.distance_to(current_session.address).round_to(2) %> miles away
-          </p>
-        <% end -%>
+        <% unless @arcade.notes.blank? %>
+        <p>
+          <h3>Additional Notes:</h3>
+          <%= sanitize(@arcade.notes) %>
+        </p>
+        <% end %>
+  
     	</div>
     </div>
   </div>
@@ -49,11 +50,15 @@
       <%= render :partial => 'shared/addressable', :object => @arcade %>
       <p class="center">
         <strong><%= @arcade.name %></strong> is in <em><%= @arcade.address.city %><% unless @arcade.address.region_id.nil? %>, <%= @arcade.address.region.name %></em><% end %>.
+        <% if current_session.addressed_in? -%>
+          <br/><br/><strong>Distance Away: </strong><%= @arcade.address.distance_to(current_session.address).round_to(2) %> miles away
+        <% end -%>
       </p>
       <% if @arcade.tag_list.length > 0 %>
       <p class="center">
         <strong>It's considered a:</strong>
         <%= @arcade.tag_list.join(', ') %>
+        
       </p>
       <% end %>
       
