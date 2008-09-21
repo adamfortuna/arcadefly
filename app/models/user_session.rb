@@ -44,7 +44,7 @@ class UserSession
       :street => address.street_address,
       :city =>  address.city,
       :region => Region.new({:name => address.state, :abbreviation => @session[:address_state]}),
-      :country => Country.new({:name => address.country_code}),
+      :country => Country.new({:name => address.country_code, :alpha_2_code => @session[:address_country], :alpha_3_code => @session[:address_country]}),
       :postal_code => address.zip,
       :lat => address.lat,
       :lng => address.lng
