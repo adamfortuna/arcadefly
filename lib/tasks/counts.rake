@@ -19,7 +19,7 @@ namespace :counts do
   end
 
   namespace :arcades do
-    desc "Update arcades.favoriteships_count"
+    desc "Update arcades.frequentships_count"
     task :frequentships_count => :environment do
       Arcade.update_all 'frequentships_count=0'
       Arcade.find(:all, :include => :frequentships, :conditions => 'frequentships.id IS NOT NULL').each do |arcade|

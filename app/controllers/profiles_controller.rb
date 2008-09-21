@@ -16,9 +16,9 @@ class ProfilesController < ResourceController::Base
       render :template => "profiles/index"
     end
   }  
-  index.wants.xml { 
-    render :text => @profiles.to_xml(:dasherize => false, :only => Profile::PUBLIC_FIELDS)
-  }
+  # index.wants.xml { 
+  #   render :text => @profiles.to_xml(:dasherize => false, :only => Profile::PUBLIC_FIELDS)
+  # }
 
   
   def list
