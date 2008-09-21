@@ -100,7 +100,7 @@ class Address < ActiveRecord::Base
     end
     lines << line if !line.blank?
 
-    lines << country.name if country?
+    lines << country.alpha_3_code if country?
     lines
   end
   
