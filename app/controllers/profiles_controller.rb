@@ -16,9 +16,9 @@ class ProfilesController < ResourceController::Base
       render :template => "profiles/index"
     end
   }  
-  # index.wants.xml { 
-  #   render :text => @profiles.to_xml(:dasherize => false, :only => Profile::PUBLIC_FIELDS)
-  # }
+  index.wants.xml { 
+    render :text => @profiles.to_xml(:dasherize => false, :only => Profile::PUBLIC_FIELDS)
+  }
 
   
   def list
@@ -28,10 +28,10 @@ class ProfilesController < ResourceController::Base
   def show
     @profile = object
     
-    respond_to do |format|
-      format.xml { render :text => @profile.to_xml(:dasherize => false, :only => Profile::PUBLIC_FIELDS) }
-      format.html { render }
-    end
+    #respond_to do |format|
+    #  format.html { render }
+    #  format.xml { render :text => @profile.to_xml(:dasherize => false, :only => Profile::PUBLIC_FIELDS) }
+    #end
   end
   
   def edit
