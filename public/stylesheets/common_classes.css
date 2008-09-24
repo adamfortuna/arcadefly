@@ -74,3 +74,6 @@ li.favorited { background-color: #B8E4F5; }
 .shift-2 { margin-top: 2em; }
 
 img.framed { border:1px solid #ccc; }
+
+ul.normal { text-align:left; list-style:normal; border:none; list-style-type:disc; list-style-position:inside; width:auto;}
+ul.normal li { border:none; width:auto; }

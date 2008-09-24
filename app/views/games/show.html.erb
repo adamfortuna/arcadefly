@@ -7,8 +7,8 @@
   <div id="profile_overview">
     <div class="left_column">
       <span class="counts left shift-1">
-        <%= link_to pluralize(@game.playables.size, "arcade"), game_arcades_path(@game), :class => "arcades" %>
-        <%= link_to pluralize(@game.favoriteships.size, "favorite"), game_profiles_path(@game), :class => "users" %>
+        <%= link_to "#{pluralize(@game.playables.size, "arcade")} (##{@game.playables_rank})", game_arcades_path(@game), :class => "arcades" %>
+        <%= link_to "#{pluralize(@game.favoriteships.size, "favorite")} (##{@game.favoriteships_rank})", game_profiles_path(@game), :class => "users" %>
       </span>
       <div class="right short_description">
         <h1><%= @game.name %></h1>
@@ -22,26 +22,14 @@
     	  <%= render :partial => 'favorite', :locals => { :show_text => true, :game => @game } if logged_in? %>
     	</div>
     	
-    	<div class="left_column_content">
-      	<% if @game.has_arcades? %>
-        <p>
-          With availability at <em><%= pluralize(@game.playables.size, "arcade") %></em>, <%= @game.name %> is the <em>#<%= @game.playables_rank %> most available</em> game.
-        </p>
-        <% end %>
-
-        <% if @game.has_users? %>
-        <p>
-          <%= @game.name %> has been favorited by <em><%= pluralize(@game.favoriteships.size, "player") %></em>, making it the <em>#<%= @game.favoriteships_rank %> most favorited</em> game.
-        </p>
-        <% end %>        
-      </div>
-      
     </div>
     
     <div class="right_column">
+      <% if @game.has_arcades? %>
       <p class="center shift-2">
         Want to see locations near you with this game? <%= link_to "Check out arcades with this game!", game_arcades_path(@game) %>
       </p>
+      <% end %>
     </div>
     
     <% if @game.alias != @game.name %>

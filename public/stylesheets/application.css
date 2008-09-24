@@ -122,7 +122,7 @@ ul.nav li a:hover, ul.nav li a:active { text-decoration: underline; }
 
 
 /* Pagination */
-.pagination { padding: 3px; margin: 3px; }
+.pagination { padding: 1em 0; clear:both;}
 .pagination a { padding: 2px 5px 2px 5px; margin: 2px; border: 1px solid #6d84b4; text-decoration: none; color: #000099; }
 .pagination a:hover, .pagination a:active {border: 1px solid #3b5998; color: #fff; background-color: #6d84b4; }
 .pagination span.current { padding: 2px 5px 2px 5px; margin: 2px; border: 1px solid #000099; font-weight: bold; background-color: #3b5998; color: #FFF; }
@@ -141,8 +141,8 @@ ul.scrollable li label, ul.items li label { display: block; font-weight:normal; 
 
 
 /* Counts displayed on an arcade/game/user page */
-span.counts { border: 1px solid #ccc; margin-left:1em; }
-span.counts a { display:block; padding:1em 2em 1em 3em; font-weight: bold; }
+span.counts { border: 1px solid #ccc; }
+span.counts a { display:block; padding:1em 1em 1em 3em; font-weight: bold; }
 span.counts a:first-child { border-bottom: 1px solid #ccc;}
 span.counts a.arcades { background: url(http://static.arcadefly.com/images/icons/joystick.png) #dde no-repeat left; background-position: 1em; }
 span.counts a.games { background: url(http://static.arcadefly.com/images/icons/controller.png) #fdd no-repeat left; background-position: 1em; }
@@ -152,24 +152,24 @@ span.counts a.users { background: url(http://static.arcadefly.com/images/icons/u
 
 
 /* Global Map settings */
-.map_box { padding:0; margin:0; }
+.map_box { padding:0; margin:0;}
 .map_box ul { width:370px; list-style:none; margin:0; padding:0; float:left; }
 .map_box ul li, ul.padded ul li { clear: both; padding:.2em .2em .2em .5em; }
 
-.map_box ul, div.map { border: 1px solid #ccc; margin-bottom: 1em; }
-.map_box div.map { float:right; }
+.map_box ul, div.map { border: 1px solid #ccc; }
 
 div.map_big { width: 894px; height: 550px; padding-bottom: 1em; } /* Entire Page Map */
 #map_big_loading { position:absolute; left:460px; top:330px;}
 
-div.map_medium { width:510px; } /* List Map */
+div.map_medium { width:510px; float:right; } /* List Map */
 #map_medium_loading { position:absolute; left:660px; top:250px;}
 
-div.map_small { width: 300px; height:250px; padding: 1em; } /* Profile/Arcade/Games Map */
+div.map_small { width: 330px; height:280px; } /* Profile/Arcade/Games Map */
 #map_small_loading { position:absolute; left:745px; top:155px;}
 
 .map_box_width { width:370px; padding-right:15px; }
 
+.map_info { padding-top:1em; width:80%; margin:1em auto 0 auto; }
 
 .half { width:420px; padding-right:20px;}
 .half-padding { width:420px;}
@@ -180,9 +180,9 @@ div.map_small { width: 300px; height:250px; padding: 1em; } /* Profile/Arcade/Ga
 .last { margin-right:0;}
 div.large_left_column { width:640px; float:left;}
 div.left_column { width:540px; float:left;}
-div.left_column .short_description { width:370px; float: right; }
-div.left_column .left_column_content { clear: both; padding-top: 2em; }
-div.right_column { width:300px; float:right; }
+div.left_column .short_description { float: left; padding:1em 1em 0 1em; width:350px;}
+div.left_column .left_column_content { clear: both; padding-top: 0em; }
+div.right_column { width:330px; float:right; }
 
 ul.arcades_list { margin:0; list-style:none; }
 ul.arcades_list li { padding: .2em .8em; }

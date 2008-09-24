@@ -3,7 +3,7 @@
   #  render :partial => 'shared/addressables', :object => arcades, :locals => {:small_map => true, :map_type => false, :id => "#{addressables.first.class.to_s.downcase}_map"}
 
   options ||= {}
-  options.reverse_merge!({:small_map => true, :map_type => false, :id => "#{addressable.class.to_s.downcase}_map", :class => "map_small right prepend-1 span-13 last map"})
+  options.reverse_merge!({:small_map => true, :map_type => false, :id => "#{addressable.class.to_s.downcase}_map", :class => "map_small map"})
 
   map = GMap.new(options[:id])
   map.control_init(options)

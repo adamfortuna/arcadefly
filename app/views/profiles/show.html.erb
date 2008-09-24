@@ -27,7 +27,8 @@
     <% if @profile.has_address? %>
     <div class="map_box right_column">
       <%= render :partial => 'shared/addressable', :object => @profile if @profile.has_address?%>
-      <p class="center">
+      
+      <p class="map_info">
         <%= h @profile.display_name %> lives in <%= @profile.address.shortest_line %>
       </p>
     </div>
