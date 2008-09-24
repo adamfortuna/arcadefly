@@ -5,8 +5,8 @@
   <div id="profile_overview">
     <div class="overview left_column">
       <span class="counts left shift-1">
-        <%= link_to "#{pluralize(@arcade.playables.size, "game")} (##{@arcade.frequentships_rank})", arcade_games_path(@arcade), :class=>"games" %>
-        <%= link_to "#{pluralize(@arcade.frequentships.size, "favorite")} (##{@arcade.playables_rank})", arcade_profiles_path(@arcade), :class=>"users" %>
+        <%= link_to "#{pluralize(@arcade.playables.size, "game")} (##{@arcade.playables_rank})", arcade_games_path(@arcade), :class=>"games" %>
+        <%= link_to "#{pluralize(@arcade.frequentships.size, "favorite")} (##{@arcade.frequentships_rank})", arcade_profiles_path(@arcade), :class=>"users" %>
       </span>
       <div class="short_description">
         <h1><%= h @arcade.name %></h1>        
