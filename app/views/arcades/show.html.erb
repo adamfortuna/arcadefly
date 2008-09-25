@@ -38,23 +38,27 @@
       <div class="map_info">
         <p class="center">
           <strong><%= @arcade.name %></strong> is in <em><%= @arcade.address.city %><% unless @arcade.address.region_id.nil? %>, <%= @arcade.address.region.name %></em><% end %>.
-          <% if current_session.addressed_in? -%>
-            <br/><br/><strong>Distance Away: </strong><%= @arcade.address.distance_to(current_session.address).round_to(2) %> miles away
-          <% end -%>
         </p>
+
+        <% if current_session.addressed_in? -%>
+          <div class="clear shift-1">
+            <strong>Distance Away: </strong><%= @arcade.address.distance_to(current_session.address).round_to(2) %> miles away
+          </div>
+        <% end -%>
+        
         <% if @arcade.tag_list.length > 0 %>
-        <p>
+        <div class="clear shift-1">
           <strong>It's been marked as the following:</strong>
-          <ul class="normal">
+          <ul class="inline comma">
             <% @arcade.tag_list.each do |tag| %>
               <li><%= tag %></li>
             <% end %>
           </ul>
-        </p>
+        </div>
         <% end %>
       
         <% if @arcade.has_hours? %>
-        <ul style="margin:0 0 0 50px; border:0; width:250px;">
+        <ul class="inline comma">
           <% @arcade.hours.each do |hour| %>
             <li>
               <strong><%= hour.dayofweek.capitalize %></strong>: 
@@ -67,6 +71,19 @@
           <% end %>
         </ul>
         <% end %>
+        
+        
+        <% if @arcade.editors.length > 0 %>
+          <div class="clear shift-1">
+            <strong>Editors for this Arcade: </strong>
+            <ul class="inline comma">
+            <% @arcade.editors.each do |editor| %>
+              <li><%= link_to editor.display_name, profile_path(editor) %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+  
       </div>
     </div>
   <% end %>

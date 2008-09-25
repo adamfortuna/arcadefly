@@ -21,6 +21,18 @@ class UserMailer < ActionMailer::Base
     setup_email(user)
     @subject    += 'Your password has been reset.'
   end
+
+  def claim_approval(claim)
+    setup_email(claim.profile.user)
+    @subject       += "Your claim has been approved for #{claim.arcade.name}"
+    @body[:claim]  = claim
+  end
+  
+  def claim_denied(claim)
+    setup_email(claim.profile.user)
+    @subject       += "Your claim has been denied for #{claim.arcade.name}"
+    @body[:claim]  = claim    
+  end
   
   protected
     def setup_email(user)

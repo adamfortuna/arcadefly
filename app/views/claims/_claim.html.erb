@@ -1,7 +1,16 @@
 <li>
   <input type="checkbox" name="claims[<%= claim.id %>]" value="1" />
-  <%= link_to "#{claim.profile.display_name} (#{claim.profile.full_name})", profile_path(claim.profile) %> - 
-  <%= claim.type %> - 
-  <%= claim.name %>
-  <p><%= claim.reason %></p>
+  <%= link_to "#{claim.profile.display_name} (#{claim.profile.full_name})", profile_path(claim.profile) %> (claimed name: <%= claim.name %>)
+  
+  <br>
+  <strong>Arcade:</strong> <%= link_to claim.arcade.name, arcade_path(claim.arcade) %> ( <%= pluralize(claim.arcade.editors.count, "current editor") %>)
+  
+  <br/>
+  <strong>Claim Type:</strong> <%= claim.type %>
+  
+  <br/>
+  <p>
+  <strong>Reason: </strong>
+    <%= claim.reason %>
+  </p>
 </li>

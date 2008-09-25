@@ -110,17 +110,6 @@ div.right-space { padding: 1em 0 1em 0; margin-right:20px; }
 div.tabbed-map { padding: 0em 0 1em 0; clear:both; }
 
 
-
-
-/*  For general horizontal lists */
-ul.nav li { display: inline; border-right: 1px solid #ccc; padding: 0 .5em; }
-ul.nav li:last-child { border: none; }
-ul.nav li a, ul.nav li a:visited { color: #369; text-decoration: none; }
-ul.nav li a:hover, ul.nav li a:active { text-decoration: underline; }
-
-
-
-
 /* Pagination */
 .pagination { padding: 1em 0; clear:both;}
 .pagination a { padding: 2px 5px 2px 5px; margin: 2px; border: 1px solid #6d84b4; text-decoration: none; color: #000099; }
@@ -145,8 +134,11 @@ span.counts { border: 1px solid #ccc; }
 span.counts a { display:block; padding:1em 1em 1em 3em; font-weight: bold; }
 span.counts a:first-child { border-bottom: 1px solid #ccc;}
 span.counts a.arcades { background: url(http://static.arcadefly.com/images/icons/joystick.png) #dde no-repeat left; background-position: 1em; }
+span.counts a.arcades:hover { background-color: #ccf; }
 span.counts a.games { background: url(http://static.arcadefly.com/images/icons/controller.png) #fdd no-repeat left; background-position: 1em; }
+span.counts a.games:hover { background-color: #fcc; }
 span.counts a.users { background: url(http://static.arcadefly.com/images/icons/user.png) #ded no-repeat left; background-position: 1em; }
+span.counts a.users:hover { background-color: #cec; }
 
 
 
@@ -198,3 +190,22 @@ ul.icons li:hover { border:1px solid #ccc; }
 ul.icons a { text-decoration:none;  float:left; padding:.8em; }
 ul.icons p.favorite { display:inline; }
 ul.icons p.favorite a { border:none; padding:0; margin:0;}
+
+
+
+
+/*  For general horizontal lists */
+ul.nav li { display: inline; border-right: 1px solid #ccc; padding: 0 .5em; }
+ul.nav li:last-child { border: none; }
+ul.nav li a, ul.nav li a:visited { color: #369; text-decoration: none; }
+ul.nav li a:hover, ul.nav li a:active { text-decoration: underline; }
+
+ul.inline { display:inline; width:100%; border:0; }
+ul.inline li { display: inline; border:none; margin:0; padding:0; }
+ul.inline li a, ul.inline li a:visited { color: #369; text-decoration: none; border:none; }
+ul.inline li a:hover, ul.inline li a:active { text-decoration: underline; }
+
+ul.comma li:after { content:", ";} 
+ul.comma li:last-child:after { content:"";} 
+
+

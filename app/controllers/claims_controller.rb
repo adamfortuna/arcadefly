@@ -2,7 +2,7 @@ class ClaimsController < ApplicationController
   before_filter :login_required
   before_filter :parent_object
   
-  before_filter :check_administrator, :only => [:index, :destroy, :destroy_selected, :approve_selected]
+  before_filter :check_administrator, :only => [:index, :destroy_selected, :approve_selected]
   
   # Used to manage claims for administrators
   # GET /claims
@@ -30,6 +30,7 @@ class ClaimsController < ApplicationController
     claims = Claim.find_all_by_id(params[:claims].keys)
     
     claims.each do |claim|
+      claim.denied = true
       claim.destroy
     end
     

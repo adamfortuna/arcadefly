@@ -28,9 +28,27 @@
     <div class="map_box right_column">
       <%= render :partial => 'shared/addressable', :object => @profile if @profile.has_address?%>
       
-      <p class="map_info">
+      <p class="map_info center">
         <%= h @profile.display_name %> lives in <%= @profile.address.shortest_line %>
       </p>
+      
+      <% if @profile.administrator? %>
+        <div class="clear center shift-1">
+          <strong><%= h @profile.display_name %> is an administrator.</strong>
+        </div>
+      <% elsif @profile.claimed_arcades.length > 0 %>
+        <div class="clear shift-1">
+          <strong><%= h @profile.display_name %> is an editor for these arcades: </strong>
+          <ul class="inline comma">
+          <% @profile.claimed_arcades.each do |arcade| %>
+            <li><%= link_to arcade.name, arcade_path(arcade) %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      
+      
+      
     </div>
     <% end %>
   </div>

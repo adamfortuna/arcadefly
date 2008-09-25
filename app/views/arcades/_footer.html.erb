@@ -6,6 +6,9 @@
     <li><%= link_to "Edit this Arcade", edit_arcade_path(@arcade) %></li>
     <li><%= link_to "Edit Games List", edit_arcade_games_path(@arcade) %></li>
     
+    <% if current_profile.claimed?(@arcade) %>
+      <%= link_to "Resign as an editor of this arcade", arcade_claim_path(@arcade, 1), :method => :delete, :confirm => "Are you sure? You will no longer be able to edit this arcade or the games at it." %>
+    <% end %>
   <% elsif current_profile.pending_claim?(@arcade) %>
     <li>You've already put in a claim for this arcade. <%= link_to "Remove it?", arcade_claim_path(@arcade, 1), :method => :delete, :confirm => "Are you sure?" %></li>
 

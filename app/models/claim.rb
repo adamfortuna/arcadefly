@@ -13,6 +13,9 @@ class Claim < ActiveRecord::Base
   validates_length_of       :name, :within => 4..200,  :if => :name_required?
   
   
+  before_destroy :send_denied_email
+  attr_accessor :denied
+  
 
   LEVELS = ["I'm the Owner/Manager at this Arcade", 1],
            ["I'm an Employee at this Arcade", 2],
@@ -37,14 +40,25 @@ class Claim < ActiveRecord::Base
   end
   
   def approve!
-    self.update_attribute(:approved, true)
-    send_approval_email
+    begin
+      self.transaction do
+        self.update_attribute(:approved, true)
+        send_approval_email
+      end
+    rescue Exception => e
+      debugger
+    end
+    return false
   end
   
   def send_approval_email
-    
+    UserMailer.deliver_claim_approval(self)
   end
   
+  def send_denied_email
+    debugger
+    UserMailer.deliver_claim_denied(self) if !approved && denied
+  end
   
   private
   def name_required?
