@@ -40,15 +40,10 @@ class Claim < ActiveRecord::Base
   end
   
   def approve!
-    begin
-      self.transaction do
-        self.update_attribute(:approved, true)
-        send_approval_email
-      end
-    rescue Exception => e
-      debugger
+    self.transaction do
+      self.update_attribute(:approved, true)
+      send_approval_email
     end
-    return false
   end
   
   def send_approval_email
