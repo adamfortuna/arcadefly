@@ -26,6 +26,7 @@ class UserMailer < ActionMailer::Base
     setup_email(claim.profile.user)
     @subject       += "Your claim has been approved for #{claim.arcade.name}"
     @body[:claim]  = claim
+    @body[:url]  = "#{HOST}/arcades/#{claim.arcade.permalink}"
   end
   
   def claim_denied(claim)
