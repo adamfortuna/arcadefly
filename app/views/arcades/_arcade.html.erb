@@ -1,3 +1,4 @@
+<% arcade.address ||= Address.new %>
 <li class="<%= cycle("even","odd")%> clear">
 
   <span style="width:280px;" class="left clear">
@@ -11,7 +12,7 @@
   <div class="clear soft">
   	<div class="left">
       <%= render :partial => 'arcades/favorite', :locals => { :show_text => false, :arcade => arcade } if logged_in? %>
-      <p><%= arcade.address.shortest_line unless arcade.address.nil? -%></p>
+      <p><%= arcade.address.shortest_line -%></p>
   	</div>
   	
   	<div class="right">
