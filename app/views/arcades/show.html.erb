@@ -1,4 +1,4 @@
-<% title 'Arcades' + separator + @arcade.name %>
+<% title 'Arcades' + separator + h(@arcade.name) %>
 <%= render :partial => 'menu', :locals => { :arcade => @arcade } %>
 
 <% tabbed_box do %>
@@ -11,11 +11,10 @@
       <div class="short_description">
         <h1><%= h @arcade.name %></h1>        
         <%= render :partial => 'arcades/favorite', :locals => { :show_text => true, :arcade => @arcade } if logged_in? %>
-        <% unless @arcade.phone.nil? %>
-        <p><strong>Phone Number:</strong> <%= @arcade.phone %></p>
-        <% end %>
+    		<% unless @arcade.phone.blank? %><div><strong>Phone Number:</strong> <%= h(@arcade.phone) %></div><% end %>
+    		<% unless @arcade.website.blank? %><div><strong>Website:</strong> <%= link_to h(@arcade.website), h(@arcade.website) %></div><% end %>
         
-        <p class="adr">
+        <p class="adr shift-1">
           <b>Address:</b><br/>
           <span class="street-address"><%= @arcade.address.street %></span><br/>
           <span class="locality"><%= @arcade.address.city %></span> <% unless @arcade.address.region_id.nil? %>, <span class="region"><%= @arcade.address.region.name %></span><% end %> <span class="postal-code"><%= @arcade.address.postal_code %></span><br/>
@@ -26,7 +25,7 @@
       <% unless @arcade.notes.blank? %>
     	<p class="left_column_content">
           <h3>Additional Notes:</h3>
-          <%= sanitize(@arcade.notes) %>  
+          <%= sanitize(@arcade.notes, :tags => ALLOWED_HTML_TAGS ) %>  
     	</p>
     	<% end %>
       
@@ -37,7 +36,7 @@
       <%= render :partial => 'shared/addressable', :object => @arcade %>
       <div class="map_info">
         <p class="center">
-          <strong><%= @arcade.name %></strong> is in <em><%= @arcade.address.city %><% unless @arcade.address.region_id.nil? %>, <%= @arcade.address.region.name %></em><% end %>.
+          <strong><%= h @arcade.name %></strong> is in <em><%= @arcade.address.city %><% unless @arcade.address.region_id.nil? %>, <%= @arcade.address.region.name %></em><% end %>.
         </p>
 
         <% if current_session.addressed_in? -%>

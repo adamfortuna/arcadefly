@@ -53,9 +53,11 @@
 
     <p class="block">
       <label for="profile_about_me">About Me</label>
-      <span class="block info">This is for info about you, not javascript, styles or forms. This isn't MySpace after all.<br/>Want something to write about? Here's a few ideas to get those brain juices flowing... 
-      What arcades and games do you love? Do you prefer arcades or console games -- and why? How long have you been gaming? If people in your area want to hang out, how shouold they contact you?
-       </span>
+      <span class="block info">
+        This is for info about you, not javascript, styles or forms. This isn't MySpace after all.<br/>Want something to write about? Here's a few ideas to get those brain juices flowing... 
+        What arcades and games do you love? Do you prefer arcades or console games -- and why? How long have you been gaming? If people in your area want to hang out, how shouold they contact you?
+        <br/><br/>You Can use the following tags: <%= ALLOWED_HTML_TAGS.join(', ') %>
+      </span>
       <%= error_message_on "profile", "about_me", "About Me " %>
       <%= p.text_area :about_me, { :class => 'text'} %>
     </p>

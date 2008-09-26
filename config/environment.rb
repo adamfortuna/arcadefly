@@ -124,6 +124,7 @@ end
 
 AMS_KEY = "096RRJ93PTDQPZZ44802"
 AMAZON_ASSOCIATES_ID = "adamfortuna-20"
+ALLOWED_HTML_TAGS = %w(a strong em br table tr td div span)
 
 gem 'mislav-will_paginate', '~> 2.2'
 require 'will_paginate'

@@ -198,7 +198,9 @@
     
   <p class="block">
     <label for="arcade_notes">Notes:</label>
-    <span class="info">Is there anything specific about this arcade others would find useful?</span>
+    <span class="info">Is there anything specific about this arcade others would find useful?
+    <br/><br/>You Can use the following tags: <%= ALLOWED_HTML_TAGS.join(', ') %>
+    </span>
     <%= error_message_on "arcade", "notes", "Notes " %>
     <%= f.text_area :notes, { :class => 'text' } %>
   </p>
