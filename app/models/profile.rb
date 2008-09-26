@@ -1,4 +1,5 @@
 class Profile < ActiveRecord::Base
+  extend ActiveSupport::Memoizable 
   include Addressable
 
   PUBLIC_FIELDS = [:created_at, :display_name, :favoriteships_count, :frequentships_count, :friendships_count, :full_name, :initials, :permalink, :website]
@@ -108,6 +109,14 @@ class Profile < ActiveRecord::Base
     pending_friend_with?(profile) || friends_with?(profile)
   end
   
+  def has_followers?
+    followers_count > 0
+  end
+  
+  def followers_count
+    followers.count
+  end
+  memoize :followers_count
   
   
   

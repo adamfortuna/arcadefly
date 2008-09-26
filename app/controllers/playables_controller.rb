@@ -15,7 +15,7 @@ class PlayablesController < ResourceController::Base
           render
         rescue
           render :update do |page|
-            page.alert "This arcade already has that game. If you want to update the count, please remove it and readd it."
+            page.alert "There was a problem adding that game. You can only add games that are available from the drop down list. Please make sure it this arcade doesn't already has that game. If you want to update the count, please remove it and re-add it."
             page.call 'Form.reset', 'arcade_form'
           end        
         end

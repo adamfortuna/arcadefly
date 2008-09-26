@@ -5,7 +5,17 @@ class UserSession
     @cookies = cookies
     @current_profile = build_profile
     @current_address = build_address
-    @current_address = profile.address if !addressed_in? && logged_in? && profile.has_address?
+    if !addressed_in? && logged_in? && profile.has_address?
+      @current_address = profile.address
+      
+      @session[:address_street] = address.street
+      @session[:address_city] = address.city
+      @session[:address_region] = address.region.abbreviation
+      @session[:address_country] = address.country.alpha_3_code
+      @session[:address_zip] = address.postal_code
+      @session[:address_lat] = address.lat
+      @session[:address_lng] = address.lng
+    end
     @current_arcade_range = build_range(session[:arcade_range])
     @current_profile_range = build_range(session[:profile_range])
   end
