@@ -73,4 +73,13 @@ module ApplicationHelper
   def map_bubble_for(addressable)
     render :partial => "#{addressable.class.to_s.downcase}s/map_bubble", :object => addressable
   end
+  
+  
+  def find_point(markers, addressable)
+    m = markers.find do |key, marker|
+      (marker.point.lat == addressable.address.public_lat) && (marker.point.lng == addressable.address.public_lng)
+    end
+    m ? m[0] : false
+  end
+
 end
