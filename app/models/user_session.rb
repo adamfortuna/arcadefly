@@ -102,13 +102,15 @@ class UserSession
   def profile_from_session
     Profile.find_by_user_id(@session[:user]) if @session[:user]
   end
-  def profile_from_cookie      
+  def profile_from_cookie
     user = @cookies[:auth_token] && User.find_by_remember_token(@cookies[:auth_token])
     if user && user.remember_token?
       user.remember_me
       @cookies[:auth_token] = { :value => user.remember_token, :expires => user.remember_token_expires_at }
       @current_user = user
+      return @current_user.profile
     end
+    return false
   end
 
   def build_range(range)

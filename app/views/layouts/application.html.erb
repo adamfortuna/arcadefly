@@ -24,7 +24,7 @@
   		    <li><%= link_to "Popular", popular_path %></li>
           <%- if logged_in? -%>
             <% if administrator? %><li><%= link_to "Claims (#{Claim.pending.count})", claims_path %></li><% end %>
-            <% if current_profile.has_followers? %><li><%= link_to "Friend Requests (#{current_profile.followers_count})", profile_friends_path(current_profile) %></li><% end %>
+            <% if current_session.profile.has_followers? %><li><%= link_to "Friend Requests (#{current_session.profile.followers_count})", profile_friends_path(current_session.profile) %></li><% end %>
             <li><%= link_to "My Profile", profile_path(current_profile) %></li>
             <li><%= link_to "Logout", logout_path %></li>
           <%- else -%>
