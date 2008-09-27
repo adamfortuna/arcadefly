@@ -96,12 +96,12 @@ class ProfilesController < ResourceController::Base
     permission_denied unless current_profile == object
   end
   
-  def create_map(profile)
-    @map = GMap.new("user_map")
-    @map.control_init(:map_type => false, :small_zoom => true)
-    @map.center_zoom_init([profile.address.public_lat, profile.address.public_lng], 11)
-    @map.overlay_init(GMarker.new([profile.address.public_lat, profile.address.public_lng], :title => profile.display_name))
-  end
+  # def create_map(profile)
+  #   @map = GMap.new("user_map")
+  #   @map.control_init(:map_type => false, :small_zoom => true)
+  #   @map.center_zoom_init([profile.address.public_lat, profile.address.public_lng], 11)
+  #   @map.overlay_init(GMarker.new([profile.address.public_lat, profile.address.public_lng], :title => profile.display_name))
+  # end
   
   # GET /profiles
   # GET /arcades/:arcade_id/profiles
@@ -113,9 +113,8 @@ class ProfilesController < ResourceController::Base
       if params[:search].nil? or params[:search].length == 1
         objects = Profile.paginate options
       else
-        objects = Profile.search params[:search], :page => params[:page], :per_page => Profile::PER_PAGE, :order => :display_name
+        objects = Profile.search params[:search], :page => params[:page], :per_page => Profile::PER_PAGE, :order => params[:order] || :display_name
       end
-      objects.reject! { |r| r.address.nil? } if params[:action] == 'index'  
     end
     objects
   end
@@ -136,44 +135,39 @@ class ProfilesController < ResourceController::Base
   
   # Setup up the possible options for getting a collection, with defaults
   def options
-    search = params[:search]
-
-    order = params[:order]
-    if order == 'name'
-      order = 'profiles.display_name' 
-    elsif order == 'arcades'
-      order = 'frequentships_count desc'
-    elsif order == 'games'
-      order = 'favoriteships_count desc'
-    elsif current_session.addressed_in? && params[:action] == 'index'
-      order = 'distance'
-    else
-      order = 'profiles.display_name'
-    end
-
-
     collection_options = {}
-    collection_options[:page] = params[:page] || 1
-    collection_options[:per_page] = params[:per_page] if params[:per_page]
-    collection_options[:order] = order
-    collection_options[:conditions] = ['profiles.active = 1']
-    if search == '#'
-      collection_options[:conditions] << ['profiles.display_name regexp "^[0-9]+"']
-    elsif !search.blank?
-      collection_options[:conditions] << ['profiles.display_name like ?', "#{search}%"]
+    search = params[:search]
+    order = params[:order]
+
+    # Order
+    order = case params[:order]
+       when 'name'    then 'profiles.display_name' 
+       when 'arcades' then 'frequentships_count desc'
+       when 'games'   then 'favoriteships_count desc'
+       else (current_session.addressed_in? && (params[:action] == 'index')) ? 'distance' : 'profiles.display_name'
     end
 
+    # Conditions
+    collection_options[:conditions] = "profiles.active = 1"
+    if search == '#'
+      collection_options[:conditions] += ' AND profiles.display_name regexp "^[0-9]+"'
+    elsif !search.blank?
+      collection_options[:conditions] += " AND profiles.display_name like '#{search}%'"
+    end
+    collection_options[:conditions] += ' AND addresses.id IS NOT NULL' if params[:action] == 'index'
+    
+    # If on the main profiles page where we map out profiles, include their addresses
     if params[:action] == 'index'
-      collection_options[:conditions] << ['addresses.id IS NOT NULL']
       collection_options[:include] = {:address => [:region, :country]}
       if current_session.addressed_in?
         collection_options[:origin] = current_session.address
-        #collection_options[:within] = current_session.profile_range
-      # else
-      #   collection_options[:origin] = Address.first
-      #   collection_options[:within] = 50000
       end
     end
+
+    # Usual params
+    collection_options[:page] = params[:page] || 1
+    collection_options[:per_page] = params[:per_page] if params[:per_page]
+    collection_options[:order] = order
 
     collection_options
   end
