@@ -104,6 +104,30 @@ class Address < ActiveRecord::Base
     lines
   end
   
+  def full_single_line
+    full_line.join(', ')
+  end
+
+  def full_line
+    lines = []
+    lines << street if street?
+
+    line = ''
+    line << city if city?
+    if region
+      line << ', ' if !line.blank?
+      line << region.name if region?
+    end
+    if postal_code?
+      line << '  ' if !line.blank?
+      line << postal_code.to_s
+    end
+    lines << line if !line.blank?
+
+    lines << country.name if country?
+    lines
+  end
+  
   def self.geocode(address)
     GeoKit::Geocoders::GoogleGeocoder.geocode(address)
   end
@@ -121,7 +145,7 @@ class Address < ActiveRecord::Base
     
     self.geocoded = true
     # Exact location
-    exact_loc = Address.geocode(single_line)
+    exact_loc = Address.geocode(full_single_line)
     return false if exact_loc.lat.nil? || exact_loc.lng.nil?
 
     self.lat = exact_loc.lat

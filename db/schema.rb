@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080924223110) do
+ActiveRecord::Schema.define(:version => 20080927151210) do
 
   create_table "addresses", :force => true do |t|
     t.datetime "created_at"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20080924223110) do
   add_index "arcades", ["frequentships_count"], :name => "index_arcades_on_frequentships_count"
   add_index "arcades", ["name", "frequentships_count"], :name => "index_arcades_on_name_and_frequentships_count"
   add_index "arcades", ["name", "playables_count"], :name => "index_arcades_on_name_and_playables_count"
+  add_index "arcades", ["frequentships_count", "playables_count"], :name => "index_arcades_on_frequentships_count_and_playables_count"
 
   create_table "claims", :force => true do |t|
     t.datetime "created_at"
@@ -143,6 +144,7 @@ ActiveRecord::Schema.define(:version => 20080924223110) do
   add_index "games", ["favoriteships_count"], :name => "index_games_on_favoriteships_count"
   add_index "games", ["name", "playables_count"], :name => "index_games_on_name_and_playables_count"
   add_index "games", ["name", "favoriteships_count"], :name => "index_games_on_name_and_favoriteships_count"
+  add_index "games", ["favoriteships_count", "playables_count"], :name => "index_games_on_favoriteships_count_and_playables_count"
 
   create_table "hours", :force => true do |t|
     t.datetime "created_at"
