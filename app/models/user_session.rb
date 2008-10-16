@@ -10,7 +10,7 @@ class UserSession
       
       @session[:address_street] = address.street
       @session[:address_city] = address.city
-      @session[:address_region] = address.region.abbreviation
+      @session[:address_region] = address.region.abbreviation if address.region?
       @session[:address_country] = address.country.alpha_3_code
       @session[:address_zip] = address.postal_code
       @session[:address_lat] = address.lat
@@ -22,6 +22,16 @@ class UserSession
   
   def logged_in?
     !@current_profile.nil?
+  end
+  
+  def user
+    profile.user
+  end
+  
+  def user=(new_user)
+    @session[:user] = (new_user.nil? || new_user.is_a?(Symbol)) ? nil : new_user.id
+    @current_profile = new_user.profile if !new_user.nil?
+    @current_user = new_user if !new_user.nil?
   end
   
   def profile
