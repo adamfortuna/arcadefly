@@ -2,6 +2,6 @@
 	<%= link_to(profile.display_name, profile_path(profile), :class => 'main' ) %>
 	
 	<div class="count">
-	  <%= pluralize(profile.frequentships.size, "favorite arcade") %> and <%= pluralize(profile.favoriteships.size, "favorite games") %>
+	  <%= pluralize(profile.frequentships.size, "favorite arcade") %> and <%= pluralize(profile.favoriteships.size, "favorite game") %>
   </div>
 </li>
