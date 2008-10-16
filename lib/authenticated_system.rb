@@ -13,7 +13,7 @@ module AuthenticatedSystem
     # Returns true or false if the user is logged in.
     # Preloads @current_user with the user model if they're logged in.
     def logged_in?
-      current_profile != :false
+      current_profile != nil
     end
     
     # Returns true or false if the user has an address
@@ -24,20 +24,18 @@ module AuthenticatedSystem
     # Accesses the current user from the session.  Set it to :false if login fails
     # so that future calls do not hit the database.
     def current_profile
-      @current_profile ||= (profile_from_session  || profile_from_cookie || :false)
+      current_session.profile
     end
     
     # Accesses the current user from the session.  Set it to :false if login fails
     # so that future calls do not hit the database.
     def current_user
-      @current_user ||= (login_from_session  || login_from_cookie || :false)
+      current_session.user
     end
 
     # Store the given user in the session.
     def current_user=(new_user)
-      session[:user] = (new_user.nil? || new_user.is_a?(Symbol)) ? nil : new_user.id
-      @current_profile = new_user.profile if !new_user.nil?
-      @current_user = new_user
+      current_session.user = new_user
     end
     
     
@@ -137,48 +135,48 @@ module AuthenticatedSystem
 
     
 
-    # Called from #current_profile.  First attempt to login by the user id stored in the session.
-    def profile_from_session
-      Profile.find_by_user_id(session[:user]) if session[:user]
-    end
-
-    # Called from #current_profile.  Finaly, attempt to login by an expiring token in the cookie.
-    def profile_from_cookie      
-      user = cookies[:auth_token] && User.find_by_remember_token(cookies[:auth_token])
-      if user && user.remember_token?
-        user.remember_me
-        cookies[:auth_token] = { :value => user.remember_token, :expires => user.remember_token_expires_at }
-        self.current_user = user
-      end
-    end
-
-
-    # Called from #current_user.  First attempt to login by the user id stored in the session.
-    def login_from_session
-      self.current_user = User.find_by_id(session[:user]) if session[:user]
-    end
-
-    # Called from #current_user.  Finaly, attempt to login by an expiring token in the cookie.
-    def login_from_cookie      
-      user = cookies[:auth_token] && User.find_by_remember_token(cookies[:auth_token])
-      if user && user.remember_token?
-        user.remember_me
-        cookies[:auth_token] = { :value => user.remember_token, :expires => user.remember_token_expires_at }
-        self.current_user = user
-      end
-    end
+    # # Called from #current_profile.  First attempt to login by the user id stored in the session.
+    # def profile_from_session
+    #   Profile.find_by_user_id(session[:user]) if session[:user]
+    # end
+    # 
+    # # Called from #current_profile.  Finaly, attempt to login by an expiring token in the cookie.
+    # def profile_from_cookie      
+    #   user = cookies[:auth_token] && User.find_by_remember_token(cookies[:auth_token])
+    #   if user && user.remember_token?
+    #     user.remember_me
+    #     cookies[:auth_token] = { :value => user.remember_token, :expires => user.remember_token_expires_at }
+    #     self.current_user = user
+    #   end
+    # end
 
 
+    # # Called from #current_user.  First attempt to login by the user id stored in the session.
+    # def login_from_session
+    #   self.current_user = User.find_by_id(session[:user]) if session[:user]
+    # end
+    # 
+    # # Called from #current_user.  Finaly, attempt to login by an expiring token in the cookie.
+    # def login_from_cookie      
+    #   user = cookies[:auth_token] && User.find_by_remember_token(cookies[:auth_token])
+    #   if user && user.remember_token?
+    #     user.remember_me
+    #     cookies[:auth_token] = { :value => user.remember_token, :expires => user.remember_token_expires_at }
+    #     self.current_user = user
+    #   end
+    # end
 
 
 
-  private
-    @@http_auth_headers = %w(Authorization HTTP_AUTHORIZATION X-HTTP_AUTHORIZATION X_HTTP_AUTHORIZATION REDIRECT_X_HTTP_AUTHORIZATION)
 
-    # gets BASIC auth info
-    def get_auth_data
-      auth_key  = @@http_auth_headers.detect { |h| request.env.has_key?(h) }
-      auth_data = request.env[auth_key].to_s.split unless auth_key.blank?
-      return auth_data && auth_data[0] == 'Basic' ? Base64.decode64(auth_data[1]).split(':')[0..1] : [nil, nil] 
-    end
+
+  # private
+  #   @@http_auth_headers = %w(Authorization HTTP_AUTHORIZATION X-HTTP_AUTHORIZATION X_HTTP_AUTHORIZATION REDIRECT_X_HTTP_AUTHORIZATION)
+  # 
+  #   # gets BASIC auth info
+  #   def get_auth_data
+  #     auth_key  = @@http_auth_headers.detect { |h| request.env.has_key?(h) }
+  #     auth_data = request.env[auth_key].to_s.split unless auth_key.blank?
+  #     return auth_data && auth_data[0] == 'Basic' ? Base64.decode64(auth_data[1]).split(':')[0..1] : [nil, nil] 
+  #   end
 end
