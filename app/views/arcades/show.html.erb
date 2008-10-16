@@ -36,7 +36,7 @@
       <%= render :partial => 'shared/addressable', :object => @arcade %>
       <div class="map_info">
         <p class="center">
-          <strong><%= h @arcade.name %></strong> is in <em><%= @arcade.address.city %><% unless @arcade.address.region_id.nil? %>, <%= @arcade.address.region.name %></em><% end %>.
+          <strong><%= h @arcade.name %></strong> is in <em><%= @arcade.address.city %><% unless @arcade.address.region_id.nil? %>, <%= @arcade.address.region.name %><% end %></em>.
         </p>
 
         <% if current_session.addressed_in? -%>
