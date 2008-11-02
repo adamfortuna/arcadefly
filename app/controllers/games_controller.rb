@@ -145,7 +145,6 @@ class GamesController < ResourceController::Base
   end
   
   def clean_for_db
-    debugger
     params[:game][:gamefaqs_id] = nil if params[:game][:gamefaqs_id].blank?
     params[:game][:klov_id] = nil if params[:game][:klov_id].blank?
   end

@@ -51,7 +51,6 @@ class Claim < ActiveRecord::Base
   end
   
   def send_denied_email
-    debugger
     UserMailer.deliver_claim_denied(self) if !approved && denied
   end
   
