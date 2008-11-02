@@ -209,3 +209,5 @@ ul.comma li:after { content:", ";}
 ul.comma li:last-child:after { content:"";} 
 
 
+#content a[href^="http:"] { background: url(http://static.arcadefly.com/images/external.png) right top no-repeat; padding-right: 12px; }
+#content a[href^="http://www.arcadefly.com"] { background: transparent; padding-right: 0px; }

@@ -12,7 +12,7 @@
         <h1><%= h @arcade.name %></h1>        
         <%= render :partial => 'arcades/favorite', :locals => { :show_text => true, :arcade => @arcade } if logged_in? %>
     		<% unless @arcade.phone.blank? %><div><strong>Phone Number:</strong> <%= h(@arcade.phone) %></div><% end %>
-    		<% unless @arcade.website.blank? %><div><strong>Website:</strong> <%= link_to h(@arcade.website), h(@arcade.website) %></div><% end %>
+    		<% unless @arcade.website.blank? %><div><strong>Website:</strong> <%= link_to h(@arcade.website), h(@arcade.website), {:target => '_blank'} %></div><% end %>
         
         <p class="adr shift-1">
           <b>Address:</b><br/>
