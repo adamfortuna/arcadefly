@@ -9,15 +9,16 @@ class PlayablesController < ResourceController::Base
 
     respond_to do |format|
       format.js {
-        begin
-          @arcade.playables << Playable.new({:game_id => @game.id, :games_count => params[:count]})
-          @playable = @arcade.playables.find_by_game_id(@game.id)
-          render
-        rescue
-          render :update do |page|
-            page.alert "There was a problem adding that game. You can only add games that are available from the drop down list. Please make sure it this arcade doesn't already has that game. If you want to update the count, please remove it and re-add it."
-            page.call 'Form.reset', 'arcade_form'
-          end        
+        if @game.nil?
+          create_failed
+        else
+          begin
+            @arcade.playables << Playable.new({:game_id => @game.id, :games_count => params[:count]})
+            @playable = @arcade.playables.find_by_game_id(@game.id)
+            render
+          rescue
+            create_failed
+          end
         end
       }
     end
@@ -53,4 +54,10 @@ class PlayablesController < ResourceController::Base
     permission_denied unless current_profile.claimed?(parent_object) || current_profile.administrator?
   end
   
+  def create_failed
+    render :update do |page|
+      page.alert "There was a problem adding that game. You can only add games that are available from the drop down list. Please make sure it this arcade doesn't already has that game. If you want to update the count, please remove it and re-add it."
+      page.call 'Form.reset', 'arcade_form'
+    end
+  end
 end

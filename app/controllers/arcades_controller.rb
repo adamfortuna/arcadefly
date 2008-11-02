@@ -7,6 +7,7 @@ class ArcadesController < ResourceController::Base
   before_filter :login_required, :only => [:new, :create, :favorite, :unfavorite]
   before_filter :check_administrator, :only => [:destroy]
   before_filter :check_claim, :only => [:edit, :update, :edit_games]
+  before_filter :set_arcade, :only => :claim
 
   index.wants.html { 
     if parent_type == :game
@@ -29,13 +30,11 @@ class ArcadesController < ResourceController::Base
 
   # Used by an arcade goer or arcade owner to claim an arcade
   # GET /arcades/rockys-replay/claim
-  def claim
-    @arcade = object
-  end
-  
-  def show
-    @arcade = object
-  end
+  # def claim; end 
+
+  # def show
+  #     @arcade = object
+  #   end
 
   # Edit an arcade
   # GET /arcades/rockys-replay/edit
@@ -247,4 +246,9 @@ class ArcadesController < ResourceController::Base
       current_session.arcade_range = 0 if current_session.address
     end
   end
+  
+  def set_arcade
+    @arcade = object
+  end
+
 end

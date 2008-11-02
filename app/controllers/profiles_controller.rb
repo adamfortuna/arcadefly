@@ -19,20 +19,23 @@ class ProfilesController < ResourceController::Base
   index.wants.xml { 
     render :text => @profiles.to_xml(:dasherize => false, :only => Profile::PUBLIC_FIELDS)
   }
+  show.wants.xml {
+    render :text => @profile.to_xml(:dasherize => false, :only => Profile::PUBLIC_FIELDS, :include => [:address], :methods => [:region, :country])
+  }
 
   
   def list
     @profiles = collection
   end
 
-  def show
-    @profile = object
+#  def show
+ #   @profile = object
     
     #respond_to do |format|
     #  format.html { render }
     #  format.xml { render :text => @profile.to_xml(:dasherize => false, :only => Profile::PUBLIC_FIELDS) }
     #end
-  end
+  #end
   
   def edit
     @profile = object

@@ -2,6 +2,7 @@ class MessagesController < ResourceController::Base
   belongs_to :profile
 #  before_filter :can_send, :only => :create
 
+  before_filter :redirect_to_root, :only => [:index, :show]
 
   index.wants.html { 
     render :template => "profiles/messages" 

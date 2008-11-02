@@ -23,4 +23,8 @@ class ApplicationController < ActionController::Base
     @user_session ||= UserSession.new(session, cookies)
   end
   helper_method :current_session
+  
+  def redirect_to_root
+    redirect_to root_url
+  end
 end

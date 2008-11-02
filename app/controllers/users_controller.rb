@@ -2,7 +2,15 @@ class UsersController < ApplicationController
   before_filter :not_logged_in_required, :only => [:new, :create, :activate] 
   before_filter :login_required, :only => [:edit, :update, :welcome]
   before_filter :check_administrator, :only => [:destroy, :enable]
-    
+  
+  def index
+    redirect_to profiles_url
+  end  
+  
+  def show
+    redirect_to params[:id] ? profile_url(params[:id]) : profiles_url
+  end
+  
   # render new.rhtml
   def new
     @user = User.new(params[:profile])

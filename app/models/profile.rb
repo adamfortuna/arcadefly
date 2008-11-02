@@ -2,7 +2,7 @@ class Profile < ActiveRecord::Base
   extend ActiveSupport::Memoizable 
   include Addressable
 
-  PUBLIC_FIELDS = [:created_at, :display_name, :favoriteships_count, :frequentships_count, :friendships_count, :full_name, :initials, :permalink, :website]
+  PUBLIC_FIELDS = [:created_at, :display_name, :favoriteships_count, :frequentships_count, :friendships_count, :full_name, :initials, :permalink, :website, :city]
   PER_PAGE = 30
 
   named_scope :active, :conditions => ['active = ?', true]

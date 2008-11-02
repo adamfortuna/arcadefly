@@ -74,9 +74,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :profiles, :has_many   => [:comments, :messages, :arcades, :games],
                            :has_one    => [:address, :friends],
-                           :collection => [ :list ]
+                           :collection => [ :list ],
+                           :alias      => :friends
 
-  map.resources :profiles,  :alias => :friends
   map.resources :addresses, :sessions, :password, :comments, :messages, :playables, :ranges
   map.resources :sessions, :object => [ :address ]
   map.resources :claims, :collection => [ :delete_selected, :approve_selected ]

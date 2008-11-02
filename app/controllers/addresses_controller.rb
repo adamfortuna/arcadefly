@@ -1,11 +1,9 @@
 class AddressesController < ResourceController::Base
   before_filter :not_logged_in_required, :only => :create
   belongs_to :user, :game, :session
-  
-  def index
-    redirect_to root_url
-  end
 
+  before_filter :redirect_to_root, :only => [:index, :show]
+  
   # GET /users/1/addresses/new
   # Todo: Add the ability for users to add multiple addresses
   def new
