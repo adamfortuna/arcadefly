@@ -37,3 +37,15 @@ end
 
 
 before "deploy:symlink", "s3_asset_host:synch_public"
+
+namespace :passenger do
+  desc "Restart Application"
+  task :restart do
+    run "touch #{current_path}/tmp/restart.txt"
+  end
+end
+after :deploy, "passenger:restart"
+
+task :after_update_code, :roles => :app do
+  run "rm -rf #{release_path}/public/.htaccess"
+end
