@@ -16,9 +16,9 @@ config.action_controller.perform_caching             = false
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
 
-ASSET_HOST = "http://localhost:3000"
-HOST = 'http://localhost:3000'
-config.action_controller.asset_host = "http://localhost:3000"
+ASSET_HOST = "http://arcadefly.local"
+HOST = 'http://arcadefly.local'
+config.action_controller.asset_host = "http://arcadefly.local"
 
 
 config.log_level = :debug
