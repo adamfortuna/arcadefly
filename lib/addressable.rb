@@ -4,7 +4,7 @@ module Addressable
     receiver.class_eval do
       acts_as_mappable :lat_column_name => 'addresses.lat', :lng_column_name => 'addresses.lng'
       
-      has_one :address, :as => :addressable, :accessible => true, :dependent => :destroy
+      has_one :address, :as => :addressable, :dependent => :destroy#, :accessible => true
     	delegate [:lat, :lng, :country_id, :region_id], :to => :address
 
       after_validation :add_address_errors_to_base

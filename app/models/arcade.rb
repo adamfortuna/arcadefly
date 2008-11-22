@@ -14,12 +14,13 @@ class Arcade < ActiveRecord::Base
 	has_many :frequentships, :dependent => :destroy
 	has_many :profiles, :through => :frequentships
 
-	has_many :hours, :as => :timeable, :order => 'day, start, end', :accessible => true, :dependent => :destroy
+	has_many :hours, :as => :timeable, :order => 'day, start, end', :dependent => :destroy#, :accessible => true,
 	
 	has_many :editors, :through => :claims, :source => :profile, :conditions => ['claims.approved=?', true]
 	has_many :claims, :dependent => :destroy
 
 	# Validations
+	validates_presence_of :address
 	validates_associated :address
 	validates_presence_of :name, :message => "is required."
 	validates_uniqueness_of :permalink

@@ -71,11 +71,11 @@ class ArcadesController < ResourceController::Base
   
   # POST /arcades
   def create
-    @arcade = Arcade.create(params[:arcade].merge(:profile => current_session.profile))
+    @arcade = Arcade.create(params[:arcade].merge(:profile => current_session.profile, :address => Address.new(params[:arcade][:address])))
     if @arcade.valid?
       redirect_to arcade_url(@arcade)
     else
-      if @arcade.address.errors.on(:lat)
+      if !@arcade.address || @arcade.address.errors.on(:lat)
         flash[:error] = "We can't find the address you entered. Please make sure it looks right and try again. If in doubt just leave out the city and we'll find it for you."
       else
         flash[:error] = "There was a problem creating the arcade. Please fix any errors below and give it another try."
