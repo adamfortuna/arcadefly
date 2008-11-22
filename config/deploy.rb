@@ -20,7 +20,7 @@ depend :remote, :gem, "mislav-will_paginate", "~> 2.2"
 
 
 #after "deploy:update_code", "deploy:rails_symlink"
-afer "deploy:update_code", "s3_asset_host:synch_public"
+after "deploy:update_code", "s3_asset_host:synch_public"
 after "deploy:update_code", "deploy:build_assets"
 namespace :deploy do
 
