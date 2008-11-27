@@ -89,9 +89,9 @@ module AuthenticatedSystem
         format.html do
           store_location
           flash[:error] = "You don't have permission to complete that action."
-          domain = "http://localhost:3000" #modify for your application settings
+          domain = "http://#{request.env["HTTP_HOST"]}" #modify for your application settings
           http_referer = request.env["HTTP_REFERER"]
-          request_path = request.env["REQUEST_PATH"]
+          request_path = request.env["REQUEST_PATH"] || ""
           full_path = domain + request_path
           if http_referer.nil? || full_path.nil?
             redirect_to root_path

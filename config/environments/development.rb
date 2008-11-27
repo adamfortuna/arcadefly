@@ -47,3 +47,10 @@ ActiveRecord::Base.logger = Logger.new(STDOUT)
 #  ActiveRecord::Base.logger = Logger.new(stream)
 #  ActiveRecord::Base.clear_active_connections!
 #end
+
+if File.exists?(File.join(RAILS_ROOT,'tmp', 'debug.txt'))
+  require 'ruby-debug'
+  Debugger.wait_connection = true
+  Debugger.start_remote
+  File.delete(File.join(RAILS_ROOT,'tmp', 'debug.txt'))
+end
