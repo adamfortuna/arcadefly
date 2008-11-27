@@ -115,7 +115,7 @@ class GamesController < ResourceController::Base
     elsif parent_type == :profile
       objects = parent_object.favoriteships.paginate(options)
     else
-      if params[:search].nil? or params[:search].length == 1
+      if params[:search].nil? || params[:search].blank? || params[:search].length == 1
         objects = Game.paginate options
       else
         objects = Game.search params[:search], :page => params[:page], :per_page => Game::PER_PAGE, :order => :name

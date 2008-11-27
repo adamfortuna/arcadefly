@@ -113,7 +113,8 @@ class ProfilesController < ResourceController::Base
     if parent?
       objects = parent_object.profiles.paginate(options)
     else
-      if params[:search].nil? or params[:search].length == 1
+
+      if params[:search].nil? || params[:search].blank? || params[:search].length == 1
         objects = Profile.paginate options
       else
         objects = Profile.search params[:search], :page => params[:page], :per_page => Profile::PER_PAGE, :order => params[:order] || :display_name

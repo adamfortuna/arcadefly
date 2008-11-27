@@ -5,6 +5,7 @@
 <% tabbed_box do %>  
   <h1><%= @title %></h1>
   <%= render :partial => 'shared/addressables', :object => [@arcade], :locals => { :options => { :large_map => true,
+                                                                                                 :small_map => false,
                                                                                                  :map_type => true,
                                                                                                  :class => 'map_big map',
                                                                                                  :autozoom => false } } %>
