@@ -198,7 +198,7 @@ class ArcadesController < ResourceController::Base
       order = 'arcades.name, frequentships_count desc'
     end
 
-    search = params[:search] || ""
+    search = params[:search]
     search = "%" + search if search and params[:search].length >= 2
 
     collection_options = {}

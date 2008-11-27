@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include HoptoadNotifier::Catcher
+  
+  filter_parameter_logging ["password", "password_confirmation", "verify_password"]
 
   # Pick a unique cookie name to distinguish our session data from others'
   session :session_key => 'arcadefly_session_id_cookie'  
