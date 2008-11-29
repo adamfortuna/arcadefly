@@ -1,7 +1,10 @@
-<% letters = ('a'..'z').to_a << '#' -%>
+<% 
+  letters = ('a'..'z').to_a << '#' 
+  action ||= 'index'
+-%>
 <div class="pagination">
-  <%= render :partial => "shared/letter", :collection => letters, :locals => { :controller => controller } %>
+  <%= render :partial => "shared/letter", :collection => letters, :locals => { :controller => controller, :action => action } %>
   <% if params[:search] %>
-    <%= link_to "No filter", :controller => controller %>
+    <%= link_to "No filter", :controller => controller, :action => action %>
   <% end %>
 </div>

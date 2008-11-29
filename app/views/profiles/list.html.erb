@@ -12,7 +12,7 @@
     <% end %>
   </div>
 
-  <%= render :partial => 'shared/letters', :locals => { :controller => 'profiles' } %>
+  <%= render :partial => 'shared/letters', :locals => { :controller => 'profiles', :action => 'list' } %>
 
   <%= render :partial => 'profiles/profiles', :object => @profiles %>
 <% end %>

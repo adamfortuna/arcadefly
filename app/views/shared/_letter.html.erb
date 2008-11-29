@@ -1,5 +1,5 @@
 <% if params[:search] == letter %>
   <span class="current"><%= letter.upcase %></span>
 <% else %>
-  <%= link_to letter.upcase, :controller => controller, :search => letter %>
+  <%= link_to letter.upcase, :controller => controller, :action => action, :search => letter %>
 <% end %>
