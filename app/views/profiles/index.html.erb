@@ -3,7 +3,9 @@
 
 <% tabbed_box do %>
   <h1><%= @title %></h1>
-
+  <% if !params[:search] %>
+    <p>Only players who have entered their address show up here. No exact addresses are shown -- only a general area based on city and postal code.</p>
+  <% end %>
   <div id="controller_search">
     <% form_for(:profile, profiles_path, :html => { :method => 'get' }) do |f| %>
       <label id="search_label" for="search">Search for a profile...</label>

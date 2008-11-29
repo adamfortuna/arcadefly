@@ -155,7 +155,7 @@ class ProfilesController < ResourceController::Base
        when 'name'    then 'profiles.display_name' 
        when 'arcades' then 'frequentships_count desc'
        when 'games'   then 'favoriteships_count desc'
-       else (current_session.addressed_in? && (params[:action] == 'index')) ? 'distance' : 'profiles.display_name'
+       else (current_session.addressed_in? && !parent?) ? 'distance' : 'profiles.display_name'
     end
 
     # Conditions
@@ -165,10 +165,10 @@ class ProfilesController < ResourceController::Base
     elsif !search.blank?
       collection_options[:conditions] += " AND profiles.display_name like '#{search}%'"
     end
-    collection_options[:conditions] += ' AND addresses.id IS NOT NULL' if params[:action] == 'index'
     
     # If on the main profiles page where we map out profiles, include their addresses
-    if params[:action] == 'index'
+    if !parent?
+      collection_options[:conditions] += ' AND addresses.id IS NOT NULL' if params[:action] == 'index'
       collection_options[:include] = {:address => [:region, :country]}
       if current_session.addressed_in?
         collection_options[:origin] = current_session.address
