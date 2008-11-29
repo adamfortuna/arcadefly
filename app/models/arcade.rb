@@ -1,4 +1,5 @@
 class Arcade < ActiveRecord::Base
+  extend ActiveSupport::Memoizable
   include Addressable
   acts_as_taggable
 
@@ -50,14 +51,17 @@ class Arcade < ActiveRecord::Base
   def has_game?(game)
     playables.find_by_game_id(game.id)
   end
+  memoize :has_game?
 
   def frequentships_rank
     Arcade.count(:conditions => ['frequentships_count > ?', frequentships_count]) + 1
   end
+  memoize :frequentships_rank
   
   def playables_rank
     Arcade.count(:conditions => ['playables_count > ?', playables_count]) + 1
   end
+  memoize :playables_rank
   
   def build_week
     self.hours = Hour.new_week(self)
@@ -87,7 +91,7 @@ class Arcade < ActiveRecord::Base
       self.tag_list = current_tags
     end
   end
-  
+
   protected
   after_create :create_claim
 	def create_claim

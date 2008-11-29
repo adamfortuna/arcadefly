@@ -39,7 +39,7 @@ mailer_options = YAML.load(mailer_config)
 ActionMailer::Base.smtp_settings = mailer_options
 
 
-ActiveRecord::Base.logger = Logger.new(STDOUT)
+#ActiveRecord::Base.logger = Logger.new(STDOUT)
 
 
 

@@ -48,6 +48,8 @@ class ProfilesController < ResourceController::Base
 
     case params[:switch]
       when 'name'
+        website_entered = !params[:profile][:website].nil? && !params[:profile][:website].blank?
+        params[:profile][:website] = "http://" + params[:profile][:website] if website_entered && !(params[:profile][:website] =~ /http:\/\//)
         if @profile.update_attributes(params[:profile])
           flash[:notice] = "Your profile has been updated! These changes will take effect immediately."
         end
@@ -60,14 +62,22 @@ class ProfilesController < ResourceController::Base
           flash[:notice] = "Password has been changed."
         end
       when 'address'
-        @profile.build_address unless @profile.address
-        if @profile.address.update_attributes(params[:address])
+        address = Address.new(params[:address])
+        if address.blank?
+          saved = @profile.address.destroy
+        else
+          @profile.address = address
+          saved = @profile.address.save
+        end
+        if saved
           flash[:notice] = "Your address has been updated. All maps will show relative to your new address."
+        else
+          flash.now[:error] = "There was an error finding the address you specified. According to Google it doesn't exist. Are you sure everything is correct?"
         end
     end
     
-    if @user.errors.length > 0 || @profile.errors.length > 0
-      flash.now[:error] = "There was a problem updating your profile. Errors should be highlighted in red below."
+    if @user.errors.length > 0 || @profile.errors.length > 0 || (@profile.address && @profile.address.errors.length > 0)
+      flash.now[:error] ||= "There was a problem updating your profile. Errors should be highlighted in red below."
       render :action => :edit
     else
       redirect_to edit_profile_url(@profile)

@@ -32,7 +32,7 @@
       <% end %>
     </div>
     
-    <% if @game.alias != @game.name %>
+    <% if !@game.alias.nil? && !@game.alias.blank? && @game.alias != @game.name %>
       <p class="clear">
         <strong>Aliases for this game:</strong> <%= @game.alias %>
       </p>

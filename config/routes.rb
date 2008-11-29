@@ -77,12 +77,15 @@ ActionController::Routing::Routes.draw do |map|
                            :collection => [ :list ],
                            :alias      => :friends
 
-  map.resources :addresses, :sessions, :password, :comments, :messages, :playables, :ranges
-  map.resources :sessions, :object => [ :address ]
-  map.resources :claims, :collection => [ :delete_selected, :approve_selected ]
-  map.resources :users
+  map.resources :sessions, :only => [:new, :create, :destroy], :object => [ :address ]
+  map.resources :password, :only => [:create, :edit, :destroy]
+  map.resources :ranges,   :only => [:create]
+  map.resources :claims,   :only => [:new, :create, :destroy, :index], :collection => [ :delete_selected, :approve_selected ]
+  
+  
+  map.resources :addresses, :messages, :playables, :users, :comments
 
-  map.resources :landings, :collection => [ :mobile ]
+  #map.resources :landings, :collection => [ :mobile ]
 
   # Since a lot of people tend to use /login as the login path, add it here just in case.
   map.connect '/login',    :controller => 'redirect', :action => 'login'

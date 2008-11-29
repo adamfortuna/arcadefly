@@ -6,48 +6,48 @@
     <p class="block required">
       <label for="profile_display_name">Alias</label>
       <span class="block info">This is your nickname, if you go by one. Across the site this is what people will see. This can be your real name or an alias, but must be unique here on ArcadeFly.</span>
-      <%= error_message_on "profile", "display_name", "Display Name " %>
+      <%= error_message_on(@profile, :display_name, {:prepend_text => "Alias "}) %>
       <%= p.text_field :display_name, { :class => 'text'} %>
     </p>
 
     <p class="block">
       <label for="profile_full_name">Real Name</label>
       <span class="block info">We'll show your real name in your profile if you want people to see it. Some people put first, some put last -- whatever works for you.</span>
-      <%= error_message_on "profile", "full_name", "Full Name " %>
+      <%= error_message_on(@profile, :full_name, {:prepend_text => "Full Name "}) %>
       <%= p.text_field :full_name, { :class => 'text'} %>
     </p>
     
     <p class="block">
       <label for="profile_initials">Initials</label>
       <span class="block info">The initials you leave when you get a high score.</span>
-      <%= error_message_on "profile", "initials", "Initials " %>
+      <%= error_message_on(@profile, :initials, {:prepend_text => "Initials "}) %>
       <%= p.text_field :initials, { :class => 'text'} %>
     </p>
     
     <p class="block">
       <label for="profile_website">Website</label>
       <span class="block info">This should start with http://</span>
-      <%= error_message_on "profile", "website", "Website " %>
+      <%= error_message_on(@profile, :website, {:prepend_text => "Website "}) %>
       <%= p.text_field :website, { :class => 'text' } %>
     </p>
 
     <p class="block">
       <label for="profile_aim_name">AIM Name</label>
-      <%= error_message_on "profile", "aim_name", "AIM Name " %>
+      <%= error_message_on(@profile, :aim_name, {:prepend_text => "AIM Name "}) %>
       <%= p.text_field :aim_name, { :class => 'text'} %>
     </p>
     
     <p class="block">
       <label for="profile_gtalk_name">GTalk Name</label>
       <span class="block info">Only logged in users will be able to view this.</span>
-      <%= error_message_on "profile", "gtalk_name", "GTalk Name " %>
+      <%= error_message_on(@profile, :gtalk_name, {:prepend_text => "GTalk Name "}) %>
       <%= p.text_field :gtalk_name, { :class => 'text'} %>
     </p>
 
     <p class="block">
       <label for="profile_msn_name">MSN Chat Name</label>
       <span class="block info">Only logged in users will be able to view this.</span>
-      <%= error_message_on "profile", "msn_name", "MSN Name " %>
+      <%= error_message_on(@profile, :msn_name, {:prepend_text => "MSN Name "}) %>
       <%= p.text_field :msn_name, { :class => 'text'} %>
     </p>
 
@@ -58,7 +58,7 @@
         What arcades and games do you love? Do you prefer arcades or console games -- and why? How long have you been gaming? If people in your area want to hang out, how shouold they contact you?
         <br/><br/>You Can use the following tags: <%= ALLOWED_HTML_TAGS.join(', ') %>
       </span>
-      <%= error_message_on "profile", "about_me", "About Me " %>
+      <%= error_message_on(@profile, :about_me, {:prepend_text => "About Me "}) %>
       <%= p.text_area :about_me, { :class => 'text'} %>
     </p>
      
@@ -103,7 +103,7 @@
       
       <p class="block required">
         <label for="verify_password">Current Password</label>
-        <%= error_message_on "user", "verify_password" %>
+        <%= error_message_on(@user, :verify_password) %>
     
         <% if @user.errors[:verify_password] %><div class="fieldWithErrors"><% end %>
           <input type="password" name="verify_password" id="verify_password" class="text" />
@@ -112,13 +112,13 @@
 
       <p class="block required">
         <label for="password">New Password</label>
-        <%= error_message_on "user", "password" %>
+        <%= error_message_on(@user, :password) %>
          <%= p.password_field :password, { :class => 'text'} %>
       </p>
 
       <p class="block required">
         <label for="confirm_password">Confirm New Password</label>
-        <%= error_message_on "user", "confirm_password" %>
+        <%= error_message_on(@user, :confirm_password) %>
          <%= p.password_field :password_confirmation, { :class => 'text'} %>
       </p>
     
@@ -137,19 +137,19 @@
       
       <p class="block required">
         <label for="email_verify_password">Current Password</label>
-        <%= error_message_on "profile", "password" %>
+        <%= error_message_on(@profile, :password) %>
         <input type="password" name="email_verify_password" id="email_verify_password" class="text" />
       </p>
       
       <p class="block required">
         <label for="profile_email">New Email Address</label>
-        <%= error_message_on "profile", "email", "Email " %>
+        <%= error_message_on(@profile, :email, {:prepend_text => "Email "}) %>
         <input type="text" name="new_email" id="new_email" class="text" />
       </p>
         
       <p class="block required">
         <label for="profile_email_confirmation">Confirm New Email Address</label>
-        <%= error_message_on "profile", "email_confirmation", "Email Confirmation " %>
+        <%= error_message_on(@profile, :email_confirmation, {:prepend_text => "Email Confirmation "}) %>
         <input type="text" name="new_email_confirmation" id="new_email_confirmation" class="text" />
       </p>
         

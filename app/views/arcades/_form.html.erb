@@ -85,7 +85,7 @@
     <%= f.text_field :phone, { :class => 'text' } %>
   </p>
 
-  <% fields_for 'arcade[address]', @arcade.address do |a| %>
+  <% fields_for 'address', @arcade.address do |a| %>
   <%= a.hidden_field :id %>
   
   <p class="block required">	
@@ -154,7 +154,7 @@
   </p>
   
  
-  <ul id="hours">
+  <ul id="hours" style='display:none;'>
     <% @arcade.hours.each do |hour| %>
     <% fields_for "arcade[all_hours][]", hour do |h| %>
     <li>

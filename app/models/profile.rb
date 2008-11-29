@@ -78,6 +78,7 @@ class Profile < ActiveRecord::Base
   def has_network?
     !Friend.find(:first, :conditions => ["inviter_id = ? or invited_id = ?", id, id]).blank?
   end
+  memoize :has_network?
 
   # Denotes that both profiles are friends with each other
 
@@ -126,43 +127,48 @@ class Profile < ActiveRecord::Base
   def has_arcades?
     frequentships.length > 0
   end
+  memoize :has_arcades?
 
   def has_favorite_arcade?(arcade)
     favorite_arcade_ids.include?(arcade.id)
   end
 
   def favorite_arcade_ids
-    @cached_favorite_arcade_ids ||= frequentships.find(:all, :select => :arcade_id).collect(&:arcade_id)
+    frequentships.find(:all, :select => :arcade_id).collect(&:arcade_id)
   end
+  memoize :favorite_arcade_ids
   
   def has_games?
     favoriteships.length > 0
   end
+  memoize :has_games?
 
   def has_favorite_game?(game)
     favorite_game_ids.include?(game.id)
   end
 
   def favorite_game_ids
-    @cached_favorite_game_ids ||= favoriteships.find(:all, :select => :game_id).collect(&:game_id)
+    favoriteships.find(:all, :select => :game_id).collect(&:game_id)
   end
+  memoize :favorite_game_ids
   
   def pending_claim?(arcade)
     pending_claimed_arcade_ids.include?(arcade.id)
   end
 
   def pending_claimed_arcade_ids
-    @cached_pending_claimed_arcade_ids ||= claims.pending(:all, :select => :arcade_id).collect(&:arcade_id)
+    claims.pending(:all, :select => :arcade_id).collect(&:arcade_id)
   end
+  memoize :pending_claimed_arcade_ids
   
   def claimed?(arcade)
     claimed_arcade_ids.include?(arcade.id)
   end
   
   def claimed_arcade_ids
-    @cached_claimed_arcade_ids ||= claims.approved(:all, :select => :arcade_id).collect(&:arcade_id)
+    claims.approved(:all, :select => :arcade_id).collect(&:arcade_id)
   end
-  
+  memoize :claimed_arcade_ids
     
   
   
@@ -199,6 +205,7 @@ class Profile < ActiveRecord::Base
   def can_send_messages
     user.can_send_messages
   end
+  memoize :can_send_messages
   
   def unread_messages?
     unread_messages_count > 0

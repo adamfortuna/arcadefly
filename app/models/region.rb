@@ -1,5 +1,7 @@
 # Defined by the ISO 3166-2 standard
 class Region < ActiveRecord::Base
+  extend ActiveSupport::Memoizable
+
   belongs_to              :country
   has_many                :addresses
 
@@ -16,10 +18,12 @@ class Region < ActiveRecord::Base
   def to_param
     "#{id}-#{url_safe(name)}"
   end
+  memoize :to_param
   
   def url_safe(param)
     param.downcase.gsub(/[^[:alnum:]]/,'-').gsub(/-{2,}/,'-')
   end
+  
   
   def to_s #:nodoc
     name

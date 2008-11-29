@@ -1,5 +1,7 @@
 # Defined by the ISO 3166-1 standard
 class Country < ActiveRecord::Base
+  extend ActiveSupport::Memoizable
+
   has_many                  :addresses
   has_many                  :regions
 
@@ -16,6 +18,7 @@ class Country < ActiveRecord::Base
   def to_param
     "#{id}-#{url_safe(name)}"
   end
+  memoize :to_param
   
   def url_safe(param)
     param.downcase.gsub(/[^[:alnum:]]/,'-').gsub(/-{2,}/,'-')

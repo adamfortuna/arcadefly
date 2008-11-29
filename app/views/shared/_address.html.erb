@@ -1,6 +1,5 @@
 <%- javascript_file 'dynamic_regions'
-    address ||= Address.new
-    @address = address
+    address ||= Address.new(:country_id => nil)
 %>
     
 <%- address.title = "My Home" if address.title.nil? %>
@@ -8,31 +7,31 @@
     <p class="block required">	
       <label for="address_street">Street</label>
 	  <span class="block info">For pinpoint accurate mapping, please include a street. This will be private.</span>
-      <%= error_message_on "address", "street", "Street " %>
+      <%= error_message_on(address, :street, {:prepend_text => "Street "}) %>
       <%= a.text_field :street, { :class => "text" } %>
     </p>
     <p class="block required">
       <label for="address_city">City</label>
-      <%= error_message_on "address", "city", "City " %>
+      <%= error_message_on(address, :city, {:prepend_text => "City "}) %>
       <%= a.text_field :city, { :class => "text" } %>
     </p>
     <p class="block required">
       <label for="address_country_id">Country</label>
-      <%= error_message_on "address", "country_id", "Country " %>
+      <%= error_message_on(@address, :country_id, {:prepend_text => "Country "}) %>
       <%= a.select :country_id, Country.find(:all, :order => 'name').collect {|r| [ r.name, r.id ] }, 
                                 { :include_blank => true },
                                 { :class => "text", :id => "address_country_id" } %>
     </p>
     <p class="block required" id="address_region_id_field">
       <label for="address_region_id">State/Region</label>
-      <%= error_message_on "address", "region_id", "State/Region " %>
+      <%= error_message_on(address, :region_id, {:prepend_text => "State/Region "}) %>
       <%= a.select :region_id, Region.find(:all, :order => 'name').collect {|r| [ r.name, r.id ] }, 
                                { :include_blank => true },
                                { :class => "text", :id => "address_region_id" } %>
     </p>
     <p class="block">
       <label for="address_postal_code">Zip/Postal Code</label>
-      <%= error_message_on "address", "postal_code", "Zip/Postal Code " %>
+      <%= error_message_on(address, :postal_code, {:prepend_text => "Zip/Postal Code "}) %>
       <%= a.text_field :postal_code, { :class => "text" } %>
     </p>
   <% end %>

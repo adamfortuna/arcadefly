@@ -35,11 +35,12 @@
       Form.focusFirstElement('signup_form');
       $('add_address').observe('click', function() {
         if ($('add_address').checked) {
-          $('address_country_id').selectedIndex = 1;
           set_address_status(false);
 				  $('address').removeClassName('disabled');
         } else {
 				  set_address_status(true);
+          $('address_country_id').selectedIndex = 0;
+          $('address_region_id').selectedIndex = 0;
 		  		$('address').addClassName('disabled');
         }
       });

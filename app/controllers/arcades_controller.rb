@@ -66,12 +66,14 @@ class ArcadesController < ResourceController::Base
   # GET /arcades/new
   def new
     @arcade = Arcade.new
-    @arcade.build_week
+    #@arcade.build_week
   end
   
   # POST /arcades
   def create
-    @arcade = Arcade.create(params[:arcade].merge(:profile => current_session.profile, :address => Address.new(params[:arcade][:address])))
+#    @arcade = 
+    #@arcade = Arcade.create(params[:arcade].merge(:profile => current_session.profile, :address => Address.new(params[:arcade][:address])))
+    @arcade = Arcade.create(params[:arcade].merge(:profile => current_session.profile, :address => Address.new(params[:address])))
     if @arcade.valid?
       redirect_to arcade_url(@arcade)
     else
@@ -80,7 +82,7 @@ class ArcadesController < ResourceController::Base
       else
         flash[:error] = "There was a problem creating the arcade. Please fix any errors below and give it another try."
       end
-      @arcade.build_week unless @arcade.has_hours?
+      #@arcade.build_week unless @arcade.has_hours?
       render :action => 'new'
     end
   end
@@ -106,7 +108,9 @@ class ArcadesController < ResourceController::Base
   # PUT /arcades/rockys-replay
   def update
     @arcade = object
-    if @arcade.update_attributes(params[:arcade])
+    website_entered = !params[:arcade][:website].nil? && !params[:arcade][:website].blank?
+    params[:arcade][:website] = "http://" + params[:arcade][:website] if website_entered && !(params[:arcade][:website] =~ /http:\/\//)
+    if @arcade.update_attributes(params[:arcade]) && @arcade.address.update_attributes(params[:address])
       flash[:notice] = "<span class=\"icon arcade_add\">Arcade updated! Please review the changes below and make sure everything looks as you'd expect.</span>"
       redirect_to arcade_url(@arcade)
     else

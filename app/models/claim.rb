@@ -1,4 +1,6 @@
 class Claim < ActiveRecord::Base
+  extend ActiveSupport::Memoizable
+
   belongs_to :arcade
   belongs_to :profile
   
@@ -26,6 +28,7 @@ class Claim < ActiveRecord::Base
   def type
     Claim::LEVELS.rassoc(self.level)[0]
   end
+  memoize :type
 
   def owner?
     level == 1

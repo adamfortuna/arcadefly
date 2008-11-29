@@ -28,6 +28,7 @@ module Addressable
   end
 
   def add_address_errors_to_base
+    address.valid? if address
     if address && address.errors
       address.errors.each { |attr, msg| errors.add(attr, msg) }
     end

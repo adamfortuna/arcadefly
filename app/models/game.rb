@@ -1,4 +1,6 @@
 class Game < ActiveRecord::Base
+  extend ActiveSupport::Memoizable
+
   PUBLIC_FIELDS = [:name, :gamefaqs_id, :klov_id, :favoriteships_count, :playables_count, :permalink]
   PER_PAGE = 100
   has_permalink :name
@@ -31,16 +33,20 @@ class Game < ActiveRecord::Base
   def has_arcades?
     playables.size > 0
   end
+  memoize :has_arcades?
   
   def has_users?
     favoriteships.size > 0
   end
+  memoize :has_users?
 
   def favoriteships_rank
     Game.count(:conditions => ['favoriteships_count > ?', favoriteships_count]) + 1
   end
+  memoize :favoriteships_rank
   
   def playables_rank
     Game.count(:conditions => ['playables_count > ?', playables_count]) + 1
   end
+  memoize :playables_rank
 end
