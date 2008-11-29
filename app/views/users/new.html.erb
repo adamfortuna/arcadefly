@@ -61,7 +61,7 @@
       <p class="block required">
         <label for="profile_display_name">Display Name</label>
         <span class="block info">Whenever we show your name on ArcadeFly, this is what people will see. You can change this whenever.</span>
-        <%= error_message_on @user.profile, "display_name", "Display Name " %>
+        <%= error_message_on(@user.profile, :display_name, {:prepend_text => "Display Name "}) %>
         <%= p.text_field :display_name, { :class => 'text'} %>
       </p>
     <% end %>
@@ -69,13 +69,13 @@
     <p class="block required">
       <label for="user_email">Email Address</label>
       <span class="block info">You'll use this to login and to activate your account.</span>
-      <%= error_message_on @user, "email", "Email " %>
+      <%= error_message_on(@user, :email, {:prepend_text => "Email "}) %>
       <%= f.text_field :email, { :class => 'text'} %>
     </p>
     
     <p class="block required">
       <label for="user_email_confirmation">Confirm Email Address</label>
-      <%= error_message_on @user, "email_confirmation", "Email " %>
+      <%= error_message_on(@user, :email_confirmation, {:prepend_text => "Email "}) %>
       <%= f.text_field :email_confirmation, { :class => 'text'} %>
     </p>
     
@@ -83,13 +83,13 @@
     <p class="block required">
       <label for="user_password">Choose a Password</label>
       <span class="block info">At least 4 characters.</span>
-      <%= error_message_on "user", "password", "Password " %>
+      <%= error_message_on(@user, :password, {:prepend_text => "Password "}) %>
       <%= f.password_field :password, { :class => 'text'} %>
     </p>
     
     <p class="block required">
       <label for="user_password_confirmation">Confirm your Password</label>
-      <%= error_message_on "user", "password_confirmation", "Confirm password " %>
+      <%= error_message_on(@user, :password_confirmation, {:prepend_text => "Confirm password "}) %>
       <%= f.password_field :password_confirmation, { :class => 'text'} %>
     </p>
 

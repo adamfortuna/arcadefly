@@ -87,16 +87,13 @@ class ProfilesController < ResourceController::Base
 
   def destroy
     @profile = object
-    respond_to do |wants|
-     @profile.destroy
-      cookies[:auth_token] = {:expires => Time.now-1.day, :value => ""}
-      session[:user] = nil
-      wants.js do
-        render :update do |page| 
-          page.alert('Your user account, and all data, have been deleted.')
-          page << 'location.href = "/";'
-        end
-      end
+    
+    @profile.destroy
+    cookies[:auth_token] = {:expires => Time.now-1.day, :value => ""}
+    session[:user] = nil
+    render :update do |page|
+      page.alert('Your user account, and all data, have been deleted.')
+      page << 'location.href = "/";'
     end
   end
 
