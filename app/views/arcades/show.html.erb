@@ -1,4 +1,6 @@
 <% title 'Arcades' + separator + h(@arcade.name) %>
+<% description "#{@arcade.name} in #{@arcade.address.shortest_line} has #{pluralize(@arcade.playables.size, "game")} with #{pluralize(@arcade.frequentships.size, "player")} favoriting it making it the ##{@arcade.frequentships_rank} most popular arcade at ArcadeFly.com." -%>
+
 <%= render :partial => 'menu', :locals => { :arcade => @arcade } %>
 
 <% tabbed_box do %>

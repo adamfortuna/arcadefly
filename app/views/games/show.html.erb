@@ -1,4 +1,5 @@
 <% title "Games" + separator + @game.name -%>
+<% description "#{@game.name} is available to play at #{pluralize(@game.playables.size, "arcade")}, with #{pluralize(@game.favoriteships.size, "player")} favoriting it making it the ##{@game.favoriteships_rank} most popular game at ArcadeFly.com." + ((!@game.alias.nil? && !@game.alias.blank? && @game.alias != @game.name) ? " Also known as: #{@game.alias}" : "") -%>
 <%- @body_class = "games" %>
 
 <%= render :partial => 'menu', :locals => { :game => @game } %>
