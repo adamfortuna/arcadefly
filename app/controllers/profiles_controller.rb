@@ -172,6 +172,7 @@ class ProfilesController < ResourceController::Base
       collection_options[:include] = {:address => [:region, :country]}
       if current_session.addressed_in?
         collection_options[:origin] = current_session.address
+        collection_options[:within] = current_session.profile_range
       end
     end
 
