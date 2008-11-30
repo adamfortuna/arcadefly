@@ -3,8 +3,9 @@
 #main { background:#c4c0be url(http://static.arcadefly.com/images/layout/background_light_slice.jpg) repeat-x; padding-bottom:30px; }
 #main .container { background-image:url(http://static.arcadefly.com/images/layout/background_light.jpg); background-repeat:no-repeat; }
 
-/* Fix up IE6 PNG Support */
+/* Fix up IE6 PNG Support 
 img, #logo { behavior: url(/scripts/iepngfix.htc); line-height:10px; }
+*/
 
 /* Main div for dynamic content area */
 #content {  }
