@@ -71,7 +71,7 @@
   <a href="javascript:show('arcades');">Find Out More...</a>
   
   <div>
-    <h4>Most Popular Arcades</h4>
+    <h4>Recently Added Arcades</h4>
     <ol>
       <% @arcades.each do |arcade| %>
         <li><%= link_to arcade.name, arcade_path(arcade) %> <br/><%= arcade.address.shortest_line %></li>
