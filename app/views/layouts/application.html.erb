@@ -9,6 +9,7 @@
   <meta name="description" content="<%= yield(:description) || "A social network for gamers and arcade game enthusiasts. Want to know where an arcade is, or have a game in mind and want to know where to play it? We're your place!" %>" />
   
   <%= stylesheet_link_merged :arcadefly %>
+  <style type='text/css'>@import url('http://s3.amazonaws.com/getsatisfaction.com/feedback/feedback.css');</style>
 
   <%= yield(:header) -%>
 </head>
@@ -92,7 +93,6 @@
 
   <%= javascript_include_merged :application %>
   <%= yield(:javascript) -%>
-  <style type='text/css'>@import url('http://s3.amazonaws.com/getsatisfaction.com/feedback/feedback.css');</style>
   <script src='http://s3.amazonaws.com/getsatisfaction.com/feedback/feedback.js' type='text/javascript'></script>
   <script type="text/javascript" charset="utf-8">
    GSFN.feedback('http://getsatisfaction.com/arcadefly/feedback');
