@@ -1,53 +1,165 @@
-/* layout */
-.container { width:960px; margin:0 auto; }
-#main { background:#c4c0be url(http://static.arcadefly.com/images/layout/background_light_slice.jpg) repeat-x; padding-bottom:30px; }
-#main .container { background-image:url(http://static.arcadefly.com/images/layout/background_light.jpg); background-repeat:no-repeat; }
+body { font: .8em "Trebuchet MS", Verdana, Helvetica, sans-serif; color: #666;  background: #F7FCFF url(../images/layout/bg.gif) repeat-x 0px -30px; }
+.wrap { margin: 0 auto; width: 960px; }
+.background { background: url(../images/layout/bg.jpg) no-repeat left 135px; }
+.here { position:absolute;}
 
-/* Fix up IE6 PNG Support 
-img, #logo { behavior: url(/scripts/iepngfix.htc); line-height:10px; }
-*/
+/* div#header */
+#header { color: #666; height:91px; }
+#logo { width:300px; margin: 20px 0 0; float:left; }
+#logo strong a { color:#FFFAD3; font-size:34px; }
+#logo span { float:left; font-size:18px; color:#fff;}
 
-/* Main div for dynamic content area */
-#content {  }
-#content h2 { font-size:32px; line-height:31px; }
-#content hr { border:1px solid #e3e3e3; margin-top:20px; margin-bottom:20px; }
-
-/* Header-Styles */
-#header { padding-top:10px; padding-bottom:0px; margin-bottom:0px; }
-#header div strong, #header div small { margin:0px; display:block; text-indent:-9999px; }
-#header div strong a { display:block; background-image:url(http://static.arcadefly.com/images/logo.png); background-repeat:no-repeat; width:210px; height:83px; }
-#header ul { margin:0px; padding:0px; float:right; list-style:none; }
-#header ul li { float:left; border-left:1px solid #ccc; }
-#header ul li a { text-decoration:none; color:#716d6a; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; font-weight:bold; text-transform:uppercase; padding:11px 8px; height:24px; line-height:37px; }
-#header ul li a.active, #header ul li a:hover { color:#211e1e; }
-#header p { float:right; clear:both; margin-top:1em; }
-
-
-/* right clear shift-1 */
-
-
-/* Footer-Styles */
-#footer { background-image:url(http://static.arcadefly.com/images/layout/background_footer.jpg); background-repeat:repeat-x; padding:40px; min-height:130px; }
-#footer { font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; }
-/* .footer_column { float:left; width:120px; margin-right:30px; } */
-div#footer div.container div { float:left; width:120px; margin-right:30px; }
-div#footer div.container div.long { width:610px; }
-#footer h3 { color:#e2dddc; text-transform:uppercase; font-size:10px; }
-div#footer div.container ul li, div#footer div.container ul { list-style:none; margin:0px; padding:0px; }
+#controls{ float:right; width:580px; height:93px; }
+/* div#header div#login */
+#login { width:580px; height:94px; position:absolute; }
+#login form { bottom:15px; position:absolute; right:0; }
+#login form input { font-size:11px; line-height:28px; color:#fff; }
+#login form input[type="text"], #login form input[type="password"] { width:142px; border:1px solid #999; background-color:#808080;  color:#fff; margin-right:1em; padding:3px; }
+#login form input[type="text"]:hover, #login form input[type="password"]:hover { border-color:#ccc; }
+#login form input[type='submit'] { border:1px solid #ccc; background:#336699; padding:3px; }
+#login form input[type='submit']:hover { background-color:#003366; cursor:pointer; }
+#login form #remember { position:absolute; top:-20px; left:64px;}
+#login form #remember label { font-size:10px; color:#777; }
+#login form #forgot { position:absolute; top:-19px; left:177px; }
+/* div#header div#my_controls */
+#my_controls { width:580px; height:22px; position:absolute; color:#777; margin-top:70px; }
+#my_controls p { float: right; clear:both; margin:0; }
+#my_controls ul { list-style:none; display:inline; float:right; }
+#my_controls ul li { float:left; margin-left:.5em; }
+#my_controls ul li a { background-color:#68aff3; color:white; padding:.5em 1em; }
 
 
 
+/* div#navigation */
+#menu { padding: 0 0 8px; margin: 0 0 25px; height: 20px; float:left; width:600px;  }
+#menu li { display: inline; }
+#menu li a { float: left; width: 86px; text-align: center; margin: 0 2px 0 0; font-weight: bold; font-size: .8em; padding: 16px 0 21px; color: #ccc; }
+#menu li a:hover, #menu li a.current { color: #AF1515; background: url(../images/layout/menu.gif) no-repeat center bottom; }
+#search  { float: right; margin: 5px 0 0; width: 225px; }
+#search input[type="submit"] { float: left; background: url(../images/layout/search.gif) no-repeat; width: 20px; height: 13px; border: 0; margin: 8px 0 0; }
+#search input[type="text"] { float:left; background: #808080; color: #ccc; padding: 4px; border: 0; margin: 0 5px 0 0; width: 190px; font: 1em bold "Trebuchet MS", Arial, Sans-Serif; border:1px solid transparent; }
+#search input[type="text"]:focus { border: 1px solid #ccc; color: #fff; }	
+	
+
+/* div#content */
+#content { clear:both; padding-top:1em; }
+
+/* div#footer */
+#footer { clear: both; border-top: 3px solid #6E6E6E; background: #505050 url(../images/layout/footer.gif) no-repeat right top; color: #ccc; padding:20px 0 20px 0; min-height:200px; }
+#footer h2 { color: #fff; }
+#footer a { color: #2F7EBF; }
+#footer .wrap div.long { width:580px; float:left; }
+#footer .wrap div { width:180px; float:left; }
+#footer:after { content: ""; display: block; height: 0; clear: both; }
 
 
 
-/* label that shows up on the search box */
-#controller_search label { position:absolute; margin:1em 0 0 .6em; color:#aaa; } 
+#footer-old { clear: both; padding: 15px 0; font-size: .84em; color: #808080; border-top: 1px dotted #666; }
 
 
 
-body.home .third div div h3 { font-size:2em; text-align:center; }
-#features div h3 { font-size:2em; }
-#features div { width:440px; float:right; }
-#features div ul { margin:0; padding:0; list-style:none; font-size:1.4em; line-height:2.2em;}
-#features div ul li a { text-decoration:underline; }
-#features div ul li a:hover { text-decoration:none; }
+
+
+
+
+
+
+
+
+
+
+	
+
+#feature{ color: #33617F; float: right; background: #fff; width: 580px; height: 160px; margin: 0 0 40px; font-size: 1.1em; font-style: italic; padding: 10px 10px 2px; }
+	#feature img { float: left; margin: 0 20px 0 0; }
+	#feature p { margin: 10px 0 0; }
+	.more { font-size: .74em; font-weight: bold; margin: 0 5px 0 0; color: #390505; font-style: normal; }
+
+#feature_menu { float: right; }
+	#feature_menu li { display: inline; }
+	#feature_menu li a { color: #33617F; float: left; padding: 6px 14px 6px 21px; margin: 0 0 0 2px; background: #C6E5F9 url(../images/layout/bullet.gif) no-repeat 7px 12px; font-size: .8em; font-weight: bold; }
+		#feature_menu li a:hover { color: #071F2D; background: #fff url(../images/layout/bullet_hover.gif) no-repeat 7px 8px; }
+		#feature_menu li a.current { background: #fff url(../images/layout/bullet.gif) no-repeat 5px 12px; }
+	
+#feature, #feature_menu li a  {
+	opacity: 0.6;
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+	-MS-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+}
+#feature ol li {
+	line-height:20px;
+	height:32px;
+}
+
+/* Recent news */	
+#news { float: left; width: 540px; margin: 0 0 10px; text-align: justify; }
+#news h2 { color: #52A9BA; }
+#news h2 a { border-bottom: 1px dotted #ACCADE; padding: 0 0 3px; }
+#news .more { color: #7EA4BC; }
+.subtitle { font-weight: bold; font-style: italic; font-size: 1.1em; margin: 0 0 4px; } 
+.date { background: #fff; padding: 5px 0; border-right: 1px solid #D3EAFA; border-bottom: 1px solid #D3EAFA; color: #ccc; float: left; width: 55px; margin: 7px 12px 5px 0; text-align: center; }
+.date span { font-size: 1.6em; }
+	
+#side { float: right; width: 300px; margin: 0 0 30px; font-size: .9em; }
+	#side h3 { color: #ccc; margin: 0 0 6px 5px; height: 16px; }
+
+.boxtop { background: url(../images/layout/box.gif) no-repeat top; padding: 2px 0; }
+.box { padding: 3px 6px; background: #363636; }
+.boxbottom { background: url(../images/layout/box.gif) no-repeat bottom; padding: 2px 0; }
+
+.item { font-size: .94em; display: block; color: #ccc; background: #fff url(../images/layout/item.gif) no-repeat; height: 54px; padding: 4px 10px; margin: 0 0 5px; }
+	.item.last { margin: 0; }
+	.item:hover { background: #fff url(../images/layout/item.gif) no-repeat bottom; color: #fff; }
+	.item strong { color: #FFFAD3; line-height: 27px; }
+		.sidedate { float: left; width: 35px; text-align: center; padding: 4px 15px 0 0; font-size: 1.6em; margin: 0 12px 0 0; border-right: 1px dotted #808080; }
+		.sidedate span { font-size: .6em; font-weight: bold; color: #808080; }
+
+#ad { background: url(../images/layout/dot.gif) repeat-x; padding: 15px 0 10px; clear: both; font-size: .9em; line-height: 1.7em;  }
+
+
+
+
+
+/* Home page specific */
+#about { width: 320px; float:left; }
+#reviews { width: 380px; float:right;}
+#reviews h2 { color: #52A9BA; }
+#reviews h2 a { border-bottom: 1px dotted #ACCADE; padding: 0 0 3px; }
+#reviews ul li { padding:.5em;}
+
+
+
+
+
+/* General tags */
+/* Text-Styles */
+small { color:#595856; font-weight:bold; font-size:11px; display:block; margin-bottom:15px; }
+small a { color:#007de2; }
+legend { padding: 0 .5em; }
+p { margin: 0px 0px 15px 0px; }
+img { margin:0; padding:0; }
+
+
+v:* { behavior:url(#default#VML);}
+
+
+/* project: internet encyclopedia author: luka cvrk (www.solucija.com) */
+:link,:visited { text-decoration:none } :focus,:active { outline: 0 } ul,ol { list-style:none } h1,h2,h3,h4,h5,h6,pre,code { font-size:1em; } ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,body,html,p,blockquote,fieldset,input { margin:0; padding:0 } a img,:link img,:visited img, fieldset { border:none } address { font-style:normal }
+
+a { color: #AF1515; cursor: pointer; }
+a:hover { color: #7D1919; }
+h1 { font-size: 3em; clear: both; margin: 0 0 5px; }
+h2 { font: normal 1.6em Arial; color: #3D3C3B; margin: 0 0 15px; }
+h2#slogan { font-size: 1.3em; color: #808080; }
+p  { margin: 0 0 15px; line-height: 1.7em; }
+.clear { clear: both; }
+.hidden { display:none; }
+
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}

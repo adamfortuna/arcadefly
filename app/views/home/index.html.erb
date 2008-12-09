@@ -1,114 +1,53 @@
-<% javascript do %>
-  <% if !logged_in? %>
-    Event.observe(window, 'load', function() {
-      if($F('near') == '') toggleLabel("near", true); 
-      $('games_features').hide();
-      $('profiles_features').hide();
-    });
-  <% end %>  
-  function show(section) {
-    $('arcades_features').hide();
-    $('games_features').hide();
-    $('profiles_features').hide();
-    $(section+'_features').show();
-    
-    $('landing').removeClassName('arcades');
-    $('landing').removeClassName('games');
-    $('landing').removeClassName('profiles');
-    $('landing').addClassName(section);
-    
-    $('featured_image').src = '<%=ASSET_HOST%>/images/features_'+section+'.jpg';
-  }
-<% end %> 
-
-<% box :classname => 'arcades', :id => 'landing' do %>
-
-    <%= image_tag "#{ASSET_HOST}/images/features_arcades.jpg", :class => "left framed", :id => "featured_image", :alt => "featured image" %>
-    
-    <div id="features">
-    
-      <div id="arcades_features">
-        <h3>Arcades</h3>
-        <ul>
-          <li>Find out which <%= link_to "arcades are closeby", arcades_path %></li>
-          <li>See what games are at each arcade</li>
-          <li>Check out which arcades are <%= link_to "popular", popular_arcades_path %></li>
-        </ul>
-      </div>
-      <div id="games_features" style="display:none;">
-        <h3>Games</h3>
-        <ul>
-          <li>Find the closest place to play a <%= link_to "specific game", games_path %></li>
-          <li>See what games are at each arcade</li>
-          <li>Check out which games are <%= link_to "popular", popular_games_path %></li>
-        </ul>
-      </div>
-      <div id="profiles_features" style="display:none;">
-        <h3>Players</h3>
-        <ul>
-          <li>Find out which <%= link_to "players are in your area", profiles_path %></li>
-          <li>See what other players are interested in</li>
-          <li>Find other players who go to an arcade</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="clear"></div>
-
-  <% if !logged_in? %>
-    <% form_tag(arcades_path, :id => "controller_search", :class => "big_search shift-1", :method => "get") do %>
-      <label id="near_label" for="near" style="display:none;">Enter your address to show some arcades closeby...</label>
-      <%= text_field_tag :near, current_session.addressed_in? ? current_session.address.single_line : '', { :class => 'title', :onfocus => 'toggleLabel("near", false);', :onblur => 'toggleLabel("near", true);' } %>
-      <%= submit_tag "Find Arcades!", :class => 'big-button', :disable_with => 'Finding...', :id => 'find' %>
-    <% end %>
-  <% end %>
-<% end %>
-
-<div class="left third">
-<% box :classname => 'arcades' do %>
-  <h3>Arcades</h3>
-  <p>Find arcades closeby, or see which locations the most people enjoy.</p>
-  <a href="javascript:show('arcades');">Find Out More...</a>
-  
-  <div>
-    <h4>Recently Added Arcades</h4>
-    <ol>
-      <% @arcades.each do |arcade| %>
-        <li><%= link_to arcade.name, arcade_path(arcade) %> <br/><%= arcade.address.shortest_line %></li>
-      <% end %>
-    </ol>
-  </div>
-<% end %>
+<div id="about">
+	<h1 class="hidden">ArcadeFly.com - Arcade and Game Locations</h1>
+	<h2>What is ArcadeFly.com?</h2>
+	<p>ArcadeFly is a community powered arcade and game listing site aiming to be the one stop source for anyone who steps foot in an arcade.</p>
+	<p>Want to know where an arcade is? Or where you can play a specific game? Or event what games are popular in your area? We can help!</p>
 </div>
 
-<div class="left third">
-<% box :classname => 'games' do %>
-  <h3>Games</h3>
-  <p>Looking for a game? We can help you find an arcade that has it.</p>
-  <a href="javascript:show('games');">Find Out More...</a>
-  <div>
-    <h4>Most Popular Games</h4>
-    <ol>
-      <% @games.each do |game| %>
-        <li><%= link_to game.name, game_path(game) %></li>
-      <% end %>
-    </ol>
-  </div>
-<% end %>
+<ul id="feature_menu">
+	<li><a class="current" href="#">RECENT ARCADES</a></li>
+	<li><a href="#">POPULAR GAMES</a></li>
+	<li><a href="#">RECENTLY JOINED PLAYERS</a></li>
+</ul>
+
+<div id="feature">
+  <%= image_tag "layout/feature_img.gif" %>
+	<ul>
+    <li><a href="/arcades/jungin-arcade">JungIn Arcade</a> in <a href="#">Seoul, KOR</a> has 7 games.</li>
+    <li><a href="/arcades/woori-norituh">Woori Norituh</a> in <a href="#">Seoul, KOR</a> has 5 games.</li>
+    <li><a href="/arcades/virtualand">Virtualand</a> in <a href="#">Singapore, SGP</a> has 44 games.</li>
+    <li><a href="/arcades/gameworks-6">Gameworks</a> in <a href="#">Seattle, WA, USA</a> has 5 games.</li>
+    <li><a href="/arcades/video-94">Video 94</a> in <a href="#">West Covina, CA, USA</a> has 5 games.</li>
+  </ul>
 </div>
 
-<div class="left third last">
-<% box :classname => 'profiles' do %>
-  <h3>Players</h3>
-  <p>Find gamers with similar game interests, or that hangout at your favorite arcades.</p>
-  <a href="javascript:show('profiles');">Find Out More...</a>
-  <div>
-    <h4>Recently Joined</h4>
-    <ol>
-      <% @profiles.each do |profile| %>
-        <li><%= link_to profile.display_name, profile_path(profile) %></li>
-      <% end %>
-    </ol>
-  </div>
-<% end %>
+<div class="clear"></div>
+
+<div id="news">
+	<h2><a href="#">Latest News</a></h2>
+	<p class="date"><span>2nd</span><br />Dec</p>
+	<p class="subtitle">Lots of site improvements, speeds and otherwise</p>
+	<p>We recently fixed most the bugs currently on ArcadeFly. There’s a few in the works, but nothing major outstanding. We recently upgraded to Rails 2.2 with Passenger instead of Mongrel. Things are really coming along though and become stable enough to build on. We’re planning on expanding out to some new features in the coming weeks, but still looking for suggestions on where to place our focus. If you see any problems with the way things are now, please email me or just reply to this post. We’re looking into some better ways of tracking bugs, but the free ones don’t seem to compare).</p>
+	<p><a class="more" href="#">&not; READ MORE</a> <a class="more" href="#">&not; COMMENT [12]</a> <a class="more" href="#">&not; SHARE</a> </p>
+	<p>Read more news...</p>
+</div>
+
+<div id="reviews">
+  <h2><a href="#">Recent Reviews</a></h2>
+  <ul>
+    <li>
+      <span class="sidedate">4.5<br /><span>RATING</span></span>
+			<a href='#'>Rocky's Replay</a> (Arcade)<br />Rocky's Replay is the only sole arcade in Orlando. There are other arcades that are part of movie theaters, bowling alleys and... <a href='#'>read more</a>
+    </li>
+    <li>
+      <span class="sidedate">4.5<br /><span>RATING</span></span>
+			<a href='#'>Street Fighter IV</a> (Game)<br />Rocky's Replay is the only sole arcade in Orlando. There are other arcades that are part of movie theaters, bowling alleys and  ... <a href='#'>read more</a>
+    </li>
+    <li>
+      <span class="sidedate">4.5<br /><span>RATING</span></span>
+			<a href='#'>Street Fighter IV</a> (Game)<br />Rocky's Replay is the only sole arcade in Orlando. There are other arcades that are part of movie theaters, bowling alleys and  ... <a href='#'>read more</a>
+    </li>
+  </ul>
+  <p>Read more reviews...</p>
 </div>
