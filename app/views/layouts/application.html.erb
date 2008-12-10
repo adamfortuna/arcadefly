@@ -14,102 +14,82 @@
   <%= yield(:header) -%>
 </head>
 <body<%= " class=\"#{params[:controller]}\"" unless params[:controller].nil? %>>
-
-  <div class="wrap background">
-    
-    <div id="header">
-      <div id="logo">
-  		  <strong><a href="#">ArcadeFly.com</a></strong>
-  		  <span>Tracking the Arcade Buzz!</span>
-  		</div>
-  		<div id="controls">
-  		  <% if addressed_in? %>
-          <p class="here"><strong>Browsing from: <%= link_to current_session.address.single_line, arcades_path %></strong></p>          
+	<div id="main">
+    <div class="container">
+    	<div id="header">        
+        <ul>
+          <li><%= link_to "Home", root_path %></li>
+  		    <li><%= link_to "Arcades", arcades_path, { :class => 'arcades' } %></li>
+  		    <li><%= link_to "Games",   games_path, { :class => 'games' } %></li>
+  		    <li><%= link_to "Players", profiles_path, { :class => 'users' } %></li>
+  		    <li><%= link_to "Popular", popular_path %></li>
+          <%- if logged_in? -%>
+            <% if administrator? %><li><%= link_to "Claims (#{Claim.pending.count})", claims_path %></li><% end %>
+            <% if current_session.profile.has_followers? %><li><%= link_to "Friend Requests (#{current_session.profile.followers_count})", profile_friends_path(current_session.profile) %></li><% end %>
+            <li><%= link_to "My Profile", profile_path(current_profile), { :class => 'users' } %></li>
+            <li><%= link_to "Logout", logout_path, { :class => 'users' } %></li>
+          <%- else -%>
+            <li><%= link_to "Register", signup_path, { :class => 'users' } %></li>
+            <li><%= link_to "Sign In", signin_path, { :class => 'users' } %></li>
+            <%- if current_session.addressed_in? %>
+              <li><%= link_to "Clear Address", logout_path, { :class => 'users' } %></li>
+            <% end -%>
+  		    <%- end -%>
+        </ul>
+        <% if current_session.addressed_in? %>
+        <p>
+          <strong>Browsing from: <%= current_session.address.single_line %></strong>
+        </p>
         <% end %>
-        <%- if logged_in? -%>
-          <div id="my_controls">
-            <ul>
-              <li><%= link_to "My Profile", profile_path(current_profile) %></li>
-              <li><%= link_to "My Claims", profile_path(current_profile) %></li>
-              <li><%= link_to "My Messages", profile_path(current_profile) %></li>
-
-              <li><%= link_to "Logout", logout_path %></li>
-              <% if current_session.profile.has_followers? -%>
-                <li><%= link_to "Friend Requests (#{current_session.profile.followers_count})", profile_friends_path(current_session.profile) %></li>
-              <% end -%>
-            </ul>
-          </div>
-        <%- else -%>
-    		  <div id="login">
-    				<form action="" method="post">
-    				  <span id="forgot">
-    				    <a href="">Forgot your password?</a> or <%= link_to "Register", signup_path %>
-    				  </span>
-    					<input type="text" name="email" id="email" value='Email' onfocus="javascript:if(this.value=='Email') this.value='';" onblur='javascript:if(this.value=="") this.value="Email"' />
-  					  <input type="password" name="pass" id="pass" />
-      				<span id="remember">
-    					  <input type="checkbox" id="remember_me" />
-    					  <label for="remember_me">Remember Me</label>
-    					</span>
-    					<input type="submit" name="login" value="login" />
-    				</form>
-    			</div>
-  			<% end %>
-  		</div>
-    </div>
-  
-    <div id="navigation">  
-    	<ul id="menu">
-    		<li><%= link_to_with_class "HOME", root_path, :class => "current" %></li>
-    		<li><%= link_to_with_class "ARCADES", arcades_path, :class => "current" %></li>
-    		<li><%= link_to_with_class "GAMES",   games_path, :class => "current" %></li>
-    		<li><%= link_to_with_class "PLAYERS", profiles_path, :class => "current" %></li>
-    		<li><%= link_to_with_class "POPULAR", popular_path, :class => "current" %></li>
-    		<% if administrator? %><li><%= link_to "Claims (#{Claim.pending.count})", claims_path %></li><% end %>
-    		<li><a href="http://blog.arcadefly.com">BLOG</a></li>
-    	</ul>
-    	<div id="search">
-    		<form action="">
-    			<fieldset>
-    				<input type="text" class="field" value="Search for arcades or games..." onfocus="javascript:if(this.value=='Search for arcades or games...') this.value='';" onblur='javascript:if(this.value=="") this.value="Search for arcades or games..."' />
-    				<input type="submit" class="button" value="" />
-    			</fieldset>
-    		</form>
-    	</div>
-    </div>
-    
-    <div id="content">
-  		<% flash.each do |key, msg| %>
-  		  <%= content_tag :div, msg, :class => key %>
-  		<% end %>
-	    <%= yield %>
-    </div>
-    
-  </div>
-
-  <div id="footer">
-    <div class="wrap">
-      <div class="long">
-        <p>Found a bug? Have a suggestion? Just an idea? <a href="http://getsatisfaction.com/arcadefly" target='_blank'>Let us know!</a></p>
-        <p>COPYRIGHT &copy; 2008 <a href="http://www.adamfortuna.com">Adam Fortuna</a>. Design by <a href="http://www.solucija.com/">Luka Cvrk</a>.</p>  	
+            
+      	<div>
+          <strong><a href="/">ArcadeFly.com</a></strong>
+          <small>Mapping the arcade buzz!</small>
+        </div>
       </div>
+  
+      <div id="content">
+    		<% flash.each do |key, msg| %>
+    		  <%= content_tag :div, msg, :class => key %>
+    		<% end %>
+		    <%= yield %>
+      </div>
+    </div>
+  </div>
+  
+    
+  <div id="footer">
+    <div class="container">
+      <div class="long">
+        <h3>Copyright &copy; 2007-2008 ArcadeFly. Development by <a href="http://www.adamfortuna.com">Adam Fortuna</a>.</h3>
+        <p>Found a bug? Have a suggestion? Just an idea? <a href="http://getsatisfaction.com/arcadefly" target='_blank'>Let us know!</a></p>
+        <p>You can read more about ArcadeFly on our <a href="http://blog.arcadefly.com">Blog</a></p>
+        <p>
+          <a href="http://validator.w3.org/check?uri=referer"><%= image_tag "#{ASSET_HOST}/images/w3c_blue.png" %></a>
+        </p>
+  		</div>
       <div>
-  			<h2>Quick Links</h2>
+        <h3>More Links</h3>
   			<ul>
-  			  <li><%= link_to "About ArcadeFly", about_path %></li>
+  	      <li><%= link_to "About ArcadeFly", about_path %></li>
           <li><%= link_to "Help", help_path %></li>
   	      <li><%= link_to "Contact Us", contact_path %></li>
   	      <li><%= link_to "Terms of Use", terms_path %></li>
-  	      <li><%= link_to "Privacy Policy", privacy_path %></li>  	      
-  			</ul>
+  	      <li><%= link_to "Privacy Policy", privacy_path %></li>
+  	      <li><a href="http://blog.arcadefly.com">Blog</a></li>
+        </ul>
       </div>
-  		<div>
-  			<h2>Want to help?</h2>
-  			<p>Claim an arcade. Edit games at an arcade. Volunteer to help maintain the games list. Report bugs.</p>
-  		</div>
-  	</div>
+      <div>
+        <h3>Quick Links</h3>
+  			<ul>
+          <li><%= link_to "Home", root_path %></li>
+          <li><%= link_to "Arcades", arcades_path %></li>
+          <li><%= link_to "Games", games_path %></li>
+          <li><%= link_to "Players", profiles_path %></li>
+        </ul>
+      </div>
+    </div>
   </div>
-  
 
   <%= javascript_include_merged :application %>
   <%= yield(:javascript) -%>

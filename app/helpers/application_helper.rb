@@ -13,15 +13,6 @@ module ApplicationHelper
     " &#8250; "
   end
   
-  def link_to_with_class(text, link, options)
-    options.reverse_merge! :class => ''
-    if current_page?(link)
-      link_to text, link, :class => options[:class]
-    else
-      link_to text, link
-    end
-  end
-  
   # Return a link for use in site navigation.
   def nav_link(text, link, options = {})
     #controller, action="index", show_link=true , css_class='')
