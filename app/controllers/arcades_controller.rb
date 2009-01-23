@@ -48,6 +48,7 @@ class ArcadesController < ResourceController::Base
   # GET /arcades/rockys-replay/games/edit
   def edit_games
     @arcade = Arcade.find_by_permalink(params[:id])
+    @playables = @arcade.playables.find(:all, :include => :game, :order => 'games.name')
     respond_to do |format|
       format.iphone { render }
       format.html { render }
@@ -213,7 +214,7 @@ class ArcadesController < ResourceController::Base
     collection_options[:conditions] = ['arcades.name like ?', "#{search}%"] unless search.blank?
     if current_session.addressed_in?
       collection_options[:origin] = current_session.address
-      collection_options[:within] = current_session.arcade_range if !parent?
+#      collection_options[:within] = current_session.arcade_range if !parent?
     end
     collection_options
   end

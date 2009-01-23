@@ -1,20 +1,26 @@
 <% 
   # If a playable is passed in rather than a game, show the count of games as well. 
   # Todo: This could probably be cleaned up a little
+  type = "game"
   if game.is_a?(Playable)
     playable = game
     game = playable.game
+    type = "playable"
   elsif game.is_a?(Favoriteship)
     favoriteship = game
     game = favoriteship.game
+    type = "favoriteship"
   end
 -%>
 <li id="game_<%= game.id %>" class="<%= cycle("even","odd")%><%= " favorited" if logged_in? && current_profile.has_favorite_game?(game) %>">
 	<%= link_to(game.name, game_path(game), :class => 'main') %>
+  <% if type=="playable" %>
+    <span class="left_gutter">(<%= playable.games_count %>)</span>
+  <% end %>
   
 	<div class="count">
-	  <% if game.is_a?(Playable) %>
-	    <%= pluralize(playable.games_count, "game") %>
+	  <% if type=="playable" %>
+	    <%= playable.updated_at.strftime("%B %d, %Y") + playable.updated_at.strftime(" at %I:%M %p") %>.
     <% else %>
       in <%= pluralize(game.playables.size, "arcade") %> with <%= pluralize(game.favoriteships.size, "favorite") %>
     <% end %>

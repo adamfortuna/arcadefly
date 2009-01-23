@@ -51,7 +51,7 @@
   
   <% form_for(:arcade, :playables, :url => arcade_playable_path(@arcade), :html => { :method => :put, :id => 'arcade_form' }) do |f| -%>
     <ul id="playables" class="data">
-      <%= render :partial => 'playables/playable', :collection => @arcade.playables %>
+      <%= render :partial => 'playables/playable', :collection => @playables %>
     </ul>
     <p class="clear shift-2">
       <%= submit_tag "Update game counts", :disabled => true, :class => "big-button right", :disable_with => 'Updating...', :name => 'submit', :id => 'update_game' %>

@@ -55,6 +55,10 @@
               <li><%= tag %></li>
             <% end %>
           </ul>
+          <p class="shift-2">
+            Created <%= @arcade.created_at.strftime("%m/%d/%Y") + @arcade.created_at.strftime(" at %I:%M %p") %>.<br/>
+            Last updated <%= @arcade.updated_at.strftime("%m/%d/%Y") + @arcade.updated_at.strftime(" at %I:%M %p") %>.
+          </p>
         </div>
         <% end %>
       
