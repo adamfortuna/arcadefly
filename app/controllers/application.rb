@@ -19,6 +19,15 @@ class ApplicationController < ActionController::Base
     url = url + '?' + params.join('&') if params.length > 0
     url
   end
+
+  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
+  
+  protected
+  
+  # Automatically respond with 404 for ActiveRecord::RecordNotFound
+  def record_not_found
+    render :file => File.join(RAILS_ROOT, 'public', '404.html'), :status => 404
+  end
   
   private
   def current_session
