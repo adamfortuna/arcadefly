@@ -3,7 +3,7 @@ class RangesController < ResourceController::Base
   def create
     if params[:session][:arcade_range]
       current_session.arcade_range = params[:session][:arcade_range]
-    elsif  params[:session][:profile_range]
+    elsif params[:session][:profile_range]
       current_session.profile_range = params[:session][:profile_range]
     end
 
