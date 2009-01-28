@@ -214,7 +214,7 @@ class ArcadesController < ResourceController::Base
     collection_options[:conditions] = ['arcades.name like ?', "#{search}%"] unless search.blank?
     if current_session.addressed_in?
       collection_options[:origin] = current_session.address
-#      collection_options[:within] = current_session.arcade_range if !parent?
+      collection_options[:within] = current_session.arcade_range if current_session.arcade_range !=0
     end
     collection_options
   end
