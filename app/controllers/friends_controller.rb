@@ -51,6 +51,7 @@ class FriendsController < ApplicationController
   # Profile to add as a friend
   def get_profile
     @profile = Profile.find_by_permalink(params[:profile_id])
+    raise ActiveRecord::RecordNotFound if @profile.nil?
   end
   
 end

@@ -20,4 +20,7 @@ class HomeController < ApplicationController
 
   def site_map
   end
+  
+  def four_oh_four
+  end
 end

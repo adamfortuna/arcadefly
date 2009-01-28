@@ -23,6 +23,9 @@ class ProfilesController < ResourceController::Base
     render :text => @profile.to_xml(:dasherize => false, :only => Profile::PUBLIC_FIELDS, :include => [:address], :methods => [:region, :country])
   }
 
+  def show
+    @profile = object
+  end
   
   def list
     @profiles = collection

@@ -59,7 +59,11 @@ class ArcadesController < ResourceController::Base
   # Map for an arcade
   # GET /arcades/:rockys-replay/map
   def map
-    @arcade = Arcade.find_by_permalink(params[:id], :include => { :address => [:region, :country]} )
+    @arcade = object
+  end
+
+  def show
+    @arcade = object
   end
 
 

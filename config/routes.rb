@@ -36,6 +36,7 @@ ActionController::Routing::Routes.draw do |map|
   map.contact  '/contact',        :controller => 'home',    :action => 'contact'
   map.terms '/terms',             :controller => 'home',    :action => 'terms'
   map.privacy '/privacy',         :controller => 'home',    :action => 'privacy'
+  map.four_oh_four '/404.html',   :controller => 'home',    :action => 'four_oh_four'
   map.welcome '/welcome',         :controller => 'users',   :action => 'welcome'
   map.help '/help',               :controller => 'help',    :action => 'index'
   map.features '/help/features',  :controller => 'help',    :action => 'features'

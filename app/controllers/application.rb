@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   
   # Automatically respond with 404 for ActiveRecord::RecordNotFound
   def record_not_found
-    render :file => File.join(RAILS_ROOT, 'public', '404.html'), :status => 404
+    redirect_to four_oh_four_url
   end
   
   private
