@@ -247,7 +247,9 @@ class ArcadesController < ResourceController::Base
   def check_near
     if params[:near]
       if params[:near] == 'me'
+        puts "looking up IP address #{request.env['REMOTE_ADDR']}"
         address = Address.iplookup(request.env['REMOTE_ADDR'])
+        puts "Success: #{address.success}, #{address}"
         current_session.address = address if address.success
       else
         current_session.address = Address.geocode(params[:near])
