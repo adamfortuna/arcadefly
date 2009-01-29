@@ -14,13 +14,11 @@
 -%>
 <li id="game_<%= game.id %>" class="<%= cycle("even","odd")%><%= " favorited" if logged_in? && current_profile.has_favorite_game?(game) %>">
 	<%= link_to(game.name, game_path(game), :class => 'main') %>
-  <% if type=="playable" %>
-    <span class="left_gutter">(<%= playable.games_count %>)</span>
-  <% end %>
   
 	<div class="count">
 	  <% if type=="playable" %>
-	    <%= playable.updated_at.strftime("%B %d, %Y") + playable.updated_at.strftime(" at %I:%M %p") %>.
+	    Count: <%= playable.games_count %>, 
+	    last edited <%= playable.updated_at.strftime("%B %d, %Y") + playable.updated_at.strftime(" at %I:%M %p") %>.
     <% else %>
       in <%= pluralize(game.playables.size, "arcade") %> with <%= pluralize(game.favoriteships.size, "favorite") %>
     <% end %>
