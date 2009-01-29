@@ -28,7 +28,6 @@ class Claim < ActiveRecord::Base
   def type
     Claim::LEVELS.rassoc(self.level)[0]
   end
-  memoize :type
 
   def owner?
     level == 1
