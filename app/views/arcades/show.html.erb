@@ -48,11 +48,12 @@
         <% end -%>
         
         <% if @arcade.tag_list.length > 0 %>
+        <% # rel-tag uses rel="tag" on  %>
         <div class="clear shift-1">
           <strong>It's been marked as the following:</strong>
           <ul class="inline comma">
             <% @arcade.tag_list.each do |tag| %>
-              <li><%= tag %></li>
+              <li><%= link_to tag, arcade_tag_path(urlencode(tag.downcase)), {'rel' => 'tag'} %></li>
             <% end %>
           </ul>
           <p class="shift-2">

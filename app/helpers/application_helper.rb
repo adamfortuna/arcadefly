@@ -88,4 +88,8 @@ module ApplicationHelper
     m ? m[0] : false
   end
 
+  def urlencode(str)
+    str.gsub(/ /, "+") 
+  end
+
 end

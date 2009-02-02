@@ -52,6 +52,7 @@ ActionController::Routing::Routes.draw do |map|
   #map.new_arcade_3 '/arcades/new/games',              :controller => 'arcades', :action => 'new3'
   map.edit_arcade_games '/arcades/:id/games/edit',    :controller => 'arcades', :action => 'edit_games'
   map.edit_arcade_games_iphone '/arcades/:id/games/edit.iphone',    :controller => 'arcades', :action => 'edit_games', :format => 'iphone'
+  map.arcade_tag '/arcades/tags/:tag',                         :controller => 'arcades', :action => 'tags'
   
   # Arcade maps
   #map.game_arcades '/games/:game_id/arcades', :controller => 'arcades', :action => 'list_map'
@@ -66,7 +67,7 @@ ActionController::Routing::Routes.draw do |map|
   # Resources
   map.resources :arcades, :has_many    => [ :games, :profiles, :playables, :claims ],
                           :has_one     => [ :address ],
-                          :collection  => [ :popular, :auto_complete_for_game_name, :list ],
+                          :collection  => [ :popular, :auto_complete_for_game_name, :list, :tags ],
                           :member      => [ :map, :favorite, :unfavorite ]
 
   map.resources :games,   :has_many    => [ :arcades, :profiles ],
@@ -84,7 +85,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :claims,   :only => [:new, :create, :destroy, :index], :collection => [ :delete_selected, :approve_selected ]
   
   
-  map.resources :addresses, :messages, :playables, :users, :comments
+  map.resources :addresses, :messages, :playables, :users, :comments, :tags
 
   #map.resources :landings, :collection => [ :mobile ]
 

@@ -183,6 +183,12 @@ class ArcadesController < ResourceController::Base
   def list
     @arcades = collection
   end
+  
+  def tags
+    tag = params[:tag].gsub("+", " ")
+    @arcades = Arcade.paged_find_tagged_with(tag, options)
+    render :template => "arcades/index"
+  end
 
   private
   # GET /arcades
