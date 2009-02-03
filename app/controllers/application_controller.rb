@@ -4,9 +4,6 @@ class ApplicationController < ActionController::Base
   
   filter_parameter_logging ["password", "password_confirmation", "verify_password"]
 
-  # Pick a unique cookie name to distinguish our session data from others'
-  session :session_key => 'arcadefly_session_id_cookie'  
-
   # Sort this addressable by the distance from the current address
   def sort_by_distance(addressables)
     (addressables && addressables.length > 1 && current_session.addressed_in?) ? addressables.sort_by_distance_from(current_session.address) : addressables
