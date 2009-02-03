@@ -12,3 +12,10 @@ REGISTRATION_RECIPIENTS = %W() #send an email to this list everytime someone sig
 
 
 YOUTUBE_BASE_URL = "http://gdata.youtube.com/feeds/api/videos/"
+
+
+# Your Access Key ID:096RRJ93PTDQPZZ44802
+# Your Secret Access Key: GXZ0vgPaG57k/vBEJFXyngpImh3yvziyWUfdXueJ
+AMS_KEY = "096RRJ93PTDQPZZ44802"
+AMAZON_ASSOCIATES_ID = "adamfortuna-20"
+ALLOWED_HTML_TAGS = %w(a strong em br table tr td div span)

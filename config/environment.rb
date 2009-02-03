@@ -57,26 +57,3 @@ Rails::Initializer.run do |config|
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
 end
-
-class Array
- def paginate(all = nil, options = {})
-   options[:page] = (options[:page].to_i == 0) ? 1 : options[:page].to_i
-   options[:per_page] = (options[:per_page].to_i == 0) ? 30 : options[:per_page].to_i    
-   pagination_array = WillPaginate::Collection.new(options[:page], options[:per_page], self.size)
-   start_index = pagination_array.offset
-   end_index = start_index + (options[:per_page] - 1)
-   array_to_concat = self[start_index..end_index]
-   array_to_concat.nil? ? [] : pagination_array.concat(array_to_concat)
- end
-end
-
-AMS_KEY = "096RRJ93PTDQPZZ44802"
-AMAZON_ASSOCIATES_ID = "adamfortuna-20"
-ALLOWED_HTML_TAGS = %w(a strong em br table tr td div span)
-
-gem 'mislav-will_paginate', '~> 2.2'
-require 'will_paginate'
-
-
-# Your Access Key ID:096RRJ93PTDQPZZ44802
-# Your Secret Access Key: GXZ0vgPaG57k/vBEJFXyngpImh3yvziyWUfdXueJ
