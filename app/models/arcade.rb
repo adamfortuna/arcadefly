@@ -3,8 +3,8 @@ class Arcade < ActiveRecord::Base
   include Addressable
   acts_as_taggable
 
-	PUBLIC_FIELDS = [:created_at, :updated_at, :permalink, :name, :phone, :website, :notes, :playables_count, :frequentships_count]
-	PUBLIC_FIELDS_WITH_ADDRESS = [PUBLIC_FIELDS, :street, :city, :postal_code, :lat, :lng].flatten
+	PUBLIC_FIELDS = [:id, :created_at, :updated_at, :permalink, :name, :phone, :website, :notes, :playables_count, :frequentships_count]
+	PUBLIC_FIELDS_WITH_ADDRESS = [PUBLIC_FIELDS, :street, :city, :postal_code, :lat, :lng, :name].flatten
 
 	has_permalink :name
   

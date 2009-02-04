@@ -20,11 +20,29 @@ class ArcadesController < ResourceController::Base
   }
 
   index.wants.xml {
-    render :text => @arcades.to_xml(:dasherize => false, :only => Arcade::PUBLIC_FIELDS)
+    if params[:include] && params[:include] == 'all'
+      render :text => @arcades.to_xml(:dasherize => false, 
+                                     :only => Arcade::PUBLIC_FIELDS_WITH_ADDRESS, 
+                                     :methods => [:region, :country],
+                                     :include => {:address => {}, 
+                                                  :games => { :only => [:name, :permalink] }, 
+                                                  :tags => { :only => [:name]}
+                                                 }
+                                    )
+    else
+      render :text => @arcades.to_xml(:dasherize => false, :only => Arcade::PUBLIC_FIELDS)
+    end
   }
   
   show.wants.xml {
-    render :text => @arcade.to_xml(:dasherize => false, :only => Arcade::PUBLIC_FIELDS_WITH_ADDRESS, :include => [:address], :methods => [:region, :country])
+    render :text => @arcade.to_xml(:dasherize => false, 
+                                   :only => Arcade::PUBLIC_FIELDS_WITH_ADDRESS, 
+                                   :methods => [:region, :country],
+                                   :include => {:address => {}, 
+                                                :games => { :only => [:name, :permalink] }, 
+                                                :tags => { :only => [:name]}
+                                               }
+                                  )
   }
   
 
@@ -62,9 +80,9 @@ class ArcadesController < ResourceController::Base
     @arcade = object
   end
 
-  def show
-    @arcade = object
-  end
+  # def show
+  #   @arcade = object
+  # end
 
 
   # One page form for creating a new arcade (currently doesnt work with games or address)

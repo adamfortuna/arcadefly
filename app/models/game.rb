@@ -1,7 +1,7 @@
 class Game < ActiveRecord::Base
   extend ActiveSupport::Memoizable
 
-  PUBLIC_FIELDS = [:name, :gamefaqs_id, :klov_id, :favoriteships_count, :playables_count, :permalink]
+  PUBLIC_FIELDS = [:id, :name, :gamefaqs_id, :klov_id, :favoriteships_count, :playables_count, :permalink, :alias]
   PER_PAGE = 100
   has_permalink :name
   
@@ -20,7 +20,6 @@ class Game < ActiveRecord::Base
     
     has created_at, updated_at, favoriteships_count, playables_count
   end
-
 
   def self.per_page
     PER_PAGE

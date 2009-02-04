@@ -19,7 +19,13 @@ class GamesController < ResourceController::Base
   }
 
   index.wants.xml {
-    render :text => @games.to_xml(:dasherize => false, :only => Game::PUBLIC_FIELDS)
+    if @games.length > 0 && @games.first.is_a?(Game)
+      render :text => @games.to_xml(:dasherize => false, :only => Game::PUBLIC_FIELDS)
+    else
+      games = @games.collect(&:game)
+      render :text => parent_object.to_xml(:dasherize => false, :include => :games, :only => Game::PUBLIC_FIELDS)
+      
+    end
   }
   
   show.wants.xml {
@@ -30,9 +36,9 @@ class GamesController < ResourceController::Base
     @games = Game.paginate(:all, :order => 'favoriteships_count desc, playables_count desc', :page => params[:page], :conditions => ['favoriteships_count > 0'])
   end
   
-  def show
-    @game = object
-  end
+  # def show
+  #   @game = object
+  # end
 
   def new
     @game = Game.new
@@ -118,7 +124,7 @@ class GamesController < ResourceController::Base
       if params[:search].nil? || params[:search].blank? || params[:search].length == 1
         objects = Game.paginate options
       else
-        objects = Game.search params[:search], :page => params[:page], :per_page => Game::PER_PAGE, :order => :name
+        objects = Game.search params[:search], :page => params[:page], :per_page => params[:per_page] || Game::PER_PAGE, :order => :name
       end
     end
     objects
@@ -134,7 +140,7 @@ class GamesController < ResourceController::Base
     collection_options = {}
     collection_options[:include] = :game if parent_type == :arcade || parent_type == :profile
     collection_options[:page] = params[:page] || 1
-    collection_options[:per_page] = Game::PER_PAGE
+    collection_options[:per_page] = params[:per_page] || Game::PER_PAGE
     collection_options[:order] = params[:order] || 'games.name'
     if search == '#'
       collection_options[:conditions] = ['games.name regexp "^[0-9]+"']
