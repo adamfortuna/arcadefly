@@ -27,9 +27,21 @@ class GamesController < ResourceController::Base
       
     end
   }
+  index.wants.json {
+    if @games.length > 0 && @games.first.is_a?(Game)
+      render :text => @games.to_json(:only => Game::PUBLIC_FIELDS)
+    else
+      games = @games.collect(&:game)
+      render :text => parent_object.to_json(:include => :games, :only => Game::PUBLIC_FIELDS)
+      
+    end
+  }
   
   show.wants.xml {
     render :text => @game.to_xml(:dasherize => false, :only => Game::PUBLIC_FIELDS)
+  }
+  show.wants.json {
+    render :text => @game.to_json(:only => Game::PUBLIC_FIELDS)
   }
     
   def popular
