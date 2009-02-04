@@ -5,22 +5,28 @@
 <% tabbed_box do %>
   <h1><%= @title %></h1>
   <p>
-    Just about every page with useful information on this site has an XML representation, although it's not yet easily visible. Whenever you're viewing
-    a list of arcades, games or users, just add in .xml to the URL and bam! There's the xml equivalent. This'll work with searches too. For instance,
+    Just about every page with useful information on this site has an XML and JSON representation, although it's not yet easily visible. Whenever you're viewing
+    a list of arcades, games or users, just add in .xml or .json to the URL and bam! There's the formatted equivalent. This'll work with searches too. For instance,
     if you're looking for an xml feed of all games with "dance" in them, just head to <%= link_to "#{HOST}/games.xml?search=dance", "#{HOST}/games.xml?search=dance" %>.
   </p>
   
   <p>
-    You might also notice that games on this site are available by ID in the URL rather than by game name. This ID is actually the same ID that GameFAQS uses. If
-    you're already building a site that links to GameFAQs, linking to ArcadeFly or utilizing arcade data on that game should be just as easy.
+    Whenever you're viewing a list of arcades, games or players, there are a few URL options you can use to tweak the data returned by ArcadeFly. These work both
+    when using the API and also when using 
+    <ul>
+      <li><b>per_page</b>: Just add in a per_page parameter to tell the API how many items you want to see at once.</li>
+      <li><b>page</b>: Which page you are on. If you're not including this, you're on page 1. This will force the starting item to be page * per_page.</li>
+      <li><b>include</b>: Set this to "<em>all</em>" when viewing a list of arcades and you'll get the arcades in the same format as if you were viewing it alone. Otherwise when viewing an
+        arcade it'll be in an abbreviated form.</li>
+    </ul>
   </p>
-  
+
   <h3>Disclosure</h3>
   <p>
     There are a few rules to using the ArcadeFly API; but nothing out of the ordinary. You have to have some kind of link back to <%= link_to "ArcadeFly", root_url %>
     on each page that uses data from ArcadeFly or makes a request to our API. If you're building a hugely popular system that's going to be hitting us hard, be sure
-    <%= link_to "contact us", contact_url %> so we know to expect it. Other than that just be smart in your requests! If you're wanting a list, get a list; if you're
-    wanting a single item, request a single item.
+    <%= link_to "contact us", contact_url %> so we know to expect it (and can probably work out a better solution with you). Other than that just be smart in your 
+    requests! If you're wanting a list, get a list; if you're wanting a single item, request a single item.
   </p>
   
   <h3>New API Requests</h3>

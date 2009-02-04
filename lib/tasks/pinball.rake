@@ -40,6 +40,5 @@ namespace :update do
         end
       end
     end
-    puts "Updating pinball games"
   end
 end

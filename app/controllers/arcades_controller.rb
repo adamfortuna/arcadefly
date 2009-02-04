@@ -27,10 +27,21 @@ class ArcadesController < ResourceController::Base
                                      :include => {:address => {}, 
                                                   :games => { :only => [:name, :permalink] }, 
                                                   :tags => { :only => [:name]}
-                                                 }
-                                    )
+                                                 })
     else
       render :text => @arcades.to_xml(:dasherize => false, :only => Arcade::PUBLIC_FIELDS)
+    end
+  }
+  index.wants.json {
+    if params[:include] && params[:include] == 'all'
+      render :text => @arcades.to_json(:only => Arcade::PUBLIC_FIELDS_WITH_ADDRESS, 
+                                       :methods => [:region, :country],
+                                       :include => {:address => {}, 
+                                                    :games => { :only => [:name, :permalink] }, 
+                                                    :tags => { :only => [:name]}
+                                                   })
+    else
+      render :text => @arcades.to_json(:only => Arcade::PUBLIC_FIELDS)
     end
   }
   
@@ -41,10 +52,16 @@ class ArcadesController < ResourceController::Base
                                    :include => {:address => {}, 
                                                 :games => { :only => [:name, :permalink] }, 
                                                 :tags => { :only => [:name]}
-                                               }
-                                  )
+                                               })
   }
-  
+  show.wants.json {
+      render :text => @arcade.to_json(:only => Arcade::PUBLIC_FIELDS_WITH_ADDRESS, 
+                                      :methods => [:region, :country],
+                                      :include => {:address => {}, 
+                                                   :games => { :only => [:name, :permalink] }, 
+                                                   :tags => { :only => [:name]}
+                                                  })
+  }
 
   # Used by an arcade goer or arcade owner to claim an arcade
   # GET /arcades/rockys-replay/claim
