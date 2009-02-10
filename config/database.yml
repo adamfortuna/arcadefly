@@ -40,3 +40,5 @@ production:
   username: root
   password: Q1w2e3r4
   host: localhost
+  pool: 10
+  wait_timeout: 5
