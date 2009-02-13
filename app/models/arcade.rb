@@ -49,7 +49,7 @@ class Arcade < ActiveRecord::Base
   end
 
   def has_game?(game)
-    playables.find_by_game_id(game.id)
+    playables.find_by_game_id(game.id).length > 0
   end
   memoize :has_game?
 
@@ -63,27 +63,6 @@ class Arcade < ActiveRecord::Base
   end
   memoize :playables_rank
   
-  def build_week
-    self.hours = Hour.new_week(self)
-  end
-  
-  def all_hours=(new_hours)
-    self.hours.destroy_all
-    self.hours ||= []
-    new_hours.each do |hour|
-      self.hours << hour.open? ? Hour.new(hour.merge(:start => "12:00 AM", :end => "12:00 AM")) : Hour.new(hour)
-    end
-  end
-
-  def has_hours?
-    self.hours.length > 0
-  end
-	
-	# For iUi
-	def caption
-	  name
-	end
-
   def all_tags=(current_tags)
     if(current_tags.is_a?(Array))
       self.tag_list = current_tags.join(',')
@@ -102,6 +81,10 @@ class Arcade < ActiveRecord::Base
       # Below we override the default select statement used to perform the count so that it becomes COUNT(DISTINCT Posts.id)
       paginate(options.merge(:count => { :select => options[:select].gsub('*', 'id') }))
     end
+  end
+  
+  def has_hours?
+    false
   end
 
   protected
