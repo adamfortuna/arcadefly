@@ -1,5 +1,58 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
+describe "Arcade associations" do
+  before(:each) { Factory(:arcade) }
+  subject { Arcade.new }
+  
+  it { should belong_to(:profile) }
+  it { should have_many(:tags) }
+  it { should have_many(:playables) }
+  it { should have_many(:games).through(:playables) }
+  it { should have_many(:frequentships) }
+  it { should have_many(:profiles).through(:frequentships) }
+  it { should have_many(:editors) }
+  it { should have_many(:claims) }
+  it { should have_one(:address) }
+end
+
+describe "Arcade validations" do
+  before(:each) { Factory(:arcade) }
+  subject { Arcade.new }
+
+  it { should validate_presence_of(:address) }
+  it { should validate_presence_of(:name).with_message(/is required\./) }
+  
+  %w(http://test.com http://www.test.com http://www.test.com/test http://www.test.com/test.php http://www.test.org http://www.test.net).each do |value|
+    it {should allow_value(value).for(:website)}
+  end
+  %w(test test.com http://test http:// http://.net http://.com http://.org).each do |value|
+    it {should_not allow_value(value).for(:website)}
+  end
+  
+  it {should allow_value("").for(:website)}
+  it {should allow_value(nil).for(:website)}
+end
+
+describe "Arcade accessors" do
+  before(:each) { Factory(:arcade) }
+  subject { Arcade.new }  
+  
+  it { should allow_mass_assignment_of(:name) }
+  it { should allow_mass_assignment_of(:phone) }
+  it { should allow_mass_assignment_of(:notes) }
+  it { should allow_mass_assignment_of(:all_tags) }
+  it { should allow_mass_assignment_of(:address) }
+  it { should allow_mass_assignment_of(:website) }
+  it { should_not allow_mass_assignment_of(:profile) }
+  it { should_not allow_mass_assignment_of(:created_at) }
+  it { should_not allow_mass_assignment_of(:updated_at) }
+  it { should_not allow_mass_assignment_of(:permalink_at) }
+  it { should_not allow_mass_assignment_of(:profile_id) }
+  it { should_not allow_mass_assignment_of(:playables_count) }
+  it { should_not allow_mass_assignment_of(:frequentships_count) }
+end
+
+
 describe Arcade, ".to_param" do
   before(:each) do
     @arcade = Arcade.new
@@ -23,7 +76,7 @@ describe Arcade, ".title" do
     @name = "Rocky's Replay"
     @arcade.expects(:name).once.returns(@name)
   end
-  it "should be equal to the permalink" do
+  it "should be equal to the name" do
     @arcade.title.should == @name
   end
 end
@@ -84,17 +137,13 @@ describe Arcade, ".has_game?" do
 end
 
 
-# def frequentships_rank
-#   Arcade.count(:conditions => ['frequentships_count > ?', frequentships_count]) + 1
-# end
-
 describe Arcade, ".frequentships_rank" do
   before(:each) do
     @arcade = Factory(:arcade)
   end
   it "should be first if there is one only one arcade" do
     @arcade.frequentships_rank.should == 1
-  end
+  end     
   it "should be first if there are multiple arcades with less frequentships" do
     Factory(:arcade, :frequentships_count => 1)
     @arcade.frequentships_rank.should == 1
@@ -123,10 +172,37 @@ describe Arcade, ".frequentships_rank" do
 end
 
 describe Arcade, ".playables_rank" do
-  it "should be first if there is only 1 arcade"
-  it "should be first if it has the most games"
-  it "should be last if it has 0 games"
-  it "should be tied with other arcades with the same games count"
+  before(:each) do
+    @arcade = Factory(:arcade)
+  end
+  it "should be first if there is one only one arcade" do
+    @arcade.playables_rank.should == 1
+  end
+  it "should be first if there are multiple arcades with less playables" do
+    Factory(:arcade, :playables_count => 1)
+    @arcade.playables_rank.should == 1
+  end
+  it "should be in the middle if multiple arcades have more and less playables" do
+    Factory(:arcade, :playables_count => 1)
+    Factory(:arcade, :playables_count => 20)
+    @arcade.playables_rank.should == 2
+  end
+  it "should be last if all arcades have more playables" do
+    Factory(:arcade, :playables_count => 20)
+    Factory(:arcade, :playables_count => 30)
+    Factory(:arcade, :playables_count => 40)
+    @arcade.playables_rank.should == 4
+  end
+  it "should be ranked tied with others of the same count" do
+    Factory(:arcade)
+    @arcade.playables_rank.should == 1
+  end
+  it "should be ranked tied with others of the same count and in the middle" do
+    Factory(:arcade, :playables_count => 20)
+    Factory(:arcade, :playables_count => 30)
+    Factory(:arcade, :playables_count => 10)
+    @arcade.playables_rank.should == 3
+  end
 end
 
 describe Arcade, ".all_tags=" do
@@ -143,26 +219,12 @@ describe Arcade, ".all_tags=" do
   end
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+describe Arcade, ".has_hours?" do
+  before(:each) do
+    @arcade = Arcade.new
+  end
+  
+  it "should not have hours" do
+    @arcade.has_hours?.should be_false
+  end
+end

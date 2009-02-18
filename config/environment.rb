@@ -56,6 +56,12 @@ Rails::Initializer.run do |config|
 
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
-
-  config.gem "thoughtbot-factory_girl", :lib => "factory_girl", :source => "http://gems.github.com"
+  
+  config.gem 'rspec',                   :lib => false,            :source => 'http://gems.rubyforge.org/', :version => '~>1.1.12'
+  config.gem 'rspec-rails',             :lib => false,            :source => 'http://gems.rubyforge.org/', :version => '~>1.1.12'
+  config.gem 'thoughtbot-factory_girl', :lib => 'factory_girl',   :source => 'http://gems.github.com'
+  config.gem 'thoughtbot-shoulda',      :lib => false,            :source => 'http://gems.github.com'
+  config.gem 'mislav-will_paginate',    :lib => 'will_paginate',  :source => 'http://gems.github.com',     :version => '~> 2.3.7'
+  config.gem 'mislav-will_paginate',    :lib => 'will_paginate',  :source => 'http://gems.github.com',     :version => '~> 2.3.7'
+  config.gem 'andre-geokit',            :lib => 'geokit',         :source => 'http://gems.github.com',     :version => '~> 1.2.2'
 end

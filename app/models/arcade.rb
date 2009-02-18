@@ -25,8 +25,10 @@ class Arcade < ActiveRecord::Base
 	validates_associated :address
 	validates_presence_of :name, :message => "is required."
 	validates_uniqueness_of :permalink
-
-  attr_accessible :name, :phone, :notes, :all_tags, :address, :profile, :website, :all_hours
+	validates_format_of :website, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/ix, 
+	                    :if => :website?
+  
+  attr_accessible :name, :phone, :notes, :all_tags, :address, :website#, :all_hours, :profile
 
 	def to_param
     permalink
