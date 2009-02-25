@@ -40,7 +40,6 @@
  
 <% javascript do %>
 	<%= map.to_html(:no_script_tag => true) %>
-	$('<%=options[:class].split(' ').first%>_loading').hide();
 <% end %>
 
 <%= map.div(:class => "#{options[:class]} loading") %>
