@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080927151210) do
+ActiveRecord::Schema.define(:version => 20090224023524) do
 
   create_table "addresses", :force => true do |t|
     t.datetime "created_at"
@@ -43,13 +43,13 @@ ActiveRecord::Schema.define(:version => 20080927151210) do
     t.integer  "frequentships_count", :default => 0
   end
 
-  add_index "arcades", ["permalink"], :name => "index_arcades_on_permalink", :unique => true
-  add_index "arcades", ["name"], :name => "index_arcades_on_name"
-  add_index "arcades", ["playables_count"], :name => "index_arcades_on_playables_count"
+  add_index "arcades", ["frequentships_count", "playables_count"], :name => "index_arcades_on_frequentships_count_and_playables_count"
   add_index "arcades", ["frequentships_count"], :name => "index_arcades_on_frequentships_count"
   add_index "arcades", ["name", "frequentships_count"], :name => "index_arcades_on_name_and_frequentships_count"
   add_index "arcades", ["name", "playables_count"], :name => "index_arcades_on_name_and_playables_count"
-  add_index "arcades", ["frequentships_count", "playables_count"], :name => "index_arcades_on_frequentships_count_and_playables_count"
+  add_index "arcades", ["name"], :name => "index_arcades_on_name"
+  add_index "arcades", ["permalink"], :name => "index_arcades_on_permalink", :unique => true
+  add_index "arcades", ["playables_count"], :name => "index_arcades_on_playables_count"
 
   create_table "claims", :force => true do |t|
     t.datetime "created_at"
@@ -62,9 +62,9 @@ ActiveRecord::Schema.define(:version => 20080927151210) do
     t.text     "reason"
   end
 
-  add_index "claims", ["profile_id", "arcade_id"], :name => "index_claims_on_profile_id_and_arcade_id", :unique => true
-  add_index "claims", ["profile_id", "arcade_id", "approved"], :name => "index_claims_on_profile_id_and_arcade_id_and_approved"
   add_index "claims", ["approved"], :name => "index_claims_on_approved"
+  add_index "claims", ["profile_id", "arcade_id", "approved"], :name => "index_claims_on_profile_id_and_arcade_id_and_approved"
+  add_index "claims", ["profile_id", "arcade_id"], :name => "index_claims_on_profile_id_and_arcade_id", :unique => true
 
   create_table "comments", :force => true do |t|
     t.datetime "created_at"
@@ -77,8 +77,8 @@ ActiveRecord::Schema.define(:version => 20080927151210) do
     t.boolean  "is_reviewed",      :default => false
   end
 
-  add_index "comments", ["profile_id"], :name => "index_comments_on_profile_id"
   add_index "comments", ["commentable_id", "commentable_type"], :name => "index_comments_on_commentable_id_and_commentable_type"
+  add_index "comments", ["profile_id"], :name => "index_comments_on_profile_id"
 
   create_table "countries", :force => true do |t|
     t.datetime "created_at"
@@ -88,9 +88,9 @@ ActiveRecord::Schema.define(:version => 20080927151210) do
     t.string   "alpha_3_code", :limit => 3,  :null => false
   end
 
-  add_index "countries", ["name"], :name => "index_countries_on_name", :unique => true
   add_index "countries", ["alpha_2_code"], :name => "index_countries_on_alpha_2_code", :unique => true
   add_index "countries", ["alpha_3_code"], :name => "index_countries_on_alpha_3_code", :unique => true
+  add_index "countries", ["name"], :name => "index_countries_on_name", :unique => true
 
   create_table "favoriteships", :force => true do |t|
     t.integer  "game_id",    :null => false
@@ -99,9 +99,9 @@ ActiveRecord::Schema.define(:version => 20080927151210) do
     t.datetime "updated_at"
   end
 
+  add_index "favoriteships", ["game_id"], :name => "index_favoriteships_on_game_id"
   add_index "favoriteships", ["profile_id", "game_id"], :name => "index_favoriteships_on_profile_id_and_game_id", :unique => true
   add_index "favoriteships", ["profile_id"], :name => "index_favoriteships_on_profile_id"
-  add_index "favoriteships", ["game_id"], :name => "index_favoriteships_on_game_id"
 
   create_table "frequentships", :force => true do |t|
     t.datetime "created_at"
@@ -110,9 +110,9 @@ ActiveRecord::Schema.define(:version => 20080927151210) do
     t.integer  "profile_id", :null => false
   end
 
+  add_index "frequentships", ["arcade_id"], :name => "index_frequentships_on_arcade_id"
   add_index "frequentships", ["profile_id", "arcade_id"], :name => "index_frequentships_on_profile_id_and_arcade_id", :unique => true
   add_index "frequentships", ["profile_id"], :name => "index_frequentships_on_profile_id"
-  add_index "frequentships", ["arcade_id"], :name => "index_frequentships_on_arcade_id"
 
   create_table "friends", :force => true do |t|
     t.datetime "created_at"
@@ -136,15 +136,15 @@ ActiveRecord::Schema.define(:version => 20080927151210) do
     t.string   "alias"
   end
 
-  add_index "games", ["name"], :name => "index_games_on_name", :unique => true
-  add_index "games", ["permalink"], :name => "index_games_on_permalink", :unique => true
+  add_index "games", ["favoriteships_count", "playables_count"], :name => "index_games_on_favoriteships_count_and_playables_count"
+  add_index "games", ["favoriteships_count"], :name => "index_games_on_favoriteships_count"
   add_index "games", ["gamefaqs_id"], :name => "index_games_on_gamefaqs_id", :unique => true
   add_index "games", ["klov_id"], :name => "index_games_on_klov_id", :unique => true
-  add_index "games", ["playables_count"], :name => "index_games_on_playables_count"
-  add_index "games", ["favoriteships_count"], :name => "index_games_on_favoriteships_count"
-  add_index "games", ["name", "playables_count"], :name => "index_games_on_name_and_playables_count"
   add_index "games", ["name", "favoriteships_count"], :name => "index_games_on_name_and_favoriteships_count"
-  add_index "games", ["favoriteships_count", "playables_count"], :name => "index_games_on_favoriteships_count_and_playables_count"
+  add_index "games", ["name", "playables_count"], :name => "index_games_on_name_and_playables_count"
+  add_index "games", ["name"], :name => "index_games_on_name", :unique => true
+  add_index "games", ["permalink"], :name => "index_games_on_permalink", :unique => true
+  add_index "games", ["playables_count"], :name => "index_games_on_playables_count"
 
   create_table "hours", :force => true do |t|
     t.datetime "created_at"
@@ -170,8 +170,8 @@ ActiveRecord::Schema.define(:version => 20080927151210) do
     t.boolean  "read",        :default => false, :null => false
   end
 
-  add_index "messages", ["sender_id"], :name => "index_messages_on_sender_id"
   add_index "messages", ["receiver_id"], :name => "index_messages_on_receiver_id"
+  add_index "messages", ["sender_id"], :name => "index_messages_on_sender_id"
 
   create_table "playables", :force => true do |t|
     t.datetime "created_at"
@@ -208,10 +208,10 @@ ActiveRecord::Schema.define(:version => 20080927151210) do
     t.integer  "unread_messages_count", :default => 0,     :null => false
   end
 
+  add_index "profiles", ["display_name"], :name => "index_profiles_on_display_name"
+  add_index "profiles", ["email"], :name => "index_profiles_on_email"
   add_index "profiles", ["permalink"], :name => "index_profiles_on_permalink", :unique => true
   add_index "profiles", ["user_id"], :name => "index_profiles_on_user_id"
-  add_index "profiles", ["email"], :name => "index_profiles_on_email"
-  add_index "profiles", ["display_name"], :name => "index_profiles_on_display_name"
 
   create_table "regions", :force => true do |t|
     t.datetime "created_at"
@@ -221,8 +221,8 @@ ActiveRecord::Schema.define(:version => 20080927151210) do
     t.string   "abbreviation", :limit => 5,  :null => false
   end
 
-  add_index "regions", ["name", "country_id"], :name => "index_regions_on_name_and_country_id", :unique => true
   add_index "regions", ["abbreviation", "country_id"], :name => "index_regions_on_abbreviation_and_country_id", :unique => true
+  add_index "regions", ["name", "country_id"], :name => "index_regions_on_name_and_country_id", :unique => true
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
@@ -256,7 +256,8 @@ ActiveRecord::Schema.define(:version => 20080927151210) do
     t.string   "time_zone",                               :default => "UTC"
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["email", "crypted_password"], :name => "index_users_on_email_and_crypted_password"
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
 
 end
