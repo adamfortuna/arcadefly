@@ -91,5 +91,18 @@ module ApplicationHelper
   def urlencode(str)
     str.gsub(/ /, "+") 
   end
+  
+  def addressable_for(addressable, options = {})
+    return "" unless addressable.has_address?
+    options ||= {}
+    options.reverse_merge!({:small_map => true, :map_type => false, :id => "#{addressable.class.to_s.downcase}_map", :class => "map_small map"})
+    map = GMap.new(options[:id])
+    map.control_init(options)
+
+    map.center_zoom_init([addressable.address.public_lat, addressable.address.public_lng], 10)
+    map.overlay_init(GMarker.new([addressable.address.public_lat, addressable.address.public_lng], :title => addressable.title, :info_window => map_bubble_for(addressable)))
+  
+    return map.to_html(:no_script_tag => true)
+  end
 
 end

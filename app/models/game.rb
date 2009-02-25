@@ -48,4 +48,8 @@ class Game < ActiveRecord::Base
     Game.count(:conditions => ['playables_count > ?', playables_count]) + 1
   end
   memoize :playables_rank
+  
+  def self.recent
+    self.find(:all, :order => 'favoriteships_count desc, playables_count desc', :limit => 10)
+  end
 end

@@ -1,9 +1,17 @@
 <%- show_text ||= false -%>
 
-<p class="favorite" id="favorite_game_<%= game.id %>">
+<p class="favorite" id="favorite_game_<%= game.id %>"<%- if show_text %> style="display:none;"<% end %>>
   <% if current_profile.has_favorite_game?(game) %>
     <%= unfavorite_game_link(game, { :show_text => show_text}) %>
   <% else %>
     <%= favorite_game_link(game, { :show_text => show_text}) %>
   <% end %>
 </p>
+
+
+<%- if show_text %>
+  <% javascript do %>
+    $("favorite_game_parent_<%= game.id %>").appendChild($("favorite_game_<%= game.id %>"));
+    $("favorite_game_<%= game.id %>").show();
+  <% end %>  
+<%- end %>

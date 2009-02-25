@@ -14,7 +14,7 @@
 <body<%= " class=\"#{params[:controller]}\"" unless params[:controller].nil? %>>
 	<div id="main">
     <div class="container">
-    	<div id="header">        
+    	<div id="header">
         <ul>
           <li><%= link_to "Home", root_path %></li>
   		    <li><%= link_to "Arcades", arcades_path, { :class => 'arcades' } %></li>
@@ -22,10 +22,12 @@
   		    <li><%= link_to "Players", profiles_path, { :class => 'users' } %></li>
   		    <li><%= link_to "Popular", popular_path %></li>
           <%- if logged_in? -%>
-            <% if administrator? %><li><%= link_to "Claims (#{Claim.pending.count})", claims_path %></li><% end %>
-            <% if current_session.profile.has_followers? %><li><%= link_to "Friend Requests (#{current_session.profile.followers_count})", profile_friends_path(current_session.profile) %></li><% end %>
-            <li><%= link_to "My Profile", profile_path(current_profile), { :class => 'users' } %></li>
-            <li><%= link_to "Logout", logout_path, { :class => 'users' } %></li>
+            
+              <% if administrator? %><li><%= link_to "Claims (#{Claim.pending.count})", claims_path %></li><% end %>
+              <% if current_session.profile.has_followers? %><li><%= link_to "Friend Requests (#{current_session.profile.followers_count})", profile_friends_path(current_session.profile) %></li><% end %>
+              <li><%= link_to "My Profile", profile_path(current_profile), { :class => 'users' } %></li>
+              <li><%= link_to "Logout", logout_path, { :class => 'users' } %></li>
+            
           <%- else -%>
             <li><%= link_to "Register", signup_path, { :class => 'users' } %></li>
             <li><%= link_to "Sign In", signin_path, { :class => 'users' } %></li>
@@ -34,12 +36,13 @@
             <% end -%>
   		    <%- end -%>
         </ul>
+
         <% if current_session.addressed_in? %>
         <p>
           <strong>Browsing from: <%= current_session.address.single_line %></strong>
         </p>
         <% end %>
-            
+
       	<div>
           <strong><a href="/">ArcadeFly.com</a></strong>
           <small>Mapping the arcade buzz!</small>

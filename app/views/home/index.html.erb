@@ -21,6 +21,8 @@
   }
 <% end %> 
 
+<% cache(:home, :expires_in => 30.minutes) do %>
+
 <% box :classname => 'arcades', :id => 'landing' do %>
 
     <%= image_tag "#{ASSET_HOST}/images/features_arcades.jpg", :class => "left framed", :id => "featured_image", :alt => "featured image" %>
@@ -112,3 +114,5 @@
   </div>
 <% end %>
 </div>
+
+<% end %>

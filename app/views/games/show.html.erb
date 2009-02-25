@@ -1,44 +1,49 @@
-<% title "Games" + separator + @game.name -%>
-<% description "#{@game.name} is available to play at #{pluralize(@game.playables.size, "arcade")}, with #{pluralize(@game.favoriteships.size, "player")} favoriting it making it the ##{@game.favoriteships_rank} most popular game at ArcadeFly.com." + ((!@game.alias.nil? && !@game.alias.blank? && @game.alias != @game.name) ? " Also known as: #{@game.alias}" : "") -%>
+<% 
+  title "Games" + separator + @game.name
+  description Rails.cache.fetch("game-description-#{@game.to_param}") { "#{@game.name} is available to play at #{pluralize(@game.playables.size, "arcade")}, with #{pluralize(@game.favoriteships.size, "player")} favoriting it making it the ##{@game.favoriteships_rank} most popular game at ArcadeFly.com." + ((!@game.alias.nil? && !@game.alias.blank? && @game.alias != @game.name) ? " Also known as: #{@game.alias}" : "") }
+-%>
 <%- @body_class = "games" %>
 
-<%= render :partial => 'menu', :locals => { :game => @game } %>
-
-<% tabbed_box do %>
-  <div id="profile_overview">
-    <div class="left_column">
-      <span class="counts left shift-1">
-        <%= link_to "#{pluralize(@game.playables.size, "arcade")} (##{@game.playables_rank})", game_arcades_path(@game), :class => "arcades" %>
-        <%= link_to "#{pluralize(@game.favoriteships.size, "favorite")} (##{@game.favoriteships_rank})", game_profiles_path(@game), :class => "users" %>
-      </span>
-      <div class="right short_description">
-        <h1><%= @game.name %></h1>
-        <% if @game.gamefaqs_id || @game.klov_id %>
-      	<p>
-      	  Find out more about this game on:  
-      	  <%= link_to "GameFaqs", "http://www.gamefaqs.com/coinop/arcade/data/#{@game.gamefaqs_id}.html", :target => "_blank" if @game.gamefaqs_id %><% if @game.gamefaqs_id && @game.klov_id %>, <% end %>
-      	  <%= link_to "KLOV", "http://www.klov.com/game_detail.php?game_id=#{@game.klov_id}", :target => "_blank" if @game.klov_id %>
-      	</p>
-      	<% end %>
-    	  <%= render :partial => 'favorite', :locals => { :show_text => true, :game => @game } if logged_in? %>
-    	</div>
+<% cache(@game) do %>
+  <%= render :partial => 'menu', :locals => { :game => @game } %>
+  <% tabbed_box do %>
+    <div id="profile_overview">
+      <div class="left_column">
+        <span class="counts left shift-1">
+          <%= link_to "#{pluralize(@game.playables.size, "arcade")} (##{@game.playables_rank})", game_arcades_path(@game), :class => "arcades" %>
+          <%= link_to "#{pluralize(@game.favoriteships.size, "favorite")} (##{@game.favoriteships_rank})", game_profiles_path(@game), :class => "users" %>
+        </span>
+        <div class="right short_description">
+          <h1><%= @game.name %></h1>
+          <% if @game.gamefaqs_id || @game.klov_id %>
+        	<p>
+        	  Find out more about this game on:  
+        	  <%= link_to "GameFaqs", "http://www.gamefaqs.com/coinop/arcade/data/#{@game.gamefaqs_id}.html", :target => "_blank" if @game.gamefaqs_id %><% if @game.gamefaqs_id && @game.klov_id %>, <% end %>
+        	  <%= link_to "KLOV", "http://www.klov.com/game_detail.php?game_id=#{@game.klov_id}", :target => "_blank" if @game.klov_id %>
+        	</p>
+        	<% end %>
+        	<div id="favorite_game_parent_<%= @game.id %>"></div>
+      	</div>
     	
-    </div>
+      </div>
     
-    <div class="right_column">
-      <% if @game.has_arcades? %>
-      <p class="center shift-2">
-        Want to see locations near you with this game? <%= link_to "Check out arcades with this game!", game_arcades_path(@game) %>
-      </p>
+      <div class="right_column">
+        <% if @game.has_arcades? %>
+        <p class="center shift-2">
+          Want to see locations near you with this game? <%= link_to "Check out arcades with this game!", game_arcades_path(@game) %>
+        </p>
+        <% end %>
+      </div>
+    
+      <% if !@game.alias.nil? && !@game.alias.blank? && @game.alias != @game.name %>
+        <p class="clear">
+          <strong>Aliases for this game:</strong> <%= @game.alias %>
+        </p>
       <% end %>
+    
     </div>
-    
-    <% if !@game.alias.nil? && !@game.alias.blank? && @game.alias != @game.name %>
-      <p class="clear">
-        <strong>Aliases for this game:</strong> <%= @game.alias %>
-      </p>
-    <% end %>
-    
-  </div>
+  <% end %>
 <% end %>
+
 <%= render :partial => 'footer' if administrator? %>
+<%= render :partial => 'favorite', :locals => { :show_text => true, :game => @game } if logged_in? %>

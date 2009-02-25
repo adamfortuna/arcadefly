@@ -95,6 +95,7 @@ class UserSession
 
   private
   def build_address
+    return Address.new unless @session[:address_lat] && @session[:address_lng]
     return Address.new({
       :street => @session[:address_street],
       :city =>  @session[:address_city],
@@ -117,6 +118,7 @@ class UserSession
     if user && user.remember_token?
       user.remember_me
       @cookies[:auth_token] = { :value => user.remember_token, :expires => user.remember_token_expires_at }
+      @session[:user] = user.id
       @current_user = user
       return @current_user.profile
     end

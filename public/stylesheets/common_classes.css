@@ -33,12 +33,14 @@ a.users:hover { background-color: #cec; }
 .clear:after, .container:after { content: ".";  display: block; height: 0; clear: both; visibility: hidden; }
 * html .clear { height: 1%; }
 .clear { display: block; }
-
+.hidden { display:none; }
 
 .inline { display:inline; }
 .block { display: block; }
 .center { text-align: center; }
 span.info, div.info { font-size: .8em; line-height: 1.875em; }
+
+.loading { background:url(http://static.arcadefly.com/images/spinner.gif) no-repeat center center; }
 
 /* Default colors for rows */
 .even { background-color: #efefef; }

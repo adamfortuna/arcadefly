@@ -1,9 +1,16 @@
 <%- show_text ||= false -%>
 
-<p class="favorite" id="favorite_profile_<%= profile.id %>">
+<p class="favorite" id="favorite_profile_<%= profile.id %>"<%- if show_text %> style="display:none;"<% end %>>
   <% if current_profile.friends_with?(profile) %>
     <%= unfriend_profile_link(profile, { :show_text => show_text}) %>
   <% else %>
     <%= friend_profile_link(profile, { :show_text => show_text}) %>
   <% end %>
 </p>
+
+<%- if show_text %>
+  <% javascript do %>
+    $("favorite_profile_parent_<%= profile.id %>").appendChild($("favorite_profile_<%= profile.id %>"));
+    $("favorite_profile_<%= profile.id %>").show();
+  <% end %>  
+<%- end %>

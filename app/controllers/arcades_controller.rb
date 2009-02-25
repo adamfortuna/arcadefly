@@ -273,12 +273,12 @@ class ArcadesController < ResourceController::Base
     return @parent_object
   end
 
-  # GET /arcades/1-arcade-name
+  # GET /arcades/arcade-permalink
   # This will set an arcade object
   def object
-    @object ||= Arcade.find_by_permalink(params[:id], :include => [ { :address => [:country, :region] }] )
+    @object ||= Arcade.find_by_permalink(params[:id])
     raise ActiveRecord::RecordNotFound if @object.nil?
-    @object
+    return @object
   end
   
   def check_claim

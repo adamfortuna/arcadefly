@@ -85,6 +85,10 @@ class Arcade < ActiveRecord::Base
     end
   end
   
+  def self.recent
+    self.find(:all, :order => 'created_at desc', :include => [ { :address => [:country, :region] }], :limit => 10)
+  end
+  
   def has_hours?
     false
   end

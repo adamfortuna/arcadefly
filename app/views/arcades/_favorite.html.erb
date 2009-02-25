@@ -2,10 +2,18 @@
   show_text ||= true
   span_class ||= "favorite"
 -%>
-<span class="<%= span_class %>" id="favorite_arcade_<%= arcade.id %>">
+
+<span class="<%= span_class %>" id="favorite_arcade_<%= arcade.id %>"<%- if show_text %> style="display:none;"<% end %>>
   <% if current_profile.has_favorite_arcade?(arcade) %>
     <%= unfavorite_arcade_link(arcade, { :show_text => show_text}) %>
   <% else %>
     <%= favorite_arcade_link(arcade, { :show_text => show_text}) %>
   <% end %>
 </span>
+
+<%- if show_text %>
+  <% javascript do %>
+    $("favorite_arcade_parent_<%= arcade.id %>").appendChild($("favorite_arcade_<%= arcade.id %>"));
+    $("favorite_arcade_<%= arcade.id %>").show();
+  <% end %>  
+<%- end %>

@@ -1,53 +1,67 @@
 <%- title "Profile for #{@profile.display_name}" -%>
 
-<%= render :partial => 'menu', :locals => { :profile => @profile} %>
+<% cache(@profile) do %>
+  <%= render :partial => 'menu', :locals => { :profile => @profile} %>
 
-<% tabbed_box do %>  
-  <div id="profile_overview">
-    <div class="left_column">
-      <div class="left"><%= avatar(@profile, :big) %></div>
-      <div class="short_description">
-        <h1><%= h @profile.display_name %></h1>
-        <%= render :partial => 'friend', :locals => { :show_text => true, :profile => @profile } if logged_in? && !current_profile.pending_friend_with?(@profile) && !me %>
-        <% unless @profile.full_name.blank? %><div><strong>Real Name:</strong> <%= h @profile.full_name%></div><% end %>
-    	  <% if @profile.has_address? %><h3><%= location_link @profile %></h3><% end %>
-    		<% unless @profile.website.blank? %><div><strong>Website:</strong> <%= link_to h(@profile.website), h(@profile.website), {:rel => "nofollow"} %></div><% end %>
-    		<% unless @profile.aim_name.blank? %><div><strong>AIM:</strong> <a href="aim:goim?screenname=<%= h @profile.aim_name %>"><%= h @profile.aim_name %></a></div><% end %>
-    	</div>
-    	<% unless @profile.about_me.blank? %>
-    	<div class="left_column_content">
-    	  <div>
-    	    <h3>About:</h3>
-    	    <%= sanitize(@profile.about_me, :tags => ALLOWED_HTML_TAGS ) %>
-    	  </div>
-    	</div>
-    	<% end %>
-    </div>
+  <% tabbed_box do %>  
+    <div id="profile_overview">
+      <div class="left_column">
+        <div class="left"><%= avatar(@profile, :big) %></div>
+        <div class="short_description">
+          <h1><%= h @profile.display_name %></h1>
+          <div id="favorite_profile_parent_<%= @profile.id %>"></div>
+          
+          <% unless @profile.full_name.blank? %><div><strong>Real Name:</strong> <%= h @profile.full_name%></div><% end %>
+      	  <% if @profile.has_address? %><h3><%= location_link @profile %></h3><% end %>
+      		<% unless @profile.website.blank? %><div><strong>Website:</strong> <%= link_to h(@profile.website), h(@profile.website), {:rel => "nofollow"} %></div><% end %>
+      		<% unless @profile.aim_name.blank? %><div><strong>AIM:</strong> <a href="aim:goim?screenname=<%= h @profile.aim_name %>"><%= h @profile.aim_name %></a></div><% end %>
+      	</div>
+      	<% unless @profile.about_me.blank? %>
+      	<div class="left_column_content">
+      	  <div>
+      	    <h3>About:</h3>
+      	    <%= sanitize(@profile.about_me, :tags => ALLOWED_HTML_TAGS ) %>
+      	  </div>
+      	</div>
+      	<% end %>
+      </div>
   
-    <% if @profile.has_address? %>
-    <div class="map_box right_column">
-      <%= render :partial => 'shared/addressable', :object => @profile if @profile.has_address?%>
+      <% if @profile.has_address? %>
+      <div class="map_box right_column">
+        <div id="profile_map" class="map_small map loading"></div>
       
-      <p class="map_info center">
-        <%= h @profile.display_name %> lives in <%= @profile.address.shortest_line %>
-      </p>
+        <p class="map_info center">
+          <%= h @profile.display_name %> lives in <%= @profile.address.shortest_line %>
+        </p>
       
-      <% if @profile.administrator? %>
-        <div class="clear center shift-1">
-          <strong><%= h @profile.display_name %> is an administrator.</strong>
-        </div>
-      <% elsif @profile.claimed_arcades.length > 0 %>
-        <div class="clear shift-1">
-          <strong><%= h @profile.display_name %> is an editor for these arcades: </strong>
-          <ul class="inline comma">
-          <% @profile.claimed_arcades.each do |arcade| %>
-            <li><%= link_to arcade.name, arcade_path(arcade) %></li>
-          <% end %>
-          </ul>
-        </div>
+        <% if @profile.administrator? %>
+          <div class="clear center shift-1">
+            <strong><%= h @profile.display_name %> is an administrator.</strong>
+          </div>
+        <% elsif @profile.claimed_arcades.length > 0 %>
+          <div class="clear shift-1">
+            <strong><%= h @profile.display_name %> is an editor for these arcades: </strong>
+            <ul class="inline comma">
+            <% @profile.claimed_arcades.each do |arcade| %>
+              <li><%= link_to arcade.name, arcade_path(arcade) %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+      </div>
       <% end %>
-    </div>
-    <% end %>
 
-  </div>
+    </div>
+  <% end %>
 <% end %>
+
+<% javascript_files do  %>
+  <%= javascript_include_tag GMap.google_js_path %>
+  <%= javascript_include_merged :addressables %>
+<% end %>
+ 
+<% javascript do %>
+  <%= Rails.cache.fetch("addressable-profile-#{@profile.cache_key}") { addressable_for @profile } %>
+<% end %>
+
+<%= render :partial => 'profiles/friend', :locals => { :show_text => true, :profile => @profile } if logged_in? && !me && !current_profile.pending_friend_with?(@profile) %>

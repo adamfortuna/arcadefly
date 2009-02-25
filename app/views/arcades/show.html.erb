@@ -1,97 +1,95 @@
-<% title 'Arcades' + separator + h(@arcade.name) %>
-<% description "#{@arcade.name} in #{@arcade.address.shortest_line} has #{pluralize(@arcade.playables.size, "game")} with #{pluralize(@arcade.frequentships.size, "player")} favoriting it making it the ##{@arcade.frequentships_rank} most popular arcade at ArcadeFly.com." -%>
+<% 
+  title 'Arcades' + separator + h(@arcade.name)
+  description Rails.cache.fetch("arcade-description-#{@arcade.to_param}") { "#{@arcade.name} in #{@arcade.address.shortest_line} has #{pluralize(@arcade.playables.size, "game")} with #{pluralize(@arcade.frequentships.size, "player")} favoriting it making it the ##{@arcade.frequentships_rank} most popular arcade at ArcadeFly.com." }
+-%>
 
-<%= render :partial => 'menu', :locals => { :arcade => @arcade } %>
+<% cache(@arcade) do %>
+  <%= render :partial => 'menu', :locals => { :arcade => @arcade } %>
 
-<% tabbed_box do %>
-  <div id="profile_overview">
-    <div class="overview left_column">
-      <span class="counts left shift-1">
-        <%= link_to "#{pluralize(@arcade.playables.size, "game")} (##{@arcade.playables_rank})", arcade_games_path(@arcade), :class=>"games" %>
-        <%= link_to "#{pluralize(@arcade.frequentships.size, "favorite")} (##{@arcade.frequentships_rank})", arcade_profiles_path(@arcade), :class=>"users" %>
-      </span>
-      <div class="short_description">
-        <h1><%= h @arcade.name %></h1>        
-        <%= render :partial => 'arcades/favorite', :locals => { :show_text => true, :arcade => @arcade } if logged_in? %>
-    		<% unless @arcade.phone.blank? %><div><strong>Phone Number:</strong> <%= h(@arcade.phone) %></div><% end %>
-    		<% unless @arcade.website.blank? %><div><strong>Website:</strong> <%= link_to h(@arcade.website), h(@arcade.website), {:target => '_blank'} %></div><% end %>
-        
-        <p class="adr shift-1">
-          <b>Address:</b><br/>
-          <span class="street-address"><%= @arcade.address.street %></span><br/>
-          <span class="locality"><%= @arcade.address.city %></span> <% unless @arcade.address.region_id.nil? %>, <span class="region"><%= @arcade.address.region.name %></span><% end %> <span class="postal-code"><%= @arcade.address.postal_code %></span><br/>
-          <span class="country-name"><%= @arcade.address.country.name %></span><br/>
-          <%= link_to "View Larger Map", map_arcade_path(@arcade) %>
-        </p>
-    	</div>
-      <% unless @arcade.notes.blank? %>
-    	<p class="left_column_content">
-          <h3>Additional Notes:</h3>
-          <%= sanitize(@arcade.notes, :tags => ALLOWED_HTML_TAGS ) %>  
-    	</p>
-    	<% end %>
+  <% tabbed_box do %>
+    <div id="profile_overview">
+      <div class="overview left_column">
+        <span class="counts left shift-1">
+          <%= link_to "#{pluralize(@arcade.playables.size, "game")} (##{@arcade.playables_rank})", arcade_games_path(@arcade), :class=>"games" %>
+          <%= link_to "#{pluralize(@arcade.frequentships.size, "favorite")} (##{@arcade.frequentships_rank})", arcade_profiles_path(@arcade), :class=>"users" %>
+        </span>
+        <div class="short_description">
+          <h1><%= h @arcade.name %></h1>
+          <div id="favorite_arcade_parent_<%= @arcade.id %>"></div>
+      		<% unless @arcade.phone.blank? %><div><strong>Phone Number:</strong> <%= h(@arcade.phone) %></div><% end %>
+      		<% unless @arcade.website.blank? %><div><strong>Website:</strong> <%= link_to h(@arcade.website), h(@arcade.website), {:target => '_blank'} %></div><% end %>
       
-    </div>
-  </div>
-  <% if @arcade.has_address? -%>
-    <div class="map_box right_column">
-      <%= render :partial => 'shared/addressable', :object => @arcade %>
-      <div class="map_info">
-        <p class="center">
-          <strong><%= h @arcade.name %></strong> is in <em><%= @arcade.address.city %><% unless @arcade.address.region_id.nil? %>, <%= @arcade.address.region.name %><% end %></em>.
-        </p>
-
-        <% if current_session.addressed_in? -%>
-          <div class="clear shift-1">
-            <strong>Distance Away: </strong><%= @arcade.address.distance_to(current_session.address).round_to(2) %> miles away
-          </div>
-        <% end -%>
-        
-        <% if @arcade.tag_list.length > 0 %>
-        <% # rel-tag uses rel="tag" on  %>
-        <div class="clear shift-1">
-          <strong>It's been marked as the following:</strong>
-          <ul class="inline comma">
-            <% @arcade.tag_list.each do |tag| %>
-              <li><%= link_to tag, arcade_tag_path(urlencode(tag.downcase)), {'rel' => 'tag'} %></li>
-            <% end %>
-          </ul>
-          <p class="shift-2">
-            Created <%= @arcade.created_at.strftime("%m/%d/%Y") + @arcade.created_at.strftime(" at %I:%M %p") %>.<br/>
-            Last updated <%= @arcade.updated_at.strftime("%m/%d/%Y") + @arcade.updated_at.strftime(" at %I:%M %p") %>.
+          <p class="adr shift-1">
+            <b>Address:</b><br/>
+            <span class="street-address"><%= @arcade.address.street %></span><br/>
+            <span class="locality"><%= @arcade.address.city %></span> <% unless @arcade.address.region_id.nil? %>, <span class="region"><%= @arcade.address.region.name %></span><% end %> <span class="postal-code"><%= @arcade.address.postal_code %></span><br/>
+            <span class="country-name"><%= @arcade.address.country.name %></span><br/>
+            <%= link_to "View Larger Map", map_arcade_path(@arcade) %>
           </p>
-        </div>
-        <% end %>
-      
-        <% if @arcade.has_hours? %>
-        <ul class="inline comma">
-          <% @arcade.hours.each do |hour| %>
-            <li>
-              <strong><%= hour.dayofweek.capitalize %></strong>: 
-              <% if hour.closed? %>
-                Closed
-              <% else %>
-                <%= hour.start.strftime("%I:%M %p") %> to <%= hour.end.strftime("%I:%M %p") %>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
-        <% end %>
-        
-        
-        <% if @arcade.editors.length > 0 %>
-          <div class="clear shift-1">
-            <strong>Editors for this Arcade: </strong>
-            <ul class="inline comma">
-            <% @arcade.editors.each do |editor| %>
-              <li><%= link_to editor.display_name, profile_path(editor) %></li>
-            <% end %>
-            </ul>
-          </div>
-        <% end %>
-  
+      	</div>
+        <% unless @arcade.notes.blank? %>
+      	<p class="left_column_content">
+            <h3>Additional Notes:</h3>
+            <%= sanitize(@arcade.notes, :tags => ALLOWED_HTML_TAGS ) %>  
+      	</p>
+      	<% end %>
       </div>
     </div>
+    <% if @arcade.has_address? -%>
+      <div class="map_box right_column">
+        <div id="arcade_map" class="map_small map loading"></div>
+        <div class="map_info">
+          <p class="center">
+            <strong><%= h @arcade.name %></strong> is in <em><%= @arcade.address.city %><% unless @arcade.address.region_id.nil? %>, <%= @arcade.address.region.name %><% end %></em>.
+          </p>
+
+          <% if current_session.addressed_in? -%>
+            <div class="clear shift-1">
+              <strong>Distance Away: </strong><%= @arcade.address.distance_to(current_session.address).round_to(2) %> miles away
+            </div>
+          <% end -%>
+        
+          <% if @arcade.tag_list.length > 0 %>
+          <% # rel-tag uses rel="tag" on  %>
+          <div class="clear shift-1">
+            <strong>It's been marked as the following:</strong>
+            <ul class="inline comma">
+              <% @arcade.tag_list.each do |tag| %>
+                <li><%= link_to tag, arcade_tag_path(urlencode(tag.downcase)), {'rel' => 'tag'} %></li>
+              <% end %>
+            </ul>
+            <p class="shift-2">
+              Created <%= @arcade.created_at.strftime("%m/%d/%Y") + @arcade.created_at.strftime(" at %I:%M %p") %>.<br/>
+              Last updated <%= @arcade.updated_at.strftime("%m/%d/%Y") + @arcade.updated_at.strftime(" at %I:%M %p") %>.
+            </p>
+          </div>
+          <% end %>        
+        
+          <% if @arcade.editors.length > 0 %>
+            <div class="clear shift-1">
+              <strong>Editors for this Arcade: </strong>
+              <ul class="inline comma">
+              <% @arcade.editors.each do |editor| %>
+                <li><%= link_to editor.display_name, profile_path(editor) %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 <% end %>
+
 <%= render :partial => "arcades/footer" %>
+
+<% javascript_files do  %>
+  <%= javascript_include_tag GMap.google_js_path %>
+  <%= javascript_include_merged :addressables %>
+<% end %>
+ 
+<% javascript do %>
+  <%= Rails.cache.fetch("addressable-arcade-#{@arcade.cache_key}") { addressable_for @arcade } %>
+<% end %>
+
+<%= render :partial => 'arcades/favorite', :locals => { :show_text => true, :arcade => @arcade } if logged_in? %>

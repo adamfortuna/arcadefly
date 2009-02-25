@@ -114,6 +114,14 @@ class Profile < ActiveRecord::Base
     followers_count > 0
   end
   
+  def self.recently_has_followers?(profile)
+    Rails.cache.fetch("profile-#{profile.id}-recently_has_followers", :expires_in => 30.minutes) do
+      Friend.count(:conditions => ["invited_id = ? AND accepted = 0", profile.id]) > 0
+    end
+  end
+  
+  
+  
   def followers_count
     followers.count
   end
@@ -226,6 +234,9 @@ class Profile < ActiveRecord::Base
   end
   
   
+  def self.recent
+    self.find(:all, :order => 'created_at desc', :conditions => ['active=?', true], :limit => 10)
+  end
   
     
   
