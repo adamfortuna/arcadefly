@@ -9,7 +9,7 @@
     $('#landing').removeClass('arcades').removeClass('games').removeClass('profiles').addClass(section);
     $("#"+section+"_features").show();
     var offset = 0;
-    if(section=='game') { offset = "-400"; }
+    if(section=='games') { offset = "-400"; }
     else if(section=='profiles') { offset = "-800"; }
     $('#featured_item').css("background-position", offset+"px 0");
   }
