@@ -5,19 +5,21 @@
     $('#profiles_features').hide();
   });
   function show(section) {
-    $('.feature').hide();    
+    $('.feature').hide();
     $('#landing').removeClass('arcades').removeClass('games').removeClass('profiles').addClass(section);
     $("#"+section+"_features").show();
-    $('#featured_image').src = '<%=ASSET_HOST%>/images/features_'+section+'.jpg';
+    var offset = 0;
+    if(section=='game') { offset = "-400"; }
+    else if(section=='profiles') { offset = "-800"; }
+    $('#featured_item').css("background-position", offset+"px 0");
   }
 <% end %> 
 
 <% box :classname => 'arcades', :id => 'landing' do %>
 
-    <%= image_tag "#{ASSET_HOST}/images/features_arcades.jpg", :class => "left framed", :id => "featured_image", :alt => "featured image" %>
+    <div id="featured_item"></div>
     
     <div id="features">
-    
       <div id="arcades_features" class="feature">
         <h3>Arcades</h3>
         <ul>
@@ -56,7 +58,7 @@
 <% box :classname => 'arcades' do %>
   <h3>Arcades</h3>
   <p>Find arcades closeby, or see which locations the most people enjoy.</p>
-  <a href="javascript:show('arcades');">Find Out More...</a>
+  <a href="#" onclick="javascript:show('arcades');return false;">Find Out More...</a>
   
   <div>
     <h4>Recently Added Arcades</h4>
@@ -73,7 +75,7 @@
 <% box :classname => 'games' do %>
   <h3>Games</h3>
   <p>Looking for a game? We can help you find an arcade that has it.</p>
-  <a href="javascript:show('games');">Find Out More...</a>
+  <a href="#" onclick="javascript:show('games');return false;">Find Out More...</a>
   <div>
     <h4>Most Popular Games</h4>
     <ol>
@@ -89,7 +91,7 @@
 <% box :classname => 'profiles' do %>
   <h3>Players</h3>
   <p>Find gamers with similar game interests, or that hangout at your favorite arcades.</p>
-  <a href="javascript:show('profiles');">Find Out More...</a>
+  <a href="#" onclick="javascript:show('profiles');return false;">Find Out More...</a>
   <div>
     <h4>Recently Joined</h4>
     <ol>
