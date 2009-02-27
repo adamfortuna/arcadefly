@@ -3,7 +3,7 @@ javascripts:
 - application: 
   - application
 - autocomplete:
-  - jquery.autocomplete.js
+  - jquery_autocomplete
 - addressables:
   - ym4r-gm
   - markerGroup
