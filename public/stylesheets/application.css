@@ -215,3 +215,4 @@ ul.comma li:last-child:after { content:"";}
 #content a[href^="http://www.arcadefly.com"] { background: transparent; padding-right: 0px; }
 
 #featured_item { border:1px solid #ccc; background:url(http://static.arcadefly.com/images/features.jpg) no-repeat; height:160px; width:400px; float:left; }
+#w3_valid { background:url(http://static.arcadefly.com/images/w3c_blue.png) no-repeat; width:88px; height:31px; display:block; text-indent:-9999px; }
