@@ -13,8 +13,9 @@
     else if(section=='profiles') { offset = "-800"; }
     $('#featured_item').css("background-position", offset+"px 0");
   }
-<% end %> 
+<% end %>
 
+<% cache(:home, :expires_in => 30.minutes) do %>
 <% box :classname => 'arcades', :id => 'landing' do %>
 
     <div id="featured_item"></div>
@@ -102,3 +103,4 @@
   </div>
 <% end %>
 </div>
+<% end %>

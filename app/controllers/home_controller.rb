@@ -1,5 +1,4 @@
 class HomeController < ApplicationController
-  caches_action :index,        :layout => false, :expires_in => 30.minutes
   caches_action :about,        :layout => false, :expires_in => 8.hours
   caches_action :contact,      :layout => false, :expires_in => 8.hours
   caches_action :terms,        :layout => false, :expires_in => 8.hours
@@ -8,9 +7,11 @@ class HomeController < ApplicationController
   caches_action :four_oh_four, :layout => false, :expires_in => 8.hours
 
   def index
-    @arcades = Arcade.recent
-    @games = Game.recent
-    @profiles = Profile.recent
+    if !fragment_exist? :home
+      @arcades = Arcade.recent
+      @games = Game.recent
+      @profiles = Profile.recent
+    end
   end
   
   def about
