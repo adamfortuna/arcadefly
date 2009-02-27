@@ -1,6 +1,6 @@
 <% javascript do %>
-  Event.observe(window, 'load', function() {
-    if($F('near') == '') toggleLabel("near", true);
+  $(function(){
+    if($('#near').val() == '') toggleLabel("near", true);
   });
 <% end %>
 

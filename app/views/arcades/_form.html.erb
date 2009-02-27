@@ -1,74 +1,9 @@
 <%- javascript_file 'dynamic_regions' %>
 
 <% javascript do %>
-	Event.observe(window, 'load', function() {
-    Form.focusFirstElement('arcade_form');
-    hoursChanged(false);
-    $('hide_hours').observe('click', function() {
-      hoursChanged(false);
-    });
-    $('show_hours').observe('click', function() {
-      hoursChanged(true);
-    });
+  $(function(){
+    $("input[type='text']:first", document.forms[0]).focus();
   });
-  
-  
-  function fill_down(start, stop, closed, open) {
-	  $$('#hours select.start').each( function(e) {
-  	  $(e).selectedIndex = start;
-	  });
-	  $$('#hours select.end').each( function(e) {
-  	  $(e).selectedIndex = stop;
-	  });
-    $$('#hours span.options input.closed').each( function(e) {
-      $(e).checked = closed;
-	  });
-    $$('#hours span.options input.open').each( function(e) {
-      $(e).checked = open;
-	  });
-	}
-
-
-	function closedChanged(day, show) {
-	  if (show) $(day+'_hours').style.visibility = '';
-	  else $(day+'_hours').style.visibility = 'hidden';
-	  $('hours_' + day + '_open').checked = false;
-	}
-	function openChanged(day, show) {
-	  if (show)  $(day+'_hours').style.visibility = '';
-	  else $(day+'_hours').style.visibility = 'hidden';
-	  $('hours_' + day + '_closed').checked = false;
-	}
-	
-	
-
-	function hoursChanged(showAddHours) {
-	  $$('#hours input').each( function(e) {
-      if (showAddHours) {
-  			$(e).removeClassName('disabled');
-  			$(e).disabled = '';
-  		}	else {
-  			$(e).addClassName('disabled');
-  			$(e).disabled = 'disabled';
-  		}	
-	  });
-	  $$('#hours select').each( function(e) {
-      if (showAddHours) {
-  			$(e).removeClassName('disabled');
-  			$(e).disabled = '';
-  		}	else {
-  			$(e).addClassName('disabled');
-  			$(e).disabled = 'disabled';
-  		}	
-	  });
-	  $$('#hours label').each( function(e) {
-      if (showAddHours) {
-  			$(e).removeClassName('disabled');
-  		}	else {
-  			$(e).addClassName('disabled');
-  		}	
-	  });
-	} 
 <% end %>
 
 <div class="left half">

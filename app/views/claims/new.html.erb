@@ -2,16 +2,17 @@
 <%= render :partial => 'arcades/menu', :locals => { :arcade => @arcade } %>
 
 <% javascript do %>
-  Event.observe(window, 'load', function() {
-    try { Form.focusFirstElement('arcade_claim_form'); } catch(e) {} 
-    $('claim_level').observe('change', claimChange);    
+  $(function(){
+    $("input[type='text']:first", document.forms[0]).focus();
+    $('#claim_level').change(claimChange);
     claimChange();
   });
+
   function claimChange() {
-    if($F('claim_level') == 1) {
-      $('owner_claim').show();
+    if($('#claim_level').val() == 1) {
+      $('#owner_claim').show();
     } else {
-      $('owner_claim').hide();
+      $('#owner_claim').hide();
     }
   }
 <% end %>

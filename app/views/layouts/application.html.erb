@@ -2,58 +2,56 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-	<title>ArcadeFly<%= separator -%><%= yield(:title) || "Arcade and Game Locations" %></title>
+  <title>ArcadeFly<%= separator -%><%= yield(:title) || "Arcade and Game Locations" %></title>
 
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	<meta name="keywords" content="arcade games, arcades, gaming, video games, game locations, arcade locations, play games, play arcade games, where to play games" />
+  <meta name="keywords" content="arcade games, arcades, gaming, video games, game locations, arcade locations, play games, play arcade games, where to play games" />
   <meta name="description" content="<%= yield(:description) || "A social network for gamers and arcade game enthusiasts. Want to know where an arcade is, or have a game in mind and want to know where to play it? We're your place!" %>" />
   
   <%= stylesheet_link_merged :arcadefly %>
   <%= yield(:header) -%>
 </head>
 <body<%= " class=\"#{params[:controller]}\"" unless params[:controller].nil? %>>
-	<div id="main">
+  <div id="main">
     <div class="container">
-    	<div id="header">
+      <div id="header">
         <ul>
           <li><%= link_to "Home", root_path %></li>
-  		    <li><%= link_to "Arcades", arcades_path, { :class => 'arcades' } %></li>
-  		    <li><%= link_to "Games",   games_path, { :class => 'games' } %></li>
-  		    <li><%= link_to "Players", profiles_path, { :class => 'users' } %></li>
-  		    <li><%= link_to "Popular", popular_path %></li>
-          <%- if logged_in? -%>
-            
-              <% if administrator? %><li><%= link_to "Claims (#{Claim.pending.count})", claims_path %></li><% end %>
-              <% if current_session.profile.has_followers? %><li><%= link_to "Friend Requests (#{current_session.profile.followers_count})", profile_friends_path(current_session.profile) %></li><% end %>
-              <li><%= link_to "My Profile", profile_path(current_profile), { :class => 'users' } %></li>
-              <li><%= link_to "Logout", logout_path, { :class => 'users' } %></li>
-            
-          <%- else -%>
-            <li><%= link_to "Register", signup_path, { :class => 'users' } %></li>
-            <li><%= link_to "Sign In", signin_path, { :class => 'users' } %></li>
-            <%- if current_session.addressed_in? %>
-              <li><%= link_to "Clear Address", logout_path, { :class => 'users' } %></li>
-            <% end -%>
-  		    <%- end -%>
+          <li><%= link_to "Arcades", arcades_path, { :class => 'arcades' } %></li>
+          <li><%= link_to "Games",   games_path, { :class => 'games' } %></li>
+          <li><%= link_to "Players", profiles_path, { :class => 'users' } %></li>
+          <li><%= link_to "Popular", popular_path %></li>
+        <%- if logged_in? -%>
+          <% if administrator? %><li><%= link_to "Claims (#{Claim.pending.count})", claims_path %></li><% end %>
+          <%- if current_session.profile.has_followers? -%><li><%= link_to "Friend Requests (#{current_session.profile.followers_count})", profile_friends_path(current_session.profile) %></li><%- end -%>
+          <li><%= link_to "My Profile", profile_path(current_profile), { :class => 'users' } %></li>
+          <li><%= link_to "Logout", logout_path, { :class => 'users' } %></li>
+        <%- else -%>
+          <li><%= link_to "Register", signup_path, { :class => 'users' } %></li>
+          <li><%= link_to "Sign In", signin_path, { :class => 'users' } %></li>
+          <%- if current_session.addressed_in? %>
+          <li><%= link_to "Clear Address", logout_path, { :class => 'users' } %></li>
+          <%- end -%>
+        <%- end -%>
         </ul>
 
-        <% if current_session.addressed_in? %>
+        <%- if current_session.addressed_in? -%>
         <p>
           <strong>Browsing from: <%= current_session.address.single_line %></strong>
         </p>
-        <% end %>
+        <%- end -%>
 
-      	<div>
+        <div>
           <strong><a href="/">ArcadeFly.com</a></strong>
           <small>Mapping the arcade buzz!</small>
         </div>
       </div>
   
       <div id="content">
-    		<% flash.each do |key, msg| %>
-    		  <%= content_tag :div, msg, :class => key %>
-    		<% end %>
-		    <%= yield %>
+        <% flash.each do |key, msg| %>
+          <%= content_tag :div, msg, :class => key %>
+        <% end %>
+        <%= yield %>
       </div>
     </div>
   </div>
@@ -62,27 +60,27 @@
   <div id="footer">
     <div class="container">
       <div class="long">
-        <h3>Copyright &copy; 2007-2008 ArcadeFly. Development by <a href="http://www.adamfortuna.com">Adam Fortuna</a>.</h3>
+        <h3>Copyright &copy; 2007-2009 ArcadeFly. Development by <a href="http://www.adamfortuna.com">Adam Fortuna</a>.</h3>
         <p>Found a bug? Have a suggestion? Just an idea? <a href="http://getsatisfaction.com/arcadefly" target='_blank'>Let us know!</a></p>
         <p>You can read more about ArcadeFly on our <a href="http://blog.arcadefly.com">Blog</a></p>
         <p>
-          <a href="http://validator.w3.org/check?uri=referer"><%= image_tag "#{ASSET_HOST}/images/w3c_blue.png" %></a>
+          <a href="http://validator.w3.org/check?uri=referer"><%= image_tag "#{ASSET_HOST}/images/w3c_blue.png", :alt=>'XHTML 1.0 Valid' %></a>
         </p>
-  		</div>
+      </div>
       <div>
         <h3>More Links</h3>
-  			<ul>
-  	      <li><%= link_to "About ArcadeFly", about_path %></li>
+        <ul>
+          <li><%= link_to "About ArcadeFly", about_path %></li>
           <li><%= link_to "Help", help_path %></li>
-  	      <li><%= link_to "Contact Us", contact_path %></li>
-  	      <li><%= link_to "Terms of Use", terms_path %></li>
-  	      <li><%= link_to "Privacy Policy", privacy_path %></li>
-  	      <li><a href="http://blog.arcadefly.com">Blog</a></li>
+          <li><%= link_to "Contact Us", contact_path %></li>
+          <li><%= link_to "Terms of Use", terms_path %></li>
+          <li><%= link_to "Privacy Policy", privacy_path %></li>
+          <li><a href="http://blog.arcadefly.com">Blog</a></li>
         </ul>
       </div>
       <div>
         <h3>Quick Links</h3>
-  			<ul>
+        <ul>
           <li><%= link_to "Home", root_path %></li>
           <li><%= link_to "Arcades", arcades_path %></li>
           <li><%= link_to "Games", games_path %></li>
@@ -92,11 +90,14 @@
     </div>
   </div>
 
-  <%= javascript_include_merged :application %>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
   <%= yield(:javascript) -%>
   
+  <script type="text/javascript">
+    function toggleLabel(element, show) {
+      show && $("#"+element).val() == '' ? $("#"+element+'_label').show() : $("#"+element+'_label').hide();
+    }
   <%- if Rails.env.production? -%>
-    <script type="text/javascript">
     var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
     document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
     </script>
@@ -104,7 +105,7 @@
     var pageTracker = _gat._getTracker("UA-90326-5");
     pageTracker._initData();
     pageTracker._trackPageview();
-    </script>
   <%- end -%>
+  </script>
 </body>
 </html>

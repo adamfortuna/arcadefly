@@ -43,11 +43,12 @@ div.block_outside.profiles div.block_inside { display:block; background: #ffffff
 
 
 
-div.autocomplete { margin:0px; padding:0px; width:250px; background:#fff; border:1px solid #888; position:absolute; overflow-y:auto; max-height:300px; z-index:300; }
-div.autocomplete ul { margin:0px; padding:0px; list-style-type:none; background-color:#fff; }
-div.autocomplete ul li.selected {  background-color:#ffb; }
-div.autocomplete ul li { margin:0; padding:2px; height:32px; display:block; list-style-type:none; cursor:pointer; }
-
+.autocomplete { margin:0px; padding:0px; width:250px; background:#fff; border:1px solid #888; position:absolute; overflow-y:auto; max-height:300px; z-index:300; }
+.autocomplete ul { margin:0px; padding:0px; list-style-type:none; background-color:#fff; }
+.autocomplete iframe { display:none; display/**/:block; position:absolute; top:0; left:0; z-index:-1; filter:mask(); width:3000px; height:3000px; }
+.autocomplete li { margin:0; padding:2px; height:32px; display:block; list-style-type:none; cursor:pointer; }
+form input.ac_loading { background: Window url('http://static.arcadefly.com/images/spinner.gif') right center no-repeat; }
+.ac_over { background-color:#ffb; }
 
 
 
@@ -171,7 +172,7 @@ div.map_small { width: 330px; height:280px; } /* Profile/Arcade/Games Map */
 
 .first { margin-left:0;}
 .last { margin-right:0;}
-div.large_left_column { width:640px; float:left;}
+div.large_left_column { width:600px; float:left;}
 div.left_column { width:540px; float:left;}
 div.left_column .short_description { float: left; padding:1em 1em 0 1em; width:350px;}
 div.left_column .left_column_content { clear: both; padding-top: 0em; }

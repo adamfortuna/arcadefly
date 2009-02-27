@@ -10,7 +10,7 @@
 
 <%- if show_text %>
   <% javascript do %>
-    $("favorite_profile_parent_<%= profile.id %>").appendChild($("favorite_profile_<%= profile.id %>"));
-    $("favorite_profile_<%= profile.id %>").show();
+    $("#favorite_profile_parent_<%= profile.id %>").append($("#favorite_profile_<%= profile.id %>"));
+    $("#favorite_profile_<%= profile.id %>").show();
   <% end %>  
 <%- end %>

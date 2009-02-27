@@ -1,54 +1,42 @@
 <% javascript do %>
 	function set_address_status(status) {
-	  $$('#address input').each( function(e) {
-	  	$(e).disabled = status;
-	  });
-	  $$('#address select').each( function(e) {
-	  	$(e).disabled = status;
-	  });
+	  $('#address input').attr('disabled', status);
+	  $('#address select').attr('disabled', status);
 		
 		// Remove the error messages on the address field if it's disabled
-		$$('#address .formError').each( function(e) {
-			if (status) {
-				$(e).hide();
-			}	else {
-				$(e).show();
-			}
-		});
+		if(status) {
+		  $('#address .formError').hide();
+		} else {
+		  $('#address .formError').show();		  
+		}
 		
 		if (status) {
-			$$('#address .fieldWithErrors').each( function(e) {
-				$(e).removeClassName('fieldWithErrors');
-				$(e).addClassName('fieldWithErrorsDisabled');
-			});
+			$('#address .fieldWithErrors').removeClass('fieldWithErrors').addClass('fieldWithErrorsDisabled');
 		} else {
-			$$('#address .fieldWithErrorsDisabled').each( function(e) {
-				$(e).removeClassName('fieldWithErrorsDisabled');
-				$(e).addClassName('fieldWithErrors');
-			});			
+			$('#address .fieldWithErrorsDisabled').removeClass('fieldWithErrorsDisabled').addClass('fieldWithErrors');
 		}
-		// Remove the red outline around address fields if it's disabled
-		
 	}
 
-    Event.observe(window, 'load', function() {
-      Form.focusFirstElement('signup_form');
-      $('add_address').observe('click', function() {
-        if ($('add_address').checked) {
-          set_address_status(false);
-				  $('address').removeClassName('disabled');
-        } else {
-				  set_address_status(true);
-          $('address_country_id').selectedIndex = 0;
-          $('address_region_id').selectedIndex = 0;
-		  		$('address').addClassName('disabled');
-        }
-      });
-	<% if !@add_address %>
-		set_address_status(true);
-    $('address').addClassName('disabled');
-	<% end %>
-	});
+  $(function(){
+    $("input[type='text']:first", document.forms[0]).focus();
+    
+    $('#add_address').change(function(e) {
+      if (this.checked) {
+        set_address_status(false);
+			  $('#address').removeClass('disabled');
+      } else {
+			  set_address_status(true);
+        $('#address_country_id').selectedIndex = 0;
+        $('#address_region_id').selectedIndex = 0;
+	  		$('#address').addClass('disabled');
+      }
+    });
+  
+    <% if !@add_address %>
+	    set_address_status(true);
+      $('#address').addClass('disabled');
+    <% end %>
+  })
 <% end %>
 
 <% title "Signup for an Account" %>

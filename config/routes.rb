@@ -71,7 +71,7 @@ ActionController::Routing::Routes.draw do |map|
                           :member      => [ :map, :favorite, :unfavorite ]
 
   map.resources :games,   :has_many    => [ :arcades, :profiles ],
-                          :collection  => [ :popular ],
+                          :collection  => [ :popular, :autocomplete_name ],
                           :member      => [ :favorite, :unfavorite ]
 
   map.resources :profiles, :has_many   => [:comments, :messages, :arcades, :games],

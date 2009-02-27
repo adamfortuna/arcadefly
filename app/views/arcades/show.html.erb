@@ -43,10 +43,12 @@
             <strong><%= h @arcade.name %></strong> is in <em><%= @arcade.address.city %><% unless @arcade.address.region_id.nil? %>, <%= @arcade.address.region.name %><% end %></em>.
           </p>
 
-          <% if current_session.addressed_in? -%>
+          <% if false && current_session.addressed_in? -%>
+          <!--
             <div class="clear shift-1">
               <strong>Distance Away: </strong><%= @arcade.address.distance_to(current_session.address).round_to(2) %> miles away
             </div>
+          -->
           <% end -%>
         
           <% if @arcade.tag_list.length > 0 %>
@@ -92,4 +94,4 @@
   <%= Rails.cache.fetch("addressable-arcade-#{@arcade.cache_key}") { addressable_for @arcade } %>
 <% end %>
 
-<%= render :partial => 'arcades/favorite', :locals => { :show_text => true, :arcade => @arcade } if logged_in? %>
+<%= render :partial => 'arcades/favorite', :locals => { :show_text => true, :copy_to_parent => true, :arcade => @arcade } if logged_in? %>

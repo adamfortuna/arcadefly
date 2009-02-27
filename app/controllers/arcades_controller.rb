@@ -1,8 +1,6 @@
 class ArcadesController < ResourceController::Base
   belongs_to :profile, :game
-  
-  auto_complete_for :game, :name, :limit => 25, :order => 'playables_count DESC'
-  
+    
   before_filter :check_near, :only => [:index]
   before_filter :login_required, :only => [:new, :create, :favorite, :unfavorite]
   before_filter :check_administrator, :only => [:destroy]

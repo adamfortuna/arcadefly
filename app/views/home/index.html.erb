@@ -1,27 +1,16 @@
 <% javascript do %>
-  <% if !logged_in? %>
-    Event.observe(window, 'load', function() {
-      if($F('near') == '') toggleLabel("near", true); 
-      $('games_features').hide();
-      $('profiles_features').hide();
-    });
-  <% end %>  
+  $(function(){
+    if($('#near').val() == '') toggleLabel("near", true); 
+    $('#games_features').hide();
+    $('#profiles_features').hide();
+  });
   function show(section) {
-    $('arcades_features').hide();
-    $('games_features').hide();
-    $('profiles_features').hide();
-    $(section+'_features').show();
-    
-    $('landing').removeClassName('arcades');
-    $('landing').removeClassName('games');
-    $('landing').removeClassName('profiles');
-    $('landing').addClassName(section);
-    
-    $('featured_image').src = '<%=ASSET_HOST%>/images/features_'+section+'.jpg';
+    $('.feature').hide();    
+    $('#landing').removeClass('arcades').removeClass('games').removeClass('profiles').addClass(section);
+    $("#"+section+"_features").show();
+    $('#featured_image').src = '<%=ASSET_HOST%>/images/features_'+section+'.jpg';
   }
 <% end %> 
-
-<% cache(:home, :expires_in => 30.minutes) do %>
 
 <% box :classname => 'arcades', :id => 'landing' do %>
 
@@ -29,7 +18,7 @@
     
     <div id="features">
     
-      <div id="arcades_features">
+      <div id="arcades_features" class="feature">
         <h3>Arcades</h3>
         <ul>
           <li>Find out which <%= link_to "arcades are closeby", arcades_path %></li>
@@ -37,7 +26,7 @@
           <li>Check out which arcades are <%= link_to "popular", popular_arcades_path %></li>
         </ul>
       </div>
-      <div id="games_features" style="display:none;">
+      <div id="games_features" style="display:none;" class="feature">
         <h3>Games</h3>
         <ul>
           <li>Find the closest place to play a <%= link_to "specific game", games_path %></li>
@@ -45,7 +34,7 @@
           <li>Check out which games are <%= link_to "popular", popular_games_path %></li>
         </ul>
       </div>
-      <div id="profiles_features" style="display:none;">
+      <div id="profiles_features" style="display:none;" class="feature">
         <h3>Players</h3>
         <ul>
           <li>Find out which <%= link_to "players are in your area", profiles_path %></li>
@@ -56,14 +45,11 @@
     </div>
 
     <div class="clear"></div>
-
-  <% if !logged_in? %>
     <% form_tag(arcades_path, :id => "controller_search", :class => "big_search shift-1", :method => "get") do %>
       <label id="near_label" for="near" style="display:none;">Enter your address to show some arcades closeby...</label>
       <%= text_field_tag :near, current_session.addressed_in? ? current_session.address.single_line : '', { :class => 'title', :onfocus => 'toggleLabel("near", false);', :onblur => 'toggleLabel("near", true);' } %>
       <%= submit_tag "Find Arcades!", :class => 'big-button', :disable_with => 'Finding...', :id => 'find' %>
     <% end %>
-  <% end %>
 <% end %>
 
 <div class="left third">
@@ -114,5 +100,3 @@
   </div>
 <% end %>
 </div>
-
-<% end %>

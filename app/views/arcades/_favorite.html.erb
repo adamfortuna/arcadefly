@@ -1,6 +1,7 @@
 <%- 
   show_text ||= true
   span_class ||= "favorite"
+  copy_to_parent ||= false
 -%>
 
 <span class="<%= span_class %>" id="favorite_arcade_<%= arcade.id %>"<%- if show_text %> style="display:none;"<% end %>>
@@ -13,7 +14,7 @@
 
 <%- if show_text %>
   <% javascript do %>
-    $("favorite_arcade_parent_<%= arcade.id %>").appendChild($("favorite_arcade_<%= arcade.id %>"));
-    $("favorite_arcade_<%= arcade.id %>").show();
+    $("#favorite_arcade_parent_<%= arcade.id %>").append($("#favorite_arcade_<%= arcade.id %>"));
+    $("#favorite_arcade_<%= arcade.id %>").show();
   <% end %>  
 <%- end %>

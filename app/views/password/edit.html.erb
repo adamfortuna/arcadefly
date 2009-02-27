@@ -1,8 +1,8 @@
 <%- title "Create a new Password" -%>
 
 <% javascript do %>
-  Event.observe(window, 'load', function() {
-    Form.focusFirstElement('change_password_form');
+  $(function(){
+    $("input[type='text']:first", document.forms[0]).focus();
   });
 <% end %>
 

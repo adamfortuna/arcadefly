@@ -11,7 +11,7 @@
 
 <%- if show_text %>
   <% javascript do %>
-    $("favorite_game_parent_<%= game.id %>").appendChild($("favorite_game_<%= game.id %>"));
-    $("favorite_game_<%= game.id %>").show();
+    $("#favorite_game_parent_<%= game.id %>").append($("#favorite_game_<%= game.id %>"));
+    $("#favorite_game_<%= game.id %>").show();
   <% end %>  
 <%- end %>

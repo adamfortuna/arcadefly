@@ -1,4 +1,3 @@
-// javascripts/dynamic_regions.js.erb
 var regions = new Array();
 <% for region in @regions -%>
   regions.push(new Array(<%= region.country_id %>, '<%=h region.name %>', <%= region.id %>));
@@ -6,25 +5,26 @@ var regions = new Array();
 
 function countrySelected(selectedValue) {
   selectedValue = selectedValue || '';
-  country_id = $('address_country_id').getValue();
-  options = $('address_region_id').options;
+  country_id = $('#address_country_id').val();
+  options = $('#address_region_id')[0].options;
   options.length = 1;
-  regions.each(function(region) {
+  for(var i=0; i<regions.length; i++) {
+    var region = regions[i];
     if (region[0] == country_id) {
       options[options.length] = new Option(region[1], region[2]);
       if (selectedValue == region[2]) {
         options.selectedIndex = options.length-1;
       }
     }
-  });
+  }
   if (options.length == 1) {
-    $('address_region_id_field').hide();
+    $('#address_region_id_field').hide();
   } else {
-    $('address_region_id_field').show();
+    $('#address_region_id_field').show();
   }
 }
 
-Event.observe(window, 'load', function() {
+$(function() { 
   //countrySelected($('address_region_id').value);
-  $('address_country_id').observe('change', countrySelected);
+  $('#address_country_id').change(countrySelected);
 });

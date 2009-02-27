@@ -12,8 +12,9 @@
 <% end %>
 
 <% javascript do %>
-  Event.observe(window, 'load', function() {
-    arcade_group.showMarker('<%= @arcade.permalink %>');
+  $(function() {
+    setTimeout("arcade_group.showMarker('<%= @arcade.permalink %>')", 1);
   });
 <% end %>
+
 <%= render :partial => "arcades/footer" %>

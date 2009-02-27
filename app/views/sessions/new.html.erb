@@ -1,6 +1,8 @@
 <%- title "Login" -%>
 <% javascript do %>
-  Event.observe(window, 'load', function() { Form.focusFirstElement('login_form'); });
+  $(function(){
+    $("input[type='text']:first", document.forms[0]).focus();
+  });
 <%- end -%>
 
 <div class="left half">

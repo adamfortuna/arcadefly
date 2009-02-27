@@ -1,21 +1,15 @@
 --- 
 javascripts: 
 - application: 
-  - prototype
   - application
-- effects:
-  - effects
-  - controls
+- autocomplete:
+  - jquery.autocomplete.js
 - addressables:
   - ym4r-gm
   - markerGroup
-- iphone:
-  - iui  
 stylesheets: 
 - arcadefly: 
   - layout
   - application
   - common_classes
   - forms
-- iphone:
-  - iui

@@ -1,2 +1,2 @@
 page.replace_html "favorite_game_#{@game.id}", favorite_game_link(@game, { :show_text => params[:show_text] == "true" })
-page["game_#{@game.id}"].removeClassName("favorited")
+page["game_#{@game.id}"].removeClass("favorited")

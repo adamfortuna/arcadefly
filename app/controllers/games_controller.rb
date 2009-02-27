@@ -52,6 +52,12 @@ class GamesController < ResourceController::Base
   #   @game = object
   # end
 
+  def autocomplete_name
+    games = Game.find(:all, :select => 'name', :conditions => ["LOWER(name) like ?", "%#{params[:game][:name].downcase}%"], :order => 'playables_count desc')
+    #render :text => games.collect(&:name).join("\n")
+    render :text => games.collect { |game| game.name + "\n" } #collect(&:name).join("\n")
+  end
+
   def new
     @game = Game.new
   end
