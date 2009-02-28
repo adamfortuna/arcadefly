@@ -1,1 +1,6 @@
-<%= link_to map_bubble.display_name, profile_path(map_bubble) %> lives somewhere around here.
+<div class="profile_bubble">
+  <%= avatar(map_bubble, :big) %>
+  <p><%= link_to map_bubble.display_name, profile_path(map_bubble) %> lives around here.</p>
+  <%= link_to pluralize(map_bubble.favoriteships.size, "game"), profile_games_path(map_bubble), :class => 'games' %> 
+  <%= link_to pluralize(map_bubble.frequentships.size, "arcade"), profile_arcades_path(map_bubble), :class => 'arcades' %>
+</div>

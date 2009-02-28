@@ -13,6 +13,9 @@ class Game < ActiveRecord::Base
   
   # Validation
   validates_presence_of :name
+	validates_uniqueness_of :gamefaqs_id, :if => :gamefaqs_id?
+	validates_uniqueness_of :klov_id, :if => :klov_id?
+	validates_uniqueness_of :permalink
 
   define_index do
     indexes :name, :sortable => true

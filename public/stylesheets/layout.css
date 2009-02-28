@@ -14,8 +14,8 @@ img, #logo { behavior: url(/scripts/iepngfix.htc); line-height:10px; }
 
 /* Header-Styles */
 #header { padding-top:10px; padding-bottom:0px; margin-bottom:0px; }
-#header div strong, #header div small { margin:0px; display:block; text-indent:-9999px; }
-#header div strong a { display:block; background-image:url(http://static.arcadefly.com/images/logo.png); background-repeat:no-repeat; width:210px; height:83px; }
+#title a, #title small { margin:0px; display:block; text-indent:-9999px; }
+#title a { display:block; background-image:url(http://static.arcadefly.com/images/logo.png); background-repeat:no-repeat; width:210px; height:83px; }
 #header ul { margin:0px; padding:0px; float:right; list-style:none; }
 #header ul li { float:left; border-left:1px solid #ccc; }
 #header ul li a { text-decoration:none; color:#716d6a; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; font-weight:bold; text-transform:uppercase; padding:11px 8px; height:24px; line-height:37px; }

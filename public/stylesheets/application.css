@@ -175,6 +175,7 @@ div.map_small { width: 330px; height:280px; } /* Profile/Arcade/Games Map */
 div.large_left_column { width:600px; float:left;}
 div.left_column { width:540px; float:left;}
 div.left_column .short_description { float: left; padding:1em 1em 0 1em; width:350px;}
+div.left_column .long_description { float: left; padding:1em 1em 0 1em; width:430px;}
 div.left_column .left_column_content { clear: both; padding-top: 0em; }
 div.right_column { width:330px; float:right; }
 
@@ -216,3 +217,9 @@ ul.comma li:last-child:after { content:"";}
 
 #featured_item { border:1px solid #ccc; background:url(http://static.arcadefly.com/images/features.jpg) no-repeat; height:160px; width:400px; float:left; }
 #w3_valid { background:url(http://static.arcadefly.com/images/w3c_blue.png) no-repeat; width:88px; height:31px; display:block; text-indent:-9999px; }
+
+#content .map hr { margin:5px 0; padding:0; }
+.profile_bubble { width:250px; min-height:85px; }
+.profile_bubble:after { content: ".";  display: block; height: 0; clear: both; visibility: hidden; }
+.profile_bubble, .profile_bubble p { margin-left:10px; }
+.profile_bubble .framed { margin-right:10px; }
