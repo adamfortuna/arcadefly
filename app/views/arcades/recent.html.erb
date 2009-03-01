@@ -1,0 +1,9 @@
+<% title "Recent Arcades" -%>
+
+<%= render :partial => 'arcades/list_menu' %>
+
+<% tabbed_box do %>
+  <h1><%= @title %></h1>
+  <p>Here are some of the arcades recently added.</p>
+  <%= render :partial => 'arcades/arcades', :object => @arcades %>
+<% end %>

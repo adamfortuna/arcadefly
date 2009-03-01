@@ -68,6 +68,7 @@
         <li><%= link_to arcade.name, arcade_path(arcade) %> <br/><%= arcade.address.shortest_line %></li>
       <% end %>
     </ol>
+    <p><%= link_to "See all recently added arcades", recent_arcades_path %>
   </div>
 <% end %>
 </div>

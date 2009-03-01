@@ -1,6 +1,7 @@
 class ArcadesController < ResourceController::Base
   belongs_to :profile, :game
-    
+  #caches_action :recent, :expires_in => 20.seconds, :if => Proc.new { |c| c.request.format.rss? }     
+  
   before_filter :check_near, :only => [:index]
   before_filter :login_required, :only => [:new, :create, :favorite, :unfavorite]
   before_filter :check_administrator, :only => [:destroy]
@@ -130,9 +131,20 @@ class ArcadesController < ResourceController::Base
   def popular
     @arcades = Arcade.paginate(:all,
                                :order => 'frequentships_count desc, playables_count desc',
-                               :include => [ { :address => :region } ], 
+                               :include => [ { :address => [:region, :country] } ], 
                                :page => params[:page],
                                :conditions => 'frequentships_count > 0')
+  end
+  
+  # Show recent arcades
+  # GET /arcades/recent
+  def recent
+    if (params[:format] != "rss") || (!fragment_exist? :recent_arcades)
+      @arcades = Arcade.paginate(:all,
+                                 :order => 'created_at desc',
+                                 :include => [ { :address => [:region, :country] } ], 
+                                 :page => params[:page])
+    end
   end
 
 
