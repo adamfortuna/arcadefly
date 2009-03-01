@@ -5,7 +5,7 @@ h1 { margin:0px 0px 10px 0px; font-size:32px; font-family:Helvetica, Arial, Sans
 h2 { margin:0px 0px 10px 0px; font-size:24px; font-family:Helvetica, Arial, Sans-serif; color:#000000; line-height:39px; letter-spacing:-1px; }
 h3 { margin:0px 0px 5px 0px; font-size:14px; line-height:21px; font-family:Helvetica, Arial, Sans-serif; color:#000000; }
 h3 { margin:0px 0px 5px 0px; font-size:12px; line-height:21px; font-family:Helvetica, Arial, Sans-serif; color:#000000; }
-small { color:#595856; font-weight:bold; font-size:11px; display:block; margin-bottom:15px; }
+small { color:#999; font-weight:bold; font-size:11px; display:block; }
 small a { color:#007de2; }
 legend { padding: 0 .5em; }
 p { margin: 0px 0px 15px 0px; }

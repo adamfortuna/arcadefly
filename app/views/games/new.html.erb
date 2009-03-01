@@ -1,5 +1,14 @@
 <% box do %>
   <h1>New Game</h1>
+  <p>
+  <% if administrator? %>
+    Creating a new game will add it immediately to ArcadeFly. You will be able to add it to arcades right away.
+  <% else %>
+    Thanks for wanting to help out! <b>Adding a game will not add it to the public games list immediately</b>. An administrator will double
+    check it's not a duplicate then it'll become public. <b>You, and only you, will be able to add this game to arcades immediately</b>, although it will not show up to anyone else right away.
+  <% end %>
+  </p>
+
   <%= error_messages_for :game %>
 
   <% form_for(:game, :url => games_path) do |f| %>

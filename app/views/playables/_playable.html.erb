@@ -1,5 +1,8 @@
 <li id="playable_<%= playable.id %>">
   <strong><%= playable.game.name %></strong>
+  <% if playable.game.pending? %>
+    (pending review, will not show up until this game is verified)
+  <% end %>
   
   <span class="count">
     <label for="playable_<%= playable.id %>_count">Count: </label>

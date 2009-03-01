@@ -1,8 +1,10 @@
 class GamesController < ResourceController::Base
   belongs_to :arcade, :profile
   
-  before_filter :check_administrator, :only => [:destroy, :new, :create, :edit, :update]
+  before_filter :check_administrator, :only => [:destroy, :edit, :update, :pending, :approve]
   before_filter :clean_for_db, :only => [:create, :update]
+  before_filter :login_required, :only => [:new, :create]
+  
   
   # This controls what views will be used depending on where the request is from.
   index.wants.html {
@@ -54,10 +56,9 @@ class GamesController < ResourceController::Base
 
   def autocomplete_name
     games = Game.find(:all, :select => 'name', :conditions => ["LOWER(name) like ?", "%#{params[:game][:name].downcase}%"], :order => 'playables_count desc')
-    #render :text => games.collect(&:name).join("\n")
-    render :text => games.collect { |game| game.name + "\n" } #collect(&:name).join("\n")
+    render :text => games.collect { |game| game.name + "\n" }
   end
-
+  
   def new
     @game = Game.new
   end
@@ -116,11 +117,41 @@ class GamesController < ResourceController::Base
     end
   end
   
+  def pending
+    @games = Game.find(:all, :conditions => ["pending=?", true])
+  end
+  def approve_selected
+    games = Game.find_all_by_id(params[:pending_games].keys, :conditions => ["pending=?", true])
+
+    games.each do |game|
+      game.approve!
+    end
+
+    flash[:notice] = "Games approved!"
+    redirect_to pending_games_path
+  rescue
+    flash[:error] = "An error occured approving (at least some) of these games."
+    redirect_to games_path    
+  end
+  def delete_selected
+    games = Game.find_all_by_id(params[:pending_games].keys, :conditions => ["pending=?", true])
+    
+    games.each do |game|
+      game.destroy
+    end
+    
+    flash[:notice] = "Games removed!"
+    redirect_to games_path
+  rescue
+    flash[:error] = "An error occured removing these games."
+    redirect_to games_path
+  end
+  
   
   private
   
   def object
-    @object ||= Game.find_by_permalink(params[:id])
+    @object ||= Game.find_by_permalink(params[:id], :conditions => ["(pending=? OR profile_id=?) OR ?", false, (logged_in? ? current_profile.id : 0), administrator?])
     raise ActiveRecord::RecordNotFound if @object.nil?
     @object
   end
@@ -165,11 +196,25 @@ class GamesController < ResourceController::Base
     elsif !search.blank?
       collection_options[:conditions] = ['games.name like ?', "#{search}%" ]
     end
+    
+    unless administrator?
+      collection_options[:conditions] = ['games.pending=0']
+    end
+
     collection_options
   end
   
   def clean_for_db
     params[:game][:gamefaqs_id] = nil if params[:game][:gamefaqs_id].blank?
     params[:game][:klov_id] = nil if params[:game][:klov_id].blank?
+    
+    if administrator?
+      params[:game][:pending] = false
+    else
+      params[:game][:pending] = true
+    end
+    
+    params[:game][:profile_id] = current_profile.id
   end
+  
 end

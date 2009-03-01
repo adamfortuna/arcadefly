@@ -1,0 +1,32 @@
+<% title "Pending Games" -%>
+
+<% javascript do %>
+  function check_all(selector) {
+  	$(selector).each(function(el) {
+  		this.checked = true;
+  	});
+  }
+
+  function uncheck_all(selector) {
+  	$(selector).each(function(el) {
+  		this.checked = false;
+  	});
+  }
+<% end %>
+
+<% box do %>
+  <% form_for(:games, :url => approve_selected_games_path, :html => { :id => 'pending_game_form' }) do |f| %>
+
+    Select All: <input type="checkbox" onclick="javascript:this.checked ? check_all('#pending input') : uncheck_all('#pending input')" />
+    <% if @games.length > 0 %>
+    <ul id="pending">
+      <%= render :partial => 'pending_game', :collection => @games, :locals => { :f => f }%>
+    </ul>
+    <% end %>
+  
+    <p class="right">
+      <%= submit_tag "Remove Selected", :class => "big-button", :onclick => "$('#pending_game_form').attr('action','#{delete_selected_games_path}');", :disable_with => 'Removing...' %>
+      <%= submit_tag "Approve Selected", :class => "big-button", :disable_with => 'Approve Selected...' %>
+    </p>
+  <% end %>
+<% end %>

@@ -31,6 +31,11 @@
     Thanks for wanting to lend a hand! We're powered completely by user submissions, so every little bit helps.
     <strong>New to modifing arcades here? You might want to read the help docs on <%= link_to "editing arcades", "/help/arcades"%>.</strong>
   </p>
+  
+  <p class="info">
+    <b>Run into a game not on this list? <%= link_to "Add it now!", new_game_path %></b>
+  </p>
+  
 
   <% remote_form_for(:arcade, :playables, :url => arcade_playables_path(@arcade), :html => { :id => 'arcade_form' }) do |f| -%>
     <div id="new_playable">

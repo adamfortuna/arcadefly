@@ -3,23 +3,6 @@ ActionController::Routing::Routes.draw do |map|
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   map.root :controller => "home"
 
-  # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
-
-  # Sample resource route within a namespace:
-  #   map.namespace :admin do |admin|
-  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
-  #     admin.resources :products
-  #   end
-
   # Custom Routes
   map.signup '/signup',   :controller => 'users',    :action => 'new'
   map.signin '/signin',   :controller => 'sessions', :action => 'new'
@@ -43,20 +26,16 @@ ActionController::Routing::Routes.draw do |map|
   map.site_map '/site_map',       :controller => 'home',    :action => 'site_map'
 
   # Popular 
-  map.popular '/popular',                   :controller => 'popular',    :action => 'index'
+  map.popular '/popular',         :controller => 'popular',    :action => 'index'
 
   # Better named arcade routes
   #map.browse_arcades '/arcades/browse',               :controller => 'arcades', :action => 'browse'
   #map.new_arcade_1 '/arcades/new/details',            :controller => 'arcades', :action => 'new1'
   #map.new_arcade_2 '/arcades/new/review',             :controller => 'arcades', :action => 'new2'
   #map.new_arcade_3 '/arcades/new/games',              :controller => 'arcades', :action => 'new3'
-  map.edit_arcade_games '/arcades/:id/games/edit',    :controller => 'arcades', :action => 'edit_games'
+  map.edit_arcade_games '/arcades/:id/games/edit',                  :controller => 'arcades', :action => 'edit_games'
   map.edit_arcade_games_iphone '/arcades/:id/games/edit.iphone',    :controller => 'arcades', :action => 'edit_games', :format => 'iphone'
-  map.arcade_tag '/arcades/tags/:tag',                         :controller => 'arcades', :action => 'tags'
-  
-  # Arcade maps
-  #map.game_arcades '/games/:game_id/arcades', :controller => 'arcades', :action => 'list_map'
-  #map.profile_arcades '/users/:user_id/arcades', :controller => 'arcades', :action => 'list_map'
+  map.arcade_tag '/arcades/tags/:tag',                              :controller => 'arcades', :action => 'tags'
   
   # Browse for arcades
   #map.countries_arcades '/arcades/countries',         :controller => 'arcades', :action => 'countries'
@@ -71,7 +50,7 @@ ActionController::Routing::Routes.draw do |map|
                           :member      => [ :map, :favorite, :unfavorite ]
 
   map.resources :games,   :has_many    => [ :arcades, :profiles ],
-                          :collection  => [ :popular, :autocomplete_name ],
+                          :collection  => [ :popular, :autocomplete_name, :pending, :delete_selected, :approve_selected ],
                           :member      => [ :favorite, :unfavorite ]
 
   map.resources :profiles, :has_many   => [:comments, :messages, :arcades, :games],
@@ -86,8 +65,6 @@ ActionController::Routing::Routes.draw do |map|
   
   
   map.resources :addresses, :messages, :playables, :users, :comments, :tags
-
-  #map.resources :landings, :collection => [ :mobile ]
 
   # Since a lot of people tend to use /login as the login path, add it here just in case.
   map.connect '/login',    :controller => 'redirect', :action => 'login'

@@ -11,6 +11,9 @@ class Game < ActiveRecord::Base
   has_many :favoriteships, :dependent => :destroy
   has_many :profiles, :through => :favoriteships
   
+  belongs_to :profile
+  named_scope :pending, :conditions => ['pending = ?', true]
+  
   # Validation
   validates_presence_of :name
 	validates_uniqueness_of :gamefaqs_id, :if => :gamefaqs_id?
@@ -54,5 +57,9 @@ class Game < ActiveRecord::Base
   
   def self.recent
     self.find(:all, :order => 'favoriteships_count desc, playables_count desc', :limit => 10)
+  end
+  
+  def approve!
+    self.update_attribute(:pending, false) if self.pending?
   end
 end

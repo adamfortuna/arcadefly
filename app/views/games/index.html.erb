@@ -12,7 +12,7 @@
     <% form_for(:game, games_path, :html => { :method => 'get' }) do |f| %>
       <label id="search_label" for="search">Search for a Game...</label>
       <%= text_field_tag :search, '', { :class => 'text', :onfocus => 'toggleLabel("search", false);', :onblur => 'toggleLabel("search", true);' } %>  
-      <%= submit_tag "Search!", { :disable_with => 'Searching...' } %>
+      <%= submit_tag "Search!", { :disable_with => 'Searching...', :name => nil } %>
     <% end %>
   </div>
   <% end %>
@@ -21,3 +21,13 @@
 
   <%= render :partial => 'games/games', :object => @games %>
 <% end %>
+
+<% if logged_in? %>
+<ul class="nav clear right">
+  <li><%= link_to "Add a new Game", new_game_path %></li>  
+</ul>
+<% else %>
+  <p class="nav clear right">
+    Know of a game not listed here? Just <%= link_to "Sign In", signin_path %> or <%= link_to "Register", signup_path %> and you'll be able to add it.
+  </p>
+<% end -%>

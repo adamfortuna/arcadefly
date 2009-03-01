@@ -23,8 +23,13 @@
         	</p>
         	<% end %>
         	<div id="favorite_game_parent_<%= @game.id %>"></div>
-      	</div>
-    	
+        	<% if @game.pending? %>
+        	<p>
+        	  This game was added by <%= link_to @game.profile.display_name, profile_path(@game.profile) %> and is currently pending.<br/>
+        	  It will be public as soon as it is approved.
+        	</p>
+      	  <% end %>
+      	</div>	
       </div>
     
       <div class="right_column">
