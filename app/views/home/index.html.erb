@@ -1,4 +1,4 @@
-<%- javascript do -%>
+<% javascript do %>
   $(function(){
     if($('#near').val() == '') toggleLabel("near", true); 
     $('#games_features').hide();
@@ -13,7 +13,7 @@
     else if(section=='profiles') { offset = "-800"; }
     $('#featured_item').css("background-position", offset+"px 0");
   }
-<%- end -%>
+<% end %>
 
 <%- cache(:home, :expires_in => 30.minutes) do -%>
 <% box :classname => 'arcades', :id => 'landing' do %>
