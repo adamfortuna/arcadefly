@@ -9,7 +9,8 @@
   <meta name="description" content="<%= yield(:description) || "A social network for gamers and arcade game enthusiasts. Want to know where an arcade is, or have a game in mind and want to know where to play it? We're your place!" %>" />
   
   <%= stylesheet_link_merged :arcadefly %>
-  <%= yield(:header) -%>
+  <%= auto_discovery_link_tag(:rss, :controller => "arcades", :action => 'recent', :format => :rss) %>
+  <%= yield(:header) %>
 </head>
 <body<%= " class=\"#{params[:controller]}\"" unless params[:controller].nil? %>>
   <div id="main">
