@@ -10,7 +10,7 @@
   
   <%= stylesheet_link_merged :arcadefly %>
   <%= auto_discovery_link_tag(:rss, :controller => "arcades", :action => 'recent', :format => :rss) %>
-  <%= yield(:header) %>
+  <%= yield(:header) -%>
 </head>
 <body<%= " class=\"#{params[:controller]}\"" unless params[:controller].nil? %>>
   <div id="main">
@@ -52,9 +52,9 @@
       </div>
   
       <div id="content">
-        <% flash.each do |key, msg| %>
+        <%- flash.each do |key, msg| -%>
           <%= content_tag :div, msg, :class => key %>
-        <% end %>
+        <%- end -%>
         <%= yield %>
       </div>
     </div>
@@ -101,7 +101,7 @@
     function toggleLabel(element, show) {
       show && $("#"+element).val() == '' ? $("#"+element+'_label').show() : $("#"+element+'_label').hide();
     }
-  <%- if Rails.env.production? -%>
+    <%- if Rails.env.production? -%>
     var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
     document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
     </script>
@@ -109,7 +109,7 @@
     var pageTracker = _gat._getTracker("UA-90326-5");
     pageTracker._initData();
     pageTracker._trackPageview();
-  <%- end -%>
+    <%- end -%>
   </script>
 </body>
 </html>

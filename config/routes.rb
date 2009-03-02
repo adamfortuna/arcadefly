@@ -34,7 +34,7 @@ ActionController::Routing::Routes.draw do |map|
   #map.new_arcade_2 '/arcades/new/review',             :controller => 'arcades', :action => 'new2'
   #map.new_arcade_3 '/arcades/new/games',              :controller => 'arcades', :action => 'new3'
   map.edit_arcade_games '/arcades/:id/games/edit',                  :controller => 'arcades', :action => 'edit_games'
-  map.edit_arcade_games_iphone '/arcades/:id/games/edit.iphone',    :controller => 'arcades', :action => 'edit_games', :format => 'iphone'
+  #map.edit_arcade_games_iphone '/arcades/:id/games/edit.iphone',    :controller => 'arcades', :action => 'edit_games', :format => 'iphone'
   map.arcade_tag '/arcades/tags/:tag',                              :controller => 'arcades', :action => 'tags'
   
   # Browse for arcades

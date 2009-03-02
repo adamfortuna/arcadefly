@@ -1,24 +1,10 @@
-<% title 'Claims' %>
-
-<% javascript do %>
-  function check_all(selector) {
-  	$("."+selector).each(function(el) {
-  		this.checked = true;
-  	});
-  }
-
-  function uncheck_all(selector) {
-  	$("."+selector).each(function(el) {
-  		this.checked = false;
-  	});
-  }
-<% end %>
+<%- title 'Claims' -%>
 
 <% box do %>
   <h1><%= @title %></h1>
   <% form_for(:claims, :url => approve_selected_claims_path, :html => { :id => 'claim_form' }) do |f| %>
   
-    Select All: <input type="checkbox" onclick="javascript:this.checked ? check_all('.claims input') : uncheck_all('.claims input')" />
+    Select All: <input type="checkbox" onclick="javascript:$('#claims input:checkbox').attr('checked', this.checked);" />
     <% if @claims.length > 0 %>
     <ul id="claims">
       <%= render :partial => 'claim', :collection => @claims, :locals => { :f => f }%>

@@ -1,17 +1,15 @@
-<li class="<%= cycle("even","odd")%> clear">
+<li<%= cycle(' class="even"','')%>>
 
-  <span style="width:280px;" class="left clear">
+  <span class="title">
     <%= link_to(profile_map.display_name, profile_path(profile_map)) %>
   </span>
   
-  <span style="width:50px;" class="right">
+  <span class="marker">
     <a href="#" onclick="profile_group.showMarker('<%= profile_map.permalink %>');return false;">Show »</a>
   </span>
   
   <div class="clear soft">
   	<div class="left">
-      <%= #render :partial => 'profiles/favorite', :locals => { :show_text => false, :arcade => arcade } if logged_in? 
-      %>
       <p><%= profile_map.address.shortest_line -%></p>
   	</div>
   	

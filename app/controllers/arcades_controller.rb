@@ -83,10 +83,6 @@ class ArcadesController < ResourceController::Base
   def edit_games
     @arcade = Arcade.find_by_permalink(params[:id])
     @playables = @arcade.playables.find(:all, :include => :game, :order => 'games.name')
-    respond_to do |format|
-      format.iphone { render }
-      format.html { render }
-    end
   end
     
 

@@ -12,7 +12,7 @@
   <% end %>
 </span>
 
-<%- if show_text %>
+<%- if copy_to_parent %>
   <% javascript do %>
     $("#favorite_arcade_parent_<%= arcade.id %>").append($("#favorite_arcade_<%= arcade.id %>"));
     $("#favorite_arcade_<%= arcade.id %>").show();

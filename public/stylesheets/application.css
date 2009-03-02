@@ -223,3 +223,6 @@ ul.comma li:last-child:after { content:"";}
 .profile_bubble:after { content: ".";  display: block; height: 0; clear: both; visibility: hidden; }
 .profile_bubble, .profile_bubble p { margin-left:10px; }
 .profile_bubble .framed { margin-right:10px; }
+
+span.title { width:280px; float:left; clear:both; }
+span.marker { width:50px; float:right; }

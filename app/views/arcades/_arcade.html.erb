@@ -1,11 +1,11 @@
 <% arcade.address ||= Address.new %>
-<li class="<%= cycle("even","odd")%> clear">
+<li<%= cycle(' class="even"','')%>>
 
-  <span style="width:280px;" class="left clear">
+  <span class="title">
     <%= link_to(arcade.name, arcade_path(arcade)) %>
   </span>
   
-  <span style="width:50px;" class="right">
+  <span class="marker">
     <a href="#" onclick="arcade_group.showMarker('<%= arcade.permalink %>');return false;">Show »</a>
   </span>
   

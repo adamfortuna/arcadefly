@@ -1,4 +1,4 @@
-<% javascript do %>
+<%- javascript do -%>
   $(function(){
     if($('#near').val() == '') toggleLabel("near", true); 
     $('#games_features').hide();
@@ -13,13 +13,12 @@
     else if(section=='profiles') { offset = "-800"; }
     $('#featured_item').css("background-position", offset+"px 0");
   }
-<% end %>
+<%- end -%>
 
-<% cache(:home, :expires_in => 30.minutes) do %>
+<%- cache(:home, :expires_in => 30.minutes) do -%>
 <% box :classname => 'arcades', :id => 'landing' do %>
-
     <div id="featured_item"></div>
-    
+
     <div id="features">
       <div id="arcades_features" class="feature">
         <h3>Arcades</h3>
@@ -64,9 +63,9 @@
   <div>
     <h4>Recently Added Arcades</h4>
     <ol>
-      <% @arcades.each do |arcade| %>
+      <%- @arcades.each do |arcade| -%>
         <li><%= link_to arcade.name, arcade_path(arcade) %> <br/><%= arcade.address.shortest_line %></li>
-      <% end %>
+      <%- end -%>
     </ol>
     <p><%= link_to "See all recently added arcades", recent_arcades_path %>
   </div>
@@ -81,9 +80,9 @@
   <div>
     <h4>Most Popular Games</h4>
     <ol>
-      <% @games.each do |game| %>
+      <%- @games.each do |game| -%>
         <li><%= link_to game.name, game_path(game) %></li>
-      <% end %>
+      <%- end -%>
     </ol>
   </div>
 <% end %>
@@ -97,11 +96,11 @@
   <div>
     <h4>Recently Joined</h4>
     <ol>
-      <% @profiles.each do |profile| %>
+      <%- @profiles.each do |profile| -%>
         <li><%= link_to profile.display_name, profile_path(profile) %></li>
       <% end %>
     </ol>
   </div>
 <% end %>
 </div>
-<% end %>
+<%- end -%>
