@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090224023524) do
+ActiveRecord::Schema.define(:version => 20090302041608) do
 
   create_table "addresses", :force => true do |t|
     t.datetime "created_at"
@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(:version => 20090224023524) do
     t.integer  "profile_id"
     t.integer  "playables_count",     :default => 0
     t.integer  "frequentships_count", :default => 0
+    t.string   "owner_email"
+    t.string   "owner_name"
   end
 
   add_index "arcades", ["frequentships_count", "playables_count"], :name => "index_arcades_on_frequentships_count_and_playables_count"
@@ -127,13 +129,15 @@ ActiveRecord::Schema.define(:version => 20090224023524) do
   create_table "games", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name",                               :null => false
+    t.string   "name",                                  :null => false
     t.string   "gamefaqs_id"
-    t.string   "permalink",                          :null => false
+    t.string   "permalink",                             :null => false
     t.integer  "playables_count",     :default => 0
     t.integer  "favoriteships_count", :default => 0
     t.string   "klov_id"
     t.string   "alias"
+    t.boolean  "pending",             :default => true
+    t.integer  "profile_id"
   end
 
   add_index "games", ["favoriteships_count", "playables_count"], :name => "index_games_on_favoriteships_count_and_playables_count"

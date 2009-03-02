@@ -30,7 +30,7 @@
         <p class="block required">
           <label for="claim_level">Claim Type</label>
           <span class="block info">This will determine how you claim this arcade</span>
-          <%= error_message_on "claim", "level", "Claim Type " %>
+          <%= error_message_on "claim", "level", { :prepend_text => "Claim Type " } %>
           <%= f.select :level, Claim::LEVELS, { :include_blank => true }, { :class => "text", :id => "claim_level" }  %>
         </p>
 
@@ -50,7 +50,7 @@
           <p class="block required">
             <label for="claim_level">What is your name?</label>
             <span class="block info">This is the name we will inquire about, or ask for when we call up.</span>
-            <%= error_message_on "claim", "name", "Name " %>
+            <%= error_message_on "claim", "name", { :prepend_text => "Name " } %>
             <%= f.text_field :name, { :class => 'text' } %>
           </p>
         </div>
@@ -58,7 +58,7 @@
       <div class="right half">
         <p class="block required">
           <label for="claim_reason">Reason why you should be able to edit this arcade</label>
-          <%= error_message_on "claim", "reason", "Reason " %>
+          <%= error_message_on "claim", "reason", { :prepend_text => "Reason " } %>
           <%= f.text_area :reason, { :class => 'text' } %>
         </p>
         <p class="center">

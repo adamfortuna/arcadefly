@@ -13,12 +13,12 @@
       <p class="block required">
         <label for="user_password">New Password</label>
   			<span class="block info">At least 4 characters.</span>
-  			<%= error_message_on "user", "password", "Password " %>
+  			<%= error_message_on "user", "password", { :prepend_text => "Password " } %>
         <%= f.password_field :password, :size => 50,  :class => 'text', :value => '' %>
       </p>
       <p class="block required">
         <label for="user_password_confirmation">Confirm Password</label>
-  			<%= error_message_on "user", "password_confirmation", "Password Confirmation " %>
+  			<%= error_message_on "user", "password_confirmation", { :prepend_text => "Password Confirmation " } %>
         <%= f.password_field :password_confirmation, :size => 50,  :class => 'text', :value => '' %>
       </p>
       <p class="block">

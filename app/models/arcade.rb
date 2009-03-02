@@ -27,8 +27,10 @@ class Arcade < ActiveRecord::Base
 	validates_uniqueness_of :permalink
 	validates_format_of :website, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/ix, 
 	                    :if => :website?
+	                    
+  validates_format_of :owner_email, :with => /^([^@\s]{1}+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :if => :owner_email?
   
-  attr_accessible :name, :phone, :notes, :all_tags, :address, :website#, :all_hours, :profile
+  attr_accessible :name, :phone, :notes, :all_tags, :address, :website, :owner_name, :owner_email #, :all_hours, :profile
 
 	def to_param
     permalink

@@ -103,7 +103,7 @@
       
       <p class="block required">
         <label for="verify_password">Current Password</label>
-        <%= error_message_on(@user, :verify_password) %>
+        <%= error_message_on @user, :verify_password %>
     
         <% if @user.errors[:verify_password] %><div class="fieldWithErrors"><% end %>
           <input type="password" name="verify_password" id="verify_password" class="text" />
@@ -112,13 +112,13 @@
 
       <p class="block required">
         <label for="password">New Password</label>
-        <%= error_message_on(@user, :password) %>
+        <%= error_message_on @user, :password %>
          <%= p.password_field :password, { :class => 'text', :value => ''} %>
       </p>
 
       <p class="block required">
         <label for="confirm_password">Confirm New Password</label>
-        <%= error_message_on(@user, :confirm_password) %>
+        <%= error_message_on @user, :confirm_password %>
          <%= p.password_field :password_confirmation, { :class => 'text', :value => ''} %>
       </p>
     
@@ -133,33 +133,6 @@
   <fieldset id="change_emails">
     <legend>Change Email</legend>
     <div class='formError'>Cannot change email addresses yet! Coming soon.</div>
-    <!--
-    <p>You'll still need to use your current email address to sign in until your new email address is confirmed.</p>
-    <% form_for :profile, :url => profile_url(@profile), :html=>{:method=>:put } do |p| %>
-      <p class="block required">
-        <label for="email_verify_password">Current Password</label>
-        <%= error_message_on(@profile, :password) %>
-        <input type="password" name="email_verify_password" id="email_verify_password" class="text" disabled="disabled" />
-      </p>
-      
-      <p class="block required">
-        <label for="profile_email">New Email Address</label>
-        <%= error_message_on(@profile, :email, {:prepend_text => "Email "}) %>
-        <input type="text" name="new_email" id="new_email" class="text" disabled="disabled" />
-      </p>
-        
-      <p class="block required">
-        <label for="profile_email_confirmation">Confirm New Email Address</label>
-        <%= error_message_on(@profile, :email_confirmation, {:prepend_text => "Email Confirmation "}) %>
-        <input type="text" name="new_email_confirmation" id="new_email_confirmation" class="text" disabled="disabled" />
-      </p>
-        
-      <p class="block">
-        <%= p.submit "Change My Email", :class => "button", :disable_with => 'Changing Email...', :id => "profile_submit_email"  %>
-        <input type="hidden" name="switch" value="email" />
-      </p>
-    -->  
-      
     <% end %>
   </fieldset>
 
