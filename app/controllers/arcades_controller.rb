@@ -154,8 +154,6 @@ class ArcadesController < ResourceController::Base
   # PUT /arcades/rockys-replay
   def update
     @arcade = object
-    website_entered = !params[:arcade][:website].nil? && !params[:arcade][:website].blank?
-    params[:arcade][:website] = "http://" + params[:arcade][:website] if website_entered && !(params[:arcade][:website] =~ /http:\/\//)
     if @arcade.update_attributes(params[:arcade]) && @arcade.address.update_attributes(params[:address])
       flash[:notice] = "<span class=\"icon arcade_add\">Arcade updated! Please review the changes below and make sure everything looks as you'd expect.</span>"
       redirect_to arcade_url(@arcade)

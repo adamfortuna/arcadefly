@@ -26,7 +26,8 @@ class Arcade < ActiveRecord::Base
 	validates_presence_of :name, :message => "is required."
 	validates_uniqueness_of :permalink
 	validates_format_of :website, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/ix, 
-	                    :if => :website?
+	                    :if => :website?,
+	                    :message => "doesn't look right. Should begin with http://"
 	                    
   validates_format_of :owner_email, :with => /^([^@\s]{1}+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :if => :owner_email?
   

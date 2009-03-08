@@ -193,7 +193,7 @@ class Address < ActiveRecord::Base
   memoize :geocoded_address
 
   def geocoded_general_address
-    Address.geocode("#{geocoded_address.zip} #{geocoded_address.city} #{geocoded_address.state}")
+    Address.geocode("#{geocoded_address.city}, #{geocoded_address.state} #{geocoded_address.zip}")
   end
   memoize :geocoded_general_address
   
