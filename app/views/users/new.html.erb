@@ -36,6 +36,18 @@
 	    set_address_status(true);
       $('#address').addClass('disabled');
     <% end %>
+    
+    if($("#address_country_id").attr("selectedIndex") > 0) {
+      var selected_region = $('#address_region_id').val();
+      countrySelected($("#address_country_id").val());
+      
+      options = $('#address_region_id')[0].options;
+      for(var i=0; i<options.length; i++) {
+        if (options[i].value == selected_region) {
+          $('#address_region_id').attr("selectedIndex", i)
+        }
+      }
+    }
   })
 <% end %>
 

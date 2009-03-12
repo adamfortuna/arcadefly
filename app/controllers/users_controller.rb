@@ -15,8 +15,11 @@ class UsersController < ApplicationController
   def new
     @user = User.new(params[:profile])
     @user.profile = Profile.new()
-    @user.profile.address = current_session.address if current_session.addressed_in?
-    
+    if current_session.addressed_in?
+      @user.profile.address = current_session.address 
+      @user.profile.address.region = Region.find_by_abbreviation(current_session.address.region.abbreviation)
+      @user.profile.address.region_id = @user.profile.address.region.id
+    end
     @add_address = params[:add_address] || true
   end
  
