@@ -10,7 +10,7 @@ module ApplicationHelper
   include TagsHelper
   
   def separator
-    " &#8250; "
+    " - "
   end
   
   # Return a link for use in site navigation.
