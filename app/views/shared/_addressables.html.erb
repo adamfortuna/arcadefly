@@ -17,7 +17,7 @@
       markers[marker].options[:title] = "Multiple addresses at this location"
       markers[marker].info_window += "<hr/>#{map_bubble_for(addressable)}"
     else
-      markers.merge!("'#{addressable.permalink}'" => GMarker.new([addressable.address.public_lat, addressable.address.public_lng],
+      markers.merge!("'#{addressable.maplink}'" => GMarker.new([addressable.address.public_lat, addressable.address.public_lng],
                                                                  :title => addressable.title,
                                                                  :info_window => map_bubble_for(addressable))
                     )

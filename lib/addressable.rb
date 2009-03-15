@@ -1,4 +1,5 @@
 module Addressable
+  extend ActiveSupport::Memoizable
 
   def self.included(receiver)
     receiver.class_eval do
@@ -14,6 +15,11 @@ module Addressable
   def has_address?
     !address.nil?
   end
+  
+  def maplink
+    return "point-#{(address.public_lat+address.public_lng).hash}"
+  end
+  memoize :maplink
 
   # def add_address_errors_to_base
   #   address.valid? if address
