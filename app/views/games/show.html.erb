@@ -4,7 +4,7 @@
 -%>
 <%- @body_class = "games" %>
 
-<% cache(@game) do %>
+<% cache(@game, :expires_in => 30.minutes) do %>
   <%= render :partial => 'menu', :locals => { :game => @game } %>
   <% tabbed_box do %>
     <div id="profile_overview">

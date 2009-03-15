@@ -1,6 +1,6 @@
 <%- title "Profile for #{@profile.display_name}" -%>
 
-<% cache(@profile) do %>
+<% cache(@profile, :expires_in => 30.minutes) do %>
   <%= render :partial => 'menu', :locals => { :profile => @profile} %>
 
   <% tabbed_box do %>  
