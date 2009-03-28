@@ -18,7 +18,7 @@ img, #logo { behavior: url(/scripts/iepngfix.htc); line-height:10px; }
 #title a { display:block; background-image:url(http://static.arcadefly.com/images/logo.png); background-repeat:no-repeat; width:210px; height:83px; }
 #header ul { margin:0px; padding:0px; float:right; list-style:none; }
 #header ul li { float:left; border-left:1px solid #ccc; }
-#header ul li a { text-decoration:none; color:#716d6a; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; font-weight:bold; text-transform:uppercase; padding:11px 8px; height:24px; line-height:37px; }
+#header ul li a { color:#716D6A; display:block; font-family:Verdana,Arial,Helvetica,sans-serif; font-size:10px; font-weight:bold; height:15px; line-height:20px; padding:11px 8px; text-decoration:none; text-transform:uppercase; }
 #header ul li a.active, #header ul li a:hover { color:#211e1e; }
 #header p { float:right; clear:both; margin-top:1em; }
 

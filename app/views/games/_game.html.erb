@@ -22,7 +22,7 @@
     <% else %>
       in <%= pluralize(game.playables.size, "arcade") %> with <%= pluralize(game.favoriteships.size, "favorite") %>
     <% end %>
-
-    <%= render :partial => 'games/favorite', :locals => { :show_text => false, :game => game } if logged_in? %>
   </div>
+
+  <%= render :partial => 'games/favorite', :locals => { :show_text => false, :game => game } if logged_in? %>
 </li>

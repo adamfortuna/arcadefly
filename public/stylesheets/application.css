@@ -68,12 +68,12 @@ ul.logged_in { width:880px;}
 ul.data { margin:1em 0 0 0; padding:0; }
 ul.data a { color: #2D7BB2; text-decoration: none; font-weight: bold; }
 ul.data a:hover { color: #333; }
-ul.data li { position: relative; display: block; border-bottom: 1px solid #EEE; }
-ul.data li a.main {display: block;  padding: 0.4em 4.5em 0.4em 0.5em; position: relative; z-index: 2; }
-ul.data li .count { display: block; position: absolute; top: 0; right: 0; margin: 0 0.3em; text-align: right; color: #999; font-weight: bold; font-size: 0.875em; line-height: 3em; z-index:2; }
+ul.data li { list-style:none; position: relative; display: block; border-bottom: 1px solid #EEE; padding:0; margin:0; width:100%; }
+ul.data li a.main {display: block;  padding:6px 20px 6px 6px; position: relative; z-index: 2; }
+ul.data li .count { display: block; position: absolute; top: 0px; right: 0px; margin: 0 0.3em; text-align: right; color: #999; font-weight: bold; font-size: 0.875em; z-index:2; width:300px; line-height:3em; }
 ul.data li .left_gutter { position:absolute; left:-22px; top:4px; }
-ul.data li .favorite { display: inline; position:absolute; top:0; padding-left:1em; }
 ul.data li .soft { color: #999; font-weight: bold; font-size: 0.875em; line-height: 2em; z-index:2; }
+ul.data li .favorite { position:absolute; right:-25px; top:6px; }
 ul.data li a.favorite { display: inline;  padding: 1em; position: relative; z-index: 2; }
 ul.data li:hover { background-color: #ddd; }
 ul.data li span.index { display: block; position: absolute; top: 0; left: 0; height: 100%; background: #B8E4F5; text-indent: -9999px; overflow: hidden; line-height: 2em; z-index:1; }
@@ -83,12 +83,10 @@ ul.content li a { display: inline; }
 ul.left-shift { position:absolute; left:-150px; } /* Used to shirt some menus beyond the main data */
 
 
-
-
 /* Very cool tabs from  http://www.simplebits.com/bits/css_tabs.html */
-ul.tabs { height: 2.6em; padding: 0 20px; background: url(http://static.arcadefly.com/images/helpers/tab_bottom.gif) repeat-x bottom; clear: both; margin:0px; }
+ul.tabs { height: 34px; padding: 0 20px; background: url(http://static.arcadefly.com/images/helpers/tab_bottom.gif) repeat-x bottom; clear: both; margin:0px; }
 ul.tabs li { margin: 0; padding: 0; display: inline; list-style-type: none; }
-ul.tabs a:link, ul.tabs a:visited { float: left; font-weight: bold; padding: .5em 1.2em; margin-right: 8px; border: 1px solid #a3a09e; text-decoration: none; color: #666; }
+ul.tabs a:link, ul.tabs a:visited { float: left; font-weight: bold; padding: 7px 1.2em; margin-right: 8px; border: 1px solid #a3a09e; text-decoration: none; color: #666; height:18px; }
 ul.tabs a { background-color: #f3f3f3; }
 ul.tabs li.current a:link, ul.tabs li.current a:visited { border-bottom: 1px solid #ececec; background: #ececec; color: #000; }
 ul.tabs a:hover { background-color: #fff;	}
