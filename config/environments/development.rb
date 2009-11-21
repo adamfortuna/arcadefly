@@ -5,7 +5,6 @@
 # since you don't have to restart the webserver when you make code changes.
 config.cache_classes = false
 
-
 # Log error messages when you accidentally call methods on nil.
 config.whiny_nils = true
 
@@ -48,16 +47,22 @@ ActionMailer::Base.smtp_settings = mailer_options
 
 #ActiveRecord::Base.logger = Logger.new(STDOUT)
 
-
-
 #def log_to(stream)
 #  ActiveRecord::Base.logger = Logger.new(stream)
 #  ActiveRecord::Base.clear_active_connections!
 #end
 
-if File.exists?(File.join(RAILS_ROOT,'tmp', 'debug.txt'))
-  require 'ruby-debug'
-  Debugger.wait_connection = true
-  Debugger.start_remote
-  File.delete(File.join(RAILS_ROOT,'tmp', 'debug.txt'))
+# if File.exists?(File.join(RAILS_ROOT,'tmp', 'debug.txt'))
+#   require 'ruby-debug'
+#   Debugger.wait_connection = true
+#   Debugger.start_remote
+#   File.delete(File.join(RAILS_ROOT,'tmp', 'debug.txt'))
+# end
+
+# Allow debugging without starting rails with --debugger
+begin
+  require "ruby-debug"
+  Debugger.start
+rescue LoadError, NameError
+  $stderr.puts "Error loading ruby-debug.  Debugger support will not be available.  `gem install ruby-debug` to correct this."
 end
