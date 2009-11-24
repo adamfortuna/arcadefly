@@ -9,9 +9,7 @@
   <meta name="keywords" content="arcade games, arcades, gaming, video games, game locations, arcade locations, play games, play arcade games, where to play games" />
   <meta name="description" content="<%= yield(:description) || "A social network for gamers and arcade game enthusiasts. Want to know where an arcade is, or have a game in mind and want to know where to play it? We're your place!" %>" />
   
-  <%# stylesheet_link_merged :arcadefly 
-  %>
-  <link href="http://www.arcadefly.com/stylesheets/arcadefly_1258850112.css" media="screen" rel="Stylesheet" type="text/css" />
+  <% stylesheet_link_merged :arcadefly %>
   <%= auto_discovery_link_tag(:rss, :controller => "arcades", :action => 'recent', :format => :rss) %>
   <%= yield(:header) -%>
 </head>
