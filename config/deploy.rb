@@ -1,10 +1,25 @@
 set :application, "arcadefly"
-set :repository,  "http://svn.arcadefly.com/trunk"
+default_run_options[:pty] = true
+set :repository, 'git@github.com:adamfortuna/arcadefly.git'
+set(:branch)        { Capistrano::CLI.ui.ask("Deploy from branch: ") }
+set :use_sudo,    true
+set :user,        "adam"
+set :scm,         "git"
+#set :git_enable_submodules, 0
+set :scm_passphrase, "PaSSph4se" #This is your custom users password
+set :deploy_via, :remote_cache
+
+
+
+# Dependencies
+depend :local,  :command, 'git'
+
 
 # If you aren't deploying to /u/apps/#{application} on the target
 # servers (which is the default), you can specify the actual location
 # via the :deploy_to variable:
 # set :deploy_to, "/var/www/#{application}"
+# set :deploy_to,   "/mnt/app/#{application}"
 
 # If you aren't using Subversion to manage your source code, specify
 # your SCM below:
@@ -20,6 +35,7 @@ depend :remote, :gem, "mislav-will_paginate", "~> 2.2"
 
 
 #after "deploy:update_code", "deploy:rails_symlink"
+before "deploy:symlink", "s3_asset_host:synch_public"
 after "deploy:update_code", "s3_asset_host:synch_public"
 after "deploy:update_code", "deploy:build_assets"
 namespace :deploy do
@@ -44,10 +60,4 @@ namespace :deploy do
       cd #{release_path} && rake RAILS_ENV=production asset:packager:build_all
     EOF
   end  
-end
-
-before "deploy:symlink", "s3_asset_host:synch_public"
-
-task :after_update_code, :roles => :app do
-  run "rm -rf #{release_path}/public/.htaccess"
 end
