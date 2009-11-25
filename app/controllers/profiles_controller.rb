@@ -162,11 +162,11 @@ class ProfilesController < ResourceController::Base
     end
 
     # Conditions
-    collection_options[:conditions] = "profiles.active = 1"
+    collection_options[:conditions] = "profiles.active = true"
     if search == '#'
       collection_options[:conditions] += ' AND profiles.display_name regexp "^[0-9]+"'
     elsif !search.blank?
-      collection_options[:conditions] += " AND profiles.display_name like '#{search}%'"
+      collection_options[:conditions] += " AND (profiles.display_name like '#{search}%' OR profiles.display_name like '#{search.downcase}%')"
     end
     
     # If on the main profiles page where we map out profiles, include their addresses

@@ -22,8 +22,8 @@ ActionController::Base.perform_caching               = false
 
 
 ASSET_HOST = "http://static.arcadefly.com"
-HOST = "http://www.arcadefly.com"
-config.action_controller.asset_host = "http://www.arcadefly.com"
+HOST = "http://arcadefly.heroku.com"
+config.action_controller.asset_host = "http://arcadefly.heroku.com"
 
 
 require 'hodel_3000_compliant_logger'

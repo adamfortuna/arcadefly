@@ -6,6 +6,7 @@
   <% if !params[:search] %>
     <p>Only players who have entered their address show up here. No exact addresses are shown -- only a general area based on city and postal code.</p>
   <% end %>
+  <!--
   <div id="controller_search">
     <% form_for(:profile, profiles_path, :html => { :method => 'get' }) do |f| %>
       <label id="search_label" for="search">Search for a profile...</label>
@@ -13,6 +14,7 @@
       <%= submit_tag "Search!", { :name => nil, :name => nil, :disable_with => 'Searching...' } %>
     <% end %>
   </div>
+  -->
 
   <%= render :partial => 'shared/letters', :locals => { :controller => 'profiles' } %>
   <%= render :partial => 'profiles/map_profiles', :object => @profiles %>

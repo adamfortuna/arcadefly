@@ -194,11 +194,11 @@ class GamesController < ResourceController::Base
     if search == '#'
       collection_options[:conditions] = ['games.name regexp "^[0-9]+"']
     elsif !search.blank?
-      collection_options[:conditions] = ['games.name like ?', "#{search}%" ]
+      collection_options[:conditions] = ['(games.name like ? OR games.name like ?)', "#{search}%", "#{search.downcase}%"]
     end
     
     unless administrator?
-      collection_options[:conditions] = ['games.pending=0']
+      collection_options[:conditions] = ['games.pending=?', false]
     end
 
     collection_options

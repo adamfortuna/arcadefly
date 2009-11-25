@@ -8,6 +8,7 @@
   <%- end -%>
 
   <% cache do %>
+  <!--
   <div id="controller_search">
     <% form_for(:game, games_path, :html => { :method => 'get' }) do |f| %>
       <label id="search_label" for="search">Search for a Game...</label>
@@ -15,6 +16,7 @@
       <%= submit_tag "Search!", { :disable_with => 'Searching...', :name => nil } %>
     <% end %>
   </div>
+  -->
   <% end %>
 
   <%= render :partial => 'shared/letters', :locals => { :controller => 'games' } %>
