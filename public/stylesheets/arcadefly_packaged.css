@@ -1,0 +1,257 @@
+ .container {width:960px; margin:0 auto}
+#main {background:#c4c0be url(http://static.arcadefly.com/images/layout/background_light_slice.jpg) repeat-x; padding-bottom:30px}
+#main .container {background-image:url(http://static.arcadefly.com/images/layout/background_light.jpg); background-repeat:no-repeat}
+  #content {}
+#content h2 {font-size:32px; line-height:31px}
+#content hr {border:1px solid #e3e3e3; margin-top:20px; margin-bottom:20px}
+ #header {padding-top:10px; padding-bottom:0px; margin-bottom:0px}
+#title a, #title small {margin:0px; display:block; text-indent:-9999px}
+#title a {display:block; background-image:url(http://static.arcadefly.com/images/logo.png); background-repeat:no-repeat; width:210px; height:83px}
+#header ul {margin:0px; padding:0px; float:right; list-style:none}
+#header ul li {float:left; border-left:1px solid #ccc}
+#header ul li a {color:#716D6A; display:block; font-family:Verdana,Arial,Helvetica,sans-serif; font-size:10px; font-weight:bold; height:15px; line-height:20px; padding:11px 8px; text-decoration:none; text-transform:uppercase}
+#header ul li a.active, #header ul li a:hover {color:#211e1e}
+#header p {float:right; clear:both; margin-top:1em}
+  #footer {background-image:url(http://static.arcadefly.com/images/layout/background_footer.jpg); background-repeat:repeat-x; padding:40px; min-height:130px}
+#footer {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px}
+ div#footer div.container div {float:left; width:120px; margin-right:30px}
+div#footer div.container div.long {width:610px}
+#footer h3 {color:#e2dddc; text-transform:uppercase; font-size:10px}
+div#footer div.container ul li, div#footer div.container ul {list-style:none; margin:0px; padding:0px}
+ #controller_search label {position:absolute; margin:1em 0 0 .6em; color:#aaa}
+body.home .third div div h3 {font-size:2em; text-align:center}
+#features div h3 {font-size:2em}
+#features div {width:440px; float:right}
+#features div ul {margin:0; padding:0; list-style:none; font-size:1.4em; line-height:2.2em;}
+#features div ul li a {text-decoration:underline}
+#features div ul li a:hover {text-decoration:none}
+ .block_outside_topless {border-left:1px solid #a3a09e; border-right:1px solid #a3a09e; border-bottom:1px solid #a3a09e; background-color:#ffffff; margin-bottom:20px; position:relative; clear:both}
+.block_inside_topless {display:block; background: #ffffff url(http://static.arcadefly.com/images/layout/background_block_slice.jpg) repeat-x; padding:30px; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff}
+ .block_outside {border:1px solid #a3a09e; background-color:#ffffff; margin-bottom:20px; position:relative; clear:both}
+.block_inside {display:block; border:1px solid #ffffff; background: #ffffff url(http://static.arcadefly.com/images/layout/background_block_slice.jpg) repeat-x; padding:20px}
+#block_portfolio .block_outside, #block_portfolio .block_outside_topless {min-height:165px;}
+ body.games ul.tabs li.current a {background-color: #fdd; border-bottom: 1px solid #fdd}
+body.games .block_inside_topless, body.games .block_inside, div.block_outside.games div.block_inside {display:block; background: #ffffff url(http://static.arcadefly.com/images/layout/background_block_slice_games.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff}
+body.arcades ul.tabs li.current a, body.claims ul.tabs li.current a {background-color: #dde; border-bottom: 1px solid #dde}
+body.arcades .block_inside_topless, body.arcades .block_inside, body.claims .block_inside_topless, body.claims .block_inside, div.block_outside.arcades div.block_inside {display:block; background: #ffffff url(http://static.arcadefly.com/images/layout/background_block_slice_arcades.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff}
+body.profiles ul.tabs li.current a, body.friends ul.tabs li.current a, body.users ul.tabs li.current a, body.sessions ul.tabs li.current a, body.messages ul.tabs li.current a {background-color: #ded; border-bottom: 1px solid #ded}
+body.profiles .block_inside_topless, body.friends .block_inside_topless, body.users .block_inside_topless, body.sessions .block_inside_topless, body.messages .block_inside_topless, body.profiles .block_inside, body.friends .block_inside, body.users .block_inside, body.sessions .block_inside, body.messages .block_inside, div.block_outside.profiles div.block_inside {display:block; background: #ffffff url(http://static.arcadefly.com/images/layout/background_block_slice_users.jpg) repeat-x; padding:30px; overflow:auto; border-left:1px solid #ffffff; border-right:1px solid #ffffff; border-bottom:1px solid #ffffff}
+  #content_area {width:665px; float:left}
+#content_area .block_inside {min-height:400px}
+  #sidebar {float:left; width:281px; position:relative; left:-1px; margin-top:15px; background-color:#e2dddc; border:1px solid #a3a09e}
+#sidebar .block_inside {background:none; background-color:#e2dddc}
+#sidebar h3 {font-size:20px; line-height:23px}
+#sidebar ul {margin:10px 0px 30px 0px; padding:0px}
+#sidebar ul li {list-style:none; margin:0px 0px 5px 0px; padding:0px}
+#sidebar ul li a {color:#7f7d78}
+#sidebar ul li a:hover {color:#0172dd; text-decoration:none}
+.autocomplete {margin:0px; padding:0px; width:250px; background:#fff; border:1px solid #888; position:absolute; overflow-y:auto; max-height:300px; z-index:300}
+.autocomplete ul {margin:0px; padding:0px; list-style-type:none; background-color:#fff}
+.autocomplete iframe {display:block; position:absolute; top:0; left:0; z-index:-1; filter:mask(); width:3000px; height:3000px}
+.autocomplete li {margin:0; padding:2px; height:32px; display:block; list-style-type:none; cursor:pointer}
+form input.ac_loading {background: Window url('http://static.arcadefly.com/images/spinner.gif') right center no-repeat}
+.ac_over {background-color:#ffb}
+ul#hours {list-style:none; margin:0; padding:0}
+ul#hours li {margin: .6em 0;}
+ul#hours li span.dayofweek {width:40px; display:block; float:left; text-align:right; padding-right:.4em; margin-top:1.1em;}
+ul#hours li span.from_to {display:block; width:250px; float:left; margin-top:.3em;}
+ul#hours li input.text, ul#hours li select.text {width:100px}
+ul#hours li span.options {margin-left:0em 0 2em 0}
+ul#hours li span.options span {display: block}
+ ul.logged_in {width:880px;}
+ul.data {margin:1em 0 0 0; padding:0}
+ul.data a {color: #2D7BB2; text-decoration: none; font-weight: bold}
+ul.data a:hover {color: #333}
+ul.data li {list-style:none; position: relative; display: block; border-bottom: 1px solid #EEE; padding:0; margin:0; width:100%}
+ul.data li a.main {display: block; padding:6px 20px 6px 6px; position: relative; z-index: 2}
+ul.data li .count {display: block; position: absolute; top: 0px; right: 0px; margin: 0 0.3em; text-align: right; color: #999; font-weight: bold; font-size: 0.875em; z-index:2; width:300px; line-height:3em}
+ul.data li .left_gutter {position:absolute; left:-22px; top:4px}
+ul.data li .soft {color: #999; font-weight: bold; font-size: 0.875em; line-height: 2em; z-index:2}
+ul.data li .favorite {position:absolute; right:-25px; top:6px}
+ul.data li a.favorite {display: inline; padding: 1em; position: relative; z-index: 2}
+ul.data li:hover {background-color: #ddd}
+ul.data li span.index {display: block; position: absolute; top: 0; left: 0; height: 100%; background: #B8E4F5; text-indent: -9999px; overflow: hidden; line-height: 2em; z-index:1}
+ul.data li span.index:hover {background: #9fbceb}
+ul.content li .count {clear:left; position: relative; top:1em}
+ul.content li a {display: inline}
+ul.left-shift {position:absolute; left:-150px}
+  ul.tabs {height: 34px; padding: 0 20px; background: url(http://static.arcadefly.com/images/helpers/tab_bottom.gif) repeat-x bottom; clear: both; margin:0px}
+ul.tabs li {margin: 0; padding: 0; display: inline; list-style-type: none}
+ul.tabs a:link, ul.tabs a:visited {float: left; font-weight: bold; padding: 7px 1.2em; margin-right: 8px; border: 1px solid #a3a09e; text-decoration: none; color: #666; height:18px}
+ul.tabs a {background-color: #f3f3f3}
+ul.tabs li.current a:link, ul.tabs li.current a:visited {border-bottom: 1px solid #ececec; background: #ececec; color: #000}
+ul.tabs a:hover {background-color: #fff}
+ul.tabs a.arcades {background-color: #dde}
+ul.tabs a.arcades:hover {background-color: #ccf}
+ul.tabs a.games {background-color: #fdd}
+ul.tabs a.games:hover {background-color: #fcc}
+ul.tabs a.users {background-color: #ded}
+ul.tabs a.users:hover {background-color: #cec}
+ ul.right-tabs {position:relative; top:-4em}
+ul.right-tabs li {float: right}
+.tabbed ul.right-tabs {top: -3.5em}
+.right-tabbed {position:relative; top:-4em}
+.tabbed .right-tabbed {top:0em}
+ div.tabbed {padding: 1em 0 1em 20px; margin-right:20px}
+div.right-space {padding: 1em 0 1em 0; margin-right:20px}
+div.tabbed-map {padding: 0em 0 1em 0; clear:both}
+ .pagination {padding: 1em 0; clear:both;}
+.pagination a {padding: 2px 5px 2px 5px; margin: 2px; border: 1px solid #6d84b4; text-decoration: none; color: #000099}
+.pagination a:hover, .pagination a:active {border: 1px solid #3b5998; color: #fff; background-color: #6d84b4}
+.pagination span.current {padding: 2px 5px 2px 5px; margin: 2px; border: 1px solid #000099; font-weight: bold; background-color: #3b5998; color: #FFF}
+.pagination span.disabled {padding: 2px 5px 2px 5px; margin: 2px; border: 1px solid #ccc; color: #bbb}
+ .scrollable {overflow-x: hidden; overflow-y: scroll}
+ul.scrollable li, ul.items li {clear: both}
+ul.scrollable li:hover, ul.items li:hover {background-color: #ddd}
+ul.scrollable li label, ul.items li label {display: block; font-weight:normal}
+ span.counts {border: 1px solid #ccc}
+span.counts a {display:block; padding:1em 1em 1em 3em; font-weight: bold}
+span.counts a:first-child {border-bottom: 1px solid #ccc;}
+span.counts a.arcades {background: url(http://static.arcadefly.com/images/icons/joystick.png) #dde no-repeat left; background-position: 1em}
+span.counts a.arcades:hover {background-color: #ccf}
+span.counts a.games {background: url(http://static.arcadefly.com/images/icons/controller.png) #fdd no-repeat left; background-position: 1em}
+span.counts a.games:hover {background-color: #fcc}
+span.counts a.users {background: url(http://static.arcadefly.com/images/icons/user.png) #ded no-repeat left; background-position: 1em}
+span.counts a.users:hover {background-color: #cec}
+ .map_box {padding:0; margin:0;}
+.map_box ul {width:370px; list-style:none; margin:0; padding:0; float:left}
+.map_box ul li, ul.padded ul li {clear: both; padding:.2em .2em .2em .5em}
+.map_box ul, div.map {border: 1px solid #ccc}
+div.map_big {width: 894px; height: 550px; padding-bottom: 1em}
+ #map_big_loading {position:absolute; left:460px; top:330px;}
+div.map_medium {width:510px; float:right}
+ #map_medium_loading {position:absolute; left:660px; top:250px;}
+div.map_small {width: 330px; height:280px}
+ #map_small_loading {position:absolute; left:745px; top:155px;}
+.map_box_width {width:370px; padding-right:15px}
+.map_info {padding-top:1em; width:80%; margin:1em auto 0 auto}
+.half {width:420px; padding-right:20px;}
+.half-padding {width:420px;}
+.third {width: 312px; margin-right:12px}
+.first {margin-left:0;}
+.last {margin-right:0;}
+div.large_left_column {width:600px; float:left;}
+div.left_column {width:540px; float:left;}
+div.left_column .short_description {float: left; padding:1em 1em 0 1em; width:350px;}
+div.left_column .long_description {float: left; padding:1em 1em 0 1em; width:430px;}
+div.left_column .left_column_content {clear: both; padding-top: 0em}
+div.right_column {width:330px; float:right}
+ul.arcades_list {margin:0; list-style:none}
+ul.arcades_list li {padding: .2em .8em}
+#new_playable {}
+#new_playable span input {}
+#playables li {padding:10px 0;}
+ul.icons {list-style:none; margin:0; padding:0}
+ul.icons li {text-align:center; margin:0; padding:1em; width:100px; float:left; border: 1px solid transparent;}
+ul.icons li:hover {border:1px solid #ccc}
+ul.icons a {text-decoration:none; float:left; padding:.8em}
+ul.icons p.favorite {display:inline}
+ul.icons p.favorite a {border:none; padding:0; margin:0;}
+ ul.nav li {display: inline; border-right: 1px solid #ccc; padding: 0 .5em}
+ul.nav li:last-child {border: none}
+ul.nav li a, ul.nav li a:visited {color: #369; text-decoration: none}
+ul.nav li a:hover, ul.nav li a:active {text-decoration: underline}
+ul.inline {display:inline; width:100%; border:0}
+ul.inline li {display: inline; border:none; margin:0; padding:0}
+ul.inline li a, ul.inline li a:visited {color: #369; text-decoration: none; border:none}
+ul.inline li a:hover, ul.inline li a:active {text-decoration: underline}
+ul.comma li:after {content:", ";}
+ul.comma li:last-child:after {content:"";}
+#content a[href^="http:"] {background: url(http://static.arcadefly.com/images/external.png) right top no-repeat; padding-right: 12px}
+#content a[href^="http://www.arcadefly.com"] {background: transparent; padding-right: 0px}
+#featured_item {border:1px solid #ccc; background:url(http://static.arcadefly.com/images/features.jpg) no-repeat; height:160px; width:400px; float:left}
+#w3_valid {background:url(http://static.arcadefly.com/images/w3c_blue.png) no-repeat; width:88px; height:31px; display:block; text-indent:-9999px}
+#content .map hr {margin:5px 0; padding:0}
+.profile_bubble {width:250px; min-height:85px}
+.profile_bubble:after {content: "."; display: block; height: 0; clear: both; visibility: hidden}
+.profile_bubble, .profile_bubble p {margin-left:10px}
+.profile_bubble .framed {margin-right:10px}
+span.title {width:280px; float:left; clear:both}
+span.marker {width:50px; float:right}
+body {margin:0px; padding:0px; background-color:#131211; font-family:Arial, Helvetica, sans-serif; color:#7f7d78; font-size:13px; line-height:19px}
+ h1 {margin:0px 0px 10px 0px; font-size:32px; font-family:Helvetica, Arial, Sans-serif; color:#000000; line-height:39px; letter-spacing:-1px}
+h2 {margin:0px 0px 10px 0px; font-size:24px; font-family:Helvetica, Arial, Sans-serif; color:#000000; line-height:39px; letter-spacing:-1px}
+h3 {margin:0px 0px 5px 0px; font-size:14px; line-height:21px; font-family:Helvetica, Arial, Sans-serif; color:#000000}
+h3 {margin:0px 0px 5px 0px; font-size:12px; line-height:21px; font-family:Helvetica, Arial, Sans-serif; color:#000000}
+small {color:#999; font-weight:bold; font-size:11px; display:block}
+small a {color:#007de2}
+legend {padding: 0 .5em}
+p {margin: 0px 0px 15px 0px}
+img {margin:0; padding:0}
+v:* {behavior:url(#default#VML);}
+a, a:visited {color:#26689f; text-decoration:none}
+a:hover, a:active {text-decoration: underline}
+a img {border:none}
+a.arcades {background-color: #dde}
+a.arcades:hover {background-color: #ccf}
+a.games {background-color: #fdd}
+a.games:hover {background-color: #fcc}
+a.users {background-color: #ded}
+a.users:hover {background-color: #cec}
+.content-height {height: 400px}
+.left {float:left}
+.right {float:right}
+.clear {display: inline-block; clear:both}
+.clear:after, .container:after {content: "."; display: block; height: 0; clear: both; visibility: hidden}
+* html .clear {height: 1%}
+.clear {display: block}
+.hidden {display:none}
+.inline {display:inline}
+.block {display: block}
+.center {text-align: center}
+span.info, div.info {font-size: .8em; line-height: 1.875em}
+.loading {background:url(http://static.arcadefly.com/images/spinner.gif) no-repeat center center}
+ .even {background-color: #efefef}
+.odd {}
+ul.clean {list-style:none;}
+ .error, .notice, .warning {padding: .8em; margin-bottom: 1em}
+div.notice {background-color: #CFC; border: solid 1px #6C6}
+div.warning {background-color: #ff9; border: solid 1px #fc0}
+div.error {background-color: #FCC; border: solid 1px #C66}
+div.notice span.icon, div.warning span.icon, div.error span.icon {padding-left: 2em}
+ li.favorited {background-color: #B8E4F5}
+.favorite_left {padding:0 1em .3em 0px}
+.favorite_add {background: url(http://static.arcadefly.com/images/icons/heart_add.png) no-repeat left}
+.favorite_delete {background: url(http://static.arcadefly.com/images/icons/heart_delete.png) no-repeat left}
+.arcade_add {background: url(http://static.arcadefly.com/images/icons/joystick_add.png) no-repeat left}
+.arcade_delete {background: url(http://static.arcadefly.com/images/icons/joystick_delete.png) no-repeat left}
+.arcade_error {background: url(http://static.arcadefly.com/images/icons/joystick_error.png) no-repeat left}
+.user_add {background: url(http://static.arcadefly.com/images/icons/user_add.png) no-repeat left}
+.user_delete {background: url(http://static.arcadefly.com/images/icons/user_delete.png) no-repeat left}
+.game_add {background: url(http://static.arcadefly.com/images/icons/controller_add.png) no-repeat left}
+.game_delete {background: url(http://static.arcadefly.com/images/icons/controller_delete.png) no-repeat left}
+ .features img.thumbnail {border:1px solid #b5b5b5; background-color:#d2d2d2; float:left; margin-right:10px}
+ .shift-1 {margin-top: 1em}
+.shift-2 {margin-top: 2em}
+img.framed {border:1px solid #ccc}
+ul.normal {text-align:left; list-style:normal; border:none; list-style-type:disc; list-style-position:inside; width:auto;}
+ul.normal li {border:none; width:auto}
+ input[type="submit"] {padding:.4em}
+input.inline {position:absolute; margin-top: .3em}
+ input[type="text"],input[type="password"] {width: 300px}
+input[type="file"] {width: 250px}
+select.text, select.title {width: 310px; margin:0.5em 0.5em 0.5em 0; border:1px solid #bbb; background:#eee; padding:5px}
+select.text:focus, select.title:focus {border:1px solid #999; background:#fff}
+select.title {font-size:1.5em}
+ div.formError {color: red}
+div.fieldWithErrors input, div.fieldWithErrors select, div.fieldWithErrors textarea {border-color: red}
+div.fieldWithErrors input.text:focus, div.fieldWithErrors input.title:focus {border-color: red; background:#fff}
+ p.required label:before {content: "* "}
+.disabled {font-weight: lighter; color: #ababab}
+.disabled p.required label:before {content: ""}
+p.block {margin: 0 0 .3em 0}
+p.block label {display:block; padding:0; margin:0}
+label {font-weight: bold}
+.big-button {font-size:20px; padding:0; margin:0}
+ fieldset {padding:1.4em; margin: 0 0 1.5em 0; border: 1px solid #ccc}
+legend {font-weight: bold; font-size:1.2em}
+ input.text, input.title {margin:0.5em 0.5em 0.5em 0}
+input.text, input.title {border:1px solid #bbb; background:#eee; padding:5px}
+input.text:focus, input.title:focus {border:1px solid #999; background:#fff}
+input.title {font-size:1.5em}
+ textarea {width: 400px; height: 250px; margin:0.5em 0.5em 0.5em 0; border:1px solid #bbb; background:#eee; padding:5px}
+textarea:focus {border:1px solid #999; background:#fff}
+ select {border:1px solid #ccc; background:#eee; width:200px}
+select:focus {border:1px solid #999; background:#fff}
+.big_search label {font-size:1.5em}
+.big_search input.title {width: 618px}
