@@ -198,7 +198,7 @@ class GamesController < ResourceController::Base
     end
     
     unless administrator?
-      collection_options[:conditions] = ['games.pending=0']
+      collection_options[:conditions] = ['games.pending=?', false]
     end
 
     collection_options
