@@ -162,7 +162,7 @@ class ProfilesController < ResourceController::Base
     end
 
     # Conditions
-    collection_options[:conditions] = "profiles.active = 1"
+    collection_options[:conditions] = "profiles.active = true"
     if search == '#'
       collection_options[:conditions] += ' AND profiles.display_name regexp "^[0-9]+"'
     elsif !search.blank?
