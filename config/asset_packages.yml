@@ -1,6 +1,6 @@
 --- 
 javascripts: 
-- application: 
+- arcadefly: 
   - application
 - autocomplete:
   - jquery_autocomplete
