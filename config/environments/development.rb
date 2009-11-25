@@ -14,7 +14,6 @@ config.action_view.debug_rjs                         = true
 config.action_controller.perform_caching             = false
 ActionController::Base.perform_caching               = false
 
-config.cache_store = :mem_cache_store, 'localhost:11211'
 config.action_controller.perform_caching             = false
 ActionController::Base.perform_caching               = false
 
@@ -33,31 +32,6 @@ config.log_level = :debug
 # ActiveRecord
 config.active_record.timestamped_migrations = true
 config.active_record.logger = Logger.new(STDOUT)
-
-# Mail settings
-ActionMailer::Base.delivery_method = :smtp
-
-
-require "smtp_tls"
-
-mailer_config = File.open("#{RAILS_ROOT}/config/mailer.yml")
-mailer_options = YAML.load(mailer_config)
-ActionMailer::Base.smtp_settings = mailer_options
-
-
-#ActiveRecord::Base.logger = Logger.new(STDOUT)
-
-#def log_to(stream)
-#  ActiveRecord::Base.logger = Logger.new(stream)
-#  ActiveRecord::Base.clear_active_connections!
-#end
-
-# if File.exists?(File.join(RAILS_ROOT,'tmp', 'debug.txt'))
-#   require 'ruby-debug'
-#   Debugger.wait_connection = true
-#   Debugger.start_remote
-#   File.delete(File.join(RAILS_ROOT,'tmp', 'debug.txt'))
-# end
 
 # Allow debugging without starting rails with --debugger
 begin

@@ -12,12 +12,6 @@ class Profile < ActiveRecord::Base
 
   attr_accessor :icon
 
-  define_index do
-    indexes :display_name, :sortable => true
-    indexes :initials, :full_name, :about_me, :aim_name, :gtalk_name, :msn_name
-    has created_at, updated_at, favoriteships_count, frequentships_count
-  end
-
   # User
   belongs_to :user, :dependent => :destroy
 
