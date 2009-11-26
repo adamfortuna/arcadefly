@@ -20,6 +20,13 @@ class Game < ActiveRecord::Base
 	validates_uniqueness_of :klov_id, :if => :klov_id?
 	validates_uniqueness_of :permalink
 
+  # define_index do
+  #   indexes :name, :sortable => true
+  #   indexes :alias
+  #   
+  #   has created_at, updated_at, favoriteships_count, playables_count
+  # end
+
   def self.per_page
     PER_PAGE
   end
